@@ -1,6 +1,7 @@
 /*
  * Ghostview.c -- Ghostview widget.
  * Copyright (C) 1992  Timothy O. Theisen
+ * Copyright (C) 2004  José E. Marchesi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +59,7 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <signal.h>
 
 #include "types.h"
 #include "d_memdebug.h"
@@ -68,7 +70,7 @@
 typedef char *XPointer;
 #endif
 
-#include <signal.h>
+#include <gv_signal.h>
 #ifdef SIGNALRETURNSINT
 #define SIGVAL int
 #else

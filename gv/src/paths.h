@@ -3,6 +3,7 @@
 ** paths.h
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** Copyright (C) 2004 José E. Marchesi
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -34,9 +35,9 @@
 #   define INC_XMU(aaa) <XMU_DIRECTORY/aaa>
 #   define INC_XAW(aaa) <XAW_DIRECTORY/aaa>
 #else
-#   define INC_X11(aaa) <X11/##aaa##>
-#   define INC_XMU(aaa) <X11/Xmu/##aaa##>
-#   define INC_XAW(aaa) <X11/Xaw3d/##aaa##>
+#   define INC_X11(aaa) <X11/aaa>
+#   define INC_XMU(aaa) <X11/Xmu/aaa>
+#   define INC_XAW(aaa) <X11/Xaw3d/aaa>
 #endif
 
 #endif /* _PATHS_H_ */

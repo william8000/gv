@@ -3,6 +3,7 @@
 ** misc.c
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** Copyright (C) 2004 José E. Marchesi
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -69,7 +70,7 @@
 #   define SEEK_SET 0
 #endif
 
-#include <signal.h>
+#include <gv_signal.h>
 #ifdef SIGNALRETURNSINT
 #   define SIGVAL int
 #else

@@ -119,37 +119,46 @@ converted :
 	@echo "" > converted
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_MEMDEBUG_CODE
    USER_DEFS_1	= $(MEMDEBUG_TYPES)
    SRCS_1	= d_mem.c d_xtmem.c
    OBJS_1	= d_mem.o d_xtmem.o
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_RUNTIME_MESSAGES
    USER_DEFS_2	= -DMESSAGES -DMESSAGE_NO_ESC
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_SIGNAL_HANDLER
    USER_DEFS_3	= -DUSE_SIGNAL_HANDLER
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_SETENV_CODE
    SRCS_4	= setenv.c getenv.c
    OBJS_4	= setenv.o getenv.o
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_MEMMOVE_CODE
    USER_DEFS_5	= -DUSE_MEMMOVE_CODE
 #endif
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_SCROLLBAR_CODE
    SRCS_6	= Scrollbar.c
    OBJS_6	= Scrollbar.o
 #endif
 
+# XXX: HANDLED on configure.ac
 USER_DEFS_7	= -DUSER_DEFAULTS=\"$(USER_DEFAULTS)\"
+# XXX: Must not be used on code!
 USER_DEFS_8	= -DGV_LIBDIR=\"$(GV_LIBDIR)\" -DGV_CODE $(XAW3D_HEADERS)
 
+# XXX: HANDLED on configure.ac
 #ifdef USE_FALLBACK_STYLES
    USER_DEFS_9	= -DUSE_FALLBACK_STYLES
 #endif

@@ -1,8 +1,9 @@
 /*
 **
-** signal.c
+** gv_signal.c
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** Copyright (C) 2004 José E. Marchesi
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -31,7 +32,7 @@
 #include "message.h"
 
 #include <stdio.h>
-#include <signal.h>
+#include <gv_signal.h>
 #ifdef VMS
 #   include <unixlib.h>
 #   include <stat.h>

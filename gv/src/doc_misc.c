@@ -3,6 +3,7 @@
 ** doc_misc.c
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** Copyright (C) 2004 José E. Marchesi
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -32,6 +33,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <gv_signal.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)

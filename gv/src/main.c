@@ -32,6 +32,7 @@
 */
 #include "message.h"
 
+#include "ac_config.h"
 #include "config.h"
 
 #include <stdlib.h>
@@ -105,7 +106,7 @@
 #   undef USE_SIGNAL_HANDLER
 #endif
 #ifdef USE_SIGNAL_HANDLER
-#   include "signal.h"
+#   include "gv_signal.h"
 #endif /* USE_SIGNAL_HANDLER */
 
 

@@ -1,6 +1,7 @@
 /*
  * ps.h -- Include file for PostScript routines.
  * Copyright (C) 1992  Timothy O. Theisen
+ * Copyright (C) 2004 José E. Marchesi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
