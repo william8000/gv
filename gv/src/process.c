@@ -278,8 +278,7 @@ ProcessData process_fork (name,command,notify_proc,data)
    pid = fork();
 
    if (pid == 0) { /* child */
-      int  argc=0;
-      char *argv[20];
+      char *argv[4];
       char *c;
 
       INFMESSAGE(child process)
@@ -292,15 +291,10 @@ ProcessData process_fork (name,command,notify_proc,data)
        */
       system(c);
 #else
-      while (isspace(*c)) c++;
-      while (*c) {
-         argv[argc++] = c;
-         while (*c && !isspace(*c)) c++;
-         if (*c) *c++ = '\0';
-         while (isspace(*c)) c++;
-         SMESSAGE(argv[argc-1])
-      }
-      argv[argc] = NULL;
+      argv[0] = "sh";
+      argv[1] = "-c";
+      argv[2] = c;
+      argv[3] = NULL;
 
       INFMESSAGE(spawning conversion process)
 /*
