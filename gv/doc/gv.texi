@@ -241,7 +241,7 @@ by the @code{XUSERFILESEARCHPATH} environment variable.
 
 The files @file{gv_user.ad} and @file{gv_system.ad} (located in the
 library directory of gv, which is most probably either
-@file{/usr/local/lib/gv/} or @file{/usr/lib/gv/} may serve as a basis for
+@file{/usr/local/lib/gv/} or @file{/usr/lib/gv/}) may serve as a basis for
 constructing the user and system specific resource files.
 
 Note that the user and system specific resource files are not the only
@@ -974,9 +974,7 @@ always display the newest version of the document in work.
 
 Instead of explicitly loading it via the file selection
 popup the most recent version can be displayed by
-pressing the @strong{Reload} button in the main window
-(VMS users should use the @strong{Update File} entry in the
-@strong{File} menu).
+pressing the @strong{Reload} button in the main window.
 Choosing the @strong{Reload} entry in the menu that pops
 up when clicking with the third mouse button anywhere on the
 displayed page certainly has the same effect.
@@ -1030,7 +1028,7 @@ mouse. Alternatively, the cursor arrow keys can be used.
 Use the "spartan" style by starting gv with the command
 
 @verbatim
-         gv -spartan
+         gv --spartan
 @end verbatim
 
 This removes the "Open", "Print", "Save", "Reload", and page marking
