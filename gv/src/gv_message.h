@@ -70,6 +70,7 @@ PostScript and PDF viewer.\n\
   --style=FILE               read and use additional resources from FILE. These resources\n\
                              have lower priority than those provided on the context of --ad\n\
   --spartan                  shortcut for --style=gv_spartan.dat\n\
+  --version                  show gv version and exit\n\
 ";
 
 char *message_help = "\

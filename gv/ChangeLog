@@ -1,3 +1,7 @@
+2004-12-06  JosÃ© E. Marchesi  <jemarch@gnu.org>
+
+	* src/main.c (main): Process GNU arguments after X initialization
+
 2004-11-11  Jose E. Marchesi  <jemarch@dataware.es>
 
 	* configure.ac: Changed the scratch dir from ~/ to /tmp/

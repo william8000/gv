@@ -382,189 +382,6 @@ int main(argc, argv)
     style_p = 0;
     arguments_p = 0;
 
-    /*### Manage GNU command line arguments ########################*/
-    int opt_counter = 0;
-    int c;
-    while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
-	   != -1)
-      {
-
-	switch (c)
-	  {
-	  case CENTER_ARG:
-	    center_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOCENTER_ARG:
-	    nocenter_p = 1;
-	    opt_counter++;
-	    break;
-	  case SCALE_ARG:
-	    scale_p = 1;
-	    scale_value = optarg;
-	    opt_counter++;
-	    break;
-	  case MAGSTEP_ARG:
-	    magstep_p = 1;
-	    magstep_value = optarg;
-	    opt_counter++;
-	    break;
-	  case SCALEBASE_ARG:
-	    scalebase_p = 1;
-	    scalebase_value = optarg;
-	    opt_counter++;
-	    break;
-	  case RESIZE_ARG:
-	    resize_p = 1;
-	    opt_counter++;
-	    break;
-	  case NORESIZE_ARG:
-	    noresize_p = 1;
-	    opt_counter++;
-	    break;
-	  case SWAP_ARG:
-	    swap_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOSWAP_ARG:
-	    noswap_p = 1;
-	    opt_counter++;
-	    break;
-	  case DSC_ARG:
-	    dsc_p = 1;
-	    opt_counter++;
-	    break;
-	  case NODSC_ARG:
-	    nodsc_p = 1;
-	    opt_counter++;
-	    break;
-	  case EOF_ARG:
-	    eof_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOEOF_ARG:
-	    noeof_p = 1;
-	    opt_counter++;
-	    break;
-	  case WATCH_ARG:
-	    watch_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOWATCH_ARG:
-	    nowatch_p = 1;
-	    opt_counter++;
-	    break;
-	  case AD_ARG:
-	    ad_p = 1;
-	    ad_value = optarg;
-	    opt_counter++;
-	    break;
-	  case STYLE_ARG:
-	    style_p = 1;
-	    style_value = optarg;
-	    opt_counter++;
-	    break;
-	  case ARGUMENTS_ARG:
-	    arguments_p = 1;
-	    arguments_value = optarg;
-	    opt_counter++;
-	    break;
-	  case PIXMAP_ARG:
-	    pixmap_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOPIXMAP_ARG:
-	    nopixmap_p = 1;
-	    opt_counter++;
-	    break;
-	  case SAFER_ARG:
-	    safer_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOSAFER_ARG:
-	    nosafer_p = 1;
-	    opt_counter++;
-	    break;
-	  case ANTIALIAS_ARG:
-	    antialias_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOANTIALIAS_ARG:
-	    noantialias_p = 1;
-	    opt_counter++;
-	    break;
-	  case COLOR_ARG:
-	    color_p = 1;
-	    opt_counter++;
-	    break;
-	  case GRAYSCALE_ARG:
-	    grayscale_p = 1;
-	    opt_counter++;
-	    break;
-	  case HELP_ARG:
-	    /* Show some help and return */
-	    fprintf(stdout,"%s\n", message_usage);
-	    exit(0);
-	  case QUIET_ARG:
-	    quiet_p = 1;
-	    opt_counter++;
-	    break;
-	  case MONOCHROME_ARG:
-	    monochrome_p = 1;
-	    opt_counter++;
-	    break;
-	  case NOQUIET_ARG:
-	    noquiet_p = 1;
-	    opt_counter++;
-	    break;
-	  case MEDIA_ARG:
-	    {
-	      media_p = 1;
-	      media_value = optarg;
-	      opt_counter++;
-	      break;
-	    }
-	    
-	  case ORIENTATION_ARG:
-	    {
-	      orientation_p = 1;
-	      orientation_value = optarg;
-	      opt_counter++;
-	      break;
-	    }
-
-	  case PAGE_ARG:
-	    {
-	      page_p = 1;
-	      page_value = optarg;
-	      opt_counter++;
-	      break;
-	    }
-
-	  case USAGE_ARG:
-	    /* Show usage */
-	    fprintf(stdout,"%s\n", message_usage);
-	    exit(0);
-
-	  case SPARTAN_ARG:
-	    spartan_p = 1;
-	    opt_counter++;
-	    break;
-
-	  case VERSION_ARG:
-	    /* Show the program version */
-	    fprintf(stdout,"%s\n", versionIdentification[0]);
-	    exit(0);
-
-
-	  default:
-	    /* Error, usage and exit */
-	    fprintf(stdout, "%s\n", message_usage);
-	    exit(1);
-	    break;
-	  }
-      }
-
 
     /*###  initializing toolkit and the application context ########*/
 
@@ -601,7 +418,190 @@ int main(argc, argv)
      gv_database=XtDatabase(gv_display);
    }
 
-/*### getting resources ############################################*/
+   /*### Manage GNU command line arguments ########################*/
+   int opt_counter = 0;
+   int c;
+   while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
+	  != -1)
+     {
+
+       switch (c)
+	 {
+	 case CENTER_ARG:
+	   center_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOCENTER_ARG:
+	   nocenter_p = 1;
+	   opt_counter++;
+	   break;
+	 case SCALE_ARG:
+	   scale_p = 1;
+	   scale_value = optarg;
+	   opt_counter++;
+	   break;
+	 case MAGSTEP_ARG:
+	   magstep_p = 1;
+	   magstep_value = optarg;
+	   opt_counter++;
+	   break;
+	 case SCALEBASE_ARG:
+	   scalebase_p = 1;
+	   scalebase_value = optarg;
+	   opt_counter++;
+	   break;
+	 case RESIZE_ARG:
+	   resize_p = 1;
+	   opt_counter++;
+	   break;
+	 case NORESIZE_ARG:
+	   noresize_p = 1;
+	   opt_counter++;
+	   break;
+	 case SWAP_ARG:
+	   swap_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOSWAP_ARG:
+	   noswap_p = 1;
+	   opt_counter++;
+	   break;
+	 case DSC_ARG:
+	   dsc_p = 1;
+	   opt_counter++;
+	   break;
+	 case NODSC_ARG:
+	   nodsc_p = 1;
+	   opt_counter++;
+	   break;
+	 case EOF_ARG:
+	   eof_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOEOF_ARG:
+	   noeof_p = 1;
+	   opt_counter++;
+	   break;
+	 case WATCH_ARG:
+	   watch_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOWATCH_ARG:
+	   nowatch_p = 1;
+	   opt_counter++;
+	   break;
+	 case AD_ARG:
+	   ad_p = 1;
+	   ad_value = optarg;
+	   opt_counter++;
+	   break;
+	 case STYLE_ARG:
+	   style_p = 1;
+	   style_value = optarg;
+	   opt_counter++;
+	   break;
+	 case ARGUMENTS_ARG:
+	   arguments_p = 1;
+	   arguments_value = optarg;
+	   opt_counter++;
+	   break;
+	 case PIXMAP_ARG:
+	   pixmap_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOPIXMAP_ARG:
+	   nopixmap_p = 1;
+	   opt_counter++;
+	   break;
+	 case SAFER_ARG:
+	   safer_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOSAFER_ARG:
+	   nosafer_p = 1;
+	   opt_counter++;
+	   break;
+	 case ANTIALIAS_ARG:
+	   antialias_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOANTIALIAS_ARG:
+	   noantialias_p = 1;
+	   opt_counter++;
+	   break;
+	 case COLOR_ARG:
+	   color_p = 1;
+	   opt_counter++;
+	   break;
+	 case GRAYSCALE_ARG:
+	   grayscale_p = 1;
+	   opt_counter++;
+	   break;
+	 case HELP_ARG:
+	   /* Show some help and return */
+	   fprintf(stdout,"%s\n", message_usage);
+	   exit(0);
+	 case QUIET_ARG:
+	   quiet_p = 1;
+	   opt_counter++;
+	   break;
+	 case MONOCHROME_ARG:
+	   monochrome_p = 1;
+	   opt_counter++;
+	   break;
+	 case NOQUIET_ARG:
+	   noquiet_p = 1;
+	   opt_counter++;
+	   break;
+	 case MEDIA_ARG:
+	   {
+	     media_p = 1;
+	     media_value = optarg;
+	     opt_counter++;
+	     break;
+	   }
+	    
+	 case ORIENTATION_ARG:
+	   {
+	     orientation_p = 1;
+	     orientation_value = optarg;
+	     opt_counter++;
+	     break;
+	   }
+
+	 case PAGE_ARG:
+	   {
+	     page_p = 1;
+	     page_value = optarg;
+	     opt_counter++;
+	     break;
+	   }
+
+	 case USAGE_ARG:
+	   /* Show usage */
+	   fprintf(stdout,"%s\n", message_usage);
+	   exit(0);
+
+	 case SPARTAN_ARG:
+	   spartan_p = 1;
+	   opt_counter++;
+	   break;
+
+	 case VERSION_ARG:
+	   /* Show the program version */
+	   fprintf(stdout,"%s\n", versionIdentification[0]);
+	   exit(0);
+
+
+	 default:
+	   /* Error, usage and exit */
+	   fprintf(stdout, "%s\n", message_usage);
+	   exit(1);
+	   break;
+	 }
+     }
+
+   /*### getting resources ############################################*/
 
    {
      XrmDatabase db;
