@@ -16,6 +16,16 @@ by a '#' or a '*' or a '?'. A
 
 # Documentation is now distributed in texinfo format.
 
+# "Redisplay" button has been renamed to "Reload".
+
+# Some GNU standard command line arguments are supported now:
+  --help, --usage and --version.
+
+# Antialiasing is now used by default.
+
+# Solved bug #11014: gv is capable to open files with spaces (or other 
+  harm character) in the filename.
+
 %%%%%%%%%%%%%%%%%%% GV 3.5.8  (21 June 1997) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Bugfix: The command line option "-geometry" didn't work correctly
