@@ -11,8 +11,8 @@
 This is the @value{EDITION} edition of the @cite{GNU gv Manual},
 updated for gv version @value{GVVER}.
 
-Copyright (C) 1995, 1996, 1997 Johannes Plass
-Copyright (C) 2004 Jos@'e E. Marchesi
+Copyright @copyright{} 1995, 1996, 1997 Johannes Plass
+Copyright @copyright{} 2004 Jos@'e E. Marchesi
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
