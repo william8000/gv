@@ -177,6 +177,7 @@ enum
 
 static struct option const GNU_longOptions[] =
   {
+    {"grayscale", no_argument, NULL, GRAYSCALE_ARG},
     {"center", no_argument, NULL, CENTER_ARG},
     {"nocenter", no_argument, NULL, NOCENTER_ARG},
     {"scale", required_argument, NULL, SCALE_ARG},

@@ -123,6 +123,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   XrmDatabase db=NULL;
   String *sP;
   String s,t;
+  char *spartan_filename;
   char tmp[GV_MAX_FILENAME_LENGTH];
 #ifdef VMS
   int b;
@@ -151,12 +152,16 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     //  s = XtResolvePathname(display,"app-defaults",NULL,NULL,NULL,NULL,0,NULL);
     /* #endif */
 
-    String rpath = GV_XtNewString(GV_LIBDIR);
-    if (rpath) {
-      INFSMESSAGE(merging system resource file into database,rpath)
-	XrmCombineFileDatabase(rpath,&db,True);
-      resource_system_file = rpath;
-    }
+    String rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));
+  rpath[0] = '\0';
+  strcat (rpath, GV_LIBDIR);
+  strcat (rpath, "/gv_system.ad");
+  if (rpath) {
+    fprintf(stderr,"System resource file: %s\n", rpath);
+    INFSMESSAGE(merging system resource file into database,rpath)
+      XrmCombineFileDatabase(rpath,&db,True);
+    resource_system_file = rpath;
+  }
 
   /* ### user resources ################# */
   INFMESSAGE(checking for user resources)
@@ -225,7 +230,13 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     }
   if (spartan_p)
     {
-      resource_putResource (&db, app_name, ".style", "gv_spartan.dat");
+      spartan_filename = (char *) 
+	GV_XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_spartan.dat") + 1);
+      spartan_filename[0] = '\0';
+      strcat(spartan_filename, GV_LIBDIR);
+      strcat(spartan_filename, "/gv_spartan.dat");
+      resource_putResource (&db, app_name, ".style", spartan_filename);
+      GV_XtFree (spartan_filename);
     }
   if (quiet_p)
     {
@@ -357,6 +368,12 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
       } else s = t;
     }
 #   else
+    
+    /*
+     * Do not use fallback styles
+     *
+     */
+
     INFSMESSAGE(merging style resource file into database,s)
       t = resource_mergeFileIntoDatabase(&db,s);
     if (!t) {
