@@ -203,10 +203,9 @@ However, when starting gv, preferences are read from
 
 @table @strong
 @item a system specific resource file.
-The name of this file is as described by the @code{XFILESEARCHPATH}
-environment variable, or, if this variable is not defined,
-implementation dependant. In most cases it is  
-@file{/usr/X11/lib/X11/app-defaults/gv}.
+The name of this file is GV and is installed on as part of gv's
+architecture independent library. Usually the library files are
+installed on @file{/usr/local/lib/gv}.
 
 Administrators may want to modify this file in order
 to set up gv according to the local needs of their system.
@@ -235,6 +234,7 @@ inferred from the appended default system specific resource file.
 @item antialias
 Whether antialiasing should be used.
 Valid values are @code{True} and @code{False}.
+It defaults to @code{True}
 @item autoCenter
 Whether the displayed page should automatically be centered 
 (for instance when opening a new file).
