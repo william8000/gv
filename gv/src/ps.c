@@ -102,10 +102,35 @@ extern Media *gv_medias;
 #define memset(a,b,c) bzero(a,c)
 #endif
 
+/* We use this helper function for providing proper */
+/* case and colon :-) insensitive DSC matching */
+static int dsc_strncmp(s1, s2, n)
+  char *s1;
+  char *s2;
+  size_t n;
+{
+ char *tmp;	
+
+ if (strncasecmp(s1, s2, n) == 0)
+	 return 0;
+ if (s2[n-1] == ':'){
+	 tmp = (char *) PS_malloc(n*sizeof(char));
+	 strncpy(tmp, s2, (n-1));
+	 tmp[n-1]=' ';
+	 if (strncasecmp(s1, tmp, n) == 0){
+		 PS_free(tmp);
+		 return 0;
+	 }
+	 PS_free(tmp);
+ }
+ 
+ return 1;
+}
+
 /* length calculates string length at compile time */
 /* can only be used with character constants */
 #define length(a)       (sizeof((a))-1)
-#define iscomment(a, b) (strncmp((a), (b), length((b))) == 0)
+#define iscomment(a, b) (dsc_strncmp((a), (b), length((b))) == 0)
 #define DSCcomment(a)   ((a)[0] == '%' && (a)[1] == '%')
 
 /* list of standard paper sizes from Adobe's PPD. */

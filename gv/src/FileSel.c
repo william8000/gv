@@ -121,12 +121,14 @@ static String unknownList[] = {"<cannot enter directory>",NULL};
 static String cannotopenList[] = {"<cannot read directory>",NULL};
 
 static void FS_textfieldFocusAction();
+static void FS_textfieldBackSpaceAction();
 static void FS_textfieldDeleteAction();
 static void FS_listAction();
 static void FS_preferButtonAction();
 
 static XtActionsRec file_selectionActionsTable[] = {
        { "FS_textfieldFocusAction",  (XtActionProc) FS_textfieldFocusAction },
+       { "FS_textfieldBackSpaceAction", (XtActionProc) FS_textfieldBackSpaceAction },
        { "FS_textfieldDeleteAction", (XtActionProc) FS_textfieldDeleteAction },
        { "FS_preferButton",          (XtActionProc) FS_preferButtonAction },
        { "List",      (XtActionProc) FS_listAction }
@@ -180,7 +182,7 @@ Ctrl<Key>V: 	no-op()\n\
 Ctrl<Key>Z: 	no-op()\n\
 Meta<Key>V: 	no-op()\n\
 Meta<Key>Z: 	no-op()\n\
-<Key>BackSpace: FS_textfieldDeleteAction()\n\
+<Key>BackSpace: FS_textfieldBackSpaceAction()\n\
 <Key>Delete: 	FS_textfieldDeleteAction()\n\
 <Key>Right: 	forward-character()\n\
 <Key>Left: 	backward-character()\n\
@@ -1206,6 +1208,31 @@ break_scrolling:
 }
 
 /*-------------------------------------------------------------------------------
+   FS_textfieldBackSpaceAction 
+-------------------------------------------------------------------------------*/
+
+static void FS_textfieldBackSpaceAction(w, event, parms, nparms)
+   Widget	w;
+   XEvent	*event;
+   String	*parms;
+   Cardinal	*nparms;
+{
+   BEGINMESSAGE(FS_textfieldBackSpaceAction)
+
+   if (XtIsSubclass(w,asciiTextWidgetClass)) {
+      XawTextPosition begin_sel,end_sel;
+
+      XawTextGetSelectionPos(w,&begin_sel,&end_sel);
+      if (begin_sel != end_sel) 
+         XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+      else 
+         XtCallActionProc(w,"delete-previous-character",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+   }       
+
+   ENDMESSAGE(FS_textfieldBackSpaceAction)
+}
+
+/*-------------------------------------------------------------------------------
    FS_textfieldDeleteAction 
 -------------------------------------------------------------------------------*/
 
@@ -1224,7 +1251,7 @@ static void FS_textfieldDeleteAction(w, event, parms, nparms)
       if (begin_sel != end_sel) 
          XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
       else 
-         XtCallActionProc(w,"delete-previous-character",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+         XtCallActionProc(w,"delete-next-character",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
    }       
 
    ENDMESSAGE(FS_textfieldDeleteAction)

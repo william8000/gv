@@ -109,6 +109,7 @@ Ctrl<Key>Z: no-op()\n\
 Meta<Key>V: no-op()\n\
 Meta<Key>Z: no-op()\n\
 <Key>BackSpace: delete-previous-character()\n\
+<Key>Delete: delete-next-character()\n\
 <Key>Right: forward-character()\n\
 <Key>Left: backward-character()\n\
 <MapNotify>:display-caret(on,always)display-caret(off,always)\n\
@@ -168,6 +169,7 @@ Ctrl<Key>Z: no-op()\n\
 Meta<Key>V: no-op()\n\
 Meta<Key>Z: no-op()\n\
 <Key>BackSpace: delete-previous-character()\n\
+<Key>Delete: delete-next-character()\n\
 <Key>Right: forward-character()\n\
 <Key>Left: backward-character()\n\
 <MapNotify>:display-caret(on,always)display-caret(off,always)\n\
