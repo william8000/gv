@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2005-03-31 16:21:20 jemarch"
+dnl Time-stamp: "2005-03-31 22:00:24 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -158,9 +158,9 @@ AC_ARG_ENABLE(scrollbar-code, AC_HELP_STRING([--enable-scrollbar-code],[Use gv's
    yes) opt_scrollbar_code=true ;;
    no)  opt_scrollbar_code=false ;;
    *) AC_MSG_ERROR([bad value ${enableval} for --enable-scrollbar-code]) ;;
- esac], [opt_scrollbar_code=false])
+ esac], [opt_scrollbar_code=true])
  
-AM_CONDITIONAL(USE_SCROLLBAR_CODE, test x$debug = xtrue)
+AM_CONDITIONAL(USE_SCROLLBAR_CODE, test x$opt_scrollbar_code = xtrue)
 
 AC_ARG_ENABLE(memmove-code, AC_HELP_STRING([--enable-memmove-code],[Use gv's own memmove. It defaults to `yes']), opt_memmove_code=$enableval, opt_memmove_code=yes)
 

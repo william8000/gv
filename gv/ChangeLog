@@ -1,5 +1,7 @@
 2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
 
+	* configure.ac: Enable the scrollbar code. Solves bug #11091.
+
 	* src/main.c (main): use getopt_long_only in order to support old
 	command line arguments style.
 
