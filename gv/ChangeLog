@@ -1,5 +1,9 @@
 2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
 
+	* configure.ac: The signal handler is now enabled by default,
+	following the commentary on configure.ac
+	Typo: enable-signal-handle -> enable-signal-handler
+
 	* src/ps.c: Strip off the external reference to 'pdf_delaysafer_hack'
 	Revert the delaysafer hack
 

@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-12-19 19:12:32 jemarch"
+dnl Time-stamp: "2005-03-31 16:21:20 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -128,9 +128,9 @@ test "$opt_ps_level_one" = "yes" && {
 }
 
 dnl TESTED
-AC_ARG_ENABLE(signal-handle, AC_HELP_STRING([--enable-signal-handle],[Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP snd SIGINT signals. It requires X11R6. Defaults to `yes']), opt_signal_handle=$enableval, opt_signal_handle=no)
+AC_ARG_ENABLE(signal-handler, AC_HELP_STRING([--enable-signal-handler],[Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP snd SIGINT signals. It requires X11R6. Defaults to `yes']), opt_signal_handler=$enableval, opt_signal_handler=yes)
 
-test "x$opt_signal_handle" = "xyes" && {
+test "x$opt_signal_handler" = "xyes" && {
 
      AC_DEFINE(USE_SIGNAL_HANDLER,[],[Define USE_SIGNAL_HANDLER])
 
