@@ -28,6 +28,10 @@
 **           Jose E. Marchesi (jemarch@gnu.org)
 **           GNU Project
 **
+** Changes submitted by Maurizio Loreti distributed on the public
+** domain:
+**
+**       - Code for handle bzip2 compressed files.
 */
 
 /*
@@ -76,7 +80,7 @@ static Widget   popup=NULL,optionControl;
 static Widget   eyeGuideToggle,reverseScrollingToggle,confirmPrintToggle,autoCenterToggle;
 static Widget   pixmapToggle,miscLabel;
 static Widget   confirmLabel,confirmButton,confirmMenu,showTitleToggle;
-static Widget   print_command,scales,uncompress,screenSize,medias,magmenu,miscmenu;
+static Widget   print_command,scales,screenSize,medias,magmenu,miscmenu;
 
 static String confirm_quit_styles[4] = { "Never","When processing","Always", NULL };
 
@@ -120,8 +124,6 @@ static void options_setup_setOptionsAtEntry()
 
   SMESSAGE(gv_print_command)
     widgets_setText(print_command, gv_print_command);
-  SMESSAGE(gv_uncompress_command)
-    widgets_setText(uncompress,gv_uncompress_command);
   SMESSAGE(gv_scales_res)
     s = options_squeezeMultiline(gv_scales_res);
     widgets_setText(scales,s);
@@ -182,7 +184,6 @@ static void options_setup_cb_apply(w, client_data, call_data)
      cb_showTitle(NULL,(XtPointer)1,NULL);
    }
 
-   options_textApply(uncompress,NULL,&gv_uncompress_command);
    options_textApply(print_command,NULL,&gv_print_command);
    options_textApply(magmenu,NULL,&gv_magmenu_entries_res);
    magmenu_freeMagMenuEntries(gv_magmenu_entries);
@@ -315,8 +316,6 @@ void options_setup_cb_save(w, client_data, call_data)
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_printCommand        ,gv_class,widgets_getText(print_command));
        ++argn;
-  options_setArg(&(argi[argn]),&(argv[argn]),s_uncompressCommand   ,gv_class,widgets_getText(uncompress));
-       ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_confirmPrint        ,gv_class       ,SwitchIsSet(confirmPrintToggle) ? t : f);
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_reverseScrolling    ,gv_class       ,SwitchIsSet(reverseScrollingToggle) ? t : f);
@@ -409,7 +408,6 @@ void options_setup_create()
    miscmenu         = widgets_createLabeledTextField("miscmenu", optionControl);
    magmenu          = widgets_createLabeledTextField("magmenu", optionControl);
    medias           = widgets_createLabeledTextField("medias", optionControl);
-   uncompress       = widgets_createLabeledLineTextField("uncompress",   optionControl);
    print_command    = widgets_createLabeledLineTextField("printCommand", optionControl);
    scales           = widgets_createLabeledTextField("scales", optionControl);
    screenSize       = widgets_createLabeledLineTextField("screenSize", optionControl);

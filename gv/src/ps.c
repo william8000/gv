@@ -23,7 +23,12 @@
  *     UUCP: uwvax!tim             University of Wisconsin-Madison
  *    Phone: (608)262-0438         1210 West Dayton Street
  *      FAX: (608)262-9777         Madison, WI   53706
-*/
+ *
+ * Changes submitted by Maurizio Loreti distributed on the public
+ * domain:
+ *
+ *       - Code for handle bzip2 compressed files.
+ */
 
 /*
  * Added the ps_io_*() routines, rewrote readline(), modified
@@ -404,13 +409,15 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     int ignore_dsc;             /* Derived from scanstyle.
 				   If set the document structure will be ignored.
 				*/
+    unsigned char b[3];         /* The first 3 bytes of the input file */
 
     BEGINMESSAGE(psscan)
 
     if (cmd_uncompress) {
-      char b[2];
-      if (!(fread(b, sizeof(char),2, *fileP) == 2)
-	  || b[0] != '\037' || (b[1] != '\235' && b[1] != '\213')) {
+      if ( fread(b, sizeof(char), 3, *fileP) != 3  ||   /* If ((read error) OR */
+           ( memcmp(b, "\037\235", 2) != 0  &&          /*   (not compress AND */
+             memcmp(b, "\037\213", 2) != 0  &&          /*    not gzip     AND */
+             memcmp(b, "BZh",      3) != 0 ) ) {        /*    not bzip2)) {    */
         rewind(*fileP);
 	cmd_uncompress=NULL;
       }
@@ -422,7 +429,11 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       char cmd[512];
       char s[512];
       filename_unc=file_getTmpFilename(NULL,filename_raw);
-      sprintf(cmd,cmd_uncompress,filename,filename_unc);
+      if (memcmp(b, "BZh", 3) == 0) {
+        sprintf(cmd, "bzip2 -dc %s >%s", filename, filename_unc);
+      } else {
+        sprintf(cmd, "gzip -dc %s >%s", filename, filename_unc);
+      }
       INFMESSAGE(is compressed)
       INFSMESSAGE(uncompress command,cmd)
       if (ps_system(cmd) || file_fileIsNotUseful(filename_unc)) {

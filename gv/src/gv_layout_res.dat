@@ -281,16 +281,12 @@ GV*optionsetupPopup*layout:\
           screenSizeLabel<+[1]*>\
           $bs\
           printCommandLabel<+[1]*>\
-          $bs\
-          uncompressLabel<+[1]*>\
         }\
         $s\
         |v{\
           screenSizeFrame<+[2]-100%*>\
           $s\
           printCommandFrame<+[2]-100%*>\
-          $s\
-          uncompressFrame<+[2]-100%*>\
         }\
       }\
     }\

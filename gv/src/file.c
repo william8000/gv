@@ -28,6 +28,11 @@
 **           Jose E. Marchesi (jemarch@gnu.org)
 **           GNU Project
 **
+** Changes submitted by Maurizio Loreti distributed on the public
+** domain:
+**
+**       - Code for handle bzip2 compressed files.
+**
 */
 
 /*
@@ -359,6 +364,7 @@ file_getUsefulName(name)
   mext = ext = GV_XtNewString(e);
   while (*ext) { *ext = tolower(*ext); ext++; }
   if      (!strncmp(mext,".gz",3))  ext = "";
+  else if (!strncmp(mext,".bz2",4)) ext = "";
   else if (!strncmp(mext,".z",2))   ext = "";
   else if (!strncmp(mext,".ps",3))  ext = ".ps";
   else if (!strncmp(mext,".pdf",4)) ext = ".pdf";
