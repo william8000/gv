@@ -12,6 +12,8 @@ appdefaultsdir = $(pkglibdir)
 
 appdefaults_DATA = GV
 
+EXTRA_DIST=ad2c
+
 # Clean files
 CLEANFILES = $(srcdir)/GV \
              $(srcdir)/GV.ad \
