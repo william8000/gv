@@ -84,7 +84,7 @@ GV : $(srcdir)/GV.ad
 	@cp $(srcdir)/GV.ad $(srcdir)/GV
 
 $(srcdir)/GV.ad : $(srcdir)/gv_system.ad
-	@echo "creating GV.ad"y
+	@echo "creating GV.ad"
 	@cp $(srcdir)/gv_system.ad $(srcdir)/GV.ad
 
 $(srcdir)/gv_system.ad : $(srcdir)/gv_user.ad
