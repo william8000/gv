@@ -296,7 +296,11 @@ file_fileIsNotUseful(fn)
     errno = EISDIR;
   } else if (s.st_size == 0) {
     r = 1;
+#ifdef EFTYPE
+    errno = EFTYPE;
+#else
     errno = ENODATA;
+#endif
   }
   IMESSAGE(r)
   ENDMESSAGE(file_fileIsNotUseful)

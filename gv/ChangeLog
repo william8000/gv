@@ -1,3 +1,8 @@
+2004-12-29  Gerald Pfeifer  <gerald@pfeifer.com>
+
+	* src/file.c (file_fileIsNotUseful): Use EFTYPE instead of ENODATA
+	if the former has been defined.
+
 2004-12-19  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* NEWS (Notation): Upgraded for 3.6.1
