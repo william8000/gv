@@ -137,15 +137,80 @@
 
 enum
   {
+    CENTER_ARG,
+    NOCENTER_ARG,
+    SCALE_ARG,
+    MAGSTEP_ARG,
+    SCALEBASE_ARG,
+    RESIZE_ARG,
+    NORESIZE_ARG,
+    SWAP_ARG,
+    NOSWAP_ARG,
+    DSC_ARG,
+    NODSC_ARG,
+    EOF_ARG,
+    NOEOF_ARG,
+    WATCH_ARG,
+    NOWATCH_ARG,
+    AD_ARG,
+    STYLE_ARG,
+    ARGUMENTS_ARG,
+    ANTIALIAS_ARG,
+    NOANTIALIAS_ARG,
+    SAFER_ARG,
+    NOSAFER_ARG,
+    PIXMAP_ARG,
+    NOPIXMAP_ARG,
+    COLOR_ARG,
+    GRAYSCALE_ARG,
     HELP_ARG,
-    VERSION_ARG,
-    USAGE_ARG
+    QUIET_ARG,
+    MONOCHROME_ARG,
+    NOQUIET_ARG,
+    MEDIA_ARG,
+    ORIENTATION_ARG,
+    PAGE_ARG,
+    SPARTAN_ARG,
+    USAGE_ARG,
+    VERSION_ARG
   };
 
 static struct option const GNU_longOptions[] =
   {
+    {"center", no_argument, NULL, CENTER_ARG},
+    {"nocenter", no_argument, NULL, NOCENTER_ARG},
+    {"scale", required_argument, NULL, SCALE_ARG},
+    {"magstep", required_argument, NULL, MAGSTEP_ARG},
+    {"scalebase", required_argument, NULL, SCALEBASE_ARG},
+    {"resize", no_argument, NULL, RESIZE_ARG},
+    {"noresize", no_argument, NULL, NORESIZE_ARG},
+    {"swap", no_argument, NULL, SWAP_ARG},
+    {"noswap", no_argument, NULL, NOSWAP_ARG},
+    {"dsc", no_argument, NULL, DSC_ARG},
+    {"nodsc", no_argument, NULL, NODSC_ARG},
+    {"eof", no_argument, NULL, EOF_ARG},
+    {"noeof", no_argument, NULL, NOEOF_ARG},
+    {"watch", no_argument, NULL, WATCH_ARG},
+    {"nowatch", no_argument, NULL, NOWATCH_ARG},
+    {"ad", required_argument, NULL, AD_ARG},
+    {"style", required_argument, NULL, STYLE_ARG},
+    {"arguments", required_argument, NULL, ARGUMENTS_ARG},
+    {"antialias", no_argument, NULL, ANTIALIAS_ARG},
+    {"noantialias", no_argument, NULL, NOANTIALIAS_ARG},
+    {"safer", no_argument, NULL, SAFER_ARG},
+    {"nosafer", no_argument, NULL, NOSAFER_ARG},
+    {"pixmap", no_argument, NULL, PIXMAP_ARG},
+    {"nopixmap", no_argument, NULL, NOPIXMAP_ARG},
+    {"color", no_argument, NULL, COLOR_ARG},
     {"help", no_argument, NULL, HELP_ARG},
+    {"quiet", no_argument, NULL, QUIET_ARG},
+    {"monochrome", no_argument, NULL, MONOCHROME_ARG},
+    {"noquiet", no_argument, NULL, NOQUIET_ARG},
+    {"media", required_argument, NULL, MEDIA_ARG},
+    {"orientation", required_argument, NULL, ORIENTATION_ARG},
+    {"page", required_argument, NULL, PAGE_ARG},
     {"usage", no_argument, NULL, USAGE_ARG},
+    {"spartan", no_argument, NULL, SPARTAN_ARG},
     {"version", no_argument, NULL, VERSION_ARG},
     {NULL, 0, NULL, 0}
   };
@@ -260,7 +325,7 @@ int main(argc, argv)
 /*###  initializing global variables ####################################*/
 
     INFMESSAGE(initializing global variables)
-      pdf_delaysafer_hack = 0;
+    pdf_delaysafer_hack = 0;
     gv_scroll_mode = SCROLL_MODE_NONE;
     gv_class = GV_CLASS;
     gv_pending_page_request=NO_CURRENT_PAGE;
@@ -283,28 +348,219 @@ int main(argc, argv)
     gv_print_kills_file = 0;
 #endif
 
+    antialias_p = 0;
+    noantialias_p = 0;
+    safer_p = 0;
+    nosafer_p = 0;
+    pixmap_p = 0;
+    nopixmap_p = 0;
+    color_p = 0;
+    grayscale_p = 0;
+    quiet_p = 0;
+    monochrome_p = 0;
+    noquiet_p = 0;
+    media_p = 0;
+    orientation_p = 0;
+    page_p = 0;
+    spartan_p = 0;
+    center_p = 0;
+    nocenter_p = 0;
+    scale_p = 0;
+    magstep_p = 0;
+    scalebase_p = 0;
+    resize_p = 0;
+    noresize_p = 0;
+    swap_p = 0;
+    noswap_p = 0;
+    dsc_p = 0;
+    nodsc_p = 0;
+    eof_p = 0;
+    noeof_p = 0;
+    watch_p = 0;
+    nowatch_p = 0;
+    ad_p = 0;
+    style_p = 0;
+    arguments_p = 0;
+
     /*### Manage GNU command line arguments ########################*/
+    int opt_counter = 0;
     int c;
     while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
 	   != -1)
       {
+
 	switch (c)
 	  {
+	  case CENTER_ARG:
+	    center_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOCENTER_ARG:
+	    nocenter_p = 1;
+	    opt_counter++;
+	    break;
+	  case SCALE_ARG:
+	    scale_p = 1;
+	    scale_value = optarg;
+	    opt_counter++;
+	    break;
+	  case MAGSTEP_ARG:
+	    magstep_p = 1;
+	    magstep_value = optarg;
+	    opt_counter++;
+	    break;
+	  case SCALEBASE_ARG:
+	    scalebase_p = 1;
+	    scalebase_value = optarg;
+	    opt_counter++;
+	    break;
+	  case RESIZE_ARG:
+	    resize_p = 1;
+	    opt_counter++;
+	    break;
+	  case NORESIZE_ARG:
+	    noresize_p = 1;
+	    opt_counter++;
+	    break;
+	  case SWAP_ARG:
+	    swap_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOSWAP_ARG:
+	    noswap_p = 1;
+	    opt_counter++;
+	    break;
+	  case DSC_ARG:
+	    dsc_p = 1;
+	    opt_counter++;
+	    break;
+	  case NODSC_ARG:
+	    nodsc_p = 1;
+	    opt_counter++;
+	    break;
+	  case EOF_ARG:
+	    eof_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOEOF_ARG:
+	    noeof_p = 1;
+	    opt_counter++;
+	    break;
+	  case WATCH_ARG:
+	    watch_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOWATCH_ARG:
+	    nowatch_p = 1;
+	    opt_counter++;
+	    break;
+	  case AD_ARG:
+	    ad_p = 1;
+	    ad_value = optarg;
+	    opt_counter++;
+	    break;
+	  case STYLE_ARG:
+	    style_p = 1;
+	    style_value = optarg;
+	    opt_counter++;
+	    break;
+	  case ARGUMENTS_ARG:
+	    arguments_p = 1;
+	    arguments_value = optarg;
+	    opt_counter++;
+	    break;
+	  case PIXMAP_ARG:
+	    pixmap_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOPIXMAP_ARG:
+	    nopixmap_p = 1;
+	    opt_counter++;
+	    break;
+	  case SAFER_ARG:
+	    safer_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOSAFER_ARG:
+	    nosafer_p = 1;
+	    opt_counter++;
+	    break;
+	  case ANTIALIAS_ARG:
+	    antialias_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOANTIALIAS_ARG:
+	    noantialias_p = 1;
+	    opt_counter++;
+	    break;
+	  case COLOR_ARG:
+	    color_p = 1;
+	    opt_counter++;
+	    break;
+	  case GRAYSCALE_ARG:
+	    grayscale_p = 1;
+	    opt_counter++;
+	    break;
 	  case HELP_ARG:
 	    /* Show some help and return */
-	    fprintf(stdout,"%s\n", message_help);
+	    fprintf(stdout,"%s\n", message_usage);
 	    exit(0);
-	  case VERSION_ARG:
-	    /* Show the program version */
-	    fprintf(stdout,"%s\n", versionIdentification[0]);
-	    exit(0);
+	  case QUIET_ARG:
+	    quiet_p = 1;
+	    opt_counter++;
+	    break;
+	  case MONOCHROME_ARG:
+	    monochrome_p = 1;
+	    opt_counter++;
+	    break;
+	  case NOQUIET_ARG:
+	    noquiet_p = 1;
+	    opt_counter++;
+	    break;
+	  case MEDIA_ARG:
+	    {
+	      media_p = 1;
+	      media_value = optarg;
+	      opt_counter++;
+	      break;
+	    }
+	    
+	  case ORIENTATION_ARG:
+	    {
+	      orientation_p = 1;
+	      orientation_value = optarg;
+	      opt_counter++;
+	      break;
+	    }
+
+	  case PAGE_ARG:
+	    {
+	      page_p = 1;
+	      page_value = optarg;
+	      opt_counter++;
+	      break;
+	    }
 
 	  case USAGE_ARG:
 	    /* Show usage */
 	    fprintf(stdout,"%s\n", message_usage);
 	    exit(0);
+
+	  case SPARTAN_ARG:
+	    spartan_p = 1;
+	    opt_counter++;
+	    break;
+
+	  case VERSION_ARG:
+	    /* Show the program version */
+	    fprintf(stdout,"%s\n", versionIdentification[0]);
+	    exit(0);
+
+
 	  default:
-	    continue;
+	    /* Error, usage and exit */
+	    fprintf(stdout, "%s\n", message_usage);
+	    exit(1);
 	    break;
 	  }
       }
@@ -353,23 +609,6 @@ int main(argc, argv)
      db = resource_buildDatabase(gv_display,gv_class,gv_name,&argc,argv);
      XrmCombineDatabase(db,&gv_database,True);
    }
-
-/*### show some help ?  ############################################*/
-    {
-      String s;
-      s=resource_getResource(gv_database,gv_class,gv_name,"help",NULL);
-      if (s) {
-	if      (!strcasecmp(s,"?"))    s=message_usage;
-	else if (!strcasecmp(s,"help")) s=message_help;
-	else if (!strcasecmp(s,"version")) s=versionIdentification[0];
-	else s = NULL;
-      }
-      if (s) {
-	fprintf(stdout,"%s\n",s);
-	XtDestroyApplicationContext(app_con);
-	exit(EXIT_STATUS_ERROR);
-      }
-    }
 
 /*### initializing widget set and creating application shell #########################*/
 
@@ -824,9 +1063,14 @@ int main(argc, argv)
    }
 /*### checking gv_filename and opening psfile #############################*/
 
-    INFMESSAGE(checking gv_filename and opening psfile)
-    if (argc > 1) gv_filename=GV_XtNewString(argv[1]);
-    if (gv_filename && strcmp(gv_filename, "-")) {
+   INFMESSAGE(checking gv_filename and opening psfile)
+
+   if (argc == (opt_counter + 2)) 
+     {
+       gv_filename=GV_XtNewString(argv[opt_counter + 1]);
+     }
+
+   if (gv_filename && strcmp(gv_filename, "-")) {
       if (misc_changeFile(gv_filename)) {
 	open_fail_error(errno,GV_ERROR_OPEN_FAIL,gv_filename,1);
 	exit(EXIT_STATUS_ERROR);
@@ -834,7 +1078,7 @@ int main(argc, argv)
         GV_XtFree(gv_filename_old);
         gv_filename_old = NULL;
       }
-    }
+   }
 
 /*### remaining initialization #####################################################*/
 

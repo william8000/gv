@@ -266,5 +266,53 @@ EXTERN Widget	versionpopup;
 EXTERN Widget	FileSel_popup;
 EXTERN Widget		FileSel;
 
+/*
+ * Command line flags
+ *
+ */
+
+EXTERN int antialias_p;
+EXTERN int noantialias_p;
+EXTERN int safer_p;
+EXTERN int nosafer_p;
+EXTERN int color_p;
+EXTERN int grayscale_p;
+EXTERN int spartan_p;
+EXTERN int quiet_p;
+EXTERN int monochrome_p;
+EXTERN int media_p;
+EXTERN char *media_value;
+EXTERN int orientation_p;
+EXTERN char *orientation_value;
+EXTERN int page_p;
+EXTERN char *page_value;
+EXTERN int noquiet_p;
+EXTERN int pixmap_p;
+EXTERN int nopixmap_p;
+EXTERN int center_p;
+EXTERN int nocenter_p;
+EXTERN int scale_p;
+EXTERN char *scale_value;
+EXTERN int magstep_p;
+EXTERN char *magstep_value;
+EXTERN int scalebase_p;
+EXTERN char *scalebase_value;
+EXTERN int resize_p;
+EXTERN int noresize_p;
+EXTERN int swap_p;
+EXTERN int noswap_p;
+EXTERN int dsc_p;
+EXTERN int nodsc_p;
+EXTERN int eof_p;
+EXTERN int noeof_p;
+EXTERN int watch_p;
+EXTERN int nowatch_p;
+EXTERN int ad_p;
+EXTERN char *ad_value;
+EXTERN int style_p;
+EXTERN char *style_value;
+EXTERN int arguments_p;
+EXTERN char *arguments_value;
+
 #undef EXTERN
 #endif /* _GV_MAIN_GLOBALS_H_ */

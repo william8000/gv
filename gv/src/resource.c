@@ -51,6 +51,7 @@
 #include "d_memdebug.h"
 #include "file.h"
 #include "main_resources.h"
+#include "main_globals.h"
 #include "resource.h"
 
 # ifndef USER_DEFAULTS
@@ -182,6 +183,148 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   }
 
   /* ### command line resources ################# */
+
+  /*
+   * When managing --[no]feature options, please put the
+   * --nofeature management _after_ the --feature one.
+   *
+   * -jemarch
+   */
+
+  if (antialias_p)
+    {
+      resource_putResource (&db, app_name, ".antialias", "True");
+    }
+  if (noantialias_p)
+    {
+      resource_putResource (&db, app_name, ".antialias", "False");
+    }
+  if (safer_p)
+    {
+      resource_putResource (&db, app_name, ".safer", "True");
+    }
+  if (nosafer_p)
+    {
+      resource_putResource (&db, app_name, ".safer", "False");
+    }
+  if (pixmap_p)
+    {
+      resource_putResource (&db, app_name, ".useBackingPixmap", "True");
+    }
+  if (nopixmap_p)
+    {
+      resource_putResource (&db, app_name, ".useBackingPixmap", "False");
+    }
+  if (color_p)
+    {
+      resource_putResource (&db, app_name, "*Ghostview.palette", "Color");
+    }
+  if (grayscale_p)
+    {
+      resource_putResource (&db, app_name, "*Ghostview.palette", "Grayscale");
+    }
+  if (spartan_p)
+    {
+      resource_putResource (&db, app_name, ".style", "gv_spartan.dat");
+    }
+  if (quiet_p)
+    {
+      resource_putResource (&db, app_name, ".quiet", "True");
+    }
+  if (monochrome_p)
+    {
+      resource_putResource (&db, app_name, "*Ghostview.palette", "Monochrome");
+    }
+  if (noquiet_p)
+    {
+      resource_putResource (&db, app_name, ".quiet", "False");
+    }
+   if (media_p) 
+     { 
+       resource_putResource (&db, app_name, ".pageMedia", media_value); 
+     } 
+   if (orientation_p)
+     {
+       resource_putResource (&db, app_name, ".orientation", orientation_value);
+     }
+   if (page_p)
+     {
+       resource_putResource (&db, app_name, ".page", page_value);
+     }
+
+   if (center_p)
+     {
+       resource_putResource (&db, app_name, ".autoCenter", "True");
+     }
+   if (nocenter_p)
+     {
+       resource_putResource (&db, app_name, ".autoCenter", "False");
+     }
+   if (scale_p)
+     {
+       resource_putResource (&db, app_name, ".scale", scale_value);
+     }
+   if (magstep_p)
+     {
+       resource_putResource (&db, app_name, ".scale", magstep_value);
+     }
+   if (scalebase_p)
+     {
+       resource_putResource (&db, app_name, ".scaleBase", scalebase_value);
+     }
+   if (resize_p)
+     {
+       resource_putResource (&db, app_name, ".autoResize", "True");
+     }
+   if (noresize_p)
+     {
+       resource_putResource (&db, app_name, ".autoResize", "False");
+     }
+   if (swap_p)
+     {
+       resource_putResource (&db, app_name, ".swapLandscape", "True");
+     }
+   if (noswap_p)
+     {
+       resource_putResource (&db, app_name, ".swapLandscape", "False");
+     }
+   if (dsc_p)
+     {
+       resource_putResource (&db, app_name, ".respectDSC", "True");
+     }
+   if (nodsc_p)
+     {
+       resource_putResource (&db, app_name, ".respectDSC", "False");
+     }
+   if (eof_p)
+     {
+       resource_putResource (&db, app_name, ".ignoreEOF", "True");
+     }
+   if (noeof_p)
+     {
+       resource_putResource (&db, app_name, ".ignoreEOF", "False");
+     }
+   if (watch_p)
+     {
+       resource_putResource (&db, app_name, ".watchFile", "True");
+     }
+   if (nowatch_p)
+     {
+       resource_putResource (&db, app_name, ".watchFile", "False");
+     }
+   if (ad_p)
+     {
+       resource_putResource (&db, app_name, ".ad", ad_value);
+     }
+   if (style_p)
+     {
+       resource_putResource (&db, app_name, ".style", style_value);
+     }
+   if (arguments_p)
+     {
+       resource_putResource (&db, app_name, ".arguments", arguments_value);
+     }
+  
   INFMESSAGE(parsing command line)
     XrmParseCommand(&db,options,XtNumber(options),app_name,argcP,argv);
 
@@ -247,6 +390,25 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
 
   ENDMESSAGE(resource_buildDatabase)
     return(db);
+}
+
+/*#######################################################
+  resource_putResource
+  #######################################################*/
+
+void 
+resource_putResource (XrmDatabase *db,
+		      char *app_name,
+		      char *resource_class,
+		      char *resource_value)
+{
+  char resource_name[GV_MAX_FILENAME_LENGTH];
+
+  sprintf(resource_name, "%s%s", app_name, resource_class);
+  XrmPutStringResource (db,
+			resource_name,
+			resource_value);
+
 }
 
 /*#######################################################

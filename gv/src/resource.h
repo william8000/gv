@@ -48,6 +48,11 @@ extern XrmDatabase   resource_buildDatabase (
 #endif
 );
 
+extern void resource_putResource (XrmDatabase *,
+				  char *,
+				  char *,
+				  char *);
+
 extern char *        resource_getResource (
 #if NeedFunctionPrototypes
    XrmDatabase,
