@@ -1559,7 +1559,7 @@ static void SetDirectoryView(w,dir)
          }
 #     else /*end of VMS */
          if (strcmp(str,".")) {
-            if (!stat(str,&sbuf) && S_ISDIR(sbuf.st_mode)) {
+            if (!stat(str,&sbuf) && S_ISDIR(sbuf.st_mode) && (strncmp(str, ".", 1) || !strcmp(str, ".."))) {
                REALLOC_MORE_IF_NEEDED(SUBDIR_LIST,SUBDIR_ENTRIES+1,SUBDIR_ALLOC);
                SUBDIR_ENTRY(SUBDIR_ENTRIES) = FS_XtNewString(str);
                SMESSAGE(SUBDIR_ENTRY(SUBDIR_ENTRIES))

@@ -192,6 +192,7 @@ static void ClassInitialize();
 static void ClassPartInitialize();
 static void Initialize();
 static void Realize();
+static void Redisplay();
 static void Destroy();
 static void Resize();
 static Boolean SetValues();
@@ -239,7 +240,7 @@ GhostviewClassRec ghostviewClassRec = {
     /* visible_interest		*/	FALSE,
     /* destroy			*/	Destroy,
     /* resize			*/	Resize,
-    /* expose			*/	NULL,
+    /* expose			*/	Redisplay,
     /* set_values		*/	SetValues,
     /* set_values_hook		*/	NULL,
     /* set_values_almost	*/	XtInheritSetValuesAlmost,
@@ -261,7 +262,67 @@ GhostviewClassRec ghostviewClassRec = {
   }
 };
 
+
 WidgetClass ghostviewWidgetClass = (WidgetClass)&ghostviewClassRec;
+
+
+/*###################################################################################*/
+/* 
+ * Double pixmap routines
+ */
+/*###################################################################################*/
+
+static Pixmap pix = 0;
+
+static void Copy_pixmap(w)
+    Widget w;
+{
+   GhostviewWidget gvw = (GhostviewWidget) w;
+   GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
+
+  if(!gvw->ghostview.use_bpixmap){
+    if(pix) {
+      Display *dpy = XtDisplay(w);
+      int scr = DefaultScreen(dpy);
+      GC gc = DefaultGC(dpy, scr);
+      Window win = XtWindow(w);
+      int x, gwidth, gheight;
+      Window r;
+    
+      XGetGeometry(dpy,win, &r,&x,&x,&gwidth, &gheight,&x,&x);
+      XCopyArea(dpy, pix, win, gc, 0,0, gwidth, gheight, 0,0);
+    }
+  }      
+
+}
+static void Realize_pixmap(w)
+    Widget w;
+{
+    if(!pix) {
+        Display *dpy = XtDisplay(w);
+        int scr = DefaultScreen(dpy);
+        GC gc = DefaultGC(dpy, scr);
+        Window win = XtWindow(w);
+        int x, gwidth, gheight;
+        Window r;
+
+        XGetGeometry(dpy,win, &r,&x,&x,&gwidth, &gheight,&x,&x);
+/*        printf("Realize_pixmap %d %d\n", gwidth, gheight);         */
+        pix =  XCreatePixmap(dpy, win, gwidth, gheight, DefaultDepth(dpy,scr));
+    } 
+}
+
+static void 
+Redisplay(w, event, region)
+Widget w;
+XEvent *event;
+Region region;
+{
+
+  BEGINMESSAGE(Redisplay)
+  Copy_pixmap(w);
+  ENDMESSAGE(Redisplay)
+}
 
 /*###################################################################################*/
 /* Message action routine.
@@ -295,6 +356,16 @@ Message(w, event, params, num_params)
       StopInterpreter(w);  
       XtCallCallbackList(w, gvw->ghostview.message_callback, "Done");
    }
+    
+    if(!gvw->ghostview.use_bpixmap){
+      if(!pix) {
+        StopInterpreter(w);
+        Realize_pixmap(w);
+        show_page(REQUEST_REDISPLAY,NULL);
+      } else {
+        Copy_pixmap(w);
+      }
+    }      
    ENDMESSAGE(Message)
 }
 
@@ -739,6 +810,7 @@ Realize(w, valueMask, attributes)
     }
 
     XtCreateWindow(w,(unsigned int)InputOutput,(Visual *)CopyFromParent,*valueMask,attributes);
+/*    Realize_pixmap(w);  */
     IMESSAGE(gvw->core.width) IMESSAGE(gvw->core.height) 
 
     ENDMESSAGE(Realize)
@@ -1032,6 +1104,9 @@ Layout(w, xfree, yfree)
  * returns True if new window size is different */
 /*###################################################################################*/
 
+
+static Boolean SetProperty(Widget w, Pixmap bpixmap);
+
 static Boolean
 ComputeSize(w, xfree, yfree, width, height)
   Widget w;
@@ -1146,9 +1221,7 @@ Setup(w)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
    GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
-   char buf[GV_BUFSIZ];
    Pixmap bpixmap;
-   float xdpi,ydpi;
 
    BEGINMESSAGE(Setup)
 
@@ -1215,6 +1288,20 @@ Setup(w)
       XChangeWindowAttributes(XtDisplay(w), XtWindow(w), CWBackingStore, &xswa);
    }
 
+   return SetProperty(w,bpixmap);
+}
+
+
+ 
+static Boolean
+SetProperty(w, bpixmap)
+   Widget w; Pixmap bpixmap;
+{
+   GhostviewWidget gvw = (GhostviewWidget) w;
+   GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
+   char buf[GV_BUFSIZ];
+   float xdpi,ydpi;
+
    gvw->ghostview.gs_width = gvw->core.width;
    gvw->ghostview.gs_height = gvw->core.height;
 
@@ -1268,7 +1355,7 @@ Setup(w)
    XSync(XtDisplay(w), False);
 
    gvw->ghostview.background_cleared = 0;
-   SetBackground(w,True);
+   if(!pix || w != page) SetBackground(w,True);
 
    ENDMESSAGE(Setup)
    return True;
@@ -1307,10 +1394,19 @@ StartInterpreter(w)
 
     BEGINMESSAGE(StartInterpreter)
 
+  if(w == page && !gvw->ghostview.use_bpixmap) {
+/*    printf("StartInterpreter on page\n"); */
+    SetProperty(w,None);
+    if (!pix) SetBackground(w,True); 
+  }
+    else {
+/*    printf("StartInterpreter old\n"); */
+    SetBackground(w,True);
+  }
+
     StopInterpreter(w);
 
     /* Clear the window before starting a new interpreter. */
-    SetBackground(w,True);
     if (gvw->ghostview.disable_start) return;
 
     argv[argc++] = gvw->ghostview.interpreter;
@@ -1410,7 +1506,11 @@ StartInterpreter(w)
 	close(std_out[1]);
 	dup2(std_err[1], 2);
 	close(std_err[1]);
-	sprintf(buf, "%ld", XtWindow(w));
+         if(pix && w == page){
+           sprintf(buf, "%ld %ld", XtWindow(w), pix );
+         } else {
+           sprintf(buf, "%ld", XtWindow(w));
+         }
 	setenv("GHOSTVIEW", buf, True);
 	setenv("DISPLAY", XDisplayString(XtDisplay(w)), True);
 	if (gvw->ghostview.filename == NULL) {
@@ -1470,6 +1570,8 @@ StartInterpreter(w)
 
 /* Stop the interperter, if present, and remove any Input sources. */
 /* Also reset the busy state. */
+int restarted = 0;
+
 static void
 StopInterpreter(w)
     Widget w;
@@ -1790,7 +1892,7 @@ GhostviewClearBackground(w)
     Widget w;
 {
     BEGINMESSAGE(GhostviewClearBackground)
-    if (XtIsRealized(w)) SetBackground(w,True);
+      if (XtIsRealized(w)) { if(!pix || w != page) SetBackground(w,True); }
     ENDMESSAGE(GhostviewClearBackground)
 }
 
