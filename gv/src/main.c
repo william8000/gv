@@ -322,6 +322,8 @@ int main(argc, argv)
     Dimension    maximum_width,maximum_height;
     unsigned int gwidth=0,gheight=0;
     int          dim_forced;
+    int          opt_counter=0;
+    int          c;
 
 /*###  initializing global variables ####################################*/
 
@@ -420,8 +422,6 @@ int main(argc, argv)
    }
 
    /*### Manage GNU command line arguments ########################*/
-   int opt_counter = 0;
-   int c;
    while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
 	  != -1)
      {

@@ -122,7 +122,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
 {
   XrmDatabase db=NULL;
   String *sP;
-  String s,t;
+  String s,t, rpath;
   char *spartan_filename;
   char tmp[GV_MAX_FILENAME_LENGTH];
 #ifdef VMS
@@ -152,7 +152,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     //  s = XtResolvePathname(display,"app-defaults",NULL,NULL,NULL,NULL,0,NULL);
     /* #endif */
 
-    String rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));
+  rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));
   rpath[0] = '\0';
   strcat (rpath, GV_LIBDIR);
   strcat (rpath, "/gv_system.ad");
