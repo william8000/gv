@@ -45,6 +45,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <errno.h>
 
 #ifdef VMS
 #   include <stat.h>
@@ -288,7 +289,15 @@ file_fileIsNotUseful(fn)
   struct stat s;
   int r=0;
   BEGINMESSAGE(file_fileIsNotUseful)
-  if (!fn || stat(fn,&s)  || (S_ISDIR(s.st_mode)) || s.st_size==0) r=1;
+  if (!fn || stat(fn, &s))
+    r = 1;
+  else if (S_ISDIR(s.st_mode)) {
+    r = 1;
+    errno = EISDIR;
+  } else if (s.st_size == 0) {
+    r = 1;
+    errno = ENODATA;
+  }
   IMESSAGE(r)
   ENDMESSAGE(file_fileIsNotUseful)
   return(r);
