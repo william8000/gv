@@ -32,6 +32,7 @@
 */
 #include "message.h"
 
+#include <ac_config.h>
 #include "config.h"
 
 #include <stdlib.h>

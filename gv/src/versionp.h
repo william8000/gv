@@ -35,8 +35,8 @@
 #define  VERSION_APPLIC_CONTEXT	app_con  			/* the Application Context */
 
 char *versionIdentification[] = {
-        "gv 3.5.8",
-        "June 1997",
+        "gv 3.6.0",
+        "November 2004",
 	0
 };
 
@@ -51,6 +51,7 @@ char * copyright = "\
  gv -- An X11 user interface for GhostScript. \n\
  \n\
  Copyright (C) 1992-1997  Johannes Plass, Timothy O. Theisen  \n\
+ Copyright (C) 2004 Jose E. Marchesi \n\
  \n\
  This program is free software; you can redistribute it and/or modify \n\
  it under the terms of the GNU General Public License as published by \n\
@@ -72,7 +73,9 @@ char *author[] = {
            Johannes Plass       plass@thep.physik.uni-mainz.de \n\
                                 Department of Physics \n\
                                 Johannes Gutenberg University \n\
-                                Mainz, Germany\
+                                Mainz, Germany\n\
+           Jose E. Marchesi     jemarch@gnu.org\n\
+                                GNU Project\
 ",
 "\
  gv is derived from GhostView 1.5, created by\n\
@@ -84,7 +87,7 @@ char *author[] = {
       FAX: (608)262-9777        Madison, WI   53706\
 ",
 "\
- Please send error reports to:  plass@thep.physik.uni-mainz.de \n\
+ Please send error reports to:  bug-gv@gnu.org \n\
 ",
 0 
 };

@@ -1,28 +1,52 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-11-10 02:34:11 jemarch"
+dnl Time-stamp: "2004-11-10 14:44:50 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
 dnl Please process this file with `autoconf' to get a configure script
 
 AC_INIT(src/gv_options.c)
-AM_INIT_AUTOMAKE(gv,3.5.8)
-AC_CONFIG_HEADERS(src/ac_config.h)
+AM_INIT_AUTOMAKE(gv,3.6.0)
+AM_CONFIG_HEADER(src/ac_config.h)
 dnl AM_CONFIG_HEADER(src/ac_config.h)
 
-dnl Compiler issues
+dnl DEFUNS
+
+AC_DEFUN(AC_XT_VERSION6,
+[AC_MSG_CHECKING([For Xt Revision > 4])
+AC_CACHE_VAL(XT_cv_version,[
+  AC_TRY_LINK([#include <X11/Intrinsic.h>],
+[#if XtSpecificationRelease < 5
+fail;
+#endif
+], XT_cv_version="yes",
+   [AC_MSG_RESULT(no)])
+])
+])
+
+
+dnl Check for programs
 AC_PROG_CC
 
-
 dnl Search for libraries
-dnl AC_CHECK_LIB([Xaw3d],[XawInitializeWidgetSet],[XAW3D_LIB=-lXaw3d],
-dnl  AC_MSG_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]))
+
+AC_CHECK_LIB(m, sqrt)
+AC_CHECK_LIB(fl, yywrap)
+
+AC_PATH_XTRA()
+AC_CHECK_LIB(X11, XOpenDisplay, , , $X_LIBS)
+AC_CHECK_LIB(ICE, main, , , $X_LIBS)
+AC_CHECK_LIB(SM, main, , , $X_LIBS)
+AC_CHECK_LIB(Xext, main, , , $X_LIBS)
+AC_CHECK_LIB(Xt, XtOpenDisplay, , , $X_LIBS)
+AC_CHECK_LIB(Xmu, main, , , $X_LIBS)
+AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
+AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
+   AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
+   $X_LIBS)
 
 
-dnl Check for headers
-
-AC_CHECK_HEADERS(Xaw3d/XawImp.h)
 
 dnl WITH options
 
@@ -87,13 +111,21 @@ AC_ARG_ENABLE(ps-level-one, AC_HELP_STRING([--enable-ps-level-one],[Produce Leve
 
 test "$opt_ps_level_one" == "yes" && {
 
-     AC_DEFINE(PRODUCE_PS_LEVEL_ONE,[], [Define PRODUCE_PS_LEVEL_ONE])     
+     AC_DEFINE(PSLevel1,[], [Define PRODUCE_PS_LEVEL_ONE])     
 
 }
 
 AC_ARG_ENABLE(signal-handle, AC_HELP_STRING([--enable-signal-handle],[Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP snd SIGINT signals. It requires X11R6. Defaults to `yes']), opt_signal_handle=$enableval, opt_signal_handle=yes)
 
-test "$opt_signal_handle" == "yes" && {
+test "x$opt_signal_handle" == "xyes" && {
+
+     dnl Test for X11 revision > 6
+dnl     AC_XT_VERSION6
+dnl     if test "x$XT_cv_version" != "xyes" && {
+
+dnl        AC_ERROR([You need X11R6 to use the signal handler, sorry.])
+
+dnl     }    
 
      AC_DEFINE(USE_SIGNAL_HANDLER,[],[Define USE_SIGNAL_HANDLER])
 
@@ -103,9 +135,19 @@ AC_ARG_ENABLE(backing-pixmap, AC_HELP_STRING([--enable-backing-pixmap],[Use a ba
 
 test "$opt_backing_pixmap" == "yes" && {
 
-     AC_DEFINE(USE_BACKING_PIXMAP, True, [Define USE_BACKING_PIXMAP])
+dnl     AC_DEFINE(USE_BACKING_PIXMAP, True, [Define USE_BACKING_PIXMAP])
+	USE_BACKING_PIXMAP=True
 
 }
+
+test "$opt_backing_pixmap" == "no" && {
+
+     USE_BACKING_PIXMAP=False
+
+}
+
+AC_SUBST(USE_BACKING_PIXMAP)
+
 
 AC_ARG_ENABLE(scrollbar-code, AC_HELP_STRING([--enable-scrollbar-code],[Use gv's own Motif like scrollbar. It defaults to `yes']), 
 [case "${enableval}" in
@@ -133,10 +175,11 @@ test "$opt_runtime_messages" == "yes" && {
 
 }
 
-AC_ARG_ENABLE(fallback-styles, AC_HELP_STRING([--enable-fallback-styles],[Compile files into the executable. Defaults to `no']), opt_fallback_styles=$enableval, opt_fallback_styles=no)
+AC_ARG_ENABLE(fallback-styles, AC_HELP_STRING([--enable-fallback-styles],[Compile files into the executable. Defaults to `yes']), opt_fallback_styles=$enableval, opt_fallback_styles=yes)
 
 test "$opt_fallback_styles" == "yes" && {
 
+dnl     USE_FALLBACK_STYLES=-DUSE_FALLBACK_STYLES
      AC_DEFINE(USE_FALLBACK_STYLES,[],[Define USE_FALLBACK_STYLES])
 
 }

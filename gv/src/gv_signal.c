@@ -29,6 +29,8 @@
 /*
 #define MESSAGES
 */
+#include <ac_config.h>
+
 #include "message.h"
 
 #include <stdio.h>
@@ -45,7 +47,7 @@
 #include INC_X11(Intrinsic.h)
 
 
-#if defined(USE_SIGNAL_HANDLER)
+#ifdef USE_SIGNAL_HANDLER
 #   if (XtSpecificationRelease >= 6)
 #      define USE_XT_SIGNAL_HANDLER
 #   else
