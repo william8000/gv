@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-11-11 12:03:43 jemarch"
+dnl Time-stamp: "2004-11-11 12:09:42 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -13,7 +13,7 @@ dnl AM_CONFIG_HEADER(src/ac_config.h)
 
 dnl DEFUNS
 
-AC_DEFUN(AC_XT_VERSION6,
+AC_DEFUN([AC_XT_VERSION6],
 [AC_MSG_CHECKING([For Xt Revision > 4])
 AC_CACHE_VAL(XT_cv_version,[
   AC_TRY_LINK([#include <X11/Intrinsic.h>],
@@ -119,14 +119,6 @@ dnl TESTED
 AC_ARG_ENABLE(signal-handle, AC_HELP_STRING([--enable-signal-handle],[Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP snd SIGINT signals. It requires X11R6. Defaults to `yes']), opt_signal_handle=$enableval, opt_signal_handle=no)
 
 test "x$opt_signal_handle" == "xyes" && {
-
-     dnl Test for X11 revision > 6
-dnl     AC_XT_VERSION6
-dnl     if test "x$XT_cv_version" != "xyes" && {
-
-dnl        AC_ERROR([You need X11R6 to use the signal handler, sorry.])
-
-dnl     }    
 
      AC_DEFINE(USE_SIGNAL_HANDLER,[],[Define USE_SIGNAL_HANDLER])
 
