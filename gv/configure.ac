@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-11-11 12:57:02 jemarch"
+dnl Time-stamp: "2004-11-11 16:36:40 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -92,11 +92,11 @@ test "$opt_user_defaults_file" == "yes" && {
 
 AC_DEFINE_UNQUOTED(USER_DEFAULTS,"$opt_user_defaults_file", "Define USER_DEFAULTS")
 
-AC_ARG_WITH(scratch-dir,AC_HELP_STRING([--with-scratch-dir=PATH],[Temporary directory. Must be terminated with a trailing `/'. Defaults to `~/']), opt_scratch_dir=$withval, opt_user_defaults_file="~/")
+AC_ARG_WITH(scratch-dir,AC_HELP_STRING([--with-scratch-dir=PATH],[Temporary directory. Must be terminated with a trailing `/'. Defaults to `/tmp/']), opt_scratch_dir=$withval, opt_user_defaults_file="/tmp/")
 
 test "$opt_scratch_dir" == "yes" && {
 
-     opt_scratch_dir="~/"
+     opt_scratch_dir="/tmp/"
 
 }
 
