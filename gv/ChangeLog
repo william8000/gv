@@ -1,3 +1,11 @@
+2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
+
+	* src/ps.c: Strip off the external reference to 'pdf_delaysafer_hack'
+	Revert the delaysafer hack
+
+	* src/misc.c (misc_changeFile): Strip off directories from the
+	path of the file. Patch by John Bowman.
+
 2005-01-17  Jose E. Marchesi  <jemarch@dataware.es>
 
 	* src/ps.c: idem.

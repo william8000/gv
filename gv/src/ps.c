@@ -63,8 +63,6 @@
 
 #include "config.h"
 
-extern int pdf_delaysafer_hack;
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -538,9 +536,6 @@ unc_ok:
       char cmd[512];
       char s[512];
       mode_t old_umask;
-
-      /* PDF hack to set DELAYSAFER on interpreter invocation */
-      pdf_delaysafer_hack = 1;
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       sprintf(cmd,cmd_scan_pdf,filename,filename_dsc);

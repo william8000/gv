@@ -403,6 +403,7 @@ String misc_changeFile(name)
   String error=NULL;
   char *p;
   Boolean b = False;
+  char *dir, *q;
 
   BEGINMESSAGE(misc_changeFile)
 
@@ -413,6 +414,14 @@ String misc_changeFile(name)
     if (!b && file_fileIsNotUseful(p)) sprintf(p,"%s.ps",name);  else b = True;
     if (!b && file_fileIsNotUseful(p)) sprintf(p,"%s.pdf",name); else b = True;
     if (!b)                            strcpy(p,name);
+    dir=file_getDirOfPath(p);
+    if(strcmp(dir,p)) {
+      chdir(dir);
+      // Strip off directory from p to satisfy GS 8.00 security change
+      q=p;
+      while(*dir && *dir == *q) {dir++; q++;}
+      strcpy(p,q);
+    }
   }
   name = p;
   INFSMESSAGE(trying to open,name)

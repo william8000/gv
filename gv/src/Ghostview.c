@@ -1428,12 +1428,6 @@ StartInterpreter(w)
     if (gvw->ghostview.safer) 
       {
 	argv[argc++] = "-dSAFER";
-
-	/* PDF & DELAYSAFER hack */
-	if (pdf_delaysafer_hack) 
-	  {
-	    argv[argc++] = "-dDELAYSAFER";
-	  }
       }
 
     if (gvw->ghostview.arguments) {
@@ -1562,8 +1556,6 @@ StartInterpreter(w)
     if (arguments) GV_XtFree(arguments);
     if (device)    GV_XtFree(device);
     gvw->ghostview.background_cleared=0;
-
-    pdf_delaysafer_hack = 0;
 
     ENDMESSAGE(StartInterpreter)
 }

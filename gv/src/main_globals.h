@@ -41,8 +41,6 @@
 #  endif
 #endif
 
-EXTERN int pdf_delaysafer_hack;
-
 EXTERN Bool			show_date;
 EXTERN Bool			show_locator;
 EXTERN Bool			show_title;
