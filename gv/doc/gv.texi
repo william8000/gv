@@ -76,110 +76,132 @@ Please note that gv is derived from Tim Theisen's ghostview.
 @chapter Invoking gv
 
 @verbatim
-gv [ filename ]
-   [-monochrome] [-grayscale] [-color]
-   [-[no]safer] [-[no]quiet] [-arguments <arguments>]
-   [-page <label>] [-[no]center]
-   [-media <media>]
-   [-portrait] [-landscape] [-upsidedown] [-seascape]
-   [-scale <n>] [-scalebase <n>]
-   [-swap] [-noswap]
-   [-antialias] [-noantialias]
-   [-dsc] [-nodsc]
-   [-eof] [-noeof]
-   [-pixmap] [-nopixmap]
-   [-watch] [-nowatch]
-   [-?] [-h] [-help] [-v]
-   [-resize] [-noresize]
-   [-geometry [<width>][x<height>][{+-}<xoffset>{+-}<yoffset>]
-   [-ad <resource file>]
-   [-style <resource file>]
-   [-spartan]
-   [<other toolkit options>]
+Usage: gv [OPTION]... [FILE]
+PostScript and PDF viewer.
+  --monochrome               display document using only black and white
+  --grayscale                display document without colors
+  --color                    display document as usual
+  --safer                    start ghostscript in safe mode
+  --nosafer                  do not start ghostscript in safe mode
+  --quiet                    start ghostscript with the -dQUIET option
+  --noquiet                  do not start ghostscript with the -dQUIET option
+  --arguments=ARGS           start ghostscript with additional options as specified
+                             by the string ARGS
+  --page=LABEL               display the page with label LABEL first
+  --center                   the page should be centered automatically
+  --nocenter                 the page should not be centered automatically
+  --media=MEDIA              selects the paper size to be used
+  --orientation=ORIENTATION  sets the orientation of the page
+  --scale=N                  selects the scale N
+  --scalebase=N              selects the scale base N
+  --swap                     interchange the meaning of the orientations landscape
+                             and seascape
+  --noswap                   do not interchange the meaning of the orientation
+                             landscape and seascape
+  --antialias                use antialiasing
+  --noantialias              do not use antialiasing
+  --dsc                      dsc comments are respected
+  --nodsc                    dsc comments are not respected
+  --eof                      ignore the postscript EOF comment while scanning
+                             documents
+  --noeof                    do not ignore the postscript EOF comment while
+                             scanning documents
+  --pixmap                   use backing pixmap
+  --nopixmap                 do not use backing pixmap
+  --watch                    watch the document file for changes
+  --nowatch                  do not watch the document file for changes
+  --help                     print a help message and exit
+  --usage                    print a usage message and exit
+  --resize                   fit the size of the window to the size of the page
+  --noresize                 do not fit the size of the window to the size of the page
+  -geometry [<width>][x<height>][{+-}<xoffset>{+-}<yoffset>]
+  --ad=FILE                  read and use additional resources from FILE
+  --style=FILE               read and use additional resources from FILE. These resources
+                             have lower priority than those provided on the context of --ad
+  --spartan                  shortcut for --style=gv_spartan.dat
+  --version                  show gv version and exit
 @end verbatim
 
 @table @code
-@item @var{filename}
+@item @var{file}
 The name of the file to be displayed.
 The file ending @file{.ps} may be omitted.
-@var{filename} may point to a compressed file 
-(gzipped, zipped or compressed).
+@var{file} may point to a compressed file 
+(gzipped, bzipped, zipped or compressed).
 Viewing PDF files requires at least ghostscript version 4.x.
-@item -ad @var{resource-file}
+@item --ad=@var{file}
 Read and use additional resources from the file
-@var{resource file}.
+@var{file}.
 These resources have higher priority than those provided
-in the context of the @var{resource file} option.
-@item -antialias, -noantialias
+in the context of the @code{--style} option.
+@item --antialias, --noantialias
 Whether to use antialiasing.
-@item -arguments @var{arguments}
+@item --arguments=@var{args}
 Start ghostscrip with additional options as specified by the
-string @var{arguments}.
-@item -center, -nocenter
+string @var{args}.
+@item --center, --nocenter
 Whether the page should be centered automatically.
-@item -dsc, -nodsc
+@item --dsc, --nodsc
 Determines if @emph{document structuring convention} (@acronym{DSC})
-comments should be respected or ignored. If @code{-nodsc} is used gv
+comments should be respected or ignored. If @code{--nodsc} is used gv
 will not attempt to examine the structure of the document but will
 pass the file to the ghostscript interpreter as a whole. In this case no
 page numbers are shown and freely moving around in the document is not
 possible.  This option may help when viewing files not conforming to
 the @emph{document structuring conventions}.
-@item -eof, -noeof
+@item --eof, --noeof
 Defines the behaviour of the postscript scanner used to examine the
-structure of the document.  If @code{-noeof} is used the scanner will
+structure of the document.  If @code{--noeof} is used the scanner will
 ignore end of file (@acronym{EOF}) comments. This may help when
 viewing documents which import other documents without enclosing them
 within the proper "BeginDocument" and "EndDocument" comments.  If
-@code{-eof} is used, the scanner treats an @acronym{EOF} comment as
+@code{--eof} is used, the scanner treats an @acronym{EOF} comment as
 marking the end of the file.
-@item -pixmap, -nopixmap
-If @code{-pixmap} is used gv tries to maintain off-screen regions of
+@item --pixmap, --nopixmap
+If @code{--pixmap} is used gv tries to maintain off-screen regions of
 the displayed page by allocating a sufficiently large pixmap.  If
-@code{-nopixmap} is used the @emph{X Server} is responsible for
+@code{--nopixmap} is used the @emph{X Server} is responsible for
 maintaining obscured portions of the displayed page (see also the
 @emph{useBackingPixmap} resource).
-@item -v, --version
+@item --version
 Print the version number of gv to standard output and exit.
-@item -help, --help
+@item --help, --usage
 Display a short help message and exit.
-@item -h, --usage
-Display a short usage message and exit.
-@item -help
-Display a more explicit help message and exit.
-@item -scale @var{n}
+@item --scale=@var{n}
 Selects the scale entry @var{n} relative to the scale 1.0.
 @var{n} must be an integer.
-@item -scalebase @var{n}
+@item --scalebase @var{n}
 Selects the scale base @var{n}.
-@item -monochrome, -grayscale, -color
+@item --monochrome, --grayscale, --color
 Sets the color palette to be used.
-@item -media @var{media}
+@item --media=@var{media}
 Selects the paper size to be used. Valid values are names of
 paper sizes that appear in the list of page medias as given
 by the @var{medias} resource.
-@item -page @var{label}
+@item --page=@var{label}
 Display the page with label @var{label} first.
-@item -portrait, -landscape, -seascape, -upsidedown
-Sets the orientation.
-@item -quiet, -noquiet
+@item --orientation=@var{orientation}
+Sets the orientation. 
+Valid values for @var{orientation} are @code{portrait},
+@code{landscape}, @code{seascape} and @code{upsidedown}.
+@item --quiet, --noquiet
 Whether to start ghostscript with the @code{-dQUIET} option.
-@item -resize, -noresize
+@item --resize, --noresize
 Whether ghostscrip is allowed to automatically fit the
 size of its window to the size of the displayed page.
-@item -safer, -nosafer
+@item --safer, --nosafer
 Whether to start ghostscript with the @code{-dSAFER} option.
-@item -spartan
-This is a shortcut for @code{-style gv_spartan.dat}.
-@item -style @var{resource file}
-Read and use additional resources from the file @var{resource file}.
+@item --spartan
+This is a shortcut for @code{--style=gv_spartan.dat}.
+@item --style=@var{file}
+Read and use additional resources from the file @var{file}.
 These resources have  lower priority than those provided
-in the context of the @var{resource file} option.
-@item -swap, -noswap
+in the context of the @code{--ad} option.
+@item --swap, --noswap
 Whether to interchange the meaning of the orientations
 landscape and seascape.
-@item -watch, -nowatch
-The @code{-watch} option causes gv to check the document
+@item --watch, --nowatch
+The @code{--watch} option causes gv to check the document
 periodically. If changes are detected gv will
 automatically display the newer version of the file.
 The document is by default checked once every second. 
