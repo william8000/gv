@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-11-10 15:07:57 jemarch"
+dnl Time-stamp: "2004-11-11 12:03:43 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -167,7 +167,7 @@ test "$opt_memmove_code" == "yes" && {
 
 }
 
-AC_ARG_ENABLE(runtime-messages, AC_HELP_STRING([--enable-runtime-messages],[Use gv's own memmove. It defaults to `yes']), opt_runtime_messages=$enableval, opt_runtime_messages=yes)
+AC_ARG_ENABLE(runtime-messages, AC_HELP_STRING([--enable-runtime-messages],[Generate informative messages at runtime. It defaults to `no']), opt_runtime_messages=$enableval, opt_runtime_messages=no)
 
 test "$opt_runtime_messages" == "yes" && {
 
@@ -176,7 +176,7 @@ test "$opt_runtime_messages" == "yes" && {
 
 }
 
-AC_ARG_ENABLE(fallback-styles, AC_HELP_STRING([--enable-fallback-styles],[Compile files into the executable. Defaults to `yes']), opt_fallback_styles=$enableval, opt_fallback_styles=yes)
+AC_ARG_ENABLE(fallback-styles, AC_HELP_STRING([--enable-fallback-styles],[Compile X resource files into the executable. Defaults to `yes']), opt_fallback_styles=$enableval, opt_fallback_styles=yes)
 
 test "$opt_fallback_styles" == "yes" && {
 
