@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <getopt.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -128,6 +129,26 @@
 #include FALLBACK_MARK_CURRENT_BITMAP
 #include FALLBACK_MARK_UNMARK_BITMAP
 #include FALLBACK_MARK_EMPTY_BITMAP
+
+
+/*********************************************************
+   GNU command line options
+**********************************************************/
+
+enum
+  {
+    HELP_ARG,
+    VERSION_ARG,
+    USAGE_ARG
+  };
+
+static struct option const GNU_longOptions[] =
+  {
+    {"help", no_argument, NULL, HELP_ARG},
+    {"usage", no_argument, NULL, USAGE_ARG},
+    {"version", no_argument, NULL, VERSION_ARG},
+    {NULL, 0, NULL, 0}
+  };
 
 typedef struct menu_entry {
   Widget		*widgetP;
@@ -262,7 +283,34 @@ int main(argc, argv)
     gv_print_kills_file = 0;
 #endif
 
-/*###  initializing toolkit and the application context #################*/
+    /*### Manage GNU command line arguments ########################*/
+    char c;
+    while ((c = getopt_long (argc, argv, "vh", GNU_longOptions, NULL))
+	   != -1)
+      {
+	switch (c)
+	  {
+	  case HELP_ARG:
+	    /* Show some help and return */
+	    fprintf(stdout,"%s\n", message_help);
+	    exit(0);
+	  case VERSION_ARG:
+	    /* Show the program version */
+	    fprintf(stdout,"%s\n", versionIdentification[0]);
+	    exit(0);
+
+	  case USAGE_ARG:
+	    /* Show usage */
+	    fprintf(stdout,"%s\n", message_usage);
+	    exit(0);
+	  default:
+	    continue;
+	    break;
+	  }
+      }
+
+
+    /*###  initializing toolkit and the application context ########*/
 
     INFMESSAGE(initializing toolkit and the application context)
     XtToolkitInitialize();
