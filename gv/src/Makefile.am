@@ -13,7 +13,10 @@ AM_CFLAGS = -g
 AM_LDFLAGS = -lm $(XAW3D_LIB)
 
 
-gv_SOURCES = Aaa.c \
+gv_SOURCES = gv_spartan.h \
+             gv_intern_res_unix.h \
+             gv_class.h \
+	     Aaa.c \
              Aaa_bison.c \
              Aaa_lex.c \
              Button.c \
@@ -55,7 +58,35 @@ gv_SOURCES = Aaa.c \
              zoom.c
 
 
-# Additional actions for resource.o
+# Additional rules for generating styles
+
+gv_spartan.h : gv_spartan_dat
+	sh ./ad2c gv_spartan_dat > gv_spartan.h
+
+gv_intern_res_unix.h : gv_intern_res_unix.dat
+	echo "creating gv_intern_res_unix.h"
+	sh ./ad2c gv_intern_res_unix.h gv_intern_res_unix.dat
+
+gv_class.h : gv_class.ad
+	echo "creating gv_class.h"
+	sh ./ad2c gv_class.ad > gv_class.h
+
+gv_class.ad : gv_font_res.dat gv_layout_res.dat gv_make_res.dat gv_misc_res.dat gv_user_res.dat gv_intern_res_unix.dat
+	echo "creating gv_class.ad"
+	cp gv_copyright.dat gv_class.ad
+	echo "!" >> gv_class.ad
+	echo "!  gv_class.ad" >> gv_class.ad
+	echo "!  Application class defaults for gv" >> gv_class.ad
+	echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass" >> gv_class.ad
+	echo "!  Copyright (C) 2004 José E. Marchesi" >> 
+	echo "!" >> gv_class.ad
+	echo ""  >> gv_class.ad
+	@cat gv_user_res.dat >> gv_class.ad
+	@cat gv_intern_res_unix.dat >> gv_class.ad
+	@cat gv_make_res.dat >> gv_class.ad
+	@cat gv_font_res.dat >> gv_class.ad
+	@cat gv_misc_res.dat >> gv_class.ad
+	@cat gv_layout_res.dat >> gv_class.ad
 
 
 
