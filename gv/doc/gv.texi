@@ -63,7 +63,7 @@ GNU gv - View PostScript and PDF documents using ghostscript.
 * Comments about the user interface::  
 * Frequently asked questions::  
 * gv internals::                
-* Index::                       
+* GNU General Public License::  
 @end menu
 
 
@@ -476,12 +476,14 @@ list of paper-sizes.
 
 @menu
 * Mouse bindings in the Main and the Zoom window::  
+* Mouse bindings in the File Selection popup::  
+* Mouse bindings in the Table of Contents::  
 * Mouse bindings in the Panner widget::  
 * Mouse bindings in the << and >> button windows::  
 * Key Bindings::                
 @end menu
 
-@node Mouse bindings in the Main and the Zoom window, Mouse bindings in the Panner widget, Mouse and key bindings, Mouse and key bindings
+@node Mouse bindings in the Main and the Zoom window, Mouse bindings in the File Selection popup, Mouse and key bindings, Mouse and key bindings
 @section Mouse bindings in the Main and the Zoom window
 
 The following mouse events are defined when the mouse pointer
@@ -515,7 +517,9 @@ Pops up a small menu which offers a few standard actions
 like 'Redisplay', 'Mark Page', etc.
 @end table
 
-@node Mouse bindings in the File Selection popup, Mouse bindings in the Panner widget, Mouse bindings in the Main and the Zoom window, Mouse and key bindings
+@node Mouse bindings in the File Selection popup, Mouse bindings in the Table of Contents, Mouse bindings in the Main and the Zoom window, Mouse and key bindings
+@section Mouse bindings in the File Selection popup
+
 The following mouse events are defined when the mouse pointer is
 in the window of either a file or a directory list:
 
@@ -533,7 +537,9 @@ Selects the file and closes the File Selection popup.
 Causes the contents of this directory to be displayed.
 @end table
 
-@node Mouse bindings in the Table of Contents, Mouse bindings in the Panner widget, Mouse bindings in the Main and the Zoom window, Mouse and key bindings
+@node Mouse bindings in the Table of Contents, Mouse bindings in the Panner widget, Mouse bindings in the File Selection popup, Mouse and key bindings
+@section Mouse bindings in the Table of Contents
+
 The following mouse events are defined when the mouse pointer is
 in the window showing a list of page numbers of the
 current file (table of contents):
@@ -550,7 +556,7 @@ Marks/unmarks all unmarked/marked pages in the region
 crossed by the mouse pointer during the movement.
 @end table
 
-@node Mouse bindings in the Panner widget, Mouse bindings in the << and >> button windows, Mouse bindings in the Main and the Zoom window, Mouse and key bindings
+@node Mouse bindings in the Panner widget, Mouse bindings in the << and >> button windows, Mouse bindings in the Table of Contents, Mouse and key bindings
 @section Mouse bindings in the Panner widget
 
 The Panner widget is the rectangular region located close to the
@@ -968,7 +974,7 @@ pixmap; otherwise it will use backing store. Select "Apply" to use a new
 setting and "Save" to make it the new default.
 
 
-@node gv internals, Index, Frequently asked questions, Top
+@node gv internals, GNU General Public License, Frequently asked questions, Top
 @chapter gv internals
 
 @menu
@@ -1217,11 +1223,12 @@ Quarto		 610x780
 10x14		 720x1008
 @end verbatim
 
-
+@node GNU General Public License,  , gv internals, Top
+@appendix GNU General Public License
 @include gpl.texi
 
-@node Index,  , gv internals, Top
-@unnumbered Index
+@c @node Index,  , GNU General Public License, Top
+@c @unnumbered Index
 
 
 @printindex cp

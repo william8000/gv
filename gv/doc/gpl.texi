@@ -1,9 +1,4 @@
 @c -*-texinfo-*-
-@setfilename ../info/gpl
-
-@node GPL, Tips, GNU Free Documentation License, Top
-@comment  node-name,  next,  previous,  up
-@appendix GNU General Public License
 @center Version 2, June 1991
 
 @display
