@@ -138,10 +138,12 @@ the displayed page by allocating a sufficiently large pixmap.  If
 @code{-nopixmap} is used the @emph{X Server} is responsible for
 maintaining obscured portions of the displayed page (see also the
 @emph{useBackingPixmap} resource).
-@item -v
+@item -v, --version
 Print the version number of gv to standard output and exit.
-@item -h, -?
+@item -help, --help
 Display a short help message and exit.
+@item -h, --usage
+Display a short usage message and exit.
 @item -help
 Display a more explicit help message and exit.
 @item -scale @var{n}
