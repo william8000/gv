@@ -239,6 +239,7 @@ int main(argc, argv)
 /*###  initializing global variables ####################################*/
 
     INFMESSAGE(initializing global variables)
+      pdf_delaysafer_hack = 0;
     gv_scroll_mode = SCROLL_MODE_NONE;
     gv_class = GV_CLASS;
     gv_pending_page_request=NO_CURRENT_PAGE;

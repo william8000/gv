@@ -1329,7 +1329,17 @@ StartInterpreter(w)
     }
     argv[argc++] = "-dNOPAUSE";
     if (gvw->ghostview.quiet) argv[argc++] = "-dQUIET";
-    if (gvw->ghostview.safer) argv[argc++] = "-dSAFER";
+    if (gvw->ghostview.safer) 
+      {
+	argv[argc++] = "-dSAFER";
+
+	/* PDF & DELAYSAFER hack */
+	if (pdf_delaysafer_hack) 
+	  {
+	    argv[argc++] = "-dDELAYSAFER";
+	  }
+      }
+
     if (gvw->ghostview.arguments) {
 	cptr = arguments = GV_XtNewString(gvw->ghostview.arguments);
 	while (isspace(*cptr)) cptr++;
@@ -1452,6 +1462,8 @@ StartInterpreter(w)
     if (arguments) GV_XtFree(arguments);
     if (device)    GV_XtFree(device);
     gvw->ghostview.background_cleared=0;
+
+    pdf_delaysafer_hack = 0;
 
     ENDMESSAGE(StartInterpreter)
 }

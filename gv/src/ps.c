@@ -63,6 +63,8 @@
 
 #include "config.h"
 
+extern int pdf_delaysafer_hack;
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -488,6 +490,7 @@ unc_ok:
 
     if (line_len>1 && (iscomment(line,"%!PS-Adobe-") || iscomment(line + 1,"%!PS-Adobe-"))) {
       INFMESSAGE(found "PS-Adobe-" comment)
+
       doc = (struct document *) PS_malloc(sizeof(struct document));
       CHECK_MALLOCED(doc);
       memset(doc, 0, sizeof(struct document));
@@ -498,6 +501,10 @@ unc_ok:
       doc->beginheader = position;
       section_len = line_len;
     } else if (iscomment(line,"%PDF-") && cmd_scan_pdf) {
+      
+      /* PDF hack to set DELAYSAFER on interpreter invocation */
+      pdf_delaysafer_hack = 1;
+
       struct document *retval = NULL;
       FILE *tmpfile = (FILE*)NULL;
       char *filename_dsc;
