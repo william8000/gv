@@ -53,7 +53,7 @@ char *versionIdentification[] = {
 char versionCompatibility[] = "gv 3.5.2";
                                             
 char * copyright = "\
- gv -- An X11 user interface for GhostScript. \n\
+ gv -- An X11 user interface for Ghostscript. \n\
  \n\
  Copyright (C) 1992-1997  Johannes Plass, Timothy O. Theisen  \n\
  Copyright (C) 2004 Jose E. Marchesi \n\

@@ -168,7 +168,7 @@ GV*versionPopup*Label.internalWidth:	8
 
 !##### Info Popup
 
-GV*infoPopup.title:			GhostScript Messages
+GV*infoPopup.title:			Ghostscript Messages
 GV*infoPopup.geometry:			+50+50
 
 !##### Dialog Popup

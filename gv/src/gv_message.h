@@ -57,10 +57,10 @@ gv help:\n\
      [<name of file to display>[.ps][.pdf]] ! The extension may be omitted\n\
    # Color environment:\n\
      [-monochrome] [-grayscale] [-color]\n\
-   # GhostScript Options:\n\
-     [-[no]safer]             ! [Do not] pass -dSAFER to GhostScript\n\
-     [-[no]quiet]             ! [Do not] pass -dQUIET to GhostScript\n\
-     [-arguments <arguments>] ! Start GhostScript with <arguments>\n\
+   # Ghostscript Options:\n\
+     [-[no]safer]             ! [Do not] pass -dSAFER to Ghostscript\n\
+     [-[no]quiet]             ! [Do not] pass -dQUIET to Ghostscript\n\
+     [-arguments <arguments>] ! Start Ghostscript with <arguments>\n\
    # Page specific \n\
      [-page <label>]          ! Display the page with label <label>\n\
      [-[no]center]            ! Center the displayed page\n\
