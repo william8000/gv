@@ -49,6 +49,9 @@ by a '#' or a '*' or a '?'. A
 
 ? The postscript generated when saving PDF files is poor in quality.
 
+? See http://savannah.gnu.org/bugs/?group=gv for more known bugs on
+  this release.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.0  (20 November 2004) %%%%%%%%%%%%%%%%%%%%%%
 
 # New configuration/compilation/installation using GNU Autotools
