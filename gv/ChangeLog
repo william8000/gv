@@ -1,5 +1,8 @@
 2004-12-19  JosÃ© E. Marchesi  <jemarch@gnu.org>
 
+	* src/gv_misc_res.dat: Changed the Reopen label to Reload for the
+	File menu.
+
 	* src/Makefile.am ($(srcdir)/gv_intern_res_unix.dat): Fix
 	GV.gsCmdConvPDF in order to work.
 
