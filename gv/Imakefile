@@ -37,9 +37,9 @@ NamedTargetSubdirs(install.doc,dirs,"installing documentation",DESTDIR=$(DESTDIR
 #endif /* InstallDocSubdirs */
 
 SUBDIRS			= src		/* make all */
-MAKEFILESUBDIRS 	= doc doc/src src	/* make Makefiles */
-CLEANSUBDIRS 		= doc doc/src src	/* make clean */
-DEPSUBDIRS 		= doc doc/src src	/* make depend */
+MAKEFILESUBDIRS 	= doc doc/source src	/* make Makefiles */
+CLEANSUBDIRS 		= doc doc/source src	/* make clean */
+DEPSUBDIRS 		= doc doc/source src	/* make depend */
 INSTALLSUBDIRS		= src		/* make install */
 INCLUDESSUBDIRS 	= src		/* make includes */
 INSTALLMANSUBDIRS 	= doc			/* make install.man */
