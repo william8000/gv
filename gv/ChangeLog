@@ -1,5 +1,9 @@
 2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
 
+	* src/Ghostview.c (StartInterpreter): Added the '-2x2' argument to
+	gs in order to get the correct orientation for landscape
+	files. Patch by John Bowman.
+
 	* configure.ac: Enable the scrollbar code. Solves bug #11091.
 
 	* src/main.c (main): use getopt_long_only in order to support old

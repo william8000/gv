@@ -1424,6 +1424,7 @@ StartInterpreter(w)
 	 while (isspace(*dptr)) dptr++;
     }
     argv[argc++] = "-dNOPAUSE";
+    argv[argc++] = "-g2x2"; // Avoid unwanted rotation of landscape pdf files
     if (gvw->ghostview.quiet) argv[argc++] = "-dQUIET";
     if (gvw->ghostview.safer) 
       {
