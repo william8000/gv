@@ -10,6 +10,45 @@ by a '#' or a '*' or a '?'. A
   '?' describes a known problem which is not fixed yet.
 
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.1  (?? December 2004) %%%%%%%%%%%%%%%%%%%%%%
+
+# New set of command line arguments. This solves the horrible bug on
+  gv 3.6.0 that makes such release nearly unusable. See the
+  documentation for details about the new arguments.
+
+# The "Reopen" entry on the File menu has been renamed to "Reload" in
+  order to be coherent with the "Reload" button.
+
+# The distributed package contents have been fixed, now conforming a
+  legal GNU source package.
+
+# The delete key now work as expected, that is, it deletes the next
+  character rather the last character on text entries.
+
+# Dot files are not shown by default on file selection forms now.
+
+# If you try to open an empty file you get an appropiate error
+  message.
+
+* Most of the Debian patches has been applied to gv:
+
+  162830_scanf.diff (Fix a security risk involving buffer overflows)
+  167029_argv.diff  (Fix an access beyond end of array on process.c)
+  206008_flicker.diff (Add double-buffering to pixmap operations)
+  223556_hidden_dir.diff (Do not show dot files on file listings)
+  250854_tmp_umask.diff (Tempfiles should not be created worldreadable)
+  252548_errno.diff (Wrong error message while opening empty files)
+  179643_bad_dsc.diff (Make DSC parsing case-insensitive)
+  159433_delete_key.diff (Change behaviour of Delete key on text entries)
+
+* The gs command used for PDF to PostScript conversion has been fixed to allow 
+  document saving.
+
+? It is not possible to zoom when viewing PDF 1.4 files. PDF 1.5 files are
+  not supported at all.
+
+? The postscript generated when saving PDF files is poor in quality.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.0  (20 November 2004) %%%%%%%%%%%%%%%%%%%%%%
 
 # New configuration/compilation/installation using GNU Autotools
