@@ -236,18 +236,25 @@ inferred from the appended default system specific resource file.
 @item antialias
 Whether antialiasing should be used.
 Valid values are @code{True} and @code{False}.
-It defaults to @code{True}
+
+It defaults to @code{True}.
 @item autoCenter
 Whether the displayed page should automatically be centered 
 (for instance when opening a new file).
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{True}.
 @item autoResize
 Whether gv is allowed to resize the main window
 according to the size of the current page.
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{True}.
 @item confirmPrint
 Whether printing requires an extra confirmation.
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{True}.
 @item confirmQuit
 Whether leaving gv requires extra confirmation.
 Valid values are @code{0} (Never), @code{1}
@@ -260,26 +267,40 @@ If this resource is @code{True} scrolling via the
 keyboard causes a temporary border to be drawn around the
 previously visible area of the page.
 Allowed values are @code{True} and @code{False}.   
+
+It defaults to @code{True}.
 @item ignoreEOF
 Defines the behaviour of the postscript scanner as described
-in the FIXME:XREF:Options section.
+in the Options section.
 Valid values are @code{True} and @code{False}.   
+
+It defaults to @code{True}.
 @item respectDSC
 Determines whether gv should attempt to respect document 
 structuring comments.
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{True}.
 @item reverseScrolling
 Defines the interpretation of directions when
 scrolling with the mouse.
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{False}.
 @item swapLandscape
 Whether the meaning of @code{landscape} and @code{seacape}
 should be interchanged.
 Valid values are @code{True} and @code{False}.
+
+It defaults to  @code{False}.
 @item scratchDir
 Specifies a directory used to store temporary data.
+
+It defaults to the invocation directory.
 @item defaultSaveDir
 Specifies the default destination directory for files to be saved.
+
+It defaults to the home directory, @file{~/}.
 @item useBackingPixmap
 If the value of this resource is @code{False} the @emph{X Server}
 is advised that saving off-screen pixels of the displayed page
@@ -291,56 +312,84 @@ If the value of this resource is @code{True} the @emph{X Server}
 is advised that maintaining backing store is not useful.
 In this case gv attempts to allocate a sufficiently large pixmap
 to store the contents of the displayed page.
+
+It defaults to @code{True}.
 @item watchFile
 Whether the document should be checked periodically and updated
 automatically if  changes are detected.
 Valid values are @code{True} and @code{False}.
+
+It defaults to @code{False}.
 @item watchFileFrequency
 Defines the time in milliseconds elapsing between successive
 checks of the document when @emph{watchFile} is set to @code{True}.
 Allowed values must be larger than 500.
+
+It defaults to @code{1000}.
 @item printCommand
 The command used for printing a file.
 The command may contain multiple @code{%s} wildcards
 which will be replaced by the name of the file to be 
 printed.
+
+It defaults to @code{lpr}.
 @item gsInterpreter
 The command used to start the ghostscript interpreter.
+
+It defaults to @code{gv}.
 @item gsCmdScanPDF
 The command used to extract document structuring comments
 from a PDF file.
+
+It defaults to @code{gs -dNODISPLAY -dQUIET -sPDFname=%s -sDSCname=%s pdf2dsc.ps -c quit}
 @item gsCmdConvPDF
 The command used to convert a PDF file to PostScript.
+
+It defaults to @code{gs -dNODISPLAY -dQUIET  -dNOPAUSE -sPSFile=%s %s -c quit}
 @item gsX11Device
 The ghostscript command line option which activates the
 @emph{X11} device. 
+
+It defaults to @code{-sDEVICE=x11}
 @item gsX11AlphaDevice
 The ghostscript command line option which activates the
 @emph{X11} device with antialiasing enabled. 
+
+It defaults to @code{-dNOPLATFONTS -sDEVICE=x11alpha}
 @item gsSafer
 Determines whether ghostscript should be started with the
 @code{-dSAFER} command line option.
+
+It defaults to @code{True}.
 @item gsQuiet
 Determines whether ghostscript should be started with the
 @code{-dQUIET} command line option.
+
+It defaults to @code{True}.
 @item gsArguments
 May be used to provide additional command line options for the
 ghostscript interpreter.
 Starting gv with the @code{-arguments @var{arguments}}
 option will override this resource setting.
+
+It defaults to the empty string.
 @item magMenu
 Describes the menu that pops up when preparing to
 to zoom an area of the displayed page.
+
 @item dirs
 Defines a list of directories accessible via the @code{Directories}
 menu in the file selection window.
 The special value @code{Home} corresponds to the users home directory,
 the value @code{Tmp} corresponds to the scratch directory as defined
 by the @strong{scratchDir} resource.
+
+It defaults to @code{Home Tmp /usr/doc /usr/local/doc}
 @item filter
 Defines the default filter to be used when displaying a directory
 contents in the file selection window.
 A filter is specified according to the syntax
+
 @verbatim
    <filter>    := [<filespecs>] [no <filespecs>]
    <filespecs> := <filespec> [<filespecs>]
@@ -358,12 +407,15 @@ A filter is specified according to the syntax
    and keeps of the remaining ones only those which end
    on @file{.ps} or @file{.pdf}.
 
+   It defaults to @code{no .*}
+
 @item filters
 Defines a list of filters offered in the @emph{Filters}
 menu of the file selection window.
 The filter @code{None} has a special meaning
 causing all files to be displayed when the corresponding
 menu entry is selected.
+
 @item miscMenuEntries
 Describes the menu that pops up when clicking with the 
 third mouse button on the displayed page. 
@@ -402,6 +454,8 @@ Allowed entries are
 Whether the name of the displayed document should be shown in the
 title bar of the window. The name of gv's icon will also change
 accordingly if this resource is set to @code{True}.
+
+It defaults to @code{True}.
 @item maximumWidth, maximumHeight
 When resizing gv will not attempt to exceed the size specified
 by these resources.
@@ -411,20 +465,33 @@ a positive or negative offset.
 The default values listed above provide examples for this syntax.
 @code{screen} will automatically be replaced by the size of the
 screen.
+
+@code{maximumWidth} defaults to @code{screen-20}.
+@code{maximumHeight} defaults to @code{screen-44}.
+
 @item minimumWidth, minimumHeight
 Defines a minimum size for the main window.
 Valid values for both resources are positive integers larger
 than 200.
+
+@code{minimumWidth} defaults to @code{400}.
+@code{minimumHeight} defaults to @code{430}.
+
 @item scale
 Sets the initial scale. The value of this resource is the offset
 of the scale to be selected relative to the scale 1.0 in the
 the @emph{Scale} menu.
+
+It defaults to @code{0}.
 @item scaleBase
 Selects the initial scale base. The value of this resource should 
 be a positive integer.
+
+It defaults to @code{1}.
 @item scales
 Defines the available scales bases and scales in the @emph{Scale}
 menu.   
+
 @item orientation
 Sets the initial orientation. Valid values are 
 @itemize
@@ -444,15 +511,19 @@ Sets the initial orientation. Valid values are
 to derive the correct orientation from document structuring
 comments.
 
+It defaults to @code{automatic}.
 @item fallbackOrientation
 Defines the paper-size to be used when automatic orientation
 detetction fails.  Valid values are @code{portrait}, @code{landscape},
 @code{seascape} and @code{upside-down}.
+
+It defaults to @code{portrait}.
 @item medias
 A list describing the page medias known to gv.
 List entries starting with @code{!} or @code{#} will not appear in the
 @emph{Media} menu but will still be used for automatic paper size 
 detection.
+
 @item pagemedia
 Sets the paper size. 
 Allowd values are as given in the above list of paper-sizes.
@@ -460,10 +531,14 @@ Specifying
 @code{automatic} causes gv to attempt
 to derive the correct paper-size from document structuring
 comments.
+
+It defaults to @code{automatic}.
 @item fallbackPageMedia
 Defines the paper-size to be used when automatic paper-size 
 detetction fails.  Valid values are as given in the  above
 list of paper-sizes.
+
+It defaults to @code{a4}.
 @end table
 
 @node Mouse and key bindings, Comments about the user interface, Resources, Top
