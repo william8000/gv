@@ -1,10 +1,12 @@
 # Makefile.am for gv/doc/
 # 
-# Time-stamp: "2004-11-28 00:50:43 jemarch"
+# Time-stamp: "2004-12-19 20:16:44 jemarch"
 #
 # Copyright (C) 2004 José E. Marchesi
 
 # File distribution
+
+EXTRA_DIST= gv.1
 
 info_TEXINFOS = gv.texi
 gv_TEXINFOS = gpl.texi version.texi

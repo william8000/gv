@@ -6,13 +6,15 @@
 
 # File distribution
 bin_PROGRAMS = gv
-dist_pkglib_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat
+dist_pkglib_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat
 
 appdefaultsdir = $(pkglibdir)
 
 appdefaults_DATA = GV
 
-EXTRA_DIST=ad2c
+EXTRA_DIST=ad2c gv_font_res.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
+           gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
+           gv_selected.xbm gv_unmark.xbm strcasecmp.c strcasecmp.h vms_dir.h vms_types.h 
 
 # Clean files
 CLEANFILES = $(srcdir)/GV \
@@ -36,45 +38,112 @@ gv_LDFLAGS = @X_LIBS@
 
 gv_SOURCES = Aaa.c \
              Aaa_bison.c \
+             Aaa_bison.h \
              Aaa_lex.c \
              Button.c \
+             Button.h \
+             ButtonP.h \
              Clip.c \
+             Clip.h \
+             ClipP.h \
              FileSel.c \
+             FileSel.h \
+             FileSelP.h \
              Frame.c \
+             Frame.h \
+             FrameP.h \
              Ghostview.c \
+             Ghostview.h \
+             GhostviewP.h \
              MButton.c \
+             MButton.h \
+             MButtonP.h \
              Switch.c \
+             Switch.h \
+             SwitchP.h \
              Vlist.c \
+             Vlist.h \
+             VlistP.h \
              actions.c \
+             actions.h \
              callbacks.c \
+             callbacks.h \
              confirm.c \
+             confirm.h \
+             config.h \
              dialog.c \
+             dialog.h \
              doc_misc.c \
+             doc_misc.h \
              error.c \
+             error.h \
              file.c \
+             file.h \
              info.c \
+             info.h \
              magmenu.c \
+             magmenu.h \
              main.c \
+             main_globals.h \
+             main_resources.h \
              media.c \
+             media.h \
+             message.h \
              misc.c \
+             misc.h \
              miscmenu.c \
+             miscmenu.h \
              misc_private.c \
+             misc_private.h \
              note.c \
+             note.h \
              options.c \
+             options.h \
              options_fs.c \
+             options_fs.h \
              options_gs.c \
+             options_gs.h \
              options_gv.c \
+             options_gv.h \
              options_setup.c \
+             options_setup.h \
+             paths.h \
              process.c \
+             process.h \
              popup.c \
+             popup.h \
              ps.c \
+             ps.h \
              resource.c \
+             resource.h \
              save.c \
+             save.h \
              scale.c \
+             scale.h \
              gv_signal.c \
+             gv_signal.h \
              version.c \
+             version.h \
+             versionp.h \
              widgets_misc.c \
-             zoom.c
+             widgets_misc.h \
+             zoom.c \
+             zoom.h \
+             message.h \
+             stdc.h \
+             Aaa_intern.h \
+             Aaa.h \
+             AaaP.h \
+             d_memdebug.h \
+             d_aaa_xtmem.h \
+             d_fs_xtmem.h \
+             d_gv_mem.h \
+             d_gv_xtmem.h \
+             d_proc_xtmem.h \
+             d_ps_mem.h \
+             d_ps_xtmem.h \
+             gv_message.h \
+             types.h
 
 BUILT_SOURCES = gv_spartan.h gv_intern_res_unix.h gv_class.h
 
@@ -179,13 +248,13 @@ $(srcdir)/gv_make_res.dat :
 # Conditional source files
 
 if USE_SCROLLBAR_CODE
-   gv_SOURCES += Scrollbar.c
+   gv_SOURCES += Scrollbar.c Scrollbar.h ScrollbarP.h
 endif
 
 if USE_SETENV_CODE
-   gv_SOURCES += setenv.c getenv.c
+   gv_SOURCES += setenv.c setenv.h getenv.c
 endif
 
 if USE_MEMDEBUG_CODE
-   gv_SOURCES += d_mem.c d_xtmem.c
+   gv_SOURCES += d_mem.c d_mem.h d_xtmem.c d_xtmem.h
 endif
