@@ -1,0 +1,70 @@
+#!/bin/bash
+
+o="$1"
+if [ "$o" = "" ]
+then 
+   o="a"
+fi
+
+mv ../gv-faq.html ../faq.html
+rm -f ../gv*.html
+rm -f ../gv.ps*
+rm -f ../gv.man
+rm -f ../key-bindings.txt*
+mv ../faq.html ../gv-faq.html
+
+cp key-bindings.txt ../key-bindings.txt
+gzip -S "-gz" ../key-bindings.txt
+
+if [ -f "../../source/gv_user.ad" ]
+then
+   echo "generating gv.ad.ps"
+   sed '
+     /^!/d
+     /^$/d
+     s/\\$/\\ /g
+     ' ../../source/gv_user.ad > gv.ad.ps
+   echo "generating gv.ad.man"
+   sed '
+     /^!/d
+     /^$/d
+     s/\\/\\\\/g
+     ' ../../source/gv_user.ad > gv.ad.man
+fi
+
+if [ "$o" = "a" -o "$o" = "m" -o "$o" = "man" ]
+then
+   rm -f gv.man gv.sgml
+   gcc -x c -E -P -traditional -DMAN -c gv.doc -o gv.sgml
+   sgml2txt -man gv
+   #groff -man -Tascii gv.man > ../gv.man
+   mv gv.man ../
+   rm -f gv.man gv.sgml
+fi
+
+if [ "$o" = "a" -o "$o" = "h" -o "$o" = "html"  ]
+then
+   rm -f gv*.html gv.sgml
+   gcc -x c -E -P -traditional -DHTML -c gv.doc -o gv.sgml
+   sgml2html gv
+   rm -f gv.sgml
+   mv  gv*.html ../
+   cp ../gv-faq.html ../gv-7.html
+   echo "copying html docs to /z/gv/gvwww/gv_doc/"
+   cp ../*.html /z/gv/gvwww/gv_doc/
+fi
+
+if [ "$o" = "a" -o "$o" = "p" -o "$o" = "ps" ]
+then
+   rm -f gv.tex gv.aux gv.log gv.toc gv.sgml
+   gcc -x c -E -P -traditional -DTEX -c gv.doc -o gv.sgml
+   sgml2latex -a -p gv
+   rm -f gv.tex gv.aux gv.log gv.toc gv.sgml
+   mv gv.ps ../
+   echo "Copying ps docs to /z/gv/gvwww/gv_doc/"
+   cp ../*.ps /z/gv/gvwww/gv_doc/
+   gzip -S "-gz" ../gv.ps
+fi
+
+rm -f gv.ad*
+

@@ -1,0 +1,872 @@
+/*
+**
+** gv.doc
+**
+** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** 
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+** 
+** Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
+**           Department of Physics
+**           Johannes Gutenberg-University
+**           Mainz, Germany
+**
+*/
+
+#ifdef MAN
+#define IT(aaa)             aaa
+#else
+#define IT(aaa)             <it>aaa</it>
+#endif
+
+#define BF(aaa)             <bf>aaa</bf>
+#define TT(aaa)             <tt>aaa</tt>
+#define SQ(aaa)             <sq>aaa</sq>
+#define ANGLED(aaa)         &lt;aaa&gt;
+#define GV_LIT_NAME         gv
+#define GV_NAME             GV_LIT_NAME
+#define GV_VERSION          3.5
+#define GV_DATE             June 1997
+#define GV_AUTHOR           Johannes Plass
+#define GV_EDITION          Edition 1.9, June 1997
+#define GV_AUTHOR_EMAIL     plass@thep.physik.uni-mainz.de
+#ifdef MAN
+#   define GV_AD_FILE       "gv.ad.man"
+#   define REF(aaa)         aaa
+#else
+#   define GV_AD_FILE       "gv.ad.ps"
+#   define REF(aaa)         <ref id="aaa" name="aaa">
+#endif
+
+#ifdef HTML
+#   define GV_AUTHOR_EMAIL_URL <htmlurl url="mailto:plass@thep.physik.uni-mainz.de" \
+                            name="plass@thep.physik.uni-mainz.de">
+#else
+#   define GV_AUTHOR_EMAIL_URL GV_AUTHOR_EMAIL
+#endif
+
+#define GS_NAME             ghostscript
+#define XAW3D               Xaw3d
+#define GHOSTVIEW           ghostview 1.5
+
+#define GV_USER_AD          SQ(gv_user.ad)
+#define GV_SYSTEM_AD        SQ(gv_system.ad)
+#define GV_CLASS_AD         SQ(gv_class.ad)
+
+#ifdef HTML
+#   define FTP_ANCHOR(aaa,bbb) <url url="bbb" name="aaa">
+#else
+#   define FTP_ANCHOR(aaa,bbb) bbb
+#endif
+
+#ifdef MAN
+#   define LABEL(bbb)        
+#   define SECTION          <sect1>
+#   define SUBSECTION       <sect1>
+#   define SUBSUBSECTION    <sect1>
+#else
+#   define LABEL(bbb)       <label id="bbb">
+#   define SECTION          <sect>
+#   define SUBSECTION       <sect1>
+#   define SUBSUBSECTION    <sect2>
+#endif
+
+<!-- gv documentation
+-->
+
+<!doctype linuxdoc system>
+
+
+#ifndef MAN
+<article>
+<title> GV_LIT_NAME GV_VERSION, GV_DATE
+<author>by GV_AUTHOR (GV_AUTHOR_EMAIL_URL)
+<date> GV_EDITION
+<abstract>
+GV_NAME - View PostScript and PDF documents using GS_NAME
+</abstract>
+<toc>
+#else
+<manpage title="gv">
+#endif
+
+<!--
+#####################################################
+   Name
+#####################################################
+-->
+#ifdef MAN
+<!--
+ LABEL() and title intentionally interchanged to
+ let 'man -k gv' give the correct result. (jp) 
+-->
+SECTION  LABEL(Name) Name
+gv - a PostScript and PDF previewer
+#endif
+<!--
+#####################################################
+   Synopsis
+#####################################################
+-->
+SECTION Synopsis LABEL(Synopsis)
+<p>
+<verb>
+GV_LIT_NAME [ filename ]
+   [-monochrome] [-grayscale] [-color]
+   [-[no]safer] [-[no]quiet] [-arguments <arguments>]
+   [-page <label>] [-[no]center]
+   [-media <media>]
+   [-portrait] [-landscape] [-upsidedown] [-seascape]
+   [-scale <n>] [-scalebase <n>]
+   [-swap] [-noswap]
+   [-antialias] [-noantialias]
+   [-dsc] [-nodsc]
+   [-eof] [-noeof]
+   [-pixmap] [-nopixmap]
+   [-watch] [-nowatch]
+   [-?] [-h] [-help] [-v]
+   [-resize] [-noresize]
+   [-geometry [<width>][x<height>][{+-}<xoffset>{+-}<yoffset>]
+   [-ad <resource file>]
+   [-style <resource file>]
+   [-spartan]
+   [<other toolkit options>]
+</verb>
+<!--
+#####################################################
+   Description
+#####################################################
+-->
+SECTION Description LABEL(Description)
+<p>
+#ifndef MAN
+GV_NAME allows to view and navigate through
+PostScript and PDF documents on an X display
+by providing a user interface for the GS_NAME interpreter
+(See REF(ghostscript) for further information on GS_NAME).
+
+Please note that GV_NAME is derived from Tim Theisen's
+GHOSTVIEW
+(See REF(ghostview) for further information on GHOSTVIEW).
+#else
+GV_NAME allows to view and navigate through
+PostScript and PDF documents on an X display
+by providing a user interface for the GS_NAME interpreter.
+
+Please note that GV_NAME is derived from Tim Theisen's
+GHOSTVIEW.
+#endif
+<!--
+#####################################################
+   Options
+#####################################################
+-->
+SECTION Options LABEL(Options)
+<p>
+<descrip>
+<tag/BF(filename)/
+   The name of the file to be displayed.
+   The file ending SQ(.ps) may be omitted.
+   SQ(filename) may point to a compressed file 
+   (gzipped, zipped or compressed).
+   Viewing PDF files requires at least ghostscript version 4.x.
+<tag/BF(-ad IT(ANGLED(resource file)))/
+   Read and use additional resources from the file
+   IT(ANGLED(resource file)).
+   These resources have higher priority than those provided
+   in the context of the IT(-style ANGLED(resource file)) option.
+<tag/BF(-antialias), BF(-noantialias)/
+   Whether to use antialiasing.
+<tag/BF(-arguments IT(ANGLED(arguments)))/
+   Start GS_NAME with additional options as specified by the
+   string IT(ANGLED(arguments)).
+<tag/BF(-center), BF(-nocenter)/
+   Whether the page should be centered automatically.
+<tag/BF(-dsc), BF(-nodsc)/
+   Determines if IT(document structuring convention) (DSC) comments
+   should be respected or ignored.
+   If IT(-nodsc) is used GV_NAME will not attempt to examine
+   the structure of the document but will pass the file
+   to the GS_NAME interpreter as a whole. In this case no page numbers
+   are shown and freely moving around in the document is not possible.
+   This option may help when viewing files not conforming
+   to the IT(document structuring conventions).
+<tag/BF(-eof), BF(-noeof)/
+   Defines the behaviour of the postscript scanner used to
+   examine the structure of the document.
+   If IT(-noeof) is used the scanner will ignore end of file (EOF)
+   comments. This may help when viewing documents which import other
+   documents without enclosing them within the proper
+   "BeginDocument" and "EndDocument" comments.
+   If IT(-eof) is used, the scanner treats an EOF comment as
+   marking the end of the file.
+<tag/BF(-pixmap), BF(-nopixmap)/
+   If IT(-pixmap) is used gv tries to maintain off-screen regions
+   of the displayed page by allocating a sufficiently large pixmap.
+   If IT(-nopixmap) is used the IT(X Server) is responsible for
+   maintaining obscured portions of the displayed page
+   (see also the SQ(useBackingPixmap) resource).
+<tag/BF(-v) /
+   Print the version number of gv to standard output and exit.
+<tag/BF(-h), BF(-?) /
+   Display a short help message and exit.
+<tag/BF(-help)/
+   Display a more explicit help message and exit.
+<tag/BF(-scale IT(ANGLED(n)))/
+   Selects the scale entry IT(ANGLED(n)) relative to the scale 1.0.
+   IT(ANGLED(n)) must be an integer.
+<tag/BF(-scalebase IT(ANGLED(n)))/
+   Selects the scale base IT(ANGLED(n)).
+<tag/BF(-monochrome), BF(-grayscale), BF(-color)/
+   Sets the color palette to be used.
+<tag/BF(-media IT(ANGLED(media)))/
+   Selects the paper size to be used. Valid values are names of
+   paper sizes that appear in the list of page medias as given
+   by the IT(medias) resource.
+<tag/BF(-page IT(ANGLED(label)))/
+   Display the page with label IT(ANGLED(label)) first.
+<tag/BF(-portrait), BF(-landscape), BF(-seascape), BF(-upsidedown)/
+   Sets the orientation.
+<tag/BF(-quiet), BF(-noquiet)/
+   Whether to start GS_NAME with the IT(-dQUIET) option.
+<tag/BF(-resize), BF(-noresize)/
+   Whether GV_NAME is allowed to automatically fit the
+   size of its window to the size of the displayed page.
+<tag/BF(-safer), BF(-nosafer)/
+   Whether to start GS_NAME with the IT(-dSAFER) option.
+<tag/BF(-spartan)/
+   This is a shortcut for SQ(-style gv_spartan.dat).
+<tag/BF(-style IT(ANGLED(resource file)))/
+   Read and use additional resources from the file IT(ANGLED(resource file)).
+   These resources have  lower priority than those provided
+   in the context of the IT(-ad ANGLED(resource file)) option.
+<tag/BF(-swap), BF(-noswap)/
+   Whether to interchange the meaning of the orientations
+   landscape and seascape.
+<tag/BF(-watch), BF(-nowatch)/
+   The IT(-watch) option causes GV_NAME to check the document
+   periodically. If changes are detected GV_NAME will
+   automatically display the newer version of the file.
+   The document is by default checked once every second. 
+   This can be changed via the IT(watchFileFrequency) resource.
+   Note that sending GV_NAME the IT(SIGHUP) signal also causes
+   an update of the displayed document. This method
+   may be used by document creators to trigger GV_NAME
+   remotely.
+</descrip>
+<!--
+#####################################################
+   Resources
+#####################################################
+-->
+SECTION Resources LABEL(Resources)
+<p>
+BF(Resource files)
+<p>
+In general GV_NAME does not depend on any external resource files.
+However, when starting GV_NAME, preferences are read from
+
+<itemize>
+<item> BF(a system specific resource file).
+   The name of this file is as described by the SQ(XFILESEARCHPATH)
+   environment variable, or, if this variable is not defined,
+   implementation dependant. In most cases it is  
+   SQ(/usr/X11/lib/X11/app-defaults/GV).
+   Administrators may want to modify this file in order
+   to set up GV_NAME according to the local needs of their system.
+<item> BF(a user specific resource file).
+   The name of this file is either SQ(&tilde/.gv) or as described
+   by the SQ(XUSERFILESEARCHPATH) environment variable.
+</itemize>
+
+The files GV_USER_AD and GV_SYSTEM_AD (located in the library directory
+of GV_NAME, which is most probably either 
+SQ(/usr/local/lib/gv/) or SQ(/usr/lib/gv/) may serve as a basis
+for constructing the user and system specific resource files.
+
+Note that the user and system specific resource files are not the only
+sources of preferences taken into account when GV_NAME is started.
+However, in practice these are the most important.
+<p>
+BF(Resources of GV_NAME)
+<p>
+The following describes some of the resources of GV_NAME.
+The precise syntax of some of the resource values may be 
+inferred from the appended default system specific resource file.
+
+<descrip>
+<tag/antialias/
+   Whether antialiasing should be used.
+   Valid values are SQ(True) and SQ(False).
+<tag/autoCenter/
+   Whether the displayed page should automatically be centered 
+   (for instance when opening a new file).
+   Valid values are SQ(True) and SQ(False).
+<tag/autoResize/
+   Whether GV_NAME is allowed to resize the main window
+   according to the size of the current page.
+   Valid values are SQ(True) and SQ(False).
+<tag/confirmPrint/
+   Whether printing requires an extra confirmation.
+   Valid values are SQ(True) and SQ(False).
+<tag/confirmQuit/
+   Whether leaving GV_NAME requires extra confirmation.
+   Valid values are SQ(0) (Never), SQ(1)
+   (When processing) and SQ(2) (Always).
+   The default value is SQ(1), which causes
+   a confirmation request when trying to leave GV_NAME
+   in the presence of pending PDF to Postscript conversions.
+<tag/scrollingEyeGuide/
+   If this resource is SQ(True) scrolling via the
+   keyboard causes a temporary border to be drawn around the
+   previously visible area of the page.
+   Allowed values are SQ(True) and SQ(False).   
+<tag/ignoreEOF/
+   Defines the behaviour of the postscript scanner as described
+   in the REF(Options) section.
+   Valid values are SQ(True) and SQ(False).   
+<tag/respectDSC/
+   Determines whether GV_NAME should attempt to respect document 
+   structuring comments.
+   Valid values are SQ(True) and SQ(False).
+<tag/reverseScrolling/
+   Defines the interpretation of directions when
+   scrolling with the mouse.
+   Valid values are SQ(True) and SQ(False).
+<tag/swapLandscape/
+   Whether the meaning of SQ(landscape) and SQ(seacape)
+   should be interchanged.
+   Valid values are SQ(True) and SQ(False).
+<tag/scratchDir/
+   Specifies a directory used to store temporary data.
+<tag/defaultSaveDir/
+   Specifies the default destination directory for files to be saved.
+<tag/useBackingPixmap/
+   If the value of this resource is SQ(False) the IT(X Server)
+   is advised that saving off-screen pixels of the displayed page
+   would be beneficial (maintaining backing store). In this case gv 
+   does not actively maintain the contents of the page but relies
+   on the IT(X Server). The server is, however, always free to stop 
+   maintaining backing backing store.
+   If the value of this resource is SQ(True) the IT(X Server)
+   is advised that maintaining backing store is not useful.
+   In this case gv attempts to allocate a sufficiently large pixmap
+   to store the contents of the displayed page.
+<tag/watchFile/
+   Whether the document should be checked periodically and updated
+   automatically if  changes are detected.
+   Valid values are SQ(True) and SQ(False).
+<tag/watchFileFrequency/
+   Defines the time in milliseconds elapsing between successive
+   checks of the document when IT(watchFile) is set to SQ(True).
+   Allowed values must be larger than 500.
+<tag/printCommand/
+   The command used for printing a file.
+   The command may contain multiple '%s' wildcards
+   which will be replaced by the name of the file to be 
+   printed.
+<tag/gsInterpreter/
+   The command used to start the GS_NAME interpreter.
+<tag/gsCmdScanPDF/
+   The command used to extract document structuring comments
+   from a PDF file.
+<tag/gsCmdConvPDF/
+	The command used to convert a PDF file to PostScript.
+<tag/gsX11Device/
+   The GS_NAME command line option which activates the
+   SQ(X11) device. 
+<tag/gsX11AlphaDevice/
+   The GS_NAME command line option which activates the
+   SQ(X11) device with antialiasing enabled. 
+<tag/gsSafer/
+   Determines whether GS_NAME should be started with the
+   SQ(-dSAFER) command line option.
+<tag/gsQuiet/
+   Determines whether GS_NAME should be started with the
+   SQ(-dQUIET) command line option.
+<tag/gsArguments/
+   May be used to provide additional command line options for the
+   GS_NAME interpreter.
+   Starting GV_NAME with the SQ(-arguments IT(ANGLED(arguments)))
+   option will override this resource setting.
+<tag/magMenu/
+   Describes the menu that pops up when preparing to
+   to zoom an area of the displayed page.
+<tag/dirs/
+   Defines a list of directories accessible via the IT(Directories)
+   menu in the file selection window.
+   The special value SQ(Home) corresponds to the users home directory,
+   the value SQ(Tmp) corresponds to the scratch directory as defined
+   by the IT(scratchDir) resource.
+<tag/filter/
+   Defines the default filter to be used when displaying a directory
+   contents in the file selection window.
+   A filter is specified according to the syntax
+<verb>
+   <filter>    := [<filespecs>] [no <filespecs>]
+   <filespecs> := <filespec> [<filespecs>]
+   <filespec>  := filename possibly including wildcards '*'
+                  which match any character.
+</verb>
+   Example: The filter
+<verb>
+   GV*filter: *.ps *.pdf no .*
+</verb>
+   screens out all files with names starting with a dot
+   and keeps of the remaining ones only those which end
+   on SQ(.ps) or SQ(.pdf).
+<tag/filters/
+   Defines a list of filters offered in the IT(Filters)
+   menu of the file selection window.
+   The filter SQ(None) has a special meaning
+   causing all files to be displayed when the corresponding
+   menu entry is selected.
+<tag/miscMenuEntries/
+   Describes the menu that pops up when clicking with the 
+   third mouse button on the displayed page. 
+   The value of this resource is a list of menu entries.
+   Allowed entries are
+   SQ(update),
+   SQ(redisplay),    
+   SQ(toggle_current),    
+   SQ(toggle_even),    
+   SQ(toggle_odd),    
+   SQ(unmark),    
+   SQ(stop),    
+   SQ(print_all),    
+   SQ(print_marked),    
+   SQ(save_all),    
+   SQ(save_marked) and
+   SQ(line).
+<tag/showTitle/
+   Whether the name of the displayed document should be shown in the
+   title bar of the window. The name of gv's icon will also change
+   accordingly if this resource is set to SQ(True).
+<tag/maximumWidth, maximumHeight/
+   When resizing GV_NAME will not attempt to exceed the size specified
+   by these resources.
+   These resources may be specified as a positive integer
+   or as SQ(screen), optionally combined with
+   a positive or negative offset.
+   The default values listed above provide examples for this syntax.
+   SQ(screen) will automatically be replaced by the size of the
+   screen.
+<tag/minimumWidth, minimumHeight/
+   Defines a minimum size for the main window.
+   Valid values for both resources are positive integers larger
+   than 200.
+<tag/scale/
+   Sets the initial scale. The value of this resource is the offset
+   of the scale to be selected relative to the scale 1.0 in the
+   the SQ(Scale) menu.
+<tag/scaleBase/
+   Selects the initial scale base. The value of this resource should 
+   be a positive integer.
+<tag/scales/
+   Defines the available scales bases and scales in the SQ(Scale)
+   menu.   
+<tag/orientation/
+   Sets the initial orientation. Valid values are 
+   SQ(portrait), SQ(landscape),SQ(seascape),
+   SQ(upside-down) and
+   SQ(automatic).
+   SQ(automatic) causes GV_NAME to attempt
+   to derive the correct orientation from document structuring
+   comments.
+<tag/fallbackOrientation/
+   Defines the paper-size to be used when automatic orientation
+   detetction fails.  Valid values are 
+   SQ(portrait), SQ(landscape),SQ(seascape) 
+   and SQ(upside-down).
+<tag/medias/
+   A list describing the page medias known to GV_NAME.
+   List entries starting with SQ(!) or SQ(#) will not appear in the
+   SQ(Media) menu but will still be used for automatic paper size 
+   detection.
+<tag/pagemedia/
+   Sets the paper size. 
+   Allowd values are as given in the above list of paper-sizes.
+   Specifying
+   SQ(automatic) causes GV_NAME to attempt
+   to derive the correct paper-size from document structuring
+    comments.
+<tag/fallbackPageMedia/
+   Defines the paper-size to be used when automatic paper-size 
+   detetction fails.  Valid values are as given in the  above
+   list of paper-sizes.
+</descrip>
+<p>
+BF(The default user and system specific resource file)
+<verb>
+#include GV_AD_FILE
+</verb>
+<!--
+#####################################################
+   Mouse and key bindings
+#####################################################
+-->
+SECTION Mouse and key bindings LABEL(Mouse_and_key_bindings)
+<p>
+<descrip>
+<tag/BF(Mouse bindings in the Main and the Zoom window)/
+The following mouse events are defined when the mouse pointer
+is either on the displayed page or on a zoomed area:
+<p>
+<descrip>
+<tag/BF(-) press button 1, move mouse, release button 1/
+   Scrolls the displayed page 'proportionally'.
+<tag/BF(-) press button 3, move mouse, release button 3/
+   Scrolls the displayed page 'absolutely'.
+<tag/BF(-) double-click with button 1/
+   In the main window this displays the previous/next page
+   if the double-click occured in the left/right half of the
+   window.
+   In a zoom window it does nothing.
+<tag/BF(-) press button 2, release button 2/
+   Pops up a small menu which allows to choose a magnification
+   for a certain area around the current mouse position.
+   After selecting a magnification a zoom window pops up
+   displaying the area at the chosen scale.
+<tag/BF(-) press button 2, move mouse, release button 2/
+   This draws and thereby defines a rectangular region which
+   can be displayed in a zoom window. The magnification for the
+   area can be selected by means of a popup menu which appears after
+   releasing button 2.
+<tag/ BF(-) press button 1, press button 2/
+   Redisplays the current page. This event sequence works only
+   in the main window.
+<tag/BF(-) press button 3, release button 3/
+   Pops up a small menu which offers a few standard actions
+   like 'Redisplay', 'Mark Page', etc.
+</descrip>
+<tag/BF(Mouse bindings in the File Selection popup)/
+The following mouse events are defined when the mouse pointer is
+in the window of either a file or a directory list:
+<p>
+<descrip>
+<tag/BF(-) press button 1, move mouse, release button 1/
+   Scrolls a file or directory list 'proportionally'.
+<tag/BF(-) press button 2, move mouse, release button 2/
+   Scrolls a file or directory list 'absolutely'.
+<tag/BF(-) press button 2, release button 2/
+   Scrolls a file or directory list one page up/down
+   if the button was pressed in the upper/lower half of the list.
+<tag/BF(-) double-click with button 1 on a filename/
+   Selects the file and closes the File Selection popup.
+<tag/BF(-) click with button 1 on a directory name/
+   Causes the contents of this directory to be displayed.
+</descrip>
+<tag/BF(Mouse bindings in the Table of Contents)/
+The following mouse events are defined when the mouse pointer is
+in the window showing a list of page numbers of the
+current file (table of contents):
+<p>
+<descrip>
+<tag/BF(-) press button 1, move mouse, release button 1/
+   Scrolls the table of contents.
+<tag/BF(-) press button 1 on a page number/
+   Go to this page.
+<tag/BF(-) press button 2 on a page number/
+   Mark this page if it is unmarked, but unmark it if it is marked.
+<tag/BF(-) press button 2, move mouse, release button 2/
+   Marks/unmarks all unmarked/marked pages in the region
+   crossed by the mouse pointer during the movement.
+</descrip>
+<tag/BF(Mouse bindings in the Panner widget)/
+The Panner widget is the rectangular region located close to the
+left edge of the main window. It indicates the size and the
+position of the visible area of the current page relative to the
+total page.
+<p>
+The following mouse events are defined when the mouse pointer is
+in this region:
+<p>
+<descrip>
+<tag/BF(-) press button 1, move mouse/
+   Scrolls the displayed page.
+<tag/BF(-) press button 2/
+   Display the previous page.
+<tag/BF(-) press button 3/
+   Display the next page.
+</descrip>
+<tag/BF(Mouse bindings in the &dquot&gt&gt&dquot and &dquot&lt&lt&dquot button windows)/
+The &dquot&gt&gt&dquot and &dquot&lt&lt&dquot buttons are used to move 
+to another page. The following mouse events are defined:
+<p>
+<descrip>
+<tag/BF(-) press button 1/
+   Move 1 page forward/backwards.
+<tag/BF(-) press button 2/
+   Move 5 pages forward/backwards.
+<tag/BF(-) press button 3/
+   Move 10 pages forward/backwards.
+</descrip>
+<tag/BF(Key Bindings)/
+The following key events are defined in the main window. Those bindings
+scrolling the page are also defined in zoom popups.
+<verb>
+#include "key-bindings.txt"
+</verb>
+</descrip>
+<!--
+#####################################################
+   Comments about the user interface
+#####################################################
+-->
+SECTION Comments about the user interface LABEL(Comments_about_the_user_interface)
+<p>
+<descrip>
+
+<tag/BF(Scales)/
+
+The SQ(Scale) menu which allows to view the document
+at different sizes is divided into two parts. The first part
+shows a list of available scale bases, the second part,
+separated by a line, lists the relative scales which are applied
+with respect to the selected scale base.
+<p>
+By default two scales bases are available, the SQ(Natural size)
+and the SQ(Pixel based) base.
+When choosing the SQ(Pixel based) scale base a relative scale 
+of 1.0 causes one postscript point to correspond to one pixel on the 
+screen.
+<p>
+When viewing a document at a relative scale of 1.0
+using the SQ(Natural size) base the page should appear in its
+real size, as if printed on paper.
+For the SQ(Natural size) base to work properly GV_NAME has to know
+the correct size of the root window. Automatic detection
+of this size unfortunately only provides approximate results, therefore
+it is best if it is provided by the user. To do so the resource
+<verb>
+   GV.screenSize:  <width> x <height>
+</verb>
+should be added to the SQ(SCREEN_RESOURCES) property of the screen
+the document is viewed on, with IT(ANGLED(width)) and IT(ANGLED(height))
+describing the width and height of the root window in units of millimeters.
+For instance by using the command
+<verb>
+   echo "GV.screenSize: 396 x 291" | xrdb -override -screen
+</verb>
+a width of 346 mm and a height of 291 mm will be used for the
+SQ(Natural size) scale base.
+Alternatively the resource
+<verb>
+   GV.screenSize_<machine>_<disp>_<scr>:  <width> x <height>
+</verb>
+may be added to a resource file read by GV_NAME. Here
+IT(ANGLED(machine)) ,IT(ANGLED(disp)) and IT(ANGLED)) describe
+the display on which GV_NAME displays the document.
+For instance, if the display is set to SQ(tic.tac.toe.wo:0.1)
+the resource should be specified as
+<verb>
+   GV.screenSize_tic_0_1: 396 x 291
+</verb>
+Note that this method doesn't work on VMS.
+As a last alternative the resource
+<verb>
+   GV.screenSize:  <width> x <height>
+</verb>
+may be added to one of the resource files. However, for obvious reasons
+this method should be used only on single user machines.
+
+<tag/BF(Scrolling)/
+<p>
+It is probably a IT(de facto) standard for user interfaces
+that windows are supposed to be scrolled by means of
+scrollbars attached to their sides.
+However, for various reasons the use of scrollbars
+has been minimized in GV_NAME.
+<p>
+Instead, in all windows with obscured data, scrolling
+may be performed by
+<quote>
+   pressing button1, moving the mouse, then releasing button1
+</quote>
+directly in the window. This includes the displayed page,
+zoom popups, the table of contents and the file and 
+directory lists displayed in the file selection popup.
+
+<tag/BF(Displaying new versions of a document)/
+<p>
+During document creation it is usually desirable to
+always display the newest version of the document in work.
+<p>
+Instead of explicitly loading it via the file selection
+popup the most recent version can be displayed by
+pressing the SQ(Redisplay) button in the main window
+(VMS users should use the SQ(Update File) entry in the
+SQ(File) menu).
+Choosing the SQ(Redisplay) entry in the menu that pops
+up when clicking with the third mouse button anywhere on the
+displayed page certainly has the same effect.
+<p>
+More comfortable is the "Watch File" feature which may
+be switched on by selecting the corresponding entry in the
+SQ(State) menu. If activated GV_NAME will check
+every now and then if a new version of the displayed
+file exists. If so it will be displayed automatically.
+By default the file is checked about once every
+second.
+<p>
+Finally it may also be left to the document creating program
+to trigger GV_NAME to update its display. To do so the
+program should send the SIGHUP signal to GV_NAME.
+For instance at the end of a shell script generating a
+postscript file from latex sources the line
+<verb>
+   kill -SIGHUP <gv_pid>
+</verb>
+may be added (here TT(&lt;gv_pid&gt;) is the process id of
+GV_NAME). Executing the script and thereby creating a new
+version of the document will then also cause the
+result to be displayed instantaneously.
+Please note that this feature is available only on X11 R6
+based systems. 
+</descrip>
+<!--
+#####################################################
+   FAQ
+#####################################################
+-->
+#ifdef HTML
+SECTION Frequently Asked Questions LABEL(Frequently_Asked_Questions)
+<p>
+bla foo bla bar
+#endif /* HTML */
+<!--
+#####################################################
+   Availability
+#####################################################
+-->
+SECTION Availability LABEL(Availability)
+<p>
+The source code of the most recent version of gv may be
+obtained from the following sources:
+<descrip>
+<tag/World Wide Web:/FTP_ANCHOR(http://wwwthep.physik.uni-mainz.de/&tilde;plass/gv/,http://wwwthep.physik.uni-mainz.de/&tilde;plass/gv/)
+<tag/Anonymous ftp:/FTP_ANCHOR(ftp://thep.physik.uni-mainz.de/pub/gv/,ftp://thep.physik.uni-mainz.de/pub/gv/)
+</descrip>
+<!--
+#####################################################
+   Authors
+#####################################################
+-->
+SECTION Authors LABEL(Authors)
+<p>
+<verb>
+Johannes Plass             plass@thep.physik.uni-mainz.de
+                           Department of Physics
+                           Johannes Gutenberg University
+                           Mainz, Germany
+
+gv is derived from GhostView 1.5, created by
+          Tim Theisen      Systems Programmer
+Internet: tim@cs.wisc.edu  Department of Computer Sciences
+    UUCP: uwvax!tim        University of Wisconsin-Madison
+   Phone: (608)262-0438    1210 West Dayton Street
+     FAX: (608)262-9777    Madison, WI   53706
+</verb>
+<!--
+#####################################################
+   Copyright
+#####################################################
+-->
+#ifndef MAN
+SECTION Copyright LABEL(Copyright)
+<p>
+Copyright (C) 1992-1997  Johannes Plass, Timothy O. Theisen
+
+gv is free software; you can redistribute it 
+and/or  modify  it under the terms  of the  GNU General 
+Public  License  as  published  by  the  Free  Software 
+Foundation;  either  version 2 of  the License, or  (at 
+your option) any later version.
+
+gv is distributed in  the hope  that it will 
+be useful, but  WITHOUT ANY WARRANTY;  without even the
+implied warranty  of  MERCHANTABILITY or  FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+You  should  have  received a  copy of  the  GNU General
+Public License along with this program; if not, write to
+the  Free  Software  Foundation,  Inc.,  675  Mass  Ave, 
+Cambridge, MA 02139, USA.
+#endif /* MAN */
+<!--
+#####################################################
+   Suggestions and bug reports
+#####################################################
+-->
+SECTION Suggestions and bug reports LABEL(Suggestions_and_bug_reports)
+<p>
+Please send suggestions or bug reports to GV_AUTHOR_EMAIL_URL.
+<!--
+#####################################################
+   Acknowledgements
+#####################################################
+-->
+#ifndef MAN
+SECTION Acknowledgements LABEL(Acknowledgements)
+<p>
+Tim Theisen created GHOSTVIEW, which was the starting point of GV_NAME.
+
+Peter Deutsch is the author of the GS_NAME interpreter, without which
+GV_NAME would be not more than an empty hull.
+
+Kaleb S.Keithley turned IT(Xaw) into the extremely nice XAW3D widget set. 
+
+Keith Packard invented the IT(Layout) widget, the heart of GV_NAME's
+widget tree.
+
+Finally I'd like to thank Jim Jennis 
+(James_H_Jennis@mail.mmmg.com) for 
+carefully testing all versions of GV_NAME.
+If there is something like the notion of a 'chief-beta-tester'
+he deserves this attribute for his careful and devoted work.
+#endif /* MAN */
+<!--
+#####################################################
+   References
+#####################################################
+-->
+#ifndef MAN
+SECTION References LABEL(References)
+<p>
+SUBSECTION BF(ghostscript) LABEL(ghostscript)
+<p>
+The GS_NAME interpreter may be obtained via anonymous ftp from
+FTP_ANCHOR(ftp.cs.wisc.edu,ftp://ftp.cs.wisc.edu/pub/ghost).
+
+SUBSECTION BF(ghostview) LABEL(ghostview)
+<p>
+GV_NAME is based on Tim Theisen's
+GHOSTVIEW.
+GHOSTVIEW may be obtained via anonymous ftp from
+FTP_ANCHOR(ftp.cs.wisc.edu,ftp://ftp.cs.wisc.edu/pub/ghost).
+
+SUBSECTION BF(Xaw3d) LABEL(Xaw3d)
+<p>
+The sources of Kaleb S. Keithley's modification of the Xaw widget set
+may be obtained via anonymous ftp from
+FTP_ANCHOR(ftp.x.org,ftp://ftp.x.org/contrib/widgets/Xaw3d).
+#endif /* MAN */
+
+#ifndef MAN
+   </article>
+#else
+   </manpage>
+#endif

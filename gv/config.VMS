@@ -1,0 +1,85 @@
+!XCOMM
+!XCOMM  config.VMS
+!XCOMM
+!XCOMM  Copyright (C) 1995, 1996, 1997 Johannes Plass
+!XCOMM 
+!XCOMM  This program is free software; you can redistribute it and/or modify
+!XCOMM  it under the terms of the GNU General Public License as published by
+!XCOMM  the Free Software Foundation; either version 2 of the License, or
+!XCOMM  (at your option) any later version.
+!XCOMM 
+!XCOMM  This program is distributed in the hope that it will be useful,
+!XCOMM  but WITHOUT ANY WARRANTY; without even the implied warranty of
+!XCOMM  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!XCOMM  GNU General Public License for more details.
+!XCOMM 
+!XCOMM  You should have received a copy of the GNU General Public License
+!XCOMM  along with this program; if not, write to the Free Software
+!XCOMM  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+!XCOMM 
+!XCOMM  Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
+!XCOMM            Department of Physics
+!XCOMM            Johannes Gutenberg-University
+!XCOMM            Mainz, Germany
+!XCOMM 
+
+!XCOMM ====================================================================
+!XCOMM === The print command. Don't forget the /DELETE qualifier on VMS.
+!XCOMM ====================================================================
+PRINT_COMMAND = PRINT/NOID/DELETE/PARAM=(DATA=POST)
+
+!XCOMM --------------------------------------------------------------------
+!XCOMM  The default papersize (can be changed at runtime).
+!XCOMM --------------------------------------------------------------------
+!XCOMM PAPERSIZE = letter
+PAPERSIZE = a4
+
+!XCOMM ====================================================================
+!XCOMM === If defined: PDF to PostScript conversion will produce
+!XCOMM === Level 1 PostScript. Otherwise Level 2 PostScript is generated.
+!XCOMM === Don't activate this unless you have gs 4.00 or newer.
+!XCOMM ====================================================================
+!PRODUCE_PS_LEVEL_ONE = 1
+
+!XCOMM ====================================================================
+!XCOMM === Use a backing pixmap (True) or rely on the XServer to maintain
+!XCOMM === backing store (can be changed at runtime).
+!XCOMM ====================================================================
+USE_BACKING_PIXMAP = True
+
+!XCOMM ====================================================================
+!XCOMM === If defined: Compile style files into the executable.
+!XCOMM ====================================================================
+!USE_FALLBACK_STYLES = 1
+
+!XCOMM ====================================================================
+!XCOMM === Destination directory for gv data files.
+!XCOMM === Must be terminated with a trailing ']' or ':'.
+!XCOMM ====================================================================
+GV_LIBDIR = X11_ROOT:[DATA]
+
+!XCOMM ====================================================================
+!XCOMM === Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP
+!XCOMM === and SIGINT signals. This allows for instance to remove gs
+!XCOMM === subprocesses before gv exits due to the received signal.
+!XCOMM === Furthermore SIGHUP causes gv to check for a possibly newer
+!XMOMM === version of the currently displayed file and to display it
+!XCOMM === in case it exists.
+!XCOMM ====================================================================
+! Doesn't work on VMS without X11R6
+!USE_SIGNAL_HANDLER = 1
+
+!##########################################################################
+!#   Usually there is no need to modify the settings below ...		  #
+!##########################################################################
+
+!XCOMM ====================================================================
+!XCOMM === Your temporary directory.
+!XCOMM ====================================================================
+SCRATCH_DIR  = SYS$SCRATCH:
+
+!XCOMM ====================================================================
+!XCOMM === The default directory for saving.
+!XCOMM ====================================================================
+SAVE_DIR     = SYS$SCRATCH:
+

@@ -1,0 +1,20 @@
+#! /bin/sh
+#
+# Converts all *.c and *.h files except of paths.h
+# to use INC_X*() macros in include directives
+#
+
+#f=`echo *.c *.h | sed -e 's/paths\.h//'`
+f=`grep -l \<X11\/ *.c *.h | sed -e 's/paths\.h//'`
+echo "lit2inc_: Converting:"
+for i in $f
+do
+   echo "   $i"
+   cp $i $i.old
+   sed '
+   s/<X11\/Xaw3d\/\([[:alnum:][:punct:]]*\)>/INC_XAW(\1)/g
+   s/<X11\/Xmu\/\([[:alnum:][:punct:]]*\)>/INC_XMU(\1)/g
+   s/<X11\/\([[:alnum:][:punct:]]*\)>/INC_X11(\1)/g
+   ' $i.old > $i
+done
+echo "lit2inc_: Conversion done"

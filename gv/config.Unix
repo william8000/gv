@@ -1,0 +1,255 @@
+XCOMM /*
+XCOMM **
+XCOMM ** config.Unix
+XCOMM **
+XCOMM ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+XCOMM ** 
+XCOMM ** This program is free software; you can redistribute it and/or modify
+XCOMM ** it under the terms of the GNU General Public License as published by
+XCOMM ** the Free Software Foundation; either version 2 of the License, or
+XCOMM ** (at your option) any later version.
+XCOMM ** 
+XCOMM ** This program is distributed in the hope that it will be useful,
+XCOMM ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+XCOMM ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+XCOMM ** GNU General Public License for more details.
+XCOMM **
+XCOMM ** You should have received a copy of the GNU General Public License
+XCOMM ** along with this program; if not, write to the Free Software
+XCOMM ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+XCOMM ** 
+XCOMM ** Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
+XCOMM **           Department of Physics
+XCOMM **           Johannes Gutenberg-University
+XCOMM **           Mainz, Germany
+XCOMM **
+XCOMM */
+
+XCOMM ####################################################################
+XCOMM ##### Miscellaneous settings
+XCOMM ####################################################################
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Destination directories.
+XCOMM --------------------------------------------------------------------
+      GV_BINDIR    = /usr/local/bin/
+      GV_DOCDIR    = /usr/local/doc/gv/
+      GV_LIBDIR    = /usr/local/lib/gv/
+      GV_MANDIR    = /usr/local/man/man1/
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- The name of the Xaw3d library.
+XCOMM --------------------------------------------------------------------
+XCOMM XAWLIB = -lXaw
+      XAWLIB = -lXaw3d
+
+XCOMM --------------------------------------------------------------------
+XCOMM  As far as the Xaw3d header files are concerned it is by
+XCOMM  default assumed that
+XCOMM     #include <X11/Xaw3d/ThreeD.h>
+XCOMM  is a valid include directive on your system.
+XCOMM  If your Xaw3d headers reside in some other directory, let's say
+XCOMM  in "/home/aaa/Xaw3d", then provide this path below. In this
+XCOMM  case you also have to create appropriate symbolic links in your
+XCOMM  Xaw3d directory, that is, you have to do the following:
+XCOMM     cd    /home/aaa/Xaw3d
+XCOMM     ln -s /home/aaa/Xaw3d X11
+XCOMM     ln -s /home/aaa/Xaw3d Xaw3d
+XCOMM --------------------------------------------------------------------
+XCOMM XAW3D_HEADERS = -I/home/aaa/Xaw3d
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Print Command
+XCOMM --------------------------------------------------------------------
+#if defined(SCOArchitecture)
+      PRINT_COMMAND = lp
+#else
+      PRINT_COMMAND = lpr
+#endif
+
+XCOMM --------------------------------------------------------------------
+XCOMM  The default papersize (can be changed at runtime).
+XCOMM --------------------------------------------------------------------
+XCOMM PAPERSIZE = letter
+      PAPERSIZE = a4
+
+XCOMM --------------------------------------------------------------------
+XCOMM  If defined: PDF to PostScript conversion will produce
+XCOMM  Level 1 PostScript. Otherwise Level 2 PostScript is generated.
+XCOMM  Don't activate this unless you have gs 4.00 or newer.
+XCOMM --------------------------------------------------------------------
+XCOMM #define PRODUCE_PS_LEVEL_ONE
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Use a signal handler intercepting SIGTERM,SIGQUIT, SIGHUP
+XCOMM  and SIGINT signals. This allows for instance to remove gs
+XCOMM  subprocesses before gv exits due to the received signal.
+XCOMM  Furthermore SIGHUP causes gv to check for a possibly newer
+XCOMM  version of the currently displayed file and to display it
+XCOMM  in case it exists.
+XCOMM  However, it also requires X11R6.
+XCOMM --------------------------------------------------------------------
+#define USE_SIGNAL_HANDLER
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Use a backing pixmap (True) or rely on the XServer to maintain
+XCOMM --- backing store (can be changed at runtime).
+XCOMM --------------------------------------------------------------------
+      USE_BACKING_PIXMAP = True
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Use gv's own Motif like scrollbar.
+XCOMM --------------------------------------------------------------------
+#define USE_SCROLLBAR_CODE
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Compile style files into the executable.
+XCOMM --------------------------------------------------------------------
+#define USE_FALLBACK_STYLES
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Use extra code for setenv() and getenv() ?
+XCOMM --------------------------------------------------------------------
+#if !defined(LinuxArchitecture) && !defined(FreeBSDArchitecture)
+#   define USE_SETENV_CODE
+#endif
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Compiler flags.
+XCOMM --------------------------------------------------------------------
+XCOMM CC          = gcc
+XCOMM CCOPTIONS   = -ansi -pedantic -Wall
+XCOMM CDEBUGFLAGS =
+XCOMM LDPOSTLIB   =
+
+XCOMM ####################################################################
+XCOMM ##### Architecture specific settings
+XCOMM ####################################################################
+
+XCOMM ############### ====================================================
+XCOMM  SCO
+XCOMM ############### ====================================================
+
+#ifdef SCOArchitecture
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Compiler options
+XCOMM --------------------------------------------------------------------
+XCOMM For SCO v5 + sco cc
+         CCOPTIONS   = -O1 -Kpentium
+XCOMM    The options below cause core dump when doing two magnifications
+XCOMM    at once.
+XCOMM    CCOPTIONS   = -O1 -Khost,inline -Knoframe -Kpentium
+XCOMM    CCOPTIONS   = -O2 -Khost,inline -Knoframe -Kpentium
+XCOMM    CCOPTIONS   = -O3 -Khost,inline -Knoframe -Kpentium
+XCOMM For SCO v5 + sco cc with debugging
+XCOMM    CCOPTIONS   = -g
+XCOMM For SCO + gcc
+XCOMM    CC          = /usr/local/bin/gcc
+XCOMM    CCOPTIONS   = -Wall -m486 -O3 -fomit-frame-pointer
+
+XCOMM --------------------------------------------------------------------
+XCOMM  SCO's prerpocesor doesn't seem to handle the INC_X11 etc. macros.
+XCOMM  So we define CONVERT_INCLUDE_DIRECTIVES, which causes the sources
+XCOMM  to be converted (by executing the 'source/inc_2lit' script).
+XCOMM --------------------------------------------------------------------
+#define CONVERT_INCLUDE_DIRECTIVES
+
+#endif /* SCOArchitecture */
+
+XCOMM ############### ====================================================
+XCOMM  HP-UX
+XCOMM ############### ====================================================
+
+#if defined(HPArchitecture)
+
+      EXTRA_INCLUDES  = -I/usr/contrib/X11R5/include
+      EXTRA_LDOPTIONS = -L/usr/contrib/X11R5/lib
+
+#endif /* HPArchitecture */
+
+XCOMM ############### ====================================================
+XCOMM  SunOS
+XCOMM ############### ====================================================
+
+#if (defined(SunArchitecture) && !defined(SVR4Architecture))
+
+XCOMM --------------------------------------------------------------------
+XCOMM --- Use some replacement code for the missing 'memmove()' function.
+XCOMM --------------------------------------------------------------------
+#define USE_MEMMOVE_CODE
+
+#endif /* SunArchitecture && !SVR4Architecture */
+
+XCOMM ####################################################################
+XCOMM ##### Usually there is no need to modify the settings below ...
+XCOMM ####################################################################
+
+XCOMM --------------------------------------------------------------------
+XCOMM  The file containing your preferences.
+XCOMM --------------------------------------------------------------------
+      USER_DEFAULTS = ~/.gv
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Your temporary directory.
+XCOMM  Must be terminated with a trailing '/'.
+XCOMM --------------------------------------------------------------------
+      SCRATCH_DIR = ~/
+
+XCOMM --------------------------------------------------------------------
+XCOMM  The default directory for saving.
+XCOMM  Must be terminated with a trailing '/'.
+XCOMM --------------------------------------------------------------------
+      SAVE_DIR = ~/
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Destination directory for the gv class resource file.
+XCOMM --------------------------------------------------------------------
+XCOMM XAPPLOADDIR	= /home/etc/class-defaults
+
+XCOMM ####################################################################
+XCOMM ##### Don't touch any of the settings below ... 
+XCOMM ####################################################################
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Where to find some bitmaps and messages.
+XCOMM --------------------------------------------------------------------
+      DOC_BMP		= $(GV_LIBDIR)gv_doc.xbm
+      SELECTED_BMP	= $(GV_LIBDIR)gv_selected.xbm
+      ICON_BMP		= $(GV_LIBDIR)gv_icon.xbm
+      ODD_BMP		= $(GV_LIBDIR)gv_odd.xbm
+      EVEN_BMP		= $(GV_LIBDIR)gv_even.xbm
+      CURRENT_BMP	= $(GV_LIBDIR)gv_current.xbm
+      UNMARK_BMP	= $(GV_LIBDIR)gv_unmark.xbm
+      EMPTY_BMP		= $(GV_LIBDIR)gv_empty.xbm
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Definitions concerning memory debugging.
+XCOMM --------------------------------------------------------------------
+XCOMM #define USE_MEMDEBUG_CODE
+XCOMM MEMDEBUG_TYPES += -DGV_FS_XTMEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_PS_MEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_PS_XTMEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_AAA_MEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_GV_MEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_GV_XTMEM_DEBUG
+XCOMM MEMDEBUG_TYPES += -DGV_PROC_XTMEM_DEBUG
+
+XCOMM --------------------------------------------------------------------
+XCOMM  Definitions concerning runtime messages.
+XCOMM --------------------------------------------------------------------
+XCOMM #define USE_RUNTIME_MESSAGES
+
+XCOMM --------------------------------------------------------------------
+XCOMM  My personal settings ...
+XCOMM --------------------------------------------------------------------
+
+#ifdef LinuxArchitecture
+   ifdef GV_DEVELOPMENT_OPTIONS
+         XAPPLOADDIR  = /home/etc/class-defaults
+         CCOPTIONS    = -ansi -pedantic -Wall -Wmissing-declarations
+XCOMM     -Wredundant-decls -Wmissing-prototypes -Wconversion -Wstrict-prototypes
+   endif
+#endif
+
+

@@ -1,0 +1,19 @@
+#! /bin/sh
+# Replaces INC_X*() macros by full pathes in all *.c and *.h
+# files except of in paths.h
+
+#f=`echo *.c *.h | sed -e 's/paths\.h//'`
+f=`grep -l INC_ *.c *.h | sed -e 's/paths\.h//'`
+
+echo "inc_2lit: Converting:"
+for i in $f
+do
+   echo "   $i"
+   cp $i $i.old
+   sed '
+   s/INC_X11(\([[:alnum:][:punct:]]*\))/<X11\/\1>/g
+   s/INC_XAW(\([[:alnum:][:punct:]]*\))/<X11\/Xaw3d\/\1>/g
+   s/INC_XMU(\([[:alnum:][:punct:]]*\))/<X11\/Xmu\/\1>/g
+   ' $i.old > $i
+done
+echo "inc_2lit: Conversion done"

@@ -1,0 +1,343 @@
+XCOMM
+XCOMM  Imakefile
+XCOMM
+XCOMM ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+XCOMM 
+XCOMM  This program is free software; you can redistribute it and/or modify
+XCOMM  it under the terms of the GNU General Public License as published by
+XCOMM  the Free Software Foundation; either version 2 of the License, or
+XCOMM  (at your option) any later version.
+XCOMM 
+XCOMM  This program is distributed in the hope that it will be useful,
+XCOMM  but WITHOUT ANY WARRANTY; without even the implied warranty of
+XCOMM  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+XCOMM  GNU General Public License for more details.
+XCOMM 
+XCOMM  You should have received a copy of the GNU General Public License
+XCOMM  along with this program; if not, write to the Free Software
+XCOMM  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+XCOMM 
+XCOMM  Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
+XCOMM            Department of Physics
+XCOMM            Johannes Gutenberg-University
+XCOMM            Mainz, Germany
+XCOMM
+
+GV_CONFIG_FILE = ../config.Unix
+#include "../config.Unix"
+
+SRCS_0 =\
+ Aaa.c\
+ Aaa_bison.c\
+ Aaa_lex.c\
+ Button.c\
+ Clip.c\
+ FileSel.c\
+ Frame.c\
+ Ghostview.c\
+ MButton.c\
+ Switch.c\
+ Vlist.c\
+ actions.c\
+ callbacks.c\
+ confirm.c\
+ dialog.c\
+ doc_misc.c\
+ error.c\
+ file.c\
+ info.c\
+ main.c\
+ media.c\
+ misc.c\
+ miscmenu.c\
+ misc_private.c\
+ note.c\
+ options.c\
+ options_fs.c\
+ options_gs.c\
+ options_gv.c\
+ options_setup.c\
+ process.c\
+ popup.c\
+ ps.c\
+ resource.c\
+ save.c\
+ scale.c\
+ signal.c\
+ version.c\
+ widgets_misc.c\
+ zoom.c
+
+OBJS_0 =\
+ Aaa.o\
+ Aaa_bison.o\
+ Aaa_lex.o\
+ Button.o\
+ Clip.o\
+ FileSel.o\
+ Frame.o\
+ Ghostview.o\
+ MButton.o\
+ Switch.o\
+ Vlist.o\
+ actions.o\
+ callbacks.o\
+ confirm.o\
+ dialog.o\
+ doc_misc.o\
+ error.o\
+ file.o\
+ info.o\
+ magmenu.o\
+ main.o\
+ media.o\
+ misc.o\
+ miscmenu.o\
+ misc_private.o\
+ note.o\
+ options.o\
+ options_fs.o\
+ options_gs.o\
+ options_gv.o\
+ options_setup.o\
+ process.o\
+ popup.o\
+ ps.o\
+ resource.o\
+ save.o\
+ scale.o\
+ signal.o\
+ version.o\
+ widgets_misc.o\
+ zoom.o
+
+#ifdef CONVERT_INCLUDE_DIRECTIVES
+Aaa.o : converted
+
+converted :
+	@./inc_2lit
+	@echo "" > converted
+#endif
+
+#ifdef USE_MEMDEBUG_CODE
+   USER_DEFS_1	= $(MEMDEBUG_TYPES)
+   SRCS_1	= d_mem.c d_xtmem.c
+   OBJS_1	= d_mem.o d_xtmem.o
+#endif
+
+#ifdef USE_RUNTIME_MESSAGES
+   USER_DEFS_2	= -DMESSAGES -DMESSAGE_NO_ESC
+#endif
+
+#ifdef USE_SIGNAL_HANDLER
+   USER_DEFS_3	= -DUSE_SIGNAL_HANDLER
+#endif
+
+#ifdef USE_SETENV_CODE
+   SRCS_4	= setenv.c getenv.c
+   OBJS_4	= setenv.o getenv.o
+#endif
+
+#ifdef USE_MEMMOVE_CODE
+   USER_DEFS_5	= -DUSE_MEMMOVE_CODE
+#endif
+
+#ifdef USE_SCROLLBAR_CODE
+   SRCS_6	= Scrollbar.c
+   OBJS_6	= Scrollbar.o
+#endif
+
+USER_DEFS_7	= -DUSER_DEFAULTS=\"$(USER_DEFAULTS)\"
+USER_DEFS_8	= -DGV_LIBDIR=\"$(GV_LIBDIR)\" -DGV_CODE $(XAW3D_HEADERS)
+
+#ifdef USE_FALLBACK_STYLES
+   USER_DEFS_9	= -DUSE_FALLBACK_STYLES
+#endif
+
+SYS_LIBS_1	= -lm XawClientLibs
+
+USER_DEFINES = $(USER_DEFS_0) $(USER_DEFS_1) $(USER_DEFS_2) $(USER_DEFS_3)\
+ $(USER_DEFS_4) $(USER_DEFS_5) $(USER_DEFS_6) $(USER_DEFS_7)\
+ $(USER_DEFS_8) $(USER_DEFS_9) $(USER_DEFS_10) $(USER_DEFS_11)\
+ $(USER_DEFS_12) $(USER_DEFS_13) $(USER_DEFS_14) $(USER_DEFS_15)
+SRCS = $(SRCS_0) $(SRCS_1) $(SRCS_2) $(SRCS_3) $(SRCS_4) $(SRCS_5)\
+ $(SRCS_6) $(SRCS_7) $(SRCS_8) $(SRCS_9) $(SRCS_10) $(SRCS_11)\
+ $(SRCS_12) $(SRCS_13) $(SRCS_14) $(SRCS_15)
+OBJS = $(OBJS_0) $(OBJS_1) $(OBJS_2) $(OBJS_3) $(OBJS_4) $(OBJS_5)\
+ $(OBJS_6) $(OBJS_7) $(OBJS_8) $(OBJS_9) $(OBJS_10) $(OBJS_11)\
+ $(OBJS_12) $(OBJS_13) $(OBJS_14) $(OBJS_15)
+SYS_LIBRARIES = $(SYS_LIBS_0) $(SYS_LIBS_1) $(SYS_LIBS_2) $(SYS_LIBS_3)\
+ $(SYS_LIBS_4) $(SYS_LIBS_5) $(SYS_LIBS_6) $(SYS_LIBS_7)\
+ $(SYS_LIBS_8) $(SYS_LIBS_9) $(SYS_LIBS_10) $(SYS_LIBS_11)\
+ $(SYS_LIBS_12) $(SYS_LIBS_13) $(SYS_LIBS_14) $(SYS_LIBS_15)
+
+DEFINES		= -DNON_BLOCKING_IO $(SIGNAL_DEFINES) $(USER_DEFINES)
+DEPLIBS		= XawClientDepLibs
+INSTDATFLAGS	= -m 0644
+
+GV_FONT_RES_DAT     = gv_font_res.dat
+GV_MAKE_RES_DAT     = gv_make_res.dat
+GV_MISC_RES_DAT     = gv_misc_res.dat
+GV_USER_RES_DAT     = gv_user_res.dat
+GV_INTERN_RES_DAT   = gv_intern_res_unix.dat
+GV_INTERN_RES_H     = gv_intern_res_unix.h
+GV_STYLE_1_DAT      = gv_spartan.dat
+GV_STYLE_1_H        = gv_spartan.h
+GV_LAYOUT_RES_DAT   = gv_layout_res.dat
+GV_COPYRIGHT_DAT    = gv_copyright.dat
+GV_CLASS_H          = gv_class.h
+GV_CLASS_NAME       = GV
+GV_CLASS_AD         = gv_class.ad
+GV_AD               = GV.ad
+GV_USER_AD          = gv_user.ad
+GV_SYSTEM_AD        = gv_system.ad
+GV_SOURCE_IMAKEFILE = ./Imakefile
+
+depend:: $(GV_USER_AD) $(GV_AD) $(GV_SYSTEM_AD) $(GV_INTERN_RES_H) $(GV_CLASS_H)
+
+#ifdef USE_FALLBACK_STYLES
+depend:: $(GV_STYLE_1_H)
+#endif
+
+install::
+	MakeDir($(DESTDIR)$(GV_LIBDIR))
+
+#ifdef InstallProgram
+#   undef InstallProgram
+#endif
+#ifndef InstallProgram
+#   define	InstallProgram(program,dest)			@@\
+InstallProgramWithFlags(program,$(GV_BINDIR),NullParameter)
+#endif /* InstallProgram */
+
+MANDIR=$(GV_MANDIR)
+ComplexProgramTarget(gv)
+InstallNonExec($(GV_SYSTEM_AD),$(GV_LIBDIR))
+InstallNonExec($(GV_USER_AD),$(GV_LIBDIR))
+InstallNonExec($(GV_CLASS_AD),$(GV_LIBDIR))
+InstallAppDefaults($(GV_CLASS_NAME))
+#ifndef USE_FALLBACK_STYLES
+   InstallNonExec($(GV_STYLE_1_DAT),$(GV_LIBDIR))
+#endif
+
+gv : $(GV_USER_AD) $(GV_AD) $(GV_CLASS_AD)
+
+resource.o: $(GV_CLASS_H) $(GV_INTERN_RES_H)
+
+#ifdef USE_FALLBACK_STYLES
+resource.o:	$(GV_STYLE_1_H)
+#endif
+
+$(GV_STYLE_1_H):	$(GV_STYLE_1_DAT)
+	@echo "creating $(GV_STYLE_1_H)"
+	@sh ./ad2c $(GV_STYLE_1_DAT) > $(GV_STYLE_1_H)
+
+$(GV_CLASS_H):	$(GV_CLASS_AD)
+	@echo "creating $(GV_CLASS_H)"
+	@sh ./ad2c $(GV_CLASS_AD) > $(GV_CLASS_H)
+
+includes:: $(GV_INTERN_RES_H) $(GV_CLASS_H)
+#ifdef USE_FALLBACK_STYLES
+includes:: $(GV_STYLE_1_H)
+#endif
+
+$(GV_INTERN_RES_H):	$(GV_INTERN_RES_DAT)
+	@echo "creating $(GV_INTERN_RES_H)"
+	@sh ./ad2c $(GV_INTERN_RES_DAT) > $(GV_INTERN_RES_H)
+
+$(GV_CLASS_AD): $(GV_FONT_RES_DAT) $(GV_LAYOUT_RES_DAT) $(GV_MAKE_RES_DAT) $(GV_MISC_RES_DAT) $(GV_USER_RES_DAT) $(GV_INTERN_RES_DAT)
+	@echo "creating $(GV_CLASS_AD)"
+	@cp $(GV_COPYRIGHT_DAT)					   $(GV_CLASS_AD)
+	@echo "!"						>> $(GV_CLASS_AD)
+	@echo "!  $(GV_CLASS_AD)"				>> $(GV_CLASS_AD)
+	@echo "!  Application class defaults for gv"		>> $(GV_CLASS_AD)
+	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass"	>> $(GV_CLASS_AD)
+	@echo "!"						>> $(GV_CLASS_AD)
+	@echo ""						>> $(GV_CLASS_AD)
+	@cat $(GV_USER_RES_DAT)					>> $(GV_CLASS_AD)
+	@cat $(GV_INTERN_RES_DAT)				>> $(GV_CLASS_AD)
+	@cat $(GV_MAKE_RES_DAT)					>> $(GV_CLASS_AD)
+	@cat $(GV_FONT_RES_DAT)					>> $(GV_CLASS_AD)
+	@cat $(GV_MISC_RES_DAT)					>> $(GV_CLASS_AD)
+	@cat $(GV_LAYOUT_RES_DAT)				>> $(GV_CLASS_AD)
+
+$(GV_AD): $(GV_SYSTEM_AD)
+	@echo "creating $(GV_AD)"
+	@cp $(GV_SYSTEM_AD) $(GV_AD)
+
+$(GV_SYSTEM_AD): $(GV_USER_AD)
+	@echo "creating $(GV_SYSTEM_AD)"
+	@cp $(GV_USER_AD) $(GV_SYSTEM_AD)
+
+$(GV_USER_AD): $(GV_USER_RES_DAT) $(GV_INTERN_RES_DAT) $(GV_MAKE_RES_DAT)
+	@echo "creating $(GV_USER_AD)"
+	@echo "!"						>  $(GV_USER_AD)
+	@echo "!  $(GV_USER_AD)"				>> $(GV_USER_AD)
+	@echo "!  User specific application defaults for gv"	>> $(GV_USER_AD)
+	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass"	>> $(GV_USER_AD)
+	@echo "!"						>> $(GV_USER_AD)
+	@cat $(GV_USER_RES_DAT)					>> $(GV_USER_AD)
+	@cat $(GV_INTERN_RES_DAT)				>> $(GV_USER_AD)
+	@cat $(GV_MAKE_RES_DAT)					>> $(GV_USER_AD)
+
+$(GV_MAKE_RES_DAT): $(GV_CONFIG_FILE) $(GV_SOURCE_IMAKEFILE)
+	@echo "creating $(GV_MAKE_RES_DAT)"
+	@echo ""							>  $(GV_MAKE_RES_DAT)
+	@echo  "!########## gv_make_res.dat (generated by makefile)"	>> $(GV_MAKE_RES_DAT)
+	@echo ""							>> $(GV_MAKE_RES_DAT)
+	@echo "GV.scratchDir:		$(SCRATCH_DIR)"			>> $(GV_MAKE_RES_DAT)
+	@echo "GV.defaultSaveDir:	$(SAVE_DIR)"			>> $(GV_MAKE_RES_DAT)
+	@echo "GV.fallbackPageMedia:	$(PAPERSIZE)"			>> $(GV_MAKE_RES_DAT)
+	@echo "GV.useBackingPixmap:	$(USE_BACKING_PIXMAP)"		>> $(GV_MAKE_RES_DAT)
+	@echo "GV*dirs:		Home\n\\"				>> $(GV_MAKE_RES_DAT)
+	@echo "			Tmp\n\\"				>> $(GV_MAKE_RES_DAT)
+	@echo "			/usr/doc\n\\"				>> $(GV_MAKE_RES_DAT)
+	@echo "			/usr/local/doc"				>> $(GV_MAKE_RES_DAT)
+	@echo "GV*filter:		no .*"				>> $(GV_MAKE_RES_DAT)
+	@echo "GV*filters:		None\n\\"			>> $(GV_MAKE_RES_DAT)
+	@echo "			*.*ps* *.pdf*  no  .*\n\\"		>> $(GV_MAKE_RES_DAT)
+	@echo "			*.*ps*   no  .*\n\\"			>> $(GV_MAKE_RES_DAT)
+	@echo "			*.pdf*  no  .*\n\\"			>> $(GV_MAKE_RES_DAT)
+	@echo "			no  .*"					>> $(GV_MAKE_RES_DAT)
+	@echo ""							>> $(GV_MAKE_RES_DAT)
+
+#ifdef PRODUCE_PS_LEVEL_ONE
+        PS_LEVEL = -dPSLevel1
+#endif
+
+$(GV_INTERN_RES_DAT): $(GV_CONFIG_FILE) $(GV_SOURCE_IMAKEFILE)
+	@echo "creating $(GV_INTERN_RES_DAT)"
+	@echo "" 							 >  $(GV_INTERN_RES_DAT)
+	@echo "!########## gv_intern_res.dat (generated by makefile)" >> $(GV_INTERN_RES_DAT)
+	@echo ""							>> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsInterpreter:	gs" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsCmdScanPDF:	gs -dNODISPLAY -dQUIET -sPDFname=%s -sDSCname=%s pdf2dsc.ps -c quit" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsCmdConvPDF:	gs -dNODISPLAY -dQUIET $(PS_LEVEL) -dNOPAUSE -sPSFile=%s %s -c quit" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsX11Device:		-sDEVICE=x11" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsX11AlphaDevice:	-dNOPLATFONTS -sDEVICE=x11alpha" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsSafer:		True" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsQuiet:		True" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.gsArguments:" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.uncompressCommand:	gzip -d -c %s > %s" >> $(GV_INTERN_RES_DAT)
+	@echo "GV.printCommand:	$(PRINT_COMMAND)" >> $(GV_INTERN_RES_DAT)
+
+clean::
+	$(RM) $(GV_INTERN_RES_DAT)
+	$(RM) $(GV_INTERN_RES_H)
+	$(RM) $(GV_MAKE_RES_DAT)
+	$(RM) $(GV_STYLE_1_H)
+	$(RM) $(GV_AD)
+	$(RM) $(GV_CLASS_AD)
+	$(RM) $(GV_CLASS_H)
+	$(RM) $(GV_SYSTEM_AD)
+	$(RM) $(GV_USER_AD)
+	$(RM) *.x
+	$(RM) converted
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+#! /bin/bash
+
+cd ..
+xmkmf -a
+cd source

@@ -1,0 +1,31 @@
+
+1. Read README
+
+2. Read config.Unix and modify it according to your needs.
+
+3. Make sure you have the Xaw3d widget set (*including* its header
+   files) installed properly (see config.Unix again).
+
+4. Execute the following commands in the top directory:
+      xmkmf
+      make Makefiles
+      make
+   This should produce the executable "./source/gv" .
+     
+5. Execute
+      make install
+   to install the executable './source/gv' in the proper directory.
+
+6. Execute
+      make install.man
+   to install the manpage './doc/gv.man' in the proper directory.
+
+7. Execute
+      make install.doc
+   to install various documentation files in './doc/' in the proper 
+   directory.
+
+6. Execute
+     gv
+   to check whether all these efforts were successful.
+
