@@ -121,7 +121,7 @@ $(srcdir)/gv_intern_res_unix.dat :
 	@echo "GV.gsCmdScanPDF:	gs -dNODISPLAY -dQUIET -sPDFname='%s' -sDSCname='%s' pdf2dsc.ps -c quit" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsCmdConvPDF:	gs -dNODISPLAY -dQUIET $(PS_LEVEL) -dNOPAUSE -sPSFile='%s' '%s' -c quit" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsX11Device:		-sDEVICE=x11" >> $(srcdir)/gv_intern_res_unix.dat
-	@echo "GV.gsX11AlphaDevice:	-dNOPLATFONTS -sDEVICE=x11alpha" >> $(srcdir)/gv_intern_res_unix.dat
+	@echo "GV.gsX11AlphaDevice:	-sDEVICE=x11 -dTextAlphaBits=4 -dGraphicsAlphaBits=2 -dMaxBitmap=10000000 -dNOPLATFONTS" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsSafer:		True" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsQuiet:		True" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsArguments:" >> $(srcdir)/gv_intern_res_unix.dat
