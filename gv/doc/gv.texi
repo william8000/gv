@@ -428,7 +428,7 @@ Allowed entries are
 @item
 @code{update}
 @item
-@code{redisplay}
+@code{reload}
 @item
 @code{toggle_current}
 @item
@@ -581,11 +581,11 @@ can be displayed in a zoom window. The magnification for the
 area can be selected by means of a popup menu which appears after
 releasing button 2.
 @item press button 1, press button 2
-Redisplays the current page. This event sequence works only
+Reload the current page. This event sequence works only
 in the main window.
 @item press button 3, release button 3
 Pops up a small menu which offers a few standard actions
-like 'Redisplay', 'Mark Page', etc.
+like 'Reload', 'Mark Page', etc.
 @end table
 
 @node Mouse bindings in the File Selection popup, Mouse bindings in the Table of Contents, Mouse bindings in the Main and the Zoom window, Mouse and key bindings
@@ -714,9 +714,9 @@ Print the marked pages
 @item SC-P
 Print the current file
 @item c-L
-Redisplay the current page
+Reload the current page
 @item .
-Redisplay the current page
+Reload the current page
 @item SC-.
 Reopen the current file
 @item M
@@ -952,10 +952,10 @@ always display the newest version of the document in work.
 
 Instead of explicitly loading it via the file selection
 popup the most recent version can be displayed by
-pressing the @strong{Redisplay} button in the main window
+pressing the @strong{Reload} button in the main window
 (VMS users should use the @strong{Update File} entry in the
 @strong{File} menu).
-Choosing the @strong{Redisplay} entry in the menu that pops
+Choosing the @strong{Reload} entry in the menu that pops
 up when clicking with the third mouse button anywhere on the
 displayed page certainly has the same effect.
 
@@ -1011,7 +1011,7 @@ Use the "spartan" style by starting gv with the command
          gv -spartan
 @end verbatim
 
-This removes the "Open", "Print", "Save", "Redisplay", and page marking
+This removes the "Open", "Print", "Save", "Reload", and page marking
 buttons (they are still available from the "File" and "Page" menus) and
 replaces them with the document attribute controls, which are normally
 along the top.
