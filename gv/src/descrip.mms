@@ -2,6 +2,7 @@
 !XCOMM  descrip.mms
 !XCOMM
 !XCOMM ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+!XCOMM ** Copyright (C) 2004 Jose E. Marchesi
 !XCOMM 
 !XCOMM  This program is free software; you can redistribute it and/or modify
 !XCOMM  it under the terms of the GNU General Public License as published by
@@ -14,14 +15,15 @@
 !XCOMM  GNU General Public License for more details.
 !XCOMM 
 !XCOMM  You should have received a copy of the GNU General Public License
-!XCOMM  along with this program; if not, write to the Free Software
-!XCOMM  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+!XCOMM  along with GNU gv; see the file COPYING.  If not, write to
+!XCOMM  the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+!XCOMM  Boston, MA 02111-1307, USA.
 !XCOMM 
 !XCOMM  Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
 !XCOMM            Department of Physics
 !XCOMM            Johannes Gutenberg-University
 !XCOMM            Mainz, Germany
-!XCOMM 
+
 
 TARGET = GV
 TARGET_TYPE = executable

@@ -3,6 +3,7 @@
 ** versionp.h
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
+** Copyright (C) 2004 Jose E. Marchesi
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,13 +16,17 @@
 ** GNU General Public License for more details.
 **
 ** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+** along with GNU gv; see the file COPYING.  If not, write to
+** the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+** Boston, MA 02111-1307, USA.
 ** 
 ** Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
 **           Department of Physicss
 **           Johannes Gutenberg-University
 **           Mainz, Germany
+**
+**           Jose E. Marchesi (jemarch@gnu.org)
+**           GNU Project
 **
 */
 
@@ -63,28 +68,16 @@ char * copyright = "\
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n\
  GNU General Public License for more details. \n\
  \n\
- You should have received a copy of the GNU General Public License \n\
- along with this program; if not, write to the Free Software \n\
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.";
+ You should have received a copy of the GNU General Public License\n\
+ along with GNU gv; see the file COPYING.  If not, write to\n\
+ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n\
+ Boston, MA 02111-1307, USA.";
 
 char *author[] = {
-" Authors: ",
 "\
-           Johannes Plass       plass@thep.physik.uni-mainz.de \n\
-                                Department of Physics \n\
-                                Johannes Gutenberg University \n\
-                                Mainz, Germany\n\
-           Jose E. Marchesi     jemarch@gnu.org\n\
-                                GNU Project\
-",
-"\
- gv is derived from GhostView 1.5, created by\n\
+   GNU Maintainer:      Jose E. Marchesi (jemarch@gnu.org)\n\
 \n\
-           Tim Theisen          Systems Programmer \n\
- Internet: tim@cs.wisc.edu      Department of Computer Sciences  \n\
-     UUCP: uwvax!tim            University of Wisconsin-Madison  \n\
-    Phone: (608)262-0438        1210 West Dayton Street \n\
-      FAX: (608)262-9777        Madison, WI   53706\
+   Original Author:     Johannes Plass\
 ",
 "\
  Please send error reports to:  bug-gv@gnu.org \n\

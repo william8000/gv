@@ -15,14 +15,17 @@
 ** GNU General Public License for more details.
 **
 ** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+** along with GNU gv; see the file COPYING.  If not, write to
+** the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+** Boston, MA 02111-1307, USA.
 ** 
-** Author:   Johannes Plass (plass@thep.physik.uni-mainz.de)
-**           Department of Physics
-**           Johannes Gutenberg-University
-**           Mainz, Germany
+** Authors:   Johannes Plass (plass@thep.physik.uni-mainz.de)
+**            Department of Physics
+**            Johannes Gutenberg-University
+**            Mainz, Germany
 **
+**            Jose E. Marchesi (jemarch@gnu.org)
+**            GNU Project
 */
 
 #ifndef _ButtonP_h

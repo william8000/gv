@@ -1,7 +1,7 @@
 /*
  * Ghostview.c -- Ghostview widget.
  * Copyright (C) 1992  Timothy O. Theisen
- * Copyright (C) 2004  José E. Marchesi
+ * Copyright (C) 2004  Jose E. Marchesi
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,8 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * along with GNU gv; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  *
  *   Author: Tim Theisen           Systems Programmer
  * Internet: tim@cs.wisc.edu       Department of Computer Sciences
@@ -30,6 +31,7 @@
  * February 1995, March 1996 ###jp###
  *
 */
+
 
 /*
 #define MESSAGES

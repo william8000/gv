@@ -13,14 +13,18 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * along with GNU gv; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA. *
  *
  *   Author: Tim Theisen           Systems Programmer
  * Internet: tim@cs.wisc.edu       Department of Computer Sciences
  *     UUCP: uwvax!tim             University of Wisconsin-Madison
  *    Phone: (608)262-0438         1210 West Dayton Street
  *      FAX: (608)262-9777         Madison, WI   53706
+ *
+ *   Author: Jose E. Marchesi (jemarch@gnu.org)
+ *           GNU Project
 */
 
 #ifndef _Ghostview_h
