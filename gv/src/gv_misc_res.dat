@@ -310,7 +310,7 @@ GV*printMarked.label:			Print Marked
 GV*saveAll.label:			Save All
 GV*saveMarked.label:			Save Marked
 GV*openFile.label:			Open
-GV*redisplay.label:			Redisplay
+GV*redisplay.label:			Reload
 GV*updateFile.label:			Update File
 GV*checkFile.label:			Check File
 
@@ -371,7 +371,7 @@ GV*dirsLabel.label:			File Selection Directories
 GV*filterLabel.label:			Default Filter
 
 GV*miscMenu.update.label:		Update File
-GV*miscMenu.redisplay.label:		Redisplay
+GV*miscMenu.redisplay.label:		Reload
 GV*miscMenu.stop.label:			Stop Interpreter
 GV*miscMenu.toggle_current.label:	Toggle Current
 GV*miscMenu.toggle_odd.label:		Toggle Odd
