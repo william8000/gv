@@ -157,7 +157,6 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   strcat (rpath, GV_LIBDIR);
   strcat (rpath, "/gv_system.ad");
   if (rpath) {
-    fprintf(stderr,"System resource file: %s\n", rpath);
     INFSMESSAGE(merging system resource file into database,rpath)
       XrmCombineFileDatabase(rpath,&db,True);
     resource_system_file = rpath;
