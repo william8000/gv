@@ -31,8 +31,8 @@ CLEANFILES = $(srcdir)/GV \
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\"
 
-AM_CFLAGS = 
 
+AM_CFLAGS = @X_CFLAGS@
 
 gv_LDFLAGS = @X_LIBS@
 
