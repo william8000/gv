@@ -1,30 +1,18 @@
+-*- mode: text -*- Time-stamp: "2004-11-10 15:43:55 jemarch"
+
+README for gv
+=============
 
 This is version 3.6.0 of gv, an X11 ghostscript frontend based on
 Tim Theisen's ghostview 1.5.
 
-This version surely works on
-   Linux
-   OpenVMS AXP (DECC 5.2,DECC 5.0)
-and most probably also on
-   Solaris
-   FreeBSD
-   NetBSD
-   Digital UNIX
-   SunOS
-   HP/UX
-   Irix
-   OSF/1
-   AIX
-   BSD
-
 The most recent version may be obtained from gv's homepage at
-   http://wwwthep.physik.uni-mainz.de/~plass/gv/
+   http://www.gnu.org/software/gv/
 or via anonymous ftp from
-   ftp://thep.physik.uni-mainz.de/pub/gv/
+   ftp://ftp.gnu.org/gnu/gv/
 
-Please send suggestions or bug reports to plass@thep.physik.uni-mainz.de.
+Please send suggestions or bug reports to bug-gv@gnu.org
 
-Johannes Plass, 06/21/97 
-
-(plass@thep.physik.uni-mainz.de)
+--
+José E. Marchesi (jemarch@gnu.org)
 
