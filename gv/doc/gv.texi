@@ -948,8 +948,7 @@ used by xdvi. Note that antialiasing requires at least Ghostscript
 version 4.x.
 
 Antialiasing can be turned on from the "State" menu, and can be made
-default by saving the setting in @code{State | gv Options...}. It is not on by
-default because it's slower.
+default by saving the setting in @code{State | gv Options...}.
 
 @node The output is not refreshed automatically,  , Small characters are not very clear, Frequently asked questions
 @section The output is not refreshed automatically
