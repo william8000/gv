@@ -5,8 +5,7 @@
 @settitle GNU gv Manual
 @comment %**end of header
 
-@set EDITION   First
-@set GVVER  3.5.8
+@include version.texi
 
 @copying
 This is the @value{EDITION} edition of the @cite{GNU gv Manual},
@@ -25,12 +24,6 @@ any later version published by the Free Software Foundation.
 @direntry
 * gv: (gv).     The GNU PostScript and PDF viewer.
 @end direntry
-
-@iftex
-@kbdinputstyle code
-
-@shorttitlepage GNU gv Manual
-@end iftex
 
 @titlepage
 @sp 6

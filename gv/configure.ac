@@ -1,15 +1,25 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "2004-11-11 12:09:42 jemarch"
+dnl Time-stamp: "2004-11-11 12:57:02 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
 dnl Please process this file with `autoconf' to get a configure script
 
+
 AC_INIT(src/gv_options.c)
 AM_INIT_AUTOMAKE(gv,3.6.0)
 AM_CONFIG_HEADER(src/ac_config.h)
 dnl AM_CONFIG_HEADER(src/ac_config.h)
+
+dnl gv version
+VERSION=3.6.0
+dnl manual edition
+MANUALEDITION=First
+
+AC_SUBST(VERSION)
+AC_SUBST(MANUALEDITION)
+
 
 dnl DEFUNS
 
@@ -141,7 +151,6 @@ test "$opt_backing_pixmap" == "no" && {
 
 AC_SUBST(USE_BACKING_PIXMAP)
 
-
 AC_ARG_ENABLE(scrollbar-code, AC_HELP_STRING([--enable-scrollbar-code],[Use gv's own Motif like scrollbar. It defaults to `yes']), 
 [case "${enableval}" in
    yes) opt_scrollbar_code=true ;;
@@ -215,4 +224,4 @@ AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
 
 
 dnl Generate output files
-AC_OUTPUT(Makefile src/Makefile doc/Makefile)
+AC_OUTPUT(Makefile doc/version.texi src/Makefile doc/Makefile)
