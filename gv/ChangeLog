@@ -1,3 +1,7 @@
+2004-11-11  Jose E. Marchesi  <jemarch@dataware.es>
+
+	* configure.ac: Changed the scratch dir from ~/ to /tmp/
+
 2004-11-10  Jose E. Marchesi  <jemarch@dataware.es>
 
 	* New ChangeLog
