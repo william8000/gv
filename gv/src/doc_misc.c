@@ -221,8 +221,8 @@ doc_preferredMediaOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
 	  (dm->width+1==dbb[URX] && dm->height+1==dbb[URY])) media=dm;
     for (j=0; gv_medias[j] && !media ; j++) {
        dm = gv_medias[j];
-       if ((dm->width==dbb[URX] && dm->height==dbb[URY]) ||
-	   (dm->width+1==dbb[URX] && dm->height+1==dbb[URY])) media=dm;
+       if (dm->used==1 && ((dm->width==dbb[URX] && dm->height==dbb[URY]) ||
+	   (dm->width+1==dbb[URX] && dm->height+1==dbb[URY]))) media=dm;
     }
     if (media) found=1;
   }

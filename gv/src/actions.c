@@ -98,7 +98,7 @@ action_shellConfigureNotify(w, event, params, num_params)
   }
   if (new_width && new_height) {
     if (width != new_width || height != new_height) {
-       misc_setPageMarker(0,2); /* bring selected in sight */
+       misc_setPageMarker(0,2,event,True); /* bring selected in sight */
        width = new_width;
        height=new_height;
     }
@@ -257,7 +257,7 @@ action_page(w, event, params, num_params)
 	}
       }
       h = doc_putPageInRange(doc,h);
-      misc_setPageMarker(h,1);
+      misc_setPageMarker(h,1,event,False);
     }
 
     nx = x = (int)aaa->core.x;
@@ -432,7 +432,7 @@ action_toc(w, event, params, num_params)
     if (!scrolling && toc_text) {
       entry = VlistEntryOfPosition(newtoc,(int)event->xbutton.y);
       if (entry >=0 && entry < doc->numpages) {
-	misc_setPageMarker(entry,0);
+	misc_setPageMarker(entry,0,event,True);
         show_page(entry,NULL);
       }
     }

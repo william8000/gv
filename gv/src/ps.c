@@ -451,15 +451,20 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       struct document *retval = NULL;
       FILE *tmpfile = (FILE*)NULL;
       char *filename_unc;
+      char *quoted_filename, *quoted_filename_unc;
       char cmd[512];
       char s[512];
       mode_t old_umask;
       filename_unc=file_getTmpFilename(NULL,filename_raw);
+      quoted_filename = quote_filename(filename);
+      quoted_filename_unc = quote_filename(filename_unc);
       if (memcmp(b, "BZh", 3) == 0) {
-        sprintf(cmd, "bzip2 -dc %s >%s", filename, filename_unc);
+        sprintf(cmd, "bzip2 -dc %s >%s", quoted_filename, quoted_filename_unc);
       } else {
-        sprintf(cmd, "gzip -dc %s >%s", filename, filename_unc);
+        sprintf(cmd, "gzip -dc %s >%s", quoted_filename, quoted_filename_unc);
       }
+      GV_XtFree(quoted_filename);
+      GV_XtFree(quoted_filename_unc);
 
       old_umask = umask(0077);
 
@@ -533,12 +538,39 @@ unc_ok:
       struct document *retval = NULL;
       FILE *tmpfile = (FILE*)NULL;
       char *filename_dsc;
+      char *quoted_filename, *quoted_filename_dsc;
+      char *pdfpos;
+      char *dscpos;
       char cmd[512];
       char s[512];
       mode_t old_umask;
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
-      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc);
+      //      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc);
+      quoted_filename = quote_filename(filename);
+      quoted_filename_dsc = quote_filename(filename_dsc);
+      if ((pdfpos = strstr(cmd_scan_pdf,"%pdf")) &&
+	  (dscpos = strstr(cmd_scan_pdf,"%dsc"))) {
+	cmd[0] = '\0';
+	if (pdfpos < dscpos) {
+	  strncat(cmd,cmd_scan_pdf,(pdfpos-cmd_scan_pdf));
+	  strcat(cmd,quoted_filename);
+	  strncat(cmd,pdfpos+4,(dscpos-pdfpos-4));
+	  strcat(cmd,quoted_filename_dsc);
+	  strcat(cmd,dscpos+4);
+	} else {
+	  strncat(cmd,cmd_scan_pdf,(dscpos-cmd_scan_pdf));
+	  strcat(cmd,quoted_filename_dsc);
+	  strncat(cmd,dscpos+4,(pdfpos-dscpos-4));
+	  strcat(cmd,quoted_filename);
+	  strcat(cmd,pdfpos+4);
+	}
+      } else {
+	sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc);
+      }
+      GV_XtFree(quoted_filename);
+      GV_XtFree(quoted_filename_dsc);
+
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
       INFSMESSAGE(scan command,cmd)
@@ -1787,6 +1819,8 @@ static char * readline (fd, lineP, positionP, line_lenP)
            (DSCcomment(line) && iscomment(line+2,(comment)))
 #define IS_BEGIN(comment)				\
            (iscomment(line+7,(comment)))
+#define IS_END(comment)				\
+           (iscomment(line+5,(comment)))
 #define SKIP_WHILE(cond)				\
 	   while (readline(fd, &line, NULL, &nbytes) && (cond)) *line_lenP += nbytes;\
            skipped=1;
@@ -1822,7 +1856,12 @@ static char * readline (fd, lineP, positionP, line_lenP)
    else
 #endif
    if  (!IS_COMMENT("Begin"))     {} /* Do nothing */
-   else if IS_BEGIN("Document:")  SKIP_UNTIL_1("EndDocument")
+   else if IS_BEGIN("Document:")  {  /* Skip the EPS without handling its content */
+            while (line && !IS_END("Document")) {
+               line = ps_io_fgetchars(fd,-1);
+               if (line) *line_lenP += FD_LINE_LEN;
+            }
+   }
    else if IS_BEGIN("Feature:")   SKIP_UNTIL_1("EndFeature")
 #ifdef USE_ACROREAD_WORKAROUND
    else if IS_BEGIN("File")       SKIP_UNTIL_2("EndFile","EOF")

@@ -525,9 +525,9 @@ GV*newtoc.baseTranslations: #replace		\n\
  <LeaveWindow>:		GV_Toc(unhighlight)	\n\
  <Btn1Down>:		GV_Toc(scrollon)	\n\
  <Btn1Motion>:		GV_Toc(scroll)		\n\
- <Btn1Up>:		GV_Toc(select)		\
+ <Btn1Up>:		GV_Toc(highlight)	\
 			GV_Toc(scrolloff)	\
-			GV_Toc(highlight)	\n\
+			GV_Toc(select)		\n\
  <Btn2Down>:		GV_Toc(toggleon)	\n\
  <Btn2Motion>:		GV_Toc(toggleextend)	\
 			GV_Toc(highlight)	\n\

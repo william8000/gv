@@ -110,7 +110,6 @@ static void options_fs_cb_apply(w, client_data, call_data)
    Widget	w;
    XtPointer	client_data, call_data;
 {
-   BEGINMESSAGE(options_fs_cb_apply)
    Arg args[5];
    Cardinal n;
    static Boolean s_scratch_dir = False;

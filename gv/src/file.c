@@ -156,6 +156,25 @@ file_locateFilename(path)
 }
 
 /*############################################################*/
+/* file_assureDirectory */
+/*############################################################*/
+
+void
+file_assureDirectory(to,from)
+   char *to;
+   char *from;
+{
+   int len;
+   BEGINMESSAGE(file_assureDirectory)
+   strcpy(to,from);
+#  ifndef VMS
+      len = strlen(to);
+      if (to[len-1] != '/') { to[len] = '/'; to[len+1] = '\0'; }
+#  endif
+   ENDMESSAGE(file_assureDirectory)
+}
+
+/*############################################################*/
 /* file_getTmpFilename */
 /* provide some temporary file name */
 /*############################################################*/
@@ -175,11 +194,13 @@ file_getTmpFilename(baseDirectory,baseFilename)
 
    BEGINMESSAGE(file_getTmpFilename)
 
-   if (!baseDirectory) baseDirectory = app_res.scratch_dir;
-   strcpy(tmpDirBuf,baseDirectory);
-   pos = file_locateFilename(tmpDirBuf);
-   if (pos) { ++pos; *pos='\0'; }
-   else strcpy(tmpDirBuf,app_res.scratch_dir);
+   pos = NULL;
+   if (baseDirectory) {
+     strcpy(tmpDirBuf,baseDirectory); 
+     pos = file_locateFilename(tmpDirBuf);
+   }
+   if (pos) *pos='\0';
+   else file_assureDirectory(tmpDirBuf,app_res.scratch_dir);
 
    if (!baseFilename) baseFilename= ".";
    strcpy(tmpNameBuf,baseFilename);

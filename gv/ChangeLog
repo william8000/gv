@@ -1,3 +1,9 @@
+2005-03-31  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/Makefile.am ($(srcdir)/gv_intern_res_unix.dat): Remove
+	quotes from the gs command lines in order to accomodate to the
+	0000-unchequed Debian patch for quoting filenames.
+
 2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
 
 	* src/Ghostview.c (StartInterpreter): Added the '-2x2' argument to

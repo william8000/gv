@@ -117,17 +117,19 @@ print_file(print_command,print_filename)
    String print_filename;
 {
    String error=NULL;
+   char *print_quoted_filename;
    char *c,*p;
    Cardinal m,n;
    String printfail=GV_ERROR_PRINT_FAIL;
 
    BEGINMESSAGE(print_file)
 
+   print_quoted_filename = quote_filename(print_filename);
    p = GV_XtNewString(print_command);
    n=0;
    c=p;
    while ((c=strstr(c,"%s"))) { c+=2; n++; }
-   m = (strlen(p)+(n>0?n:1)*strlen(print_filename)+5)*sizeof(char);
+   m = (strlen(p)+(n>0?n:1)*strlen(print_quoted_filename)+5)*sizeof(char);
    c = (char*) GV_XtMalloc(m);
    if (n>0) {
      char *e,*s;
@@ -138,13 +140,13 @@ print_file(print_command,print_filename)
        if (s) *s='\0';
        strcat(c,e);
        if (s) {
-	 strcat(c,print_filename);
+	 strcat(c,print_quoted_filename);
          e=s+2;
        } 
        else s=NULL;
      }
    } else {
-     sprintf(c, "%s %s",p,print_filename);
+     sprintf(c, "%s %s",p,print_quoted_filename);
    }
    INFSMESSAGE(printing:,c)
    if (SYSTEM_FAILED_ON(c)) {
@@ -154,6 +156,7 @@ print_file(print_command,print_filename)
    }
    GV_XtFree(c);
    GV_XtFree(p);
+   GV_XtFree(print_quoted_filename);
    ENDMESSAGE(print_file)
    return(error);
 }
@@ -203,6 +206,9 @@ save_forkPDFToPSConversion(sd)
    char proc_name[256];
    char *error=NULL;
    char *pos;
+   char *pdfpos;
+   char *pspos;
+   char *quoted_src_fn, *quoted_conv_fn;
 
    BEGINMESSAGE(save_forkPDFToPSConversion)
 
@@ -210,7 +216,30 @@ save_forkPDFToPSConversion(sd)
    strcpy(proc_name,pos);
    strcat(proc_name," conversion");
 
-   sprintf(command,gv_gs_cmd_conv_pdf,sd->conv_fn,sd->src_fn);
+   quoted_src_fn = quote_filename(sd->src_fn);
+   quoted_conv_fn = quote_filename(sd->conv_fn);
+   if ((pdfpos = strstr(gv_gs_cmd_conv_pdf,"%pdf")) &&
+       (pspos = strstr(gv_gs_cmd_conv_pdf,"%ps"))) {
+     command[0] = '\0';
+     if (pdfpos < pspos) {
+       strncat(command,gv_gs_cmd_conv_pdf,(pdfpos-gv_gs_cmd_conv_pdf));
+       strcat(command,quoted_src_fn);
+       strncat(command,pdfpos+4,(pspos-pdfpos-4));
+       strcat(command,quoted_conv_fn);
+       strcat(command,pspos+3);
+     } else {
+       strncat(command,gv_gs_cmd_conv_pdf,(pspos-gv_gs_cmd_conv_pdf));
+       strcat(command,quoted_conv_fn);
+       strncat(command,pspos+3,(pdfpos-pspos-3));
+       strcat(command,quoted_src_fn);
+       strcat(command,pdfpos+4);
+     }
+   } else {
+     sprintf(command,gv_gs_cmd_conv_pdf,quoted_conv_fn,quoted_src_fn);
+   }
+   GV_XtFree(quoted_src_fn);
+   GV_XtFree(quoted_conv_fn);
+
    INFSMESSAGE(starting conversion:,command)
    process_fork(proc_name,command,save_forkPDFToPSConversionDone,(XtPointer)sd);
    ENDMESSAGE(save_forkPDFToPSConversion)

@@ -65,7 +65,7 @@
 
 static MiscMenuEntryStruct miscmenu_entries[] = {
   { "update",cb_checkFile,(XtPointer)CHECK_FILE_DATE,2 },
-  { "redisplay",cb_redisplay,NULL,2 },
+  { "redisplay",cb_redisplay,NULL,3 },
   { "toggle_current" , cb_setPageMark, (XtPointer)(SPM_CURRENT|SPM_TOGGLE),1 },
   { "toggle_even"    , cb_setPageMark, (XtPointer)(SPM_EVEN|SPM_TOGGLE),1 },
   { "toggle_odd"     , cb_setPageMark, (XtPointer)(SPM_ODD|SPM_TOGGLE),1 },

@@ -874,7 +874,7 @@ cb_page(w, client_data, call_data)
   char *s;
 
   BEGINMESSAGE(cb_page)
-  if (gv_psfile && client_data) {
+  if (gv_filename && client_data) {
     s = (char*)client_data;
     if (*s=='-' || *s=='+') {  
       k = 1;
@@ -898,7 +898,7 @@ cb_page(w, client_data, call_data)
 	np = np + ((k==1) ? cp : 0);
 	np=doc_putPageInRange(doc,np);
 	IIMESSAGE(np,current_page)
-	misc_setPageMarker(np,0);
+	misc_setPageMarker(np,0,NULL,True);
 	if (np != current_page) show_page(np,NULL);
       } else {
 	if (k==1 && np > 0) show_page(np,NULL);

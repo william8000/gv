@@ -302,9 +302,11 @@ misc_resetPagePosition()
 /*############################################################*/
 
 void
-misc_setPageMarker(entry,kind)
+misc_setPageMarker(entry,kind,event,check_toc)
   int entry;
   int kind; /* 0 = selected, 1 = highlighted , 2 = bring selected in sight*/
+  XEvent *event;
+  Boolean check_toc;
 {
   int x,y,yl,yu,ny=99999;
   Boolean b = False;
@@ -331,9 +333,12 @@ misc_setPageMarker(entry,kind)
 	ny = (int)newtocClip->core.height - ((int)newtoc->core.y + yl + 14);
         if (y>ny) b = True;
       }
-      if (b) {
+      if (event && b) {
 	INFIMESSAGE(jumping to,ny)
 	ClipWidgetSetCoordinates(newtocClip,x,ny);
+	entry = VlistEntryOfPosition(newtoc,(int)event->xbutton.y+(y-ny));
+	if (entry != VlistHighlighted(newtoc) && check_toc)
+		VlistChangeHighlighted(newtoc,entry,XawVlistSet);
       }
     }
   }
@@ -699,7 +704,7 @@ render_page(gvw)
        }
        if (toc_text) {
 	 INFMESSAGE(marking current_page as current)
-         misc_setPageMarker(current_page,0);
+         misc_setPageMarker(current_page,0,NULL,True);
        }
     }
 
@@ -1141,7 +1146,11 @@ setup_ghostview()
 	}
 	s[i] = '\0';
 							n=0;
-	XtSetArg(args[n], XtNvlist, s);			n++;
+	if (	(!gv_filename_old)			||
+		(!olddoc)				||
+		(strcmp(gv_filename_old, gv_filename))	||
+		(doc->numpages != olddoc->numpages)	)
+		  XtSetArg(args[n], XtNvlist, s);	n++;
 	XtSetArg(args[n], XtNlabel, toc_text);		n++;
       } else {
 	s = NULL;
@@ -1164,7 +1173,7 @@ setup_ghostview()
     misc_setSensitive(w_printAllPages     , show_printAllPages     , (gv_psfile   != NULL));
     misc_setSensitive(w_checkFile         , show_checkFile         , (gv_filename != NULL));
     misc_setSensitive(w_updateFile        , show_updateFile        , (gv_filename != NULL));
-    misc_setSensitive(w_showThisPage      , show_showThisPage      , (gv_filename != NULL));
+    misc_setSensitive(w_showThisPage      , show_showThisPage      , (gv_psfile   != NULL));
     misc_setSensitive(w_prevPage          , show_prevPage          , (toc_text    != NULL));
     misc_setSensitive(w_nextPage          , show_nextPage          , (gv_filename != NULL));
     misc_setSensitive(w_toggleCurrentPage , show_toggleCurrentPage , (toc_text    != NULL));
@@ -1178,7 +1187,7 @@ setup_ghostview()
     XtSetSensitive(saveAllEntry,     (gv_psfile   != NULL));
     XtSetSensitive(saveMarkedEntry,  (toc_text    != NULL));
     XtSetSensitive(nextEntry,        (gv_filename != NULL));
-    XtSetSensitive(redisplayEntry,   (gv_filename != NULL));
+    XtSetSensitive(redisplayEntry,   (gv_psfile   != NULL));
     XtSetSensitive(prevEntry,        (toc_text    != NULL));
     XtSetSensitive(currentEntry,     (toc_text    != NULL));
     XtSetSensitive(oddEntry,         (toc_text    != NULL));
@@ -1727,4 +1736,52 @@ catch_Xerror(dpy, err)
     XtDestroyWidget(toplevel);
     ENDMESSAGE(catch_Xerror)
     return 0;
+}
+
+/*############################################################*/
+/* quote_filename */
+/* Quotes special characters in filenames */
+/* (taken from bash sources) */
+/*############################################################*/
+
+char *
+quote_filename (string) 
+     char *string;
+{
+    int c;
+    char *result, *r, *s;
+
+    BEGINMESSAGE(quote_filename)
+
+    result = (char*) GV_XtMalloc((2 * strlen (string) + 1) * sizeof(char));
+
+    for (r = result, s = string; s && (c = *s); s++)
+    {
+      switch (c)
+	{
+	case ' ': case '\t': case '\n':		/* IFS white space */
+	case '\'': case '"': case '\\':		/* quoting chars */
+	case '|': case '&': case ';':		/* shell metacharacters */
+	case '(': case ')': case '<': case '>':
+	case '!': case '{': case '}':		/* reserved words */
+	case '*': case '[': case '?': case ']':	/* globbing chars */
+	case '^':
+	case '$': case '`':			/* expansion chars */
+	  *r++ = '\\';
+	  *r++ = c;
+	  break;
+	case '#':				/* comment char */
+	  if (s == string)
+	    *r++ = '\\';
+	  /* FALLTHROUGH */
+	default:
+	  *r++ = c;
+	  break;
+	}
+    }
+    *r = '\0';
+
+    ENDMESSAGE(quote_filename)
+
+    return (result);
 }

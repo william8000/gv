@@ -61,7 +61,9 @@ extern void			misc_resetPagePosition (
 extern void			misc_setPageMarker (
 #if NeedFunctionPrototypes
     int, /* entry */
-    int	 /* kind */
+    int, /* kind */
+    XEvent*,
+    Boolean
 #endif
 );
 
@@ -119,6 +121,12 @@ extern int			catch_Xerror (
 #endif
 );
  
+extern char *                   quote_filename (
+#if NeedFunctionPrototypes
+    char*
+#endif
+);
+
 #endif	/* _GV_MISC_H_ */
 
 

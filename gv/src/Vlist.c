@@ -628,6 +628,8 @@ VlistEntryOfPosition(w,y)
     if (y < 0) entry = -1;
     else       entry = (vw->vlist.entries*y)/(int)vw->label.label_height;
   }
+  if (entry >= vw->vlist.entries)
+	  entry = vw->vlist.entries-1;
   IMESSAGE(entry)
   ENDMESSAGE(VlistEntryOfPosition)
   return(entry);
