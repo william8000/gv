@@ -13,16 +13,16 @@ appdefaultsdir = $(pkglibdir)
 appdefaults_DATA = GV
 
 # Clean files
-CLEANFILES = GV \
-             GV.ad \
-             gv_system.ad \
-             gv_user.ad \
-             gv_spartan.h \
-             gv_intern_res_unix.h \
-             gv_class.ad \
-             gv_class.h \
-             gv_make_res.dat \
-             gv_intern_res_unix.dat
+CLEANFILES = $(srcdir)/GV \
+             $(srcdir)/GV.ad \
+             $(srcdir)/gv_system.ad \
+             $(srcdir)/gv_user.ad \
+             $(srcdir)/gv_spartan.h \
+             $(srcdir)/gv_intern_res_unix.h \
+             $(srcdir)/gv_class.ad \
+             $(srcdir)/gv_class.h \
+             $(srcdir)/gv_make_res.dat \
+	     $(srcdir)/gv_intern_res_unix.dat
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\"
