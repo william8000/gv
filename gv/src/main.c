@@ -421,7 +421,7 @@ int main(argc, argv)
    }
 
    /*### Manage GNU command line arguments ########################*/
-   while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
+   while ((c = getopt_long_only (argc, argv, "vhu", GNU_longOptions, NULL))
 	  != -1)
      {
 

@@ -1,5 +1,12 @@
 2005-03-31  Jose E. Marchesi  <jemarch@dataware.es>
 
+	* src/main.c (main): use getopt_long_only in order to support old
+	command line arguments style.
+
+	* doc/gv.texi (Resource files): Typo fixed
+	(Displaying new versions of a document): Reference to VMS removed.
+	(How can I make even more room for the image?): Subst -spartan by --spartan
+
 	* configure.ac: The signal handler is now enabled by default,
 	following the commentary on configure.ac
 	Typo: enable-signal-handle -> enable-signal-handler
