@@ -284,8 +284,8 @@ int main(argc, argv)
 #endif
 
     /*### Manage GNU command line arguments ########################*/
-    char c;
-    while ((c = getopt_long (argc, argv, "vh", GNU_longOptions, NULL))
+    int c;
+    while ((c = getopt_long (argc, argv, "vhu", GNU_longOptions, NULL))
 	   != -1)
       {
 	switch (c)
