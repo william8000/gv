@@ -128,7 +128,7 @@ MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
     if (nl) *nl='\0';
     name[0]='\0';
     if (*c == '#' || *c == '!') i=0;
-    else i=sscanf(c," %s ",name);
+    else i=sscanf(c," %99s ",name);
     if (i==1) {
       for (j=0; miscmenu_entries[j].name; j++)
 	if (!strcasecmp(miscmenu_entries[j].name,name)) { 
