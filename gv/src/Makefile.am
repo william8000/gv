@@ -27,7 +27,7 @@ CLEANFILES = $(srcdir)/GV \
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\"
 
-AM_CFLAGS =
+AM_CFLAGS = 
 
 
 gv_LDFLAGS = @X_LIBS@
@@ -119,7 +119,7 @@ $(srcdir)/gv_intern_res_unix.dat :
 	@echo ""							>> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsInterpreter:	gs" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsCmdScanPDF:	gs -dNODISPLAY -dQUIET -sPDFname='%s' -sDSCname='%s' pdf2dsc.ps -c quit" >> $(srcdir)/gv_intern_res_unix.dat
-	@echo "GV.gsCmdConvPDF:	gs -dNODISPLAY -dQUIET $(PS_LEVEL) -dNOPAUSE -sPSFile='%s' '%s' -c quit" >> $(srcdir)/gv_intern_res_unix.dat
+	@echo "GV.gsCmdConvPDF:	gs -dNOPAUSE -dQUIET -dBATCH -sDEVICE=pswrite -sOutputFile='%s' -f '%s' -c save pop quit" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsX11Device:		-sDEVICE=x11" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsX11AlphaDevice:	-sDEVICE=x11 -dTextAlphaBits=4 -dGraphicsAlphaBits=2 -dMaxBitmap=10000000 -dNOPLATFONTS" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsSafer:		True" >> $(srcdir)/gv_intern_res_unix.dat

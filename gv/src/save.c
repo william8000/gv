@@ -291,18 +291,20 @@ save_saveFile(sd)
       return(error);
    }
 
-   if (!error && sd->convert && !sd->conv_fn) {
-      s = sd->save_fn ? sd->save_fn : sd->src_fn;
-      s = GV_XtNewString(s);
-      s = file_getUsefulName(s);
-      s = file_pdfname2psname(s);
-      sd->conv_fn = file_getTmpFilename(NULL,s);
-      GV_XtFree(s);
-      INFSMESSAGE(converting from file,sd->src_fn)
-      INFSMESSAGE(converting to file,sd->conv_fn)
-      error = save_forkPDFToPSConversion(sd);
-      ENDMESSAGE(save_saveFile)
-      return(error);
+   if (!error && sd->convert && !sd->conv_fn) 
+     {
+
+     s = sd->save_fn ? sd->save_fn : sd->src_fn;
+     s = GV_XtNewString(s);
+     s = file_getUsefulName(s);
+     s = file_pdfname2psname(s);
+     sd->conv_fn = file_getTmpFilename(NULL,s);
+     GV_XtFree(s);
+     INFSMESSAGE(converting from file,sd->src_fn)
+     INFSMESSAGE(converting to file,sd->conv_fn)
+     error = save_forkPDFToPSConversion(sd);
+     ENDMESSAGE(save_saveFile)
+     return(error);
    }
 
    src_fn  = sd->src_fn;
