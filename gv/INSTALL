@@ -84,7 +84,7 @@ The file containing your preferences. It defaults to `~/.gv'.
   --with-scratch-dir=PATH 
 
 Temporary directory. Must be terminated with a trailing `/'. Defaults
-to `~/'
+to `/tmp/'
 
   --with-save-dir=PATH    
 
