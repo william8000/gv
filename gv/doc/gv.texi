@@ -78,48 +78,48 @@ Please note that gv is derived from Tim Theisen's ghostview.
 @verbatim
 Usage: gv [OPTION]... [FILE]
 PostScript and PDF viewer.
-  --monochrome               display document using only black and white
-  --grayscale                display document without colors
-  --color                    display document as usual
-  --safer                    start ghostscript in safe mode
-  --nosafer                  do not start ghostscript in safe mode
-  --quiet                    start ghostscript with the -dQUIET option
-  --noquiet                  do not start ghostscript with the -dQUIET option
-  --arguments=ARGS           start ghostscript with additional options as specified
-                             by the string ARGS
-  --page=LABEL               display the page with label LABEL first
-  --center                   the page should be centered automatically
-  --nocenter                 the page should not be centered automatically
-  --media=MEDIA              selects the paper size to be used
-  --orientation=ORIENTATION  sets the orientation of the page
-  --scale=N                  selects the scale N
-  --scalebase=N              selects the scale base N
-  --swap                     interchange the meaning of the orientations landscape
-                             and seascape
-  --noswap                   do not interchange the meaning of the orientation
-                             landscape and seascape
-  --antialias                use antialiasing
-  --noantialias              do not use antialiasing
-  --dsc                      dsc comments are respected
-  --nodsc                    dsc comments are not respected
-  --eof                      ignore the postscript EOF comment while scanning
-                             documents
-  --noeof                    do not ignore the postscript EOF comment while
-                             scanning documents
-  --pixmap                   use backing pixmap
-  --nopixmap                 do not use backing pixmap
-  --watch                    watch the document file for changes
-  --nowatch                  do not watch the document file for changes
-  --help                     print a help message and exit
-  --usage                    print a usage message and exit
-  --resize                   fit the size of the window to the size of the page
-  --noresize                 do not fit the size of the window to the size of the page
+  [-]-monochrome                      display document using only black and white
+  [-]-grayscale                       display document without colors
+  [-]-color                           display document as usual
+  [-]-safer                           start ghostscript in safe mode
+  [-]-nosafer                         do not start ghostscript in safe mode
+  [-]-quiet                           start ghostscript with the -dQUIET option
+  [-]-noquiet                         do not start ghostscript with the -dQUIET option
+  [-]-arguments=ARGS                  start ghostscript with additional options as specified
+                                      by the string ARGS
+  [-]-page=LABEL                      display the page with label LABEL first
+  [-]-center                          the page should be centered automatically
+  [-]-nocenter                        the page should not be centered automatically
+  [-]-media=MEDIA                     selects the paper size to be used
+  [-]-orientation=ORIENTATION         sets the orientation of the page
+  [-]-scale=N                         selects the scale N
+  [-]-scalebase=N                     selects the scale base N
+  [-]-swap                            interchange the meaning of the orientations landscape
+                                      and seascape
+  [-]-noswap                          do not interchange the meaning of the orientation
+                                      landscape and seascape
+  [-]-antialias                       use antialiasing
+  [-]-noantialias                     do not use antialiasing
+  [-]-dsc                             dsc comments are respected
+  [-]-nodsc                           dsc comments are not respected
+  [-]-eof                             ignore the postscript EOF comment while scanning
+                                      documents
+  [-]-noeof                           do not ignore the postscript EOF comment while
+                                      scanning documents
+  [-]-pixmap                          use backing pixmap
+  [-]-nopixmap                        do not use backing pixmap
+  [-]-watch                           watch the document file for changes
+  [-]-nowatch                         do not watch the document file for changes
+  [-]-help                            print a help message and exit
+  [-]-usage                           print a usage message and exit
+  [-]-resize                          fit the size of the window to the size of the page
+  [-]-noresize                        do not fit the size of the window to the size of the page
   -geometry [<width>][x<height>][{+-}<xoffset>{+-}<yoffset>]
-  --ad=FILE                  read and use additional resources from FILE
-  --style=FILE               read and use additional resources from FILE. These resources
-                             have lower priority than those provided on the context of --ad
-  --spartan                  shortcut for --style=gv_spartan.dat
-  --version                  show gv version and exit
+  [-]-ad=FILE                         read and use additional resources from FILE
+  [-]-style=FILE                      read and use additional resources from FILE. These resources
+                                      have lower priority than those provided on the context of --ad
+  [-]-spartan                         shortcut for --style=gv_spartan.dat
+  [-]-version                         show gv version and exit
 @end verbatim
 
 @table @code
