@@ -8,7 +8,7 @@ GV.orientation:		automatic
 GV.fallbackOrientation:	portrait
 GV.swapLandscape:	False
 GV.autoCenter:		True
-GV.antialias:		False
+GV.antialias:		True
 GV.respectDSC:		True
 GV.ignoreEOF:		True
 GV.confirmPrint:	True
