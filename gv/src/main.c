@@ -1284,9 +1284,9 @@ void main_setGhostscriptResources(db)
   main_setInternResource(db,&gv_gs_x11_device,"gsX11Device");
   main_setInternResource(db,&gv_gs_x11_alpha_device,"gsX11AlphaDevice");
   main_setInternResource(db,&gv_gs_arguments,"gsArguments");
-  s = resource_getResource(db,gv_class,gv_class,"gsSafer",NULL);
+  s = resource_getResource(db,gv_class,gv_name,"gsSafer",NULL);
   if (!strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;
-  s = resource_getResource(db,gv_class,gv_class,"gsQuiet",NULL);
+  s = resource_getResource(db,gv_class,gv_name,"gsQuiet",NULL);
   if (!strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
   ENDMESSAGE(main_setGhostscriptResources)
 }

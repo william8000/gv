@@ -201,11 +201,11 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     }
   if (safer_p)
     {
-      resource_putResource (&db, app_name, ".safer", "True");
+      resource_putResource (&db, app_name, ".gsSafer", "True");
     }
   if (nosafer_p)
     {
-      resource_putResource (&db, app_name, ".safer", "False");
+      resource_putResource (&db, app_name, ".gsSafer", "False");
     }
   if (pixmap_p)
     {
@@ -229,7 +229,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     }
   if (quiet_p)
     {
-      resource_putResource (&db, app_name, ".quiet", "True");
+      resource_putResource (&db, app_name, ".gsQuiet", "True");
     }
   if (monochrome_p)
     {
@@ -237,7 +237,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     }
   if (noquiet_p)
     {
-      resource_putResource (&db, app_name, ".quiet", "False");
+      resource_putResource (&db, app_name, ".gsQuiet", "False");
     }
    if (media_p) 
      { 
