@@ -10,7 +10,7 @@ by a '#' or a '*' or a '?'. A
   '?' describes a known problem which is not fixed yet.
 
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.0  (?? November 2004) %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.0  (20 November 2004) %%%%%%%%%%%%%%%%%%%%%%
 
 # New configuration/compilation/installation using GNU Autotools
 
