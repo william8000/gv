@@ -1,4 +1,6 @@
-2004-12-19  JosÃ© E. Marchesi  <jemarch@gnu.org>
+2004-12-19  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/gv_message.h (displayed\n\): Fixed a typo on the help message.
 
 	* src/gv_misc_res.dat: Changed the Reopen label to Reload for the
 	File menu.
@@ -6,7 +8,7 @@
 	* src/Makefile.am ($(srcdir)/gv_intern_res_unix.dat): Fix
 	GV.gsCmdConvPDF in order to work.
 
-2004-12-06  JosÃ© E. Marchesi  <jemarch@gnu.org>
+2004-12-06  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/main.c (main): Process GNU arguments after X initialization
 
