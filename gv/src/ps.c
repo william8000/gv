@@ -430,12 +430,16 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       char *filename_unc;
       char cmd[512];
       char s[512];
+      mode_t old_umask;
       filename_unc=file_getTmpFilename(NULL,filename_raw);
       if (memcmp(b, "BZh", 3) == 0) {
         sprintf(cmd, "bzip2 -dc %s >%s", filename, filename_unc);
       } else {
         sprintf(cmd, "gzip -dc %s >%s", filename, filename_unc);
       }
+
+      old_umask = umask(0077);
+
       INFMESSAGE(is compressed)
       INFSMESSAGE(uncompress command,cmd)
       if (ps_system(cmd) || file_fileIsNotUseful(filename_unc)) {
@@ -453,6 +457,7 @@ unc_ok:
 	ENDMESSAGE(psscan)
         return(retval);
       }
+      umask(old_umask);
       tmpfile = fopen(filename_unc, "r");
       if (!tmpfile) goto unc_exec_failed;
       fclose(*fileP);
@@ -510,8 +515,10 @@ unc_ok:
       char *filename_dsc;
       char cmd[512];
       char s[512];
+      mode_t old_umask;
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       sprintf(cmd,cmd_scan_pdf,filename,filename_dsc);
+      old_umask = umask(0077);
       INFMESSAGE(is PDF)
       INFSMESSAGE(scan command,cmd)
 #ifdef VMS
@@ -532,6 +539,7 @@ scan_ok:
 	ENDMESSAGE(psscan)
         return(retval);
       }
+      umask (old_umask);
       tmpfile = fopen(filename_dsc, "r");
       if (!tmpfile) goto scan_exec_failed;
       fclose(*fileP);
