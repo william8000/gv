@@ -163,12 +163,12 @@ static void options_gs_cb_apply(w, client_data, call_data)
    gv_gs_safer = SwitchIsSet(saferToggle) ? 1 : 0;
    if (i != gv_gs_safer) reopen=True;
 
-   reopen = options_gs_change(gs,&gv_gs_interpreter,&(free[0]));
-   reopen = options_gs_change(scan,&gv_gs_cmd_scan_pdf,&(free[1]));
+   reopen |= options_gs_change(gs,&gv_gs_interpreter,&(free[0]));
+   reopen |= options_gs_change(scan,&gv_gs_cmd_scan_pdf,&(free[1]));
             options_gs_change(conv,&gv_gs_cmd_conv_pdf,&(free[2]));
-   reopen = options_gs_change(x11dev,&gv_gs_x11_device,&(free[3]));
-   reopen = options_gs_change(x11alphadev,&gv_gs_x11_alpha_device,&(free[4]));
-   reopen = options_gs_change(arguments,&gv_gs_arguments,&(free[5]));
+   reopen |= options_gs_change(x11dev,&gv_gs_x11_device,&(free[3]));
+   reopen |= options_gs_change(x11alphadev,&gv_gs_x11_alpha_device,&(free[4]));
+   reopen |= options_gs_change(arguments,&gv_gs_arguments,&(free[5]));
 
    if (reopen) {
      cb_stopInterpreter(page,NULL,NULL);
