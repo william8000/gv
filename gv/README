@@ -7,8 +7,11 @@ This is version 3.6.1 of gv, an X11 ghostscript frontend based on
 Tim Theisen's ghostview 1.5.
 
 The most recent version may be obtained from gv's homepage at
+
    http://www.gnu.org/software/gv/
+
 or via anonymous ftp from
+
    ftp://ftp.gnu.org/gnu/gv/
 
 Please send suggestions or bug reports to bug-gv@gnu.org
