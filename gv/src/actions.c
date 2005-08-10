@@ -266,7 +266,7 @@ action_page(w, event, params, num_params)
     if (a & (PAGE_LEFT|PAGE_RIGHT)) {
       d = (int)aaa->core.width-cw;
       if (d > 0) {
-	INFMESSAGE(scrolling left or right)
+	/* scrolling left or right */
 	f = (dc*(float)d)/(float)cw;
         if (f<1) f = 1;
         d = (int)(((f/(float)abs((int)f))*(float)cw)/dc+1.0);
@@ -277,7 +277,7 @@ action_page(w, event, params, num_params)
     if (a & (PAGE_UP|PAGE_DOWN)) {
        d = (int)aaa->core.height - ch;
        if (d>0) {
-	 INFMESSAGE(scrolling up or down)
+	 /* scrolling up or down */
 	 f = (dc*(float)d)/(float)ch;
 	 if (f<1) f = 1;
 	 d = (int)(((f/(float)abs((int)f))*(float)ch)/dc+1.0);
