@@ -64,14 +64,12 @@ extern void			scale_getScreenSize (
 #endif
 );
 
-#ifndef VMS
 extern void			scale_getScreenResourceName (
 #if NeedFunctionPrototypes
    Display*,
    char*
 #endif
 );
-#endif
 
 #endif /* _GV_SCALE_H_ */ 
 

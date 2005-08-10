@@ -39,20 +39,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#ifdef VMS
-#   include <processes.h>
-#   include <jpidef.h>
-#   include <signal.h>
-#   include <lib$routines.h>
-#   include <ssdef.h>
-#   include <types.h>
-#else
+
 #   include <sys/types.h>
 #   include <sys/wait.h>
 #   include <unistd.h>
 #   include <signal.h>
 #   include <gv_signal.h>
-#endif
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -154,31 +146,12 @@ static int process_child_status(pd)
    pid_t child_pid;
 
    BEGINMESSAGE(process_child_status)
-#  ifdef VMS
-   {
-      unsigned long ret;
-      long item_code = JPI$_LOGINTIM;
-      long res_val[2];
-      long pid=(long)pd->pid;
-      ret = lib$getjpi(&item_code,&pid,NULL,&(res_val[0]),NULL,NULL);
-      IMESSAGE((int)ret)
-      if (ret==SS$_NORMAL)
-         { status=CHILD_OKAY; INFMESSAGE(SS$_NORMAL handled as CHILD_OKAY) }
-      else if (ret==SS$_NONEXPR)
-         { status=CHILD_EXITED; INFMESSAGE(SS$_NONEXPR handled as CHILD_EXITED) }
-      else
-         { status=CHILD_OKAY; INFMESSAGE(unknown return value handled as CHILD_OKAY) }
-/*
-         { status=CHILD_ERROR; INFMESSAGE(WARNING: returning CHILD_ERROR) }
-*/
-   }
-#  else
+
       child_pid = waitpid(pd->pid,NULL,WNOHANG);
       if      (child_pid==pd->pid) { status=CHILD_EXITED;         INFMESSAGE(CHILD_EXITED) }
       else if (child_pid==0)       { status=CHILD_OKAY;           INFMESSAGE(CHILD_OKAY) }
       else if (child_pid==-1)      { status=CHILD_ERROR;          INFMESSAGE(CHILD_ERROR) }
       else                         { status=CHILD_UNKNOWN_STATUS; INFMESSAGE(CHILD_UNKNOWN_STATUS) }
-#  endif
    ENDMESSAGE(process_child_status)
    return(status);
 }
@@ -272,9 +245,7 @@ ProcessData process_fork (name,command,notify_proc,data)
    BEGINMESSAGE(process_fork)
 
    pd  = process_get_pd();
-#if defined(VMS)
-#   define fork vfork
-#endif
+
    pid = fork();
 
    if (pid == 0) { /* child */
@@ -285,12 +256,7 @@ ProcessData process_fork (name,command,notify_proc,data)
       c = command;
       SMESSAGE(c)
 
-#ifdef VMS
-      /*  For some reason the combination vfork()/system() works on VMS.
-       *  But why isn't it documented somewhere ??? Or is it ???
-       */
-      system(c);
-#else
+
       argv[0] = "sh";
       argv[1] = "-c";
       argv[2] = c;
@@ -303,7 +269,6 @@ ProcessData process_fork (name,command,notify_proc,data)
       if (!freopen("/dev/null", "r", stdin))  perror("/dev/null");
 
       execvp(argv[0], argv);
-#endif
 
       {
          char tmp[512];

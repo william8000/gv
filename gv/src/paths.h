@@ -34,15 +34,9 @@
 #define _PATHS_H_
 
 #include "config.h"
-#ifdef VMS
-#   define INC_X11(aaa) <X11_DIRECTORY/aaa>
-#   define INC_XMU(aaa) <XMU_DIRECTORY/aaa>
-#   define INC_XAW(aaa) <XAW_DIRECTORY/aaa>
-#else
-#   define INC_X11(aaa) <X11/aaa>
-#   define INC_XMU(aaa) <X11/Xmu/aaa>
-#   define INC_XAW(aaa) <X11/Xaw3d/aaa>
-#endif
+#define INC_X11(aaa) <X11/aaa>
+#define INC_XMU(aaa) <X11/Xmu/aaa>
+#define INC_XAW(aaa) <X11/Xaw3d/aaa>
 
 #endif /* _PATHS_H_ */
 

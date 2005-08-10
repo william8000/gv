@@ -306,62 +306,6 @@ static char    *empty_string = "";
  *    installed a wing from a DC-2.
  */
 
-#ifndef VMS
-#  define ps_system system
-#else
-
-/*############################################################
- * ps_system        (VMS only, otherwise same as system())
- * Similar to system(), except it allows I/O redirection with <in >out
- * at the end of the line, and returns a more Unix-compatible status (0=OK).
- * The I/O redirection is very rudimentary. >> and | are NOT supported.
- * No error checking is performed, though hopefully the command will return
- * a reasonable error message when it can't access the file.
- * < or > in the command (eg. in directory spec), unless followed by another
- * < or >, will always be interpreted as I/O redirection, so be careful!
- *############################################################*/
-
-int ps_system(cmd)
-  char *cmd;
-{
-  char *inpf=NULL,*outf=NULL,*cf=NULL,*s,*t;
-  int status;
-
-  if (!cmd) cmd="";
-  cmd = PS_XtNewString(cmd);
-  s = strrchr(cmd,'>'); if (s) { outf = s+1; *s='\n'; }
-  s = strrchr(cmd,'<'); if (s) { inpf = s+1; *s='\n'; }
-  while ((s=strrchr(cmd,'\n'))) *s='\0';
-  if (outf) {
-    for (s=t=outf; *s; s++) if (!isspace(*s)) *t++=*s; 
-    *t='\0';
-    if (!(*outf)) outf=NULL;
-  }
-  if (inpf) {
-    for (s=t=inpf; *s; s++) if (!isspace(*s)) *t++=*s;
-    *t='\0';
-    if (!(*inpf)) inpf=NULL;
-  }
-  if (outf || inpf) {
-    FILE *com;
-    cf=file_getTmpFilename (NULL, outf ? outf : inpf);
-    com=fopen(cf, "w");
-    if (!com) return 1;
-    if (inpf) fprintf(com, "$DEFINE_/NOLOG SYS$INPUT  %s\n",inpf);
-    if (outf) fprintf(com, "$DEFINE_/NOLOG SYS$OUTPUT %s\n",outf);
-    fprintf(com,"$%s\n",cmd);
-    fclose(com);
-    PS_XtFree(cmd);
-    cmd = PS_XtMalloc((1+strlen(cf)+1)*sizeof(char));
-    sprintf(cmd,"@%s",cf);
-  }
-  status=system(cmd);
-  if (cf) unlink(cf);
-  PS_XtFree(cmd);
-  return((status&7)==1 ? 0 : status);
-}
-#endif
-
 /*-----------------------------------------------------------*/
 
 static void ps_dynMemExhaust()
@@ -463,7 +407,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
 
       INFMESSAGE(is compressed)
       INFSMESSAGE(uncompress command,cmd)
-      if (ps_system(cmd) || file_fileIsNotUseful(filename_unc)) {
+      if (system(cmd) || file_fileIsNotUseful(filename_unc)) {
 	INFMESSAGE(uncompressing failed)
 unc_exec_failed:
 	sprintf(s,"Execution of\n%s\nfailed.",cmd);
@@ -567,11 +511,7 @@ unc_ok:
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
       INFSMESSAGE(scan command,cmd)
-#ifdef VMS
-      if ((system(cmd)&7)!=1 || file_fileIsNotUseful(filename_dsc)) {
-#else
       if (system(cmd) || file_fileIsNotUseful(filename_dsc)) {
-#endif
 	INFMESSAGE(scan subprocess failed)
 scan_exec_failed:
 	sprintf(s,"Execution of\n%s\nfailed.",cmd);
@@ -1722,14 +1662,8 @@ static char * ps_io_fgetchars(fd,num)
       }
 
       FD_LINE_END = FD_BUF_END;
-#ifdef VMS
-      /* different existing VMS file formats require that we use read here ###jp###,10/12/96 */ 
-      if (num<0) FD_BUF_END += read(FD_FILE_DESC,FD_BUF+FD_BUF_END,LINE_CHUNK_SIZE);
-      else       FD_BUF_END += fread(FD_BUF+FD_BUF_END,size_of_char,LINE_CHUNK_SIZE,FD_FILE);
-#else
       /* read() seems to fail sometimes (? ? ?) so we always use fread ###jp###,07/31/96*/
       FD_BUF_END += fread(FD_BUF+FD_BUF_END,size_of_char,LINE_CHUNK_SIZE,FD_FILE);
-#endif
 
       FD_BUF[FD_BUF_END] = '\0';
       if (FD_BUF_END-FD_LINE_END == 0) {

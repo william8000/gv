@@ -57,15 +57,9 @@
 #include "Vlist.h"
 #include INC_X11(IntrinsicP.h)
 
-#ifdef VMS
-#   define unlink remove
-#   include <stat.h>
-#   include <types.h>
-#else
-#   include <sys/types.h>
-#   include <sys/stat.h>
-#   include <unistd.h>
-#endif
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "types.h"
 #include "actions.h"
@@ -115,16 +109,10 @@ cb_showTitle(w, client_data, call_data)
   }
   if (app_res.show_title) {
     if (doc && doc->title) t = doc->title;
-    else if (gv_filename) {
-#   ifdef VMS
-      t = strrchr(gv_filename,']');
-      if (!t) t = strrchr(gv_filename,':');
-      if (t) t++;
-      else t = gv_filename;
-#   else
-      t = gv_filename;
-#   endif
-    }
+    else if (gv_filename) 
+      {
+	t = gv_filename;
+      }
     if (!t) t = s = GV_XtNewString(versionIdentification[0]);
     else {
       s = GV_XtMalloc((4+strlen(t)+1)*sizeof(char));
@@ -397,9 +385,6 @@ static void watch_file (client_data, idp)
       struct stat sbuf;
       INFMESSAGE(checking file)
       s = GV_XtNewString(gv_filename);
-#     ifdef VMS
-        { char *c; c = strrchr(s,';'); if (c) *c='\0'; }
-#     endif
       error = stat(s, &sbuf);
       if (!error && mtime != sbuf.st_mtime && sbuf.st_mtime < time(NULL))
          cb_checkFile(NULL,(XtPointer)(CHECK_FILE_VERSION|CHECK_FILE_DATE),NULL);

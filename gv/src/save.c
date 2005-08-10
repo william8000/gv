@@ -56,13 +56,10 @@
 #include "doc_misc.h"
 #include "save.h"
 
-#ifdef VMS
-#   include <unixio.h>
-#   define unlink remove
-#else
+
 #   include <sys/types.h>
 #   include <unistd.h>
-#endif
+
 
 /*############################################################*/
 /* save_alllocSaveData */
@@ -103,13 +100,10 @@ save_freeSaveData(sd)
 /* print_file */
 /*------------------------------------------------------------*/
 
-#ifdef VMS
-#   define SYSTEM_SUCCEEDED_ON(bbb)  ((system(bbb)&7) == 1)
-#   define SYSTEM_FAILED_ON(bbb)     ((system(bbb)&7) != 1)
-#else
+
 #   define SYSTEM_SUCCEEDED_ON(bbb)  (system(bbb) == 0)
 #   define SYSTEM_FAILED_ON(bbb)     (system(bbb) != 0)
-#endif
+
 
 static String
 print_file(print_command,print_filename)

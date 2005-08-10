@@ -100,27 +100,14 @@ typedef struct {
     struct record_list	*ps_input;	/* pointer it gs input queue */
     char		*input_buffer;	/* pointer to input buffer */
     unsigned int	bytes_left;	/* bytes left in section */
-#ifndef VMS
     char		*input_buffer_ptr; /* pointer into input buffer */
     unsigned int	buffer_bytes_left; /* bytes left in buffer */
-#endif
     int			interpreter_input; /* fd gs stdin, -1 if None */
     int			interpreter_output; /* fd gs stdout, -1 if None */
-#ifndef VMS
     int			interpreter_error; /* fd gs stderr, -1 if None */
     XtInputId		interpreter_input_id; /* XtInputId for above */
     XtInputId		interpreter_output_id; /* XtInputId for above */
     XtInputId		interpreter_error_id; /* XtInputId for above */
-#else /* VMS */
-    short		interpreter_input_iosb[4];  /* I/O Status Blocks    */
-    short		interpreter_output_iosb[4]; /* for each mailbox     */
-    short		interpreter_command_iosb[4]; /* for each mailbox     */
-    char		*output_buffer; /* pointer to output buffer */
-    int			interpreter_command;
-    int			interpreter_command_number;
-    size_t              input_overhead_bytes;
-    char                *input_overhead_buffer;
-#endif /* VMS */
     Dimension		gs_width;	/* Width of window at last Setup() */
     Dimension		gs_height;	/* Height of window at last Setup() */
     Boolean		busy;		/* Is gs busy drawing? */

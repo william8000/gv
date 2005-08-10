@@ -61,11 +61,8 @@
 #include "popup.h"
 #include "widgets_misc.h"
 
-#ifdef VMS
-#   define unlink remove
-#else
-#   include <unistd.h>
-#endif
+
+#include <unistd.h>
 
 #define MESSAGE_STRING_LEN 512
 #define MAX_RECORD_LENGTH  512

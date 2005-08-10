@@ -125,9 +125,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   String s,t, rpath;
   char *spartan_filename;
   char tmp[GV_MAX_FILENAME_LENGTH];
-#ifdef VMS
-  int b;
-#endif
+
 
   BEGINMESSAGE(resource_buildDatabase)
 
@@ -138,19 +136,6 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
 
   /* ### system resources ################# */
   INFMESSAGE(checking for system resources)
-    /* #ifdef VMS */
-    /*   b=0; */
-    /*   sprintf(tmp,"DECW$USER_DEFAULTS:%s_SYSTEM.DAT",app_class); */
-    /*   if (!file_fileIsNotUseful(tmp)) b=1; */
-    /*   if (!b) { */
-    /*     sprintf(tmp,"DECW$SYSTEM_DEFAULTS:%s_SYSTEM.DAT",app_class); */
-    /*     if (!file_fileIsNotUseful(tmp)) b=1; */
-    /*   } */
-    /*   if (b) s = GV_XtNewString(tmp); */
-    /*   else s = NULL; */
-    /* #else */
-    /*  s = XtResolvePathname(display,"app-defaults",NULL,NULL,NULL,NULL,0,NULL); */
-    /* #endif */
 
   rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));
   rpath[0] = '\0';
@@ -164,11 +149,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
 
   /* ### user resources ################# */
   INFMESSAGE(checking for user resources)
-#ifdef VMS
-    sprintf(tmp,"DECW$USER_DEFAULTS:%s.DAT",app_class);
-  if (file_fileIsNotUseful(tmp)) s=NULL;
-  else s = GV_XtNewString(tmp);
-#else
+
   strcpy(tmp,USER_DEFAULTS);
   file_translateTildeInPath(tmp);
   if (!file_fileIsNotUseful(tmp)) {
@@ -177,7 +158,6 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     s = getenv("XUSERFILESEARCHPATH");
     if (s) s = XtResolvePathname(display,NULL,NULL,NULL,s,NULL,0,NULL);
   }
-#endif
   if (s) {
     INFSMESSAGE(merging user resource file into database,s)
       XrmCombineFileDatabase(s,&db,True);
@@ -595,22 +575,15 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
     INFSMESSAGE(not useful,tmp)
       if (name != file_locateFilename(name)) useful=-1;
       else {
-#     ifdef VMS
-        sprintf(tmp,"DECW$USER_DEFAULTS:%s",name);
-#     else
+
 	sprintf(tmp,"~/%s",name);
 	file_translateTildeInPath(tmp);
-#     endif
+
       }
   } else useful=1;
 
   if (!useful) {
-#   ifdef VMS
-    if (file_fileIsNotUseful(tmp)) {
-      INFSMESSAGE(not useful,tmp)
-	sprintf(tmp,"SYS$LOGIN:%s",name);
-    } else useful=1;     
-#   endif
+
     if (!useful && file_fileIsNotUseful(tmp)) {
       INFSMESSAGE(not useful,tmp)
 	sprintf(tmp,"%s%s",GV_LIBDIR,name);

@@ -36,12 +36,10 @@
 #include "message.h"
 
 #include <stdlib.h>
-#ifdef VMS
-#   include <stat.h>
-#else
+
 #   include <sys/types.h>
 #   include <sys/stat.h>
-#endif
+
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)

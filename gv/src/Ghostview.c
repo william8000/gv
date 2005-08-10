@@ -94,17 +94,10 @@ extern int errno;
 #define EAGAIN EWOULDBLOCK
 #endif
 
-#ifndef VMS
 /* GV_BUFSIZ is set to the minimum POSIX PIPE_BUF to ensure that
  * nonblocking writes to ghostscript will work properly.
  */
 #define GV_BUFSIZ 512
-#else /* VMS */
-/*
-** GV_BUFSIZ is the maximum length line we can handle, so we up it to 1024
-*/
-#define GV_BUFSIZ 1024
-#endif /* VMS */
 
 #define ALLOW_PDF /*###jp### 02/29/96 */
 
@@ -476,7 +469,6 @@ CatchPipe(i)
 #endif
 }
 
-#ifndef VMS
 
 /*###################################################################################*/
 /* Input - Feed data to ghostscript's stdin.
@@ -668,7 +660,6 @@ Output(client_data, source, id)
     ENDMESSAGE(Output)
 }
 
-#endif /* VMS */
 
 /*###################################################################################*/
 /* Register the type converter required for the PageOrientation. */
@@ -745,23 +736,15 @@ Initialize(request, new, args, num_args)
     ngvw->ghostview.interpreter_pid = -1;
     ngvw->ghostview.input_buffer = NULL;
     ngvw->ghostview.bytes_left = 0;
-#ifndef VMS
     ngvw->ghostview.input_buffer_ptr = NULL;
     ngvw->ghostview.buffer_bytes_left = 0;
-#endif
     ngvw->ghostview.ps_input = NULL;
     ngvw->ghostview.interpreter_input = -1;
     ngvw->ghostview.interpreter_output = -1;
-#ifndef VMS
     ngvw->ghostview.interpreter_error = -1;
     ngvw->ghostview.interpreter_input_id = None;
     ngvw->ghostview.interpreter_output_id = None;
     ngvw->ghostview.interpreter_error_id = None;
-#else /* VMS */
-    memset(ngvw->ghostview.interpreter_input_iosb, 0, 8);
-    memset(ngvw->ghostview.interpreter_output_iosb, 0, 8);
-    ngvw->ghostview.output_buffer = NULL;
-#endif /* VMS */
     ngvw->ghostview.gs_width = 0;
     ngvw->ghostview.gs_height = 0;
     ngvw->ghostview.changed = False;
@@ -824,9 +807,6 @@ Destroy(w)
     XtReleaseGC(w, gvw->ghostview.gc);
     XtReleaseGC(w, gvw->ghostview.highlight_gc);
     if (gvw->ghostview.input_buffer) GV_XtFree(gvw->ghostview.input_buffer);
-#ifdef VMS
-    if (gvw->ghostview.output_buffer) GV_XtFree(gvw->ghostview.output_buffer);
-#endif /* VMS */
     if (gvw->core.background_pixmap != XtUnspecifiedPixmap)
 	XFreePixmap(XtDisplay(w), gvw->core.background_pixmap);
     ENDMESSAGE(Destroy)
@@ -1353,7 +1333,6 @@ SetProperty(w, bpixmap)
    return True;
 }
 
-#ifndef VMS
 
 /* This routine starts the interpreter.  It sets the DISPLAY and 
  * GHOSTVIEW environment variables.  The GHOSTVIEW environment variable
@@ -1481,9 +1460,6 @@ StartInterpreter(w)
     gvw->ghostview.changed = False;
     gvw->ghostview.busy = True;
     ChangeCursor(gvw,CURSOR_BUSY);
-#if defined(VMS)
-#   define fork vfork
-#endif
     gvw->ghostview.interpreter_pid = fork();
 
     if (gvw->ghostview.interpreter_pid == 0) { /* child */
@@ -1604,7 +1580,6 @@ StopInterpreter(w)
     ENDMESSAGE(StopInterpreter)
 }
 
-#endif /* VMS */
 
 /*###################################################################################*/
 /* InterpreterFailed */
@@ -2028,8 +2003,6 @@ GhostviewIsInterpreterRunning(w)
     return gvw->ghostview.interpreter_pid != -1;
 }
 
-#ifndef VMS
-
 /*###################################################################################*/
 /* GhostviewSendPS:
  *   Queue a portion of a PostScript file for output to ghostscript.
@@ -2088,8 +2061,6 @@ GhostviewSendPS(w, fp, begin, len, close)
     }
     return True;
 }
-
-#endif /* VMS */
 
 /*###################################################################################*/
 /* GhostviewNextPage:
@@ -2197,646 +2168,3 @@ XmuCvtStringToPalette(dpy, args, num_args, fromVal, toVal, data)
     return False;
 }
 
-/*###################################################################################*/
-/*###################################################################################*/
-/*###################################################################################*/
-/* VMS */
-/*###################################################################################*/
-/*###################################################################################*/
-/*###################################################################################*/
-
-#ifdef VMS
-
-#include <descrip.h>
-#include <clidef.h>
-#include <lnmdef.h>
-#include <iodef.h>
-#include <dvidef.h>
-#include "vms_types.h"
-
-#define ERR_SIGNAL(s) if(!((s) & 1))lib$signal((s), 0, 0)
-
-static void CancelInput();
-static void CancelOutput();
-static void StartInput();
-static void StartOutput();
-static void OutputComplete();
-static void InputComplete();
-
-
-/*###################################################################################*/
-/*  StartInput  */
-/*###################################################################################*/
-
-static void
-StartInput(gvw)
-    GhostviewWidget gvw;
-{
-   int stat;
-
-   BEGINMESSAGE(StartInput)
-   if (gvw->ghostview.filename == NULL) {
-      stat = gvw->ghostview.interpreter_input_iosb[0];
-      if (stat != SS$_NORMAL) {
-         INFIMESSAGE(### strange input pipe encountered:,stat)
-         InterpreterFailed((Widget)gvw);
-         return;
-      }
-      INFMESSAGE(activating input pipe NOW)
-      Input(gvw);
-   }
-   ENDMESSAGE(StartInput)
-}
-
-/*###################################################################################*/
-/*  Input  */
-/*###################################################################################*/
-
-#define BUFFER_CHUNK_SIZE  1024
-#define SEND_CHUNK_SIZE    1000
-
-#define BYTES_LEFT_IN_FILE gvw->ghostview.bytes_left
-#define OVERHEAD_BYTES     gvw->ghostview.input_overhead_bytes
-#define OVERHEAD_BUFFER    gvw->ghostview.input_overhead_buffer
-#define INPUT_BUFFER(aaa)  gvw->ghostview.input_buffer[(aaa)]
-#define INPUT_BUFFER_PTR   gvw->ghostview.input_buffer
-
-static void
-Input(gvw)
-    GhostviewWidget gvw;
-{
-    int stat;
-    size_t br   ; /* bytes_read             */
-    size_t btr  ; /* bytes_to_read          */
-    size_t bts  ; /* bytes_to_send          */
-    size_t bib  ; /* bytes_in_buffer        */
-
-    
-    BEGINMESSAGE(Input)
-
-    /* Get a new section if required */
-    if (gvw->ghostview.ps_input && BYTES_LEFT_IN_FILE == 0 && OVERHEAD_BYTES == 0) {
-       struct record_list *ps_old = gvw->ghostview.ps_input;
-       INFMESSAGE1(getting a new section)
-       gvw->ghostview.ps_input = ps_old->next;
-       if (ps_old->close) fclose(ps_old->fp);
-       GV_XtFree((char *)ps_old);
-    }
- 
-    if (gvw->ghostview.ps_input){
-       /* Have to seek at the beginning of each section */
-       if (gvw->ghostview.ps_input->seek_needed) {
-          INFMESSAGE1(seek needed)
-          if (gvw->ghostview.ps_input->len > 0)
-	     fseek(gvw->ghostview.ps_input->fp,
-	           gvw->ghostview.ps_input->begin, SEEK_SET);
-	  gvw->ghostview.ps_input->seek_needed = False;
-          gvw->ghostview.bytes_left = gvw->ghostview.ps_input->len;
-          OVERHEAD_BYTES  = 0;
-          OVERHEAD_BUFFER = NULL;
-       }
-  
-       btr = BUFFER_CHUNK_SIZE - OVERHEAD_BYTES;
-       if (btr>BYTES_LEFT_IN_FILE)  btr = BYTES_LEFT_IN_FILE; 
-       IMESSAGE(BYTES_LEFT_IN_FILE)
-       IIMESSAGE(OVERHEAD_BYTES,btr)
-
-       if (OVERHEAD_BYTES) {
-          INFMESSAGE(moving overhead buffer to start of input buffer)
-          memmove(INPUT_BUFFER_PTR,OVERHEAD_BUFFER,OVERHEAD_BYTES);
-       }
-       if (btr>0) br = fread(&(INPUT_BUFFER(OVERHEAD_BYTES)),
-                             sizeof(char), btr,
-                             gvw->ghostview.ps_input->fp);
-       else       br = 0;
-       INFIMESSAGE(bytes read,br)
-       BYTES_LEFT_IN_FILE -= br;
-       bib = br + OVERHEAD_BYTES;
-       bts = bib; if (bts>SEND_CHUNK_SIZE) bts = SEND_CHUNK_SIZE; 
-       IIMESSAGE(bib,bts)
-
-       if (btr>0 && br==0) InterpreterFailed(gvw);
-       else if (bts>0) {
-          char *c;
-          size_t s = bts-1;
-          if (s==SEND_CHUNK_SIZE-1) {
-             c = (char*) (&(INPUT_BUFFER(s)));
-             while (s != 0 && *c != '\n') { c--; s--; }
-          }
-          if (s==0) {
-             s = bts-1;
-             c = (char*) (&(INPUT_BUFFER(s)));
-             while (s != 0 && (*c != '\t' && *c != ' ' && *c != '\r')) { c--; s--; }
-          }
-          if (s==0) {
-             INFMESSAGE(Cannot split record)
-             fprintf(stderr,"Ghostview Widget: Fatal error: Cannot split record.\n");
-             InterpreterFailed(gvw);
-          } else {
-#if 0
-             {
-                char tmp[2*GV_BUFSIZ];
-                strncpy(tmp, INPUT_BUFFER_PTR ,s+1);
-                tmp[s+1]='\0';
-                fprintf(stdout,"%s####### SENT #############\n",tmp);
-             }
-             {
-                char tmp[2*GV_BUFSIZ];
-                strncpy(tmp, &(INPUT_BUFFER(s+1)) ,bib-(s+1));
-                tmp[bib-(s+1)]='\0';
-                fprintf(stdout,"%s******* OVERHEAD *********\n",tmp);
-             }
-#endif
-             OVERHEAD_BYTES  = bib - (s+1);
-             OVERHEAD_BUFFER = &(INPUT_BUFFER(s+1));
-	     stat = sys$qio( 0, (short)gvw->ghostview.interpreter_input,
-                             IO$_WRITEVBLK, &gvw->ghostview.interpreter_input_iosb,
-                             InputComplete,gvw,
-                             INPUT_BUFFER_PTR, s+1,
-                             0,0,0,0 );
-             ERR_SIGNAL(stat);
-          }
-       }
-    }
-    ENDMESSAGE(Input)
-    return;
-}
-
-/*###################################################################################*/
-/*  InputComplete  */
-/*###################################################################################*/
-
-static void
-InputComplete(gvw)
-   GhostviewWidget gvw;
-{
-   int stat;
-
-   BEGINMESSAGE1(InputComplete)
-   stat = gvw->ghostview.interpreter_input_iosb[0];
-   if (stat != SS$_NORMAL) {
-      if (stat == SS$_CANCEL || stat == SS$_ABORT) {
-         INFIMESSAGE(### input pipe aborted:,stat)
-         ENDMESSAGE1(InputComplete)
-         return;
-      } else {
-         INFIMESSAGE(### input pipe broken:,stat)
-         InterpreterFailed((Widget)gvw);
-         ENDMESSAGE1(InputComplete)
-         return;
-      }
-   }
-   Input(gvw); /* queue the next write */
-   ENDMESSAGE1(InputComplete)
-}
-
-/*###################################################################################*/
-/*  CancelInput  */
-/*###################################################################################*/
-
-static void
-CancelInput(gvw)
-   GhostviewWidget gvw;
-{
-   BEGINMESSAGE(CancelInput)
-   if (gvw->ghostview.interpreter_input >= 0) {
-      INFMESSAGE(aborting possible write requests)
-      sys$cancel((short)gvw->ghostview.interpreter_input);
-   }
-   ENDMESSAGE(CancelInput)
-}
-
-/*###################################################################################*/
-/*  StartOutput  */
-/*###################################################################################*/
-
-static void
-StartOutput(gvw)
-    GhostviewWidget gvw;
-{
-   int stat;
-
-   BEGINMESSAGE(StartOutput)
-   stat = gvw->ghostview.interpreter_output_iosb[0];
-   if (stat != SS$_NORMAL) {
-       INFIMESSAGE(### strange output pipe encountered:,stat)
-       InterpreterFailed((Widget)gvw);
-       return;
-   }
-   INFMESSAGE(activating output pipe NOW)
-   Output(gvw);
-   ENDMESSAGE(StartOutput)
-}
-
-/*###################################################################################*/
-/*  Output  */
-/*  queue a read to the output mailbox. */
-/*###################################################################################*/
-
-static void
-Output(gvw)
-   GhostviewWidget gvw;
-{
-   int stat;
-   unsigned long gvw_number=0;
-
-   BEGINMESSAGE1(Output)
-   stat = sys$qio(
-   	     0,
-	     (short)gvw->ghostview.interpreter_output,
-	     IO$_READVBLK, &gvw->ghostview.interpreter_output_iosb,
-	     OutputComplete,gvw,
-	     gvw->ghostview.output_buffer, GV_BUFSIZ,
-	     0,0,0,0
-	  );
-   ENDMESSAGE1(Output)
-}
-
-/*###################################################################################*/
-/*  OutputComplete */
-/*
- * Note: the use of  'static int received'
- * should be cleaned sometimes (remember, this is part of a widget) ###jp###
- * Most Error Messages from ghostscript come 'per byte', without line termination.
- * OutputComplete therefore also tries to give these messages some 'structure'.
-*/
-/*###################################################################################*/
-
-static void
-OutputComplete(gvw)
-   GhostviewWidget gvw;
-{
-   static char buf[GV_BUFSIZ+1];
-   static int received =0;
-   int bytes, stat;
-
-   BEGINMESSAGE1(OutputComplete)
-
-   stat = gvw->ghostview.interpreter_output_iosb[0];
-   bytes = gvw->ghostview.interpreter_output_iosb[1];
-   IIMESSAGE1(stat,bytes)
-
-   if (stat != SS$_NORMAL) {
-      if (stat == SS$_CANCEL || stat == SS$_ABORT) {
-         INFIMESSAGE(### output pipe aborted:,stat)
-         ENDMESSAGE1(OutputComplete)
-         return;
-      } else if (stat == SS$_ENDOFFILE) {
-         INFIMESSAGE(### end of file,stat)
-         StopInterpreter((Widget)gvw);
-         ENDMESSAGE1(OutputComplete)
-         return;
-      } else {
-         INFIMESSAGE(### output pipe broken:,stat)
-         InterpreterFailed((Widget)gvw);
-         ENDMESSAGE1(OutputComplete)
-         return;
-      }
-   }
-
-   if (bytes == 0) { 
-      if (received) {
-         buf[received++]= '\n';  buf[received++]= '\0';
-         received = -1;
-      }
-   } else if (bytes == 1) {
-      buf[received++] = gvw->ghostview.output_buffer[0];
-      if (received>77) {
-         buf[received++]= '\n';  buf[received++]= '\0';
-         received = -1;
-      }
-   } else if (bytes > 1) {
-      memcpy(&(buf[received]), gvw->ghostview.output_buffer, bytes);
-      buf[bytes] = '\n'; buf[bytes+1] = '\0';
-      received = -1;
-   }
-
-   if (received==-1) {
-      INFSMESSAGE1(got message:,buf)
-      XtCallCallbackList((Widget)gvw,gvw->ghostview.output_callback,(XtPointer)buf);
-      received=0;
-   }
-
-   Output(gvw);
-
-   ENDMESSAGE1(OutputComplete)
-   return;
-}
-
-/*###################################################################################*/
-/*  CancelOutput */
-/*###################################################################################*/
-
-static void
-CancelOutput(gvw)
-   GhostviewWidget gvw;
-{
-   BEGINMESSAGE(CancelOutput)
-   if (gvw->ghostview.interpreter_output >= 0) {
-      INFMESSAGE(aborting possible read requests)
-      sys$cancel((short)gvw->ghostview.interpreter_output);
-   }
-   ENDMESSAGE(CancelOutput)
-}
-
-/*###################################################################################*/
-/*  SendCommand */
-/*###################################################################################*/
-
-static void
-SendCommand(gvw)
-   GhostviewWidget gvw;
-{
-   int ret;
-   char cmd[GV_BUFSIZ];
-
-   BEGINMESSAGE(SendCommand)
-
-   switch (gvw->ghostview.interpreter_command_number) {
-      case 0:
-         sprintf(cmd,"$ set noverify");
-         break;
-      case 1:
-         sprintf(cmd,"$ set on");
-         break;
-      case 2:
-         sprintf(cmd,"$ on warning then exit");
-         break;
-      case 3:
-         sprintf(cmd,"$ define__/nolog/proc/user GHOSTVIEW %d",XtWindow((Widget)gvw));
-         break;
-      case 4:
-         sprintf(cmd,"$ define__/nolog/proc/user DECW$DISPLAY %s",XDisplayString(XtDisplay((Widget)gvw)));
-         break;
-      case 5: {
-         char in_mbx_name[256];
-         if (gvw->ghostview.filename == NULL) {
-            ITEM_LIST_3_T(dvi_list, 1) = {{{64, DVI$_DEVNAM, NULL, NULL}}, 0};
-            IOSB_GET_T dvi_iosb;
-            dvi_list.item[0].buffer_p = in_mbx_name;
-	    ret = sys$getdvi(0,gvw->ghostview.interpreter_input, 0, &dvi_list, &dvi_iosb, 0, 0, 0);
-	    ERR_SIGNAL(ret); ERR_SIGNAL(dvi_iosb.status);
-	    in_mbx_name[64] = '\0';
-         } else {
-           if (!strcmp(gvw->ghostview.filename,"-")) {
-              char translation_buffer[256];
-              unsigned short translation_length;
-              long attr=LNM$M_CASE_BLIND;
-              ITEM_LIST_3_T(sys_list, 1) = {{{256, LNM$_STRING, "", 0}}, 0};
-              $DESCRIPTOR(lnt_desc, "LNM$PROCESS");
-              $DESCRIPTOR(sys_desc, "SYS$INPUT");
-              sys_list.item[0].buffer_p = translation_buffer;
-              sys_list.item[0].buffer_length_p = &translation_length;
-              ret = sys$trnlnm(&attr, &lnt_desc, &sys_desc, 0, &sys_list);
-              ERR_SIGNAL(ret);
-              translation_buffer[translation_length]='\0';
-              if (translation_buffer[0]==27) strcpy(in_mbx_name,&(translation_buffer[4]));
-              else                           strcpy(in_mbx_name,translation_buffer);
-           } else {
-              strcpy(in_mbx_name,"NL:");
-           }
-         }
-         sprintf(cmd,"$ define__/nolog/proc/user SYS$INPUT %s",in_mbx_name);
-         break;
-      }
-      case 6:
-         sprintf(cmd,"$ %s ",gvw->ghostview.interpreter);
-         strcat(cmd," ");
-         if (app_res.antialias) strcat(cmd,gv_gs_x11_alpha_device);
-         else                   strcat(cmd,gv_gs_x11_device);
-         strcat(cmd," \"-dNOPAUSE\"");
-         if (gvw->ghostview.safer) strcat(cmd, " \"-dSAFER\"");
-         if (gvw->ghostview.quiet) strcat(cmd, " \"-dQUIET\"");
-         if (gvw->ghostview.arguments) {strcat(cmd, " "); strcat(cmd,gvw->ghostview.arguments);}
-         if (gvw->ghostview.filename != NULL && strcmp(gvw->ghostview.filename,"-")) {
-            strcat(cmd," ");
-            strcat(cmd,gvw->ghostview.filename);
-         }
-         strcat(cmd," \"-\"");
-         break;
-      case 7:
-         INFMESSAGE(sending end of file)
-         ret = sys$qio(0,(short)gvw->ghostview.interpreter_command,
-	         IO$_WRITEOF, &gvw->ghostview.interpreter_command_iosb,
-	         NULL,0,
-	         NULL, NULL,
-	         0,0,0,0
-  	      );
-         ENDMESSAGE(SendCommand) return;
-   }
-   (gvw->ghostview.interpreter_command_number)++;
-
-   INFSMESSAGE(sending command:,cmd)
-   ret = sys$qio(0,(short)gvw->ghostview.interpreter_command,
-	    IO$_WRITEVBLK, &gvw->ghostview.interpreter_command_iosb,
-	    SendCommand,gvw,
-	    cmd, strlen(cmd),
-	    0,0,0,0
-  	 );
-   ERR_SIGNAL(ret);
-   ENDMESSAGE(SendCommand)
-}
-
-/*###################################################################################*/
-/*  StartInterpreter  */
-/*###################################################################################*/
-
-static void
-StartInterpreter(w)
-    Widget w;
-{
-    GhostviewWidget gvw = (GhostviewWidget) w;
-    char buf[GV_BUFSIZ];
-    char cmd[512];
-    int ret;
-    short ch1,ch2,ch3;
-    char in_mbx_name[65], out_mbx_name[65],cmd_mbx_name[65];
-    long pid, nowait = CLI$M_NOWAIT;
-    $DESCRIPTOR(out_desc, "");
-    $DESCRIPTOR(cmd_desc, "");
-    ITEM_LIST_3_T(dvi_list, 1) = {{{64, DVI$_DEVNAM, NULL, NULL}}, 0};
-    IOSB_GET_T dvi_iosb;
-
-    BEGINMESSAGE(StartInterpreter)
-
-    StopInterpreter(w);
-    SetBackground(w,True);
-    if (gvw->ghostview.disable_start) {
-       INFMESSAGE(interpreter start was disabled) ENDMESSAGE(StartInterpreter)
-       return;
-    }
-
-    INFMESSAGE(switching to busy)
-    gvw->ghostview.busy = True;
-    ChangeCursor(gvw,CURSOR_BUSY);
-    INFMESSAGE(creating output mailbox)
-    ret = sys$crembx(0, &ch2, GV_BUFSIZ, GV_BUFSIZ, 0, 0, 0, 0);
-    ERR_SIGNAL(ret);
-    dvi_list.item[0].buffer_p = out_mbx_name;
-    ret = sys$getdvi(0, ch2, 0, &dvi_list, &dvi_iosb, 0, 0, 0);
-    ERR_SIGNAL(ret); ERR_SIGNAL(dvi_iosb.status);
-    gvw->ghostview.interpreter_output = ch2;
-    out_mbx_name[64] = '\0';
-    out_desc.dsc$a_pointer = out_mbx_name;
-    out_desc.dsc$w_length = strlen(out_mbx_name);
-
-    if (gvw->ghostview.filename == NULL) {
-        INFMESSAGE(creating input mailbox)
-	ret = sys$crembx(0, &ch1, GV_BUFSIZ, GV_BUFSIZ, 0, 0, 0, 0);
-	ERR_SIGNAL(ret);
-	dvi_list.item[0].buffer_p = in_mbx_name;
-	ret = sys$getdvi(0, ch1, 0, &dvi_list, &dvi_iosb, 0, 0, 0);
-	ERR_SIGNAL(ret); ERR_SIGNAL(dvi_iosb.status);
-	in_mbx_name[64] = '\0';
-	gvw->ghostview.interpreter_input = ch1;
-    } else {
-        if (strcmp(gvw->ghostview.filename,"-")) in_mbx_name[0] = '\0';
-        else strcpy(in_mbx_name,getenv("SYS$INPUT"));
-	gvw->ghostview.interpreter_input = 0;
-    }
-
-    INFMESSAGE(creating command mailbox)
-    ret = sys$crembx(0, &ch3, GV_BUFSIZ, GV_BUFSIZ, 0, 0, 0, 0);
-    ERR_SIGNAL(ret);
-    dvi_list.item[0].buffer_p = cmd_mbx_name;
-    ret = sys$getdvi(0, ch3, 0, &dvi_list, &dvi_iosb, 0, 0, 0);
-    ERR_SIGNAL(ret); ERR_SIGNAL(dvi_iosb.status);
-    gvw->ghostview.interpreter_command = ch3;
-    cmd_mbx_name[64] = '\0';
-    cmd_desc.dsc$a_pointer = cmd_mbx_name;
-    cmd_desc.dsc$w_length = strlen(cmd_mbx_name);
-
-    gvw->ghostview.interpreter_command_number = 1;
-    SendCommand(gvw);
-
-    INFMESSAGE(spawning interpreter process)
-    ret = lib$spawn(NULL,&cmd_desc,&out_desc,&nowait,0,&pid,0,0,0,0,0,0,0);
-    ERR_SIGNAL(ret);
-
-    /* Everything worked, initialize IOSBs and save info about interpreter. */
-    gvw->ghostview.interpreter_pid = pid;
-    if (gvw->ghostview.output_buffer == NULL) {
-	gvw->ghostview.output_buffer = GV_XtMalloc(GV_BUFSIZ);
-    }
-    gvw->ghostview.interpreter_input_iosb[0] = SS$_NORMAL;
-    gvw->ghostview.interpreter_output_iosb[0] = SS$_NORMAL;
-
-    if (gvw->ghostview.filename != NULL) StartInput(gvw);
-    StartOutput(gvw);
-    gvw->ghostview.changed = False;
-    gvw->ghostview.background_cleared=0;
-
-    ENDMESSAGE(StartInterpreter)
-}
-
-/*###################################################################################*/
-/*  StopInterpreter  */
-/*  Stop the interperter, if present, and remove any Input sources. */
-/*  Also reset the busy state. */
-/*###################################################################################*/
-
-static void
-StopInterpreter(w)
-    Widget w;
-{
-    int ret;
-    GhostviewWidget gvw = (GhostviewWidget) w;
-
-    BEGINMESSAGE(StopInterpreter)
-
-    CancelInput(gvw);
-    CancelOutput(gvw);
-    if (gvw->ghostview.interpreter_pid >= 0) {
-       INFMESSAGE(deleting process)
-	ret = sys$delprc(&gvw->ghostview.interpreter_pid, 0);
-	if(ret != SS$_NORMAL && ret != SS$_NONEXPR)lib$signal(ret, 0, 0);
-	gvw->ghostview.interpreter_pid = -1;
-    }
-    if (gvw->ghostview.interpreter_input >= 0) {
-       INFMESSAGE(cleaning input mailbox)
-	(void) sys$dassgn(gvw->ghostview.interpreter_input);
-	gvw->ghostview.interpreter_input = -1;
-	while (gvw->ghostview.ps_input) {
-	    struct record_list *ps_old = gvw->ghostview.ps_input;
-	    gvw->ghostview.ps_input = ps_old->next;
-	    if (ps_old->close) fclose(ps_old->fp);
-	    GV_XtFree((char *)ps_old);
-	}
-    }
-    if (gvw->ghostview.interpreter_output >= 0) {
-       INFMESSAGE(cleaning output mailbox)
-	(void) sys$dassgn(gvw->ghostview.interpreter_output);
-	gvw->ghostview.interpreter_output = -1;
-    }
-    if (gvw->ghostview.interpreter_command >= 0) {
-       INFMESSAGE(cleaning command mailbox)
-	(void) sys$dassgn(gvw->ghostview.interpreter_command);
-    }
-    gvw->ghostview.busy = False;
-    ChangeCursor(gvw,CURSOR_RESET);
-
-    ENDMESSAGE(StopInterpreter)
-}
-
-/*###################################################################################*/
-/*  GhostviewSendPS */
-/*
- *   Queue a portion of a PostScript file for output to ghostscript.
- *   fp: FILE * of the file in question.  NOTE: if you have several
- *   Ghostview widgets reading from the same file.  You must open
- *   a unique FILE * for each widget.
- *   SendPS does not actually send the PostScript, it merely queues it
- *   for output.
- *   begin: position in file (returned from ftell()) to start.
- *   len:   number of bytes to write.
- *
- *   If an interpreter is not running, nothing is queued and
- *   False is returned.
-*/
-/*###################################################################################*/
-
-Boolean
-GhostviewSendPS(w, fp, begin, len, close)
-    Widget w;
-    FILE *fp;
-    long begin;
-    unsigned int len;
-    Bool close;
-{
-    GhostviewWidget gvw = (GhostviewWidget) w;
-    struct record_list *ps_new;
-
-    BEGINMESSAGE(GhostviewSendPS)
-    if (gvw->ghostview.interpreter_input < 0) {
-       INFMESSAGE(no interpreter running) ENDMESSAGE(GhostviewSendPS)
-       return False;
-    }
-    if(len != 0){
-	ps_new = (struct record_list *) GV_XtMalloc(sizeof (struct record_list));
-	ps_new->fp = fp;
-	ps_new->begin = begin;
-	ps_new->len = len;
-	ps_new->seek_needed = True;
-	ps_new->close = close;
-	ps_new->next = NULL;
-
-	if (gvw->ghostview.input_buffer == NULL) {
-	    gvw->ghostview.input_buffer = GV_XtMalloc(GV_BUFSIZ);
-	}
-
-	if (gvw->ghostview.ps_input == NULL) {
-	    gvw->ghostview.bytes_left = len;
-	    gvw->ghostview.ps_input = ps_new;
-	    StartInput(gvw);
-	} else {
-	    struct record_list *p = gvw->ghostview.ps_input;
-	    while (p->next != NULL) {
-		p = p->next;
-	    }
-	    p->next = ps_new;
-	}
-    }
-    ENDMESSAGE(GhostviewSendPS)
-    return True;
-}
-#endif /* VMS */

@@ -41,16 +41,12 @@
 #include <ctype.h>  /* for toupper    */
 #include <stdio.h>
 
-#ifdef VMS
-#   include <unixio.h> /* for chdir etc. */
-#else
-#   include <sys/types.h>
-#   include <sys/stat.h>
-#   include <dirent.h>
-#   include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
     /* Damn it, don't ever use getwd with stupid linux ###jp### */
-#   define getwd(aaa) getcwd((aaa),(FS_MAXNAMLEN-2))    
-#endif
+#define getwd(aaa) getcwd((aaa),(FS_MAXNAMLEN-2))    
 
 #include "paths.h"
 #include INC_X11(Xlib.h)
@@ -77,41 +73,20 @@
    OS dependant Definitions
 ####################################################################*/
 
-#ifdef VMS
-#   define FS_MAXNAMLEN 255
-#   define DIR_SEPARATOR_STRING "."
-#   define DIR_SPECIFICATION_START_STRING "["
-#   define DIR_SPECIFICATION_END_STRING "]"
 
-#   define CHANGE_TO_HEAD_OF_DIR_SPEC(path) {				\
-              char *locat;					        \
-              if (!(locat = strrchr(path,'['))) {                       \
-                 if (!(locat = strrchr(path,':')+1)) {			\
-                    INFMESSAGE(unable to extract node/disk information)	\
-                    ENDMESSAGE(TopDirSelectionProc)			\
-                    return;						\
-                 }							\
-              }								\
-              else *(locat)='\0';					\
-           }
+#define FS_MAXNAMLEN 255
+#define DIR_SEPARATOR_STRING "/"
+#define DIR_SPECIFICATION_START_STRING ""
+#define DIR_SPECIFICATION_END_STRING ""
 
-#   define ONE_STEP_UP "[-]"		/* chdir argument to make one step up in the directory tree. */
-#   define HOME getenv("SYS$LOGIN")	/* chdir argument to go home (the login directory) */
-#else /*################################ VMS ############################*/
-
-#   define FS_MAXNAMLEN 255
-#   define DIR_SEPARATOR_STRING "/"
-#   define DIR_SPECIFICATION_START_STRING ""
-#   define DIR_SPECIFICATION_END_STRING ""
-
-#   define CHANGE_TO_HEAD_OF_DIR_SPEC(path) {	\
+#define CHANGE_TO_HEAD_OF_DIR_SPEC(path) {	\
               char*p=path;			\
               *p='/'; p++; *p='\0';		\
            }
 
-#   define ONE_STEP_UP ".."		/* chdir argument to make one step up in the directory tree. */
-#   define HOME getenv("HOME")	        /* chdir argument to go home (the login directory) */
-#endif
+#define ONE_STEP_UP ".."		/* chdir argument to make one step up in the directory tree. */
+#define HOME getenv("HOME")	        /* chdir argument to go home (the login directory) */
+
 
 /*####################################################################
    Initializations
@@ -405,7 +380,7 @@ FileSelectionClassRec file_selectionClassRec = {
     /* resources          */   resources,
     /* resource_count     */   XtNumber(resources),
     /* xrm_class          */   NULLQUARK,
-#if defined(VMS) || defined(linux) || defined(SYSV) || defined(SVR4)
+#if defined(linux) || defined(SYSV) || defined(SVR4)
     /* compress_motion    */   0,
     /* compress_exposure  */   0,
     /* compress_enterleave*/   0,
@@ -775,16 +750,7 @@ appendDirEndSeparator(path)
    BEGINMESSAGE(appendDirEndSeparator)
    INFSMESSAGE(old:,path)
    if (path) l=strlen(path);
-#ifdef VMS
-   if (l && l<=(FS_MAXNAMLEN-2) && path[l-1] != ']' && path[l-1] != ':') {
-      char* bra=strchr(path,'[');
-      char* col=strchr(path,':');
-      if (!col && !bra) strcat(path,":");
-      else strcat(path,"]");
-   }
-#else
    if (l && l<=(FS_MAXNAMLEN-2) && path[l-1] != '/') strcat(path,"/");   
-#endif
    INFSMESSAGE(new:,path);
    ENDMESSAGE(appendDirEndSeparator)
 }
@@ -857,11 +823,7 @@ static void translateTildeInPath(path)
   if (path && (pos=strchr(path,'~'))) {
     char *home;
     char tmp[FS_MAXNAMLEN];
-#ifdef VMS
-    home=getenv("SYS$LOGIN");
-#else
     home=getenv("HOME");
-#endif
     if (home) {
       *pos='\0'; pos++;
       savestrcpy(tmp,path);
@@ -885,24 +847,8 @@ static int FScompareEntries(a, b)
   String *p = (String*) a;
   String *q = (String*) b;
 
-# ifdef VMS /*versions should be sorted correctly (1.11.94)*/
-    char *vp,*vq;
-    int result;
-    vq=strrchr(*q,';');
-    vp=strrchr(*p,';');
-    if ((vq) && (vp)) {
-      *vp='\0'; *vq='\0';
-      result=strcmp(*p,*q);
-      if (!result) result = strlen(vq+1)-strlen(vp+1);
-      if (!result) result = -strcmp(vp+1,vq+1);
-      *vp=';'; *vq=';';
-      return result;
-    } else {
-      return strcmp(*p,*q);
-    }
-# else
-    return strcmp(*p,*q);
-# endif
+  return strcmp(*p,*q);
+
 }
 
 /*-------------------------------------------------------------------------------
@@ -1402,21 +1348,13 @@ SplitPath(path,dir,file)
   BEGINMESSAGE(SplitPath)
   SMESSAGE(path)
   savestrcpy(tmp,path);
-#ifdef VMS
-  s=strrchr(tmp,']');
-  if (!s) s=strrchr(tmp,':');
-  if (s) { 
-    s++;
-    savestrcpy(file,s);
-    *s='\0';
-    savestrcpy(dir,tmp);
-#else
+
   if ((s=strrchr(tmp,'/'))) {
     s++;
     savestrcpy(file,s);
     *s='\0';
     savestrcpy(dir,tmp);
-#endif
+
   } else {
     savestrcpy(dir,tmp);
     file[0]='\0';
@@ -1466,11 +1404,7 @@ static void SetDirectoryView(w,dir)
    char                 *filter,*malloced_filter;
    int			viewmode;
    int error;
-#  ifdef VMS
-      char		tempfile[FS_MAXNAMLEN];
-#  else
    struct stat          sbuf;
-#  endif
 
    USE_Arg(5);
    
@@ -1555,36 +1489,10 @@ static void SetDirectoryView(w,dir)
    if (streq(filter,"")) viewmode = XawFileSelectionRescan;
    else                  viewmode = XawFileSelectionFilter;
 
-#ifdef VMS
-   while (*filter) { *filter = toupper(*filter); filter++; }
-   filter = malloced_filter;
-#endif
 
    accepted = TRUE;
    while ((dp = readdir(dirp))) {
       str = dp->d_name;
-#     ifdef VMS
-         if ((temp=strstr(str,".DIR"))) {
-            *temp = '\0';
-            REALLOC_MORE_IF_NEEDED(SUBDIR_LIST,SUBDIR_ENTRIES+1,SUBDIR_ALLOC);
-            SUBDIR_ENTRY(SUBDIR_ENTRIES) = FS_XtNewString(str);
-            SMESSAGE(SUBDIR_ENTRY(SUBDIR_ENTRIES))
-            SUBDIR_ENTRIES++;
-         } else {
-            if (viewmode==XawFileSelectionFilter) accepted=strwild(str,filter);
-            if (accepted) {
-               REALLOC_MORE_IF_NEEDED(CURDIR_LIST,CURDIR_ENTRIES+1,CURDIR_ALLOC);
-               CURDIR_ENTRY(CURDIR_ENTRIES) = FS_XtNewString(str);
-               SMESSAGE(CURDIR_ENTRY(CURDIR_ENTRIES))
-               CURDIR_ENTRIES++;
-            }
-#           ifdef MESSAGES
-            else {
-               INFMESSAGE(list entry not accepted by viewmode)
-            }
-#           endif
-         }
-#     else /*end of VMS */
          if (strcmp(str,".")) {
             if (!stat(str,&sbuf) && S_ISDIR(sbuf.st_mode) && (strncmp(str, ".", 1) || !strcmp(str, ".."))) {
                REALLOC_MORE_IF_NEEDED(SUBDIR_LIST,SUBDIR_ENTRIES+1,SUBDIR_ALLOC);
@@ -1606,7 +1514,6 @@ static void SetDirectoryView(w,dir)
 #              endif
             }
          }
-#     endif
    }
 
    IMESSAGE(CURDIR_ENTRIES)
@@ -1626,48 +1533,10 @@ static void SetDirectoryView(w,dir)
    closedir(dirp);
 
    {
-#     ifdef VMS
-      {
-         int ntops = 0;
-         char *p;
-	 savestrcpy(path,CURRENT_DIR);
-         p = strrchr(path,':');
-         if (p) {
-            ++p;
-            if (strchr(p,'[')) {
-               strreplace(p,".]","]",p);
-               strreplace(p,"][",".",p);
-               strreplace(p,".000000","",p);
-               strreplace(p,"000000.","",p);
-               strreplace(p,"[000000]","",p);
-               strreplace(p,"]","",p);
-               strreplace(p,"[","",p);
-               savestrcpy(path,p);
-            }
-         }
-         SMESSAGE(path)
-
-         if (path) {
-            int ntops = 1;
-            temp=path;
-            while ((temp=strchr(temp,'.'))) { 
-               *(temp++) = '\0'; ++ntops; 
-            }
-            temp=path;
-            while ((ntops--)) {
-               REALLOC_MORE_IF_NEEDED(TOPDIR_LIST,TOPDIR_ENTRIES+1,TOPDIR_ALLOC);
-               TOPDIR_ENTRY(TOPDIR_ENTRIES) = FS_XtNewString(temp);
-               SMESSAGE1(TOPDIR_ENTRY(TOPDIR_ENTRIES))
-               TOPDIR_ENTRIES++;
-               temp = strchr(temp+1,'\0')+1;
-            }
-         }
-      }
-#     else /*end of VMS*/
-      {
-	char *p=path;
-	savestrcpy(path,CURRENT_DIR);
-	REALLOC_MORE_IF_NEEDED(TOPDIR_LIST,TOPDIR_ENTRIES+1,TOPDIR_ALLOC);
+     {
+       char *p=path;
+       savestrcpy(path,CURRENT_DIR);
+       REALLOC_MORE_IF_NEEDED(TOPDIR_LIST,TOPDIR_ENTRIES+1,TOPDIR_ALLOC);
 	TOPDIR_ENTRY(TOPDIR_ENTRIES) = FS_XtNewString("/");
 	SMESSAGE(TOPDIR_ENTRY(TOPDIR_ENTRIES))
 	TOPDIR_ENTRIES++;
@@ -1685,7 +1554,6 @@ static void SetDirectoryView(w,dir)
 	  temp=p;
 	}
       }
-#     endif
 
       IMESSAGE1(TOPDIR_ENTRIES)
       if (!TOPDIR_ENTRIES) {
@@ -1895,14 +1763,6 @@ SubDirSelectionProc(w, client_data, call_data)
     } else {
       savestrcpy(newpath,CURRENT_DIR);
       appendDirEndSeparator(newpath);
-#     ifdef VMS
-      {
-	size_t l=0;
-	l=strlen(newpath);
-	if (newpath[l-1]==']') newpath[l-1]='.';
-	else savestrcat(newpath,"[");
-      }
-#     endif
       savestrcat(newpath,SUBDIR_ENTRY(item));
       appendDirEndSeparator(newpath);
     }

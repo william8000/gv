@@ -57,10 +57,6 @@
 #include "MButton.h"
 #include "Vlist.h"
 
-#ifdef VMS
-#   include <unixio.h>
-#endif
-
 #include "types.h"
 #include "actions.h"
 #include "callbacks.h"

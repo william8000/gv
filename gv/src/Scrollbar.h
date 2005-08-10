@@ -121,18 +121,12 @@
 typedef struct _ScrollbarRec	  *ScrollbarWidget;
 typedef struct _ScrollbarClassRec *ScrollbarWidgetClass;
 
-#ifdef VMS  /*pragma ###jp### 06/18/95 */
-#   include <XAW_DIRECTORY/Xaw3D_VMS_PRAGMA_S.H>
-#else
-#   define _EXTERN_ extern
-#endif 
+
+#define _EXTERN_ extern
 
 _EXTERN_ WidgetClass scrollbarWidgetClass;
 
 #undef _EXTERN_
-#ifdef VMS  /*pragma ###jp### 06/18/95 */
-#   include <XAW_DIRECTORY/Xaw3D_VMS_PRAGMA_E.H>
-#endif
 
 _XFUNCPROTOBEGIN
 

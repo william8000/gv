@@ -33,11 +33,9 @@
 #ifndef _GV_TYPES_H_
 #define _GV_TYPES_H_
 
-#ifdef VMS
-#  include <types.h>
-#else 
-#  include <sys/types.h>
-#endif
+
+#include <sys/types.h>
+
 
 /*##############################################
   options

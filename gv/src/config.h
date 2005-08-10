@@ -55,13 +55,9 @@ correct files also. (yes Jim, this option is for you)
 ##########################################################
 */
 
-#ifdef VMS
-#   define INTERN_RESOURCES_DAT     "gv_intern_res_vms.dat"
-#   define INTERN_RESOURCES_H       "gv_intern_res_vms.h"
-#else
-#   define INTERN_RESOURCES_DAT     "gv_intern_res_unix.dat"
-#   define INTERN_RESOURCES_H       "gv_intern_res_unix.h"
-#endif
+#define INTERN_RESOURCES_DAT     "gv_intern_res_unix.dat"
+#define INTERN_RESOURCES_H       "gv_intern_res_unix.h"
+
 
 /*
 ----------------------------------------------------------
@@ -118,15 +114,9 @@ Miscellaneous defaults
 #define GV_APPLICATION_NAME	"gv"
 #define GV_CLASS		"GV"
 
-#ifdef VMS
-#   define EXIT_STATUS_NORMAL	1
-#   define EXIT_STATUS_ERROR	2
-#   define EXIT_STATUS_FATAL    4
-#else
-#   define EXIT_STATUS_NORMAL	0
-#   define EXIT_STATUS_ERROR	1
-#   define EXIT_STATUS_FATAL    -1
-#endif
+#define EXIT_STATUS_NORMAL	0
+#define EXIT_STATUS_ERROR	1
+#define EXIT_STATUS_FATAL    -1
 
 #endif /* _GV_CONFIG_H_ */
 

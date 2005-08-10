@@ -79,17 +79,11 @@
 
 #define GV_MAXLENGTH 512
 
-#ifdef VMS
-#   include<descrip.h>
-#   include<lnmdef.h>
-#   include<lib$routines.h>
-#   include<starlet.h>
-#   include<rmsdef.h>
-#else  
+
 #   include <sys/types.h>
 #   include <sys/stat.h>
 #   include <unistd.h>
-#endif
+
 
 #include <math.h>
 
@@ -113,10 +107,6 @@
 #include "Ghostview.h"
 #include "Vlist.h"
 
-#ifdef VMS
-#   include <unixio.h>
-#   define unlink remove
-#endif
 
 #include "types.h"
 #include "actions.h"
@@ -505,9 +495,6 @@ int mode;
    struct stat sbuf;
    char *tmpname;
    int  r = -1;
-#  ifdef VMS
-      char *pos;
-#  endif
 
    BEGINMESSAGE(check_file)
 
@@ -522,11 +509,9 @@ int mode;
       return(0);
    }
 
-#ifdef VMS
-   if (mode&CHECK_FILE_DATE) {
-#else
+
    if (1) {
-#endif
+
       INFMESSAGE(checking file date)
       status = stat(gv_filename, &sbuf);
       if (!status && mtime != sbuf.st_mtime) {
@@ -539,58 +524,7 @@ int mode;
    tmpname=gv_filename;
    r=status;
 
-#ifdef VMS
 
-   if ( (mode&CHECK_FILE_VERSION) ||
-        (status && (mode&CHECK_FILE_DATE) && strrchr(gv_filename,';'))
-      ) {
-      tmpname = GV_XtNewString(gv_filename);
-      pos = strrchr(tmpname,';'); /* strip the version */
-      if (pos) *pos='\0';
-      status = stat(tmpname, &sbuf);
-      if (!status) {
-         if (mtime != sbuf.st_mtime) {
-            if (pos) { /* get the full specification of the new file*/
-               unsigned long s;
-               char newfile[256];
-               struct dsc$descriptor_s sd;
-               struct dsc$descriptor_s fd;
-               unsigned long context = 0;       
-
-               sd.dsc$w_length  = (unsigned short)strlen(tmpname);
-               sd.dsc$b_dtype   = DSC$K_DTYPE_T;
-               sd.dsc$b_class   = DSC$K_CLASS_S;
-               sd.dsc$a_pointer = tmpname;
-               fd.dsc$w_length  = sizeof(newfile)-1;
-               fd.dsc$b_dtype   = DSC$K_DTYPE_T;
-               fd.dsc$b_class   = DSC$K_CLASS_S;
-               fd.dsc$a_pointer = newfile;
-               s=lib$find_file(&sd,&fd,&context,0,0,0,0);
-               if (s != RMS$_SUC) {
-                  INFMESSAGE(not found) r = -1;
-               } else {
-                  newfile[fd.dsc$w_length]='\0';
-                  pos = strchr(newfile,' ');
-                  if (pos) *pos = '\0';
-                  INFSMESSAGE(found new file:,newfile)
-                  if (gv_filename_old) GV_XtFree(gv_filename_old);
-                  gv_filename_old = gv_filename;
-                  gv_filename=GV_XtNewString(newfile);
-                  INFSMESSAGE(new file:,gv_filename)
-                  r = 1;
-               }
-               lib$find_file_end(&context);
-             } else { /* file changed, but filename shows no version number */
-                INFSMESSAGE(new file:,gv_filename)
-                r = 1;
-             }
-         } else {
-           INFMESSAGE(no new version)
-           r = 0;
-         }
-      } else r=status;
-   }
-#endif /* VMS */
 
    if (r<0) {
      char message[GV_MAXLENGTH]; 
@@ -1003,14 +937,8 @@ setup_ghostview()
           bitmap = app_res.document_bitmap;
        } 
        else if (gv_filename) {
-#        ifdef VMS
-           buttonlabel = strrchr(gv_filename,']');
-	   if (!buttonlabel) buttonlabel = strrchr(gv_filename,':');
-	   if (buttonlabel) buttonlabel++;
-	   else buttonlabel = gv_filename;
-#        else
+
 	   buttonlabel = gv_filename;
-#        endif
 	   label = gv_filename;
 	   bitmap = None;
        } else {
@@ -1050,32 +978,7 @@ setup_ghostview()
     }
 
     /* Reset ghostscript and output messages popup */
-#   ifdef VMS
-    {
-       Bool disable=False;
-       if ( !doc || !olddoc ||
-	    olddoc->beginprolog != doc->beginprolog ||
-	    olddoc->endprolog != doc->endprolog ||
-	    olddoc->beginsetup != doc->beginsetup ||
-	    olddoc->endsetup != doc->endsetup
-       ) disable=True;
-       if (!disable) {
-          char *fn = GV_XtNewString(gv_filename);
-          char *ofn= GV_XtNewString(gv_filename_old);
-          char *pos;
-          pos = strrchr(fn,';');  if (pos) *pos='\0';
-          pos = strrchr(ofn,';'); if (pos) *pos='\0';
-          if (strcmp(fn, ofn)) disable=True;
-          GV_XtFree(fn);
-          GV_XtFree(ofn);
-       }
-       if (disable==True) {   
-	  GhostviewDisableInterpreter(page);
-          cb_popdownInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
-          cb_resetInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
-       }
-    }
-#   else
+
     if (!doc || !olddoc ||
 	strcmp(gv_filename_old, gv_filename) ||
 	olddoc->beginprolog != doc->beginprolog ||
@@ -1087,7 +990,6 @@ setup_ghostview()
         cb_popdownInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
         cb_resetInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
     }
-#   endif
 
     /* Build table of contents */
     if (doc && doc->structured) {

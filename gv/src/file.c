@@ -75,20 +75,13 @@ file_getDirOfPath(path)
    char *pos;
 
    BEGINMESSAGE(file_getDirOfPath)
-#ifdef VMS
-   if (path) {
-      dir=GV_XtNewString(path);
-      pos = strrchr(dir,']');
-      if (!pos) pos=strrchr(dir,':');
-      if (pos) { pos++; *pos='\0'; }
-   }
-#else
+
    if (path) {
       dir=GV_XtNewString(path);
       pos = strrchr(dir,'/');
       if (pos) { pos++; *pos='\0'; }
    }
-#endif
+
 #ifdef MESSAGES
    if (!dir) { INFMESSAGE (### Warning: returning NULL) }
    else      { INFSMESSAGE(returning, dir) }
@@ -108,16 +101,7 @@ file_stripVersionNumber(filename)
    int strippedVersionNumber=0;
 
    BEGINMESSAGE(file_stripVersionNumber)
-#ifdef VMS
-   if (filename) {
-      char *pos;
-      pos = strrchr(filename,';');
-      if (pos) {
-         strippedVersionNumber=1;
-         *pos='\0';
-      }
-   }
-#endif
+
    ENDMESSAGE(file_stripVersionNumber)
    return(strippedVersionNumber);
 }
@@ -133,12 +117,9 @@ file_locateFilename(path)
    char *tmp=NULL;
    BEGINMESSAGE(file_locateFileName)
    if (path) {
-#     ifdef VMS
-         tmp = strrchr(path,']');
-         if (!tmp) tmp = strrchr(path,':');
-#     else
+
          tmp = strrchr(path,'/');
-#     endif
+
       if (!tmp) tmp=path;
       else tmp++;
       INFSMESSAGE(found,tmp)
@@ -159,10 +140,9 @@ file_assureDirectory(to,from)
    int len;
    BEGINMESSAGE(file_assureDirectory)
    strcpy(to,from);
-#  ifndef VMS
-      len = strlen(to);
-      if (to[len-1] != '/') { to[len] = '/'; to[len+1] = '\0'; }
-#  endif
+   len = strlen(to);
+   if (to[len-1] != '/') { to[len] = '/'; to[len+1] = '\0'; }
+
    ENDMESSAGE(file_assureDirectory)
 }
 
@@ -205,7 +185,7 @@ file_getTmpFilename(baseDirectory,baseFilename)
    if (pos) { *pos='\0'; tmpExt = pos+1; }
    else tmpExt = "";
 
-/* Limit filename to 39 characters (excluding dir and .tmp).
+   /* Limit filename to 39 characters (excluding dir and .tmp).
    This is required for VMS, but is also reasonable for Unix. */
    if (strlen(tmpName)+strlen(tmpExt)>23) {
       if (strlen(tmpExt)>11) tmpExt[11] = '\0';     /* allow .ps_page_nnn */
@@ -244,7 +224,6 @@ file_translateTildeInPath(path)
    char *pos;
 
    BEGINMESSAGE(file_translateTildeInPath)
-#ifndef VMS
    if ((pos=strchr(path,'~'))) {
       char *home;
       char tmp[GV_MAX_FILENAME_LENGTH];
@@ -257,7 +236,6 @@ file_translateTildeInPath(path)
          strcpy(path,tmp);
       }
    }
-#endif /* end of not VMS */
    ENDMESSAGE(file_translateTildeInPath)
 }
 
@@ -273,17 +251,9 @@ int file_fileIsDir(fn)
   char *c;
   BEGINMESSAGE(file_fileIsNotUseful)
   if (fn) {
-#ifdef VMS
-     c = strrchr(fn,']');
-     if (c && (!*(c+1) || isspace(*(c+1)))) r = 1;
-     if (!r) {
-       c = strrchr(fn,':');
-       if (c && (!*(c+1) || isspace(*(c+1)))) r = 1;
-     }
-#else
      c = strrchr(fn,'/');
      if (c && (!*(c+1) || isspace(*(c+1)))) r = 1;
-#endif
+
      if (!r && !stat(fn,&s)  && (S_ISDIR(s.st_mode))) r=1;
   }
   IMESSAGE(r)
@@ -369,10 +339,7 @@ file_getUsefulName(name)
     return(name);
   }
   INFSMESSAGE(in,name)
-# ifdef VMS
-    e = strrchr(name,';');
-    if (e) *e = '\0';
-# endif
+
   c = e = strrchr(name,'.');
   if (!e) {
      ENDMESSAGE(file_getUsefulName)

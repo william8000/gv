@@ -61,13 +61,7 @@ open_fail_error(errornumber,error_str,file_name,show)
 {
   char *m;
 
-  BEGINMESSAGE(open_fail_error_message)
-#if defined (__DECC) && defined (VMS)
-  if (errornumber < __ERRNO_MAX) m=strerror(errornumber);
-  else m = "Unknown error";
-#else
   if (!(m = strerror(errornumber))) m = "Unknown error";
-#endif
 
   if (show) {
     fprintf(stderr,"%s: %s %s (%s)\n",gv_name,error_str,file_name,m);

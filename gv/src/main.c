@@ -338,11 +338,7 @@ int main(argc, argv)
     versionpopup     = NULL;
     FileSel_popup    = NULL;
     pagemediaEntry   = NULL;
-#ifdef VMS
-    gv_print_kills_file = 1;
-#else
     gv_print_kills_file = 0;
-#endif
 
     antialias_p = 0;
     noantialias_p = 0;
@@ -390,7 +386,6 @@ int main(argc, argv)
 
    INFMESSAGE(opening display)
    {
-#ifndef VMS
      /*
        The following doesn't work for XFILESEARCHPATH since stupid
        XtResolvePathname, when passed a NULL path, checks XFILESEARCHPATH
@@ -400,11 +395,9 @@ int main(argc, argv)
      char *xuf;
      xuf = getenv(xufsp); if (xuf) xuf = GV_XtNewString(xuf);
      setenv(xufsp,"___",1);
-#endif
      gv_display = XtOpenDisplay(app_con,NULL,NULL,gv_class,NULL,0,&argc,argv);
-#ifndef VMS
+
      if (xuf) { setenv(xufsp,xuf,1); GV_XtFree(xuf); } else unsetenv(xufsp);
-#endif
      if (!gv_display) {
        fprintf(stderr, "%s: Unable to open the display.\n", GV_APPLICATION_NAME);
        exit(EXIT_STATUS_ERROR);

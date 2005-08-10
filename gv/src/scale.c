@@ -224,13 +224,11 @@ void scale_getScreenSize(display,screen,db,app_class,app_name,widthP,heightP)
     s=resource_getResource(sdb,app_class,app_name,"screenSize",NULL);
     INFSMESSAGE(found in SCREEN_RESOURCES,s)
   }
-#ifndef VMS
   if (!s) {
     scale_getScreenResourceName(display,v);
     s=resource_getResource(db,app_class,app_name,v,NULL);
     INFSMESSAGE(found in screen specific resource,s)
   }
-#endif
   if (!s) {
     s=resource_getResource(db,app_class,app_name,"screenSize",NULL);
     INFSMESSAGE(found,s)
@@ -248,8 +246,6 @@ void scale_getScreenSize(display,screen,db,app_class,app_name,widthP,heightP)
   IIMESSAGE(*widthP,*heightP)
   ENDMESSAGE(scale_getScreenSize)
 }
-
-#ifndef VMS
 
 /*##################################################
   scale_getScreenResourceName  
@@ -285,4 +281,3 @@ void scale_getScreenResourceName(display,name)
   SMESSAGE(name)
   ENDMESSAGE(scale_getScreenResourceName)
 }
-#endif /* ifndef VMS */

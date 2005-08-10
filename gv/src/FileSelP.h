@@ -36,11 +36,7 @@
 #include "paths.h"
 #include "AaaP.h"
 
-#ifdef VMS
-#   include "vms_dir.h"
-#else
-#   include <dirent.h>
-#endif
+#include <dirent.h>
 
 #include "FileSel.h"
 

@@ -337,7 +337,6 @@ void options_setup_cb_save(w, client_data, call_data)
    }
   options_setArg(&(argi[argn]),&(argv[argn]),s_confirmQuit        ,gv_class        ,tmp);
        ++argn;
-#ifndef VMS
   {
     char name[255];
     char val[255];
@@ -346,7 +345,6 @@ void options_setup_cb_save(w, client_data, call_data)
     options_setArg(&(argi[argn]),&(argv[argn]),name                  ,gv_class       ,widgets_getText(screenSize));
        ++argn;
   }
-#endif
 
   options_save(argn,argi,argv);
   while (--argn >=0) {

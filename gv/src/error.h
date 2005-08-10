@@ -33,27 +33,11 @@
 #ifndef	_GV_ERROR_H_
 #define	_GV_ERROR_H_
 
-#ifdef VMS
-#   include <errno.h>
-#   include <string.h>
-#   ifdef __DECC
-#      ifndef __ERRNO_MAX /*###jp### __ERRNO_MAX is undefined in lower versions of DEC C */
-#         define __ERRNO_MAX 85
-#      endif
-#   else
-#      include <perror.h>
-#   endif
-#else
-#if 0 /* unused ###jp###, 02.06.97 */
-#   ifndef CSRG_BASED /* for __FreeBSD__ */
-       extern int sys_nerr;
-       extern char *sys_errlist[];
-#   endif
-#endif 
-#   include <errno.h>
-    /* BSD 4.3 errno.h does not declare errno */
-    extern int errno;
-#endif
+
+
+#include <errno.h>
+/* BSD 4.3 errno.h does not declare errno */
+extern int errno;
 
 extern char*			open_fail_error (
 #if NeedFunctionPrototypes

@@ -39,13 +39,8 @@
 
 #include <stdio.h>
 #include <gv_signal.h>
-#ifdef VMS
-#   include <unixlib.h>
-#   include <stat.h>
-#else
-#   include <sys/stat.h>
-#   include <unistd.h>
-#endif
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -151,9 +146,6 @@ static void signal_scb_updateFile(client_data,sidP)
     String s;
     struct stat sbuf;
     s = GV_XtNewString(gv_filename);
-#   ifdef VMS
-      { char *c; c = strrchr(s,';'); if (c) *c='\0'; }
-#   endif
     if (!stat(s, &sbuf) && mtime != sbuf.st_mtime)
        cb_checkFile(NULL,(XtPointer)CHECK_FILE_VERSION,NULL);
     GV_XtFree(s);
