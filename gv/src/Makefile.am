@@ -14,7 +14,7 @@ appdefaults_DATA = GV
 
 EXTRA_DIST=ad2c gv_font_res.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
-           gv_selected.xbm gv_unmark.xbm strcasecmp.c strcasecmp.h vms_dir.h vms_types.h 
+           gv_selected.xbm gv_unmark.xbm vms_dir.h vms_types.h 
 
 # Clean files
 CLEANFILES = $(srcdir)/GV \

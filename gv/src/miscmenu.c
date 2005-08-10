@@ -57,11 +57,7 @@
 #include "main_resources.h"
 #include "main_globals.h"
 
-#ifdef VMS
-#  include "strcasecmp.h"
-#else
-#  include <string.h>
-#endif
+#include <string.h>
 
 static MiscMenuEntryStruct miscmenu_entries[] = {
   { "update",cb_checkFile,(XtPointer)CHECK_FILE_DATE,2 },

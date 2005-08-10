@@ -49,15 +49,9 @@
 #include INC_X11(Xfuncs.h)
 #include "GhostviewP.h"
 
-#ifdef VMS
-#   include <ssdef.h>
-#   include<lib$routines.h>
-#   include<starlet.h>
-#else
-#   include <sys/types.h>
-#   include <unistd.h>
-#   include <sys/wait.h>
-#endif
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -67,6 +61,7 @@
 #include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
+#include "misc.h"
 
 #ifndef XlibSpecificationRelease
 typedef char *XPointer;
@@ -278,7 +273,6 @@ static void Copy_pixmap(w)
     Widget w;
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
-   GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
 
   if(!gvw->ghostview.use_bpixmap){
     if(pix) {
@@ -301,7 +295,6 @@ static void Realize_pixmap(w)
     if(!pix) {
         Display *dpy = XtDisplay(w);
         int scr = DefaultScreen(dpy);
-        GC gc = DefaultGC(dpy, scr);
         Window win = XtWindow(w);
         int x, gwidth, gheight;
         Window r;
@@ -1220,7 +1213,6 @@ Setup(w)
    Widget w;
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
-   GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
    Pixmap bpixmap;
 
    BEGINMESSAGE(Setup)
@@ -1424,7 +1416,7 @@ StartInterpreter(w)
 	 while (isspace(*dptr)) dptr++;
     }
     argv[argc++] = "-dNOPAUSE";
-    argv[argc++] = "-g2x2"; // Avoid unwanted rotation of landscape pdf files
+    argv[argc++] = "-g2x2"; /* Avoid unwanted rotation of landscape pdf files */
     if (gvw->ghostview.quiet) argv[argc++] = "-dQUIET";
     if (gvw->ghostview.safer) 
       {
@@ -1571,26 +1563,32 @@ StopInterpreter(w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(StopInterpreter)
-    if (gvw->ghostview.interpreter_pid >= 0) {
-        INFMESSAGE(killing process)
+    if (gvw->ghostview.interpreter_pid >= 0)
+      {
 	kill(gvw->ghostview.interpreter_pid, SIGTERM);
 	gvw->ghostview.interpreter_pid = -1;
 	wait(0);
-    }
-    if (gvw->ghostview.interpreter_input >= 0) {
+      }
+    if (gvw->ghostview.interpreter_input >= 0) 
+      {
 	close(gvw->ghostview.interpreter_input);
 	gvw->ghostview.interpreter_input = -1;
-	if (gvw->ghostview.interpreter_input_id != None) {
+	if (gvw->ghostview.interpreter_input_id != None) 
+	  {
 	    XtRemoveInput(gvw->ghostview.interpreter_input_id);
 	    gvw->ghostview.interpreter_input_id = None;
-	}
-	while (gvw->ghostview.ps_input) {
+	  }
+	while (gvw->ghostview.ps_input) 
+	  {
 	    struct record_list *ps_old = gvw->ghostview.ps_input;
 	    gvw->ghostview.ps_input = ps_old->next;
+
 	    if (ps_old->close) fclose(ps_old->fp);
+
 	    GV_XtFree((char *)ps_old);
-	}
-    }
+
+	  }
+      }
     if (gvw->ghostview.interpreter_output >= 0) {
 	close(gvw->ghostview.interpreter_output);
 	gvw->ghostview.interpreter_output = -1;

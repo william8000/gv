@@ -422,7 +422,7 @@ String misc_changeFile(name)
     dir=file_getDirOfPath(p);
     if(strcmp(dir,p)) {
       chdir(dir);
-      // Strip off directory from p to satisfy GS 8.00 security change
+      /* Strip off directory from p to satisfy GS 8.00 security change */
       q=p;
       while(*dir && *dir == *q) {dir++; q++;}
       strcpy(p,q);

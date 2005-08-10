@@ -50,11 +50,8 @@
 #include "resource.h"
 #include "scale.h"
 
-#ifdef VMS
-#   include "strcasecmp.h"
-#else
-#   include <string.h>
-#endif
+#include <string.h>
+
 
 /*##################################################
   scale_freeScales

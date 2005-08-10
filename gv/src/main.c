@@ -68,15 +68,9 @@
 #include "MButton.h"
 #include "Vlist.h"
 
-#ifdef VMS
-#   include <unixlib.h>
-#   include "strcasecmp.h"
-#   include <stat.h>
-#else
-#   include <string.h>
-#   include <sys/stat.h>
-#   include <unistd.h>
-#endif
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "types.h"
 #include "actions.h"

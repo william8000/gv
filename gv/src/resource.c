@@ -149,7 +149,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
     /*   if (b) s = GV_XtNewString(tmp); */
     /*   else s = NULL; */
     /* #else */
-    //  s = XtResolvePathname(display,"app-defaults",NULL,NULL,NULL,NULL,0,NULL);
+    /*  s = XtResolvePathname(display,"app-defaults",NULL,NULL,NULL,NULL,0,NULL); */
     /* #endif */
 
   rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));

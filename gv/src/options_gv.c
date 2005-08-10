@@ -69,11 +69,7 @@
 #include "ps.h"
 #include "doc_misc.h"
 
-#ifdef VMS
-#   include "strcasecmp.h"
-#else
-#   include <string.h>
-#endif
+#include <string.h>
 
 static Widget   popup=NULL,optionControl;
 static Widget   antialiasToggle;

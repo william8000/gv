@@ -42,17 +42,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <time.h>
 #include <ctype.h>
 #include <errno.h>
 
-#ifdef VMS
-#   include <stat.h>
-#else  
-#   include <sys/types.h>
-#   include <sys/stat.h>
-#endif
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -64,11 +59,8 @@
 #include "main_resources.h"
 #include "main_globals.h"
 
-#ifdef VMS
-#   include "strcasecmp.h"
-#else
-#   include <string.h>
-#endif
+#include <string.h>
+
 
 
 /*############################################################*/
@@ -346,21 +338,13 @@ file_pdfname2psname(name)
      return(name);
   }
   INFSMESSAGE(in,name)
-# ifdef VMS
-    e = strrchr(name,';');
-    if (!e) e = name+strlen(name);
-    else *e = '\0';
-# else
-    e = name+strlen(name);
-# endif
+  e = name+strlen(name);
+
   if ((e-name)-4 >= 0) {
     e -= 4;
-    if (!strcasecmp(e,".pdf")) {
-#     ifdef VMS
-        strcpy(e,".PS");
-#     else
-        strcpy(e,".ps");
-#     endif
+    if (!strcasecmp(e,".pdf") ||
+	!strcasecmp(e,".PDF")) {
+      strcpy(e,".ps");
     }
   }
   INFSMESSAGE(out,name)

@@ -151,7 +151,7 @@ action_page(w, event, params, num_params)
   int i;
   char *s;
   static String *old_params = NULL;
-  static old_num_params = 0;
+  static int old_num_params = 0;
   String *pars;
   int    npars;
   static XtIntervalId timer = 0;

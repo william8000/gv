@@ -1,6 +1,6 @@
 /*
 **
-** string.h
+** gv_string.h
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
 ** Copyright (C) 2004 Jose E. Marchesi

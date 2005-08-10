@@ -66,14 +66,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef VMS
-#   include <unixio.h>
-#   include "strcasecmp.h"
-#   define unlink remove
-#   define USE_FTELL_FOR_FILEPOS
-#else
-#   include <string.h>
-#endif
+#include <string.h>
 
 #ifndef SEEK_SET
 #define SEEK_SET 0
@@ -546,7 +539,7 @@ unc_ok:
       mode_t old_umask;
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
-      //      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc);
+      /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
       quoted_filename = quote_filename(filename);
       quoted_filename_dsc = quote_filename(filename_dsc);
       if ((pdfpos = strstr(cmd_scan_pdf,"%pdf")) &&
@@ -1203,8 +1196,10 @@ continuepage:
 			    &(doc->pages[doc->numpages].boundingbox[LLX]),
 			    &(doc->pages[doc->numpages].boundingbox[LLY]),
 			    &(doc->pages[doc->numpages].boundingbox[URX]),
-			    &(doc->pages[doc->numpages].boundingbox[URY])) == 4)
+			    &(doc->pages[doc->numpages].boundingbox[URY])) == 4) 
+		      {
 			if (page_bb_set == NONE) page_bb_set = 1;
+		      }
 		    else {
 			float fllx, flly, furx, fury;
 			if (sscanf(line+length("%%PageBoundingBox:"),
