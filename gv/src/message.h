@@ -46,8 +46,8 @@
 #   define MESSAGE_E_ESC "\033[m"
 #endif
 
-#include<stdlib.h>
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #if defined(__STDC__) || defined(__ALPHA)
 #   define _MESSAGE_USE_STDC_
@@ -59,46 +59,6 @@
 #   define MESSAGE_STRING(x) "x"
 #endif
 
-/*#####################################################################*/
-#ifdef VMS /*                    VMS                                   */
-/*#####################################################################*/
-
-#include<string.h>
-#include<descrip.h>
-#include<libclidef.h>
-#include<lib$routines.h>
-#include<unixlib.h>
-
-#define MESSAGE_FILE (strrchr(__FILE__,']')+1)
-   
-#define MESSAGE_dsc(name,string,length)				\
-	name.dsc$w_length  = (unsigned short) (length);		\
-	name.dsc$b_dtype   = (unsigned char)  DSC$K_DTYPE_T;	\
-	name.dsc$b_class   = (unsigned char)  DSC$K_CLASS_S;	\
-	name.dsc$a_pointer = (char*) (string)
-
-#define MESSAGE_SAVEINDENT(indent) {			\
-	long table = LIB$K_CLI_LOCAL_SYM;		\
-	struct dsc$descriptor symbol;			\
-	struct dsc$descriptor value;			\
-	MESSAGE_dsc(symbol,"MESSAGE_INDENT",14);	\
-	MESSAGE_dsc(value,indent,strlen(indent));	\
-	lib$set_symbol(&symbol,&value,&table);		\
-	}
-
-#define MESSAGE_GETINDENT(indent,len) {					\
-	struct dsc$descriptor symbol;					\
-	struct dsc$descriptor result;					\
-	MESSAGE_dsc(symbol,"MESSAGE_INDENT",14);			\
-	MESSAGE_dsc(result,indent,99);					\
-	len = 0;							\
-	if (lib$get_symbol(&symbol,&result,&len,0) != 1) len = 0;	\
-	indent[len] = '\0';						\
-	}
-
-/*#####################################################################*/
-#else /*            end of VMS, start of other systems                 */
-/*#####################################################################*/
 
 #define MESSAGE_FILE (__FILE__)
 
@@ -112,9 +72,6 @@
 	else		{ len=0; indent[0]='\0'; }			\
 	}
 
-/*#####################################################################*/
-#endif /*                  end of other system                         */
-/*#####################################################################*/
 
 #define MESSAGE_PRINTF(format,value) {	\
    char __indent[100]; unsigned short __len;\

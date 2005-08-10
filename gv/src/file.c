@@ -40,6 +40,7 @@
 */
 #include "message.h"
 
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -59,7 +60,6 @@
 #include "main_resources.h"
 #include "main_globals.h"
 
-#include <string.h>
 
 
 
@@ -327,28 +327,27 @@ file_fileIsNotUseful(fn)
 /*############################################################*/
  
 char *
-file_pdfname2psname(name)
+file_pdfname2psname (name)
   char *name;
 {
   char *e;
 
-  BEGINMESSAGE(file_pdfname2psname)
-  if (!name) {
-     ENDMESSAGE(file_pdfname2psname)
-     return(name);
-  }
-  INFSMESSAGE(in,name)
+  if (!name) 
+    {
+      return(name);
+    }
+
   e = name+strlen(name);
 
-  if ((e-name)-4 >= 0) {
-    e -= 4;
-    if (!strcasecmp(e,".pdf") ||
-	!strcasecmp(e,".PDF")) {
-      strcpy(e,".ps");
+  if ((e-name)-4 >= 0)
+    {
+      e -= 4;
+      if (!strcasecmp(e,".pdf"))
+	{
+	  strcpy(e,".ps");
+	}
     }
-  }
-  INFSMESSAGE(out,name)
-  ENDMESSAGE(file_pdfname2psname)
+
   return(name);
 }
 
