@@ -201,10 +201,10 @@ void signal_setSignalHandlers(on)
     sid_updateFile = sid_terminate = 0;
   }
   signal(SIGHUP,  shu);
-  signal(SIGINT,  sht);
   signal(SIGQUIT, sht);
   signal(SIGTERM, sht);
 #if 0
+  signal(SIGINT,  sht);
   signal(SIGILL,  sht);
   signal(SIGBUS,  sht);
   signal(SIGFPE,  sht);
