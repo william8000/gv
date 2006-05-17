@@ -1,3 +1,8 @@
+2006-05-17  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/gv_signal.c (signal_setSignalHandlers): Ignore the SIGINT
+	signal.
+
 2005-03-31  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/Makefile.am ($(srcdir)/gv_intern_res_unix.dat): Remove
