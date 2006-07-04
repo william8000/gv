@@ -1416,6 +1416,22 @@ StartInterpreter(w)
 	    while (isspace(*cptr)) cptr++;
 	}
     }
+
+    if (arguments_p == 1) {
+	cptr = arguments = GV_XtNewString(arguments_value);
+	while (isspace(*cptr)) cptr++;
+	while (*cptr) {
+	    argv[argc++] = cptr;
+	    while (*cptr && !isspace(*cptr)) cptr++;
+	    if (*cptr) *cptr++ = '\0';
+	    if (argc + 2 >= NUM_ARGS) {
+		fprintf(stderr, "Too many arguments to interpreter.\n");
+		exit(EXIT_STATUS_ERROR);
+	    }
+	    while (isspace(*cptr)) cptr++;
+	}
+    }
+
 #   ifdef ALLOW_PDF
     if (gvw->ghostview.filename && strcmp(gvw->ghostview.filename,"-")) {
           argv[argc++] = gvw->ghostview.filename;
