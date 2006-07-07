@@ -1,3 +1,8 @@
+2006-07-07  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/ps.c: `gettext' function renamed to `ps_gettext' to avoid
+	  collision with the `gettext' builtin function.
+
 2006-05-17  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/gv_signal.c (signal_setSignalHandlers): Ignore the SIGINT

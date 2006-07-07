@@ -186,7 +186,7 @@ static int      ps_io_ftell PT((FileData));
 
 static char    *readline PT((FileData, char **, long *, unsigned int *));
 static char    *gettextline PT((char *));
-static char    *gettext PT((char *,char **));
+static char    *ps_gettext PT((char *,char **));
 static int      blank PT((char *));
 static char    *pscopyuntil PT((FileData,FILE *,long,long,char *));
 
@@ -352,7 +352,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     long beginsection;		/* Position of the beginning of the section */
     unsigned int line_len; 	/* Length of the current line */
     unsigned int section_len;	/* Place to accumulate the section length */
-    char *next_char;		/* 1st char after text returned by gettext() */
+    char *next_char;		/* 1st char after text returned by ps_gettext() */
     char *cp;
     Media dmp;
     FileData fd;
@@ -650,8 +650,8 @@ scan_ok:
 	    doc->media = (Media)
 			 PS_malloc(sizeof (MediaStruct));
             CHECK_MALLOCED(doc->media);
-	    doc->media[0].name = gettext(line+length("%%DocumentMedia:"),
-					 &next_char);
+	    doc->media[0].name = ps_gettext(line+length("%%DocumentMedia:"),
+					    &next_char);
 	    if (doc->media[0].name != NULL) {
 		if (sscanf(next_char, "%f %f", &w, &h) == 2) {
 		    doc->media[0].width = w + 0.5;
@@ -671,8 +671,8 @@ scan_ok:
 				     (doc->nummedia+1)*
 				     sizeof (MediaStruct));
                 CHECK_MALLOCED(doc->media);
-		doc->media[doc->nummedia].name = gettext(line+length("%%+"),
-							 &next_char);
+		doc->media[doc->nummedia].name = ps_gettext(line+length("%%+"),
+							    &next_char);
 		if (doc->media[doc->nummedia].name != NULL) {
 		    if (sscanf(next_char, "%f %f", &w, &h) == 2) {
 			doc->media[doc->nummedia].width = w + 0.5;
@@ -692,8 +692,8 @@ scan_ok:
 	    doc->media = (Media)
 			 PS_malloc(sizeof (MediaStruct));
             CHECK_MALLOCED(doc->media);
-	    doc->media[0].name = gettext(line+length("%%DocumentPaperSizes:"),
-					 &next_char);
+	    doc->media[0].name = ps_gettext(line+length("%%DocumentPaperSizes:"),
+					    &next_char);
 	    if (doc->media[0].name != NULL) {
 		doc->media[0].width = 0;
 		doc->media[0].height = 0;
@@ -718,7 +718,7 @@ scan_ok:
 		else
 		    PS_free(doc->media[0].name);
 	    }
-	    while ((cp = gettext(next_char, &next_char))) {
+	    while ((cp = ps_gettext(next_char, &next_char))) {
 		doc->media = (Media)
 			     PS_realloc(doc->media,
 				     (doc->nummedia+1)*
@@ -755,7 +755,7 @@ scan_ok:
 		   DSCcomment(line) && iscomment(line+2, "+")) {
 		section_len += line_len;
 		next_char = line + length("%%+");
-		while ((cp = gettext(next_char, &next_char))) {
+		while ((cp = ps_gettext(next_char, &next_char))) {
 		    doc->media = (Media)
 				 PS_realloc(doc->media,
 					 (doc->nummedia+1)*
@@ -845,7 +845,7 @@ scan_ok:
 		}
 	    } else if (page_media_set == NONE &&
 		       iscomment(line+2, "PageMedia:")) {
-		cp = gettext(line+length("%%PageMedia:"), NULL);
+		cp = ps_gettext(line+length("%%PageMedia:"), NULL);
 		for (dmp = doc->media, i=0; i<doc->nummedia; i++, dmp++) {
 		    if (strcmp(cp, dmp->name) == 0) {
 			doc->default_page_media = dmp;
@@ -967,7 +967,7 @@ scan_ok:
 		}
 	    } else if (page_media_set == NONE &&
 		       iscomment(line+2, "PaperSize:")) {
-		cp = gettext(line+length("%%PaperSize:"), NULL);
+		cp = ps_gettext(line+length("%%PaperSize:"), NULL);
 		for (dmp = doc->media, i=0; i<doc->nummedia; i++, dmp++) {
 		    /* Note: Paper size comment uses down cased paper size
 		     * name.  Case insensitive compares are only used for
@@ -1057,7 +1057,7 @@ newpage:
 	    doc->pages = (struct page *) PS_calloc(maxpages, sizeof(struct page));
             CHECK_MALLOCED(doc->pages);
 	}
-	label = gettext(line+length("%%Page:"), &next_char);
+	label = ps_gettext(line+length("%%Page:"), &next_char);
 	if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	if (nextpage == 1) {
 	    ignore = thispage != 1;
@@ -1104,7 +1104,7 @@ continuepage:
 		}
 	    } else if (doc->pages[doc->numpages].media == NULL &&
 		       iscomment(line+2, "PageMedia:")) {
-		cp = gettext(line+length("%%PageMedia:"), NULL);
+		cp = ps_gettext(line+length("%%PageMedia:"), NULL);
 		for (dmp = doc->media, i=0; i<doc->nummedia; i++, dmp++) {
 		    if (strcmp(cp, dmp->name) == 0) {
 			doc->pages[doc->numpages].media = dmp;
@@ -1114,7 +1114,7 @@ continuepage:
 		PS_free(cp);
 	    } else if (doc->pages[doc->numpages].media == NULL &&
 		       iscomment(line+2, "PaperSize:")) {
-		cp = gettext(line+length("%%PaperSize:"), NULL);
+		cp = ps_gettext(line+length("%%PaperSize:"), NULL);
 		for (dmp = doc->media, i=0; i<doc->nummedia; i++, dmp++) {
 		    /* Note: Paper size comment uses down cased paper size
 		     * name.  Case insensitive compares are only used for
@@ -1192,7 +1192,7 @@ continuepage:
 	if (!DSCcomment(line)) {
 	    /* Do nothing */
 	} else if (iscomment(line+2, "Page:")) {
-	    PS_free(gettext(line+length("%%Page:"), &next_char));
+	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
 	    if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
@@ -1285,7 +1285,7 @@ continuepage:
 	if (!preread) section_len += line_len;
 	preread = 0;
 	if (DSCcomment(line) && iscomment(line+2, "Page:")) {
-	    PS_free(gettext(line+length("%%Page:"), &next_char));
+	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
 	    if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
@@ -1346,7 +1346,7 @@ psfree(doc)
 /*
  * gettextline -- skip over white space and return the rest of the line.
  *               If the text begins with '(' return the text string
- *		 using gettext().
+ *		 using ps_gettext().
  */
 /*----------------------------------------------------------*/
 
@@ -1360,7 +1360,7 @@ gettextline(line)
     while (*line && (*line == ' ' || *line == '\t')) line++;
     if (*line == '(') {
         ENDMESSAGE(gettextline)
-	return gettext(line, NULL);
+	return ps_gettext(line, NULL);
     } else {
 	if (strlen(line) == 0) {ENDMESSAGE(gettextline) return NULL;}
 	cp = (char *) PS_malloc(strlen(line));
@@ -1374,13 +1374,13 @@ gettextline(line)
 
 /*----------------------------------------------------------*/
 /*
- *	gettext -- return the next text string on the line.
- *		   return NULL if nothing is present.
+ *	ps_gettext -- return the next text string on the line.
+ *		      return NULL if nothing is present.
  */
 /*----------------------------------------------------------*/
 
 static char *
-gettext(line, next_char)
+ps_gettext(line, next_char)
     char *line;
     char **next_char;
 {
@@ -1388,7 +1388,7 @@ gettext(line, next_char)
     char *cp;
     int quoted=0;
 
-    BEGINMESSAGE(gettext)
+    BEGINMESSAGE(ps_gettext)
     while (*line && (*line == ' ' || *line == '\t')) line++;
     cp = text;
     if (*line == '(') {
@@ -1455,11 +1455,11 @@ gettext(line, next_char)
     }
     *cp = '\0';
     if (next_char) *next_char = line;
-    if (!quoted && strlen(text) == 0) {ENDMESSAGE(gettext) return NULL;}
+    if (!quoted && strlen(text) == 0) {ENDMESSAGE(ps_gettext) return NULL;}
     cp = (char *) PS_malloc(strlen(text)+1);
     CHECK_MALLOCED(cp);
     strcpy(cp, text);
-    ENDMESSAGE(gettext)
+    ENDMESSAGE(ps_gettext)
     return cp;
 }
 
