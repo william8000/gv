@@ -168,7 +168,7 @@ $(srcdir)/gv_user.ad : $(srcdir)/gv_user_res.dat $(srcdir)/gv_intern_res_unix.da
 	@echo "!  gv_user.ad"				>> $(srcdir)/gv_user.ad
 	@echo "!  User specific application defaults for gv"	>> $(srcdir)/gv_user.ad
 	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass"	>> $(srcdir)/gv_user.ad
-	@echo "!  Copyright (C) 2004 JosÃ© E. Marchesi"	>> $(srcdir)/gv_user.ad
+	@echo "!  Copyright (C) 2004,2005,2006 José E. Marchesi"	>> $(srcdir)/gv_user.ad
 	@echo "!"						>> $(srcdir)/gv_user.ad
 	@cat $(srcdir)/gv_user_res.dat					>> $(srcdir)/gv_user.ad
 	@cat $(srcdir)/gv_intern_res_unix.dat				>> $(srcdir)/gv_user.ad
@@ -211,7 +211,7 @@ $(srcdir)/gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat $(
 	@echo "!  gv_class.ad" >> $(srcdir)/gv_class.ad
 	@echo "!  Application class defaults for gv" >> $(srcdir)/gv_class.ad
 	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass" >> $(srcdir)/gv_class.ad
-	@echo "!  Copyright (C) 2004 JosÃ© E. Marchesi" >> $(srcdir)/gv_class.ad
+	@echo "!  Copyright (C) 2004,2005,2006 José E. Marchesi" >> $(srcdir)/gv_class.ad
 	@echo "!" >> $(srcdir)/gv_class.ad
 	@echo ""  >> $(srcdir)/gv_class.ad
 	@cat $(srcdir)/gv_user_res.dat >> $(srcdir)/gv_class.ad
