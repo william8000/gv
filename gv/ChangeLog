@@ -1,3 +1,7 @@
+2007-03-16  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* doc/gv.texi: Fix GVERSION.
+
 2006-07-07  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/ps.c: `gettext' function renamed to `ps_gettext' to avoid

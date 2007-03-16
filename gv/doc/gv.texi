@@ -9,7 +9,7 @@
 
 @copying
 This is the @value{EDITION} edition of the @cite{GNU gv Manual},
-updated for gv version @value{VERSION}.
+updated for gv version @value{GVVER}.
 
 Copyright @copyright{} 1995, 1996, 1997 Johannes Plass
 
