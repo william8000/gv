@@ -1,3 +1,8 @@
+2007-03-31  Peter Breitenlohner <peb@mppmu.mpg.de>
+
+	* src/resource.c (resource_buildDatabase): avoid segfaults when
+	  reading ~/.gv as produced by State -> Setup Options -> Save
+
 2007-03-16  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* doc/gv.texi: Fix GVERSION.

@@ -137,7 +137,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   /* ### system resources ################# */
   INFMESSAGE(checking for system resources)
 
-  rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad"));
+  rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad") + 1);
   rpath[0] = '\0';
   strcat (rpath, GV_LIBDIR);
   strcat (rpath, "/gv_system.ad");
