@@ -1396,6 +1396,8 @@ ps_gettext(line, next_char)
 	quoted=1;
 	line++;
 	while (*line && !(*line == ')' && level == 0 )) {
+	    if (cp - text >= PSLINELENGTH - 1)
+                break;
 	    if (*line == '\\') {
 		if (*(line+1) == 'n') {
 		    *cp++ = '\n';
@@ -1450,8 +1452,11 @@ ps_gettext(line, next_char)
 	    }
 	}
     } else {
-	while (*line && !(*line == ' ' || *line == '\t' || *line == '\n'))
+        while (*line && !(*line == ' ' || *line == '\t' || *line == '\n')) {
+            if (cp - text >= PSLINELENGTH - 2)
+                break;
 	    *cp++ = *line++;
+	}
     }
     *cp = '\0';
     if (next_char) *next_char = line;
