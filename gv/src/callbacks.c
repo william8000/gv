@@ -357,7 +357,11 @@ cb_checkFile(w, client_data, call_data)
 
     BEGINMESSAGE(cb_checkFile)
     changed = check_file(((int)client_data));
-    if (changed==1) show_page(current_page,NULL);
+    if (changed==1)
+    {
+       cb_stopInterpreter(page,NULL,NULL);
+       show_page(current_page,NULL);
+    }
     ENDMESSAGE(cb_checkFile)
 }
 
