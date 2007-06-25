@@ -1,5 +1,9 @@
 2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
 
+	* src/misc.c (misc_setPageMarker): Correctly adjust the page
+	window after PAGE-UP and PAGE-DOWN events. (Patch by Markus
+	Steinborn).
+
 	* src/Ghostview.c (GhostviewIsInterpreterRunning): Doesnt report
 	the presence of a running gs interpreter if
 	`ghostview.disable_start' is true. Patch from Debian.

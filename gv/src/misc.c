@@ -323,12 +323,15 @@ misc_setPageMarker(entry,kind,event,check_toc)
 	ny = (int)newtocClip->core.height - ((int)newtoc->core.y + yl + 14);
         if (y>ny) b = True;
       }
-      if (event && b) {
+      if (b) {
 	INFIMESSAGE(jumping to,ny)
 	ClipWidgetSetCoordinates(newtocClip,x,ny);
-	entry = VlistEntryOfPosition(newtoc,(int)event->xbutton.y+(y-ny));
-	if (entry != VlistHighlighted(newtoc) && check_toc)
+	if (event)
+	{
+	   entry = VlistEntryOfPosition(newtoc,(int)event->xbutton.y+(y-ny));
+	   if (entry != VlistHighlighted(newtoc) && check_toc)
 		VlistChangeHighlighted(newtoc,entry,XawVlistSet);
+        }
       }
     }
   }
