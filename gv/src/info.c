@@ -76,6 +76,7 @@ void cb_popupInfoPopup(w, client_data, call_data)
    Widget	w;
    XtPointer	client_data, call_data;
 {
+   if(gv_gs_quiet) return;
    BEGINMESSAGE(cb_popupInfoPopup)
    if (!infoPopupCreated) { makeInfoPopup(); }
    if (infoPopupVisible==True) {INFMESSAGE(InfoPopup already up) ENDMESSAGE(popupInfoPopup) return; }

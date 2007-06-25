@@ -1,5 +1,11 @@
 2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
 
+	* src/info.c (cb_popupInfoPopup): Return when calling gs with the
+	`quiet' option (patch by John Bowman).
+
+	* src/main.c (main): Force the `XtSetArg' call to include XtNquiet
+	to True (patch by John Bowman).
+
 	* lib/unistd.h (getcwd): New file.
 
 	* lib/unistd_.h (if !): New file.
