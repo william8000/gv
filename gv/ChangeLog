@@ -3,6 +3,8 @@
 	* src/Ghostview.c (GhostviewIsInterpreterRunning): Doesnt report
 	the presence of a running gs interpreter if
 	`ghostview.disable_start' is true. Patch from Debian.
+	(StartInterpreter): Escape beginning minus characters from
+	filenames. (Patch by Markus Steinborn).
 
 	* src/Makefile.am (@echo "GV.gsArguments): Add `-dFIXEMEDIA' to
 	the `GV.gsArguments' default resource. (Patch by Markus

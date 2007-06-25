@@ -1431,9 +1431,17 @@ StartInterpreter(w)
 	}
     }
 
+    String filename = 0;
 #   ifdef ALLOW_PDF
     if (gvw->ghostview.filename && strcmp(gvw->ghostview.filename,"-")) {
-          argv[argc++] = gvw->ghostview.filename;
+          if ( *(gvw->ghostview.filename) == '-' ) {
+	     filename = malloc( strlen(gvw->ghostview.filename) + 3);
+	     strcpy( filename, "./" );
+	     strcat( filename, gvw->ghostview.filename);
+             argv[argc++] = filename;
+	  }
+	  else
+             argv[argc++] = gvw->ghostview.filename;
           argv[argc++] = "-c";
           argv[argc++] = "quit";
     } else {
@@ -1510,6 +1518,8 @@ StartInterpreter(w)
 	perror(buf);
 	_exit(EXIT_STATUS_ERROR);
     } else {
+        if (filename)
+	   free(filename);
 	if (gvw->ghostview.filename == NULL) {
 #ifdef NON_BLOCKING_IO
 	    int result;
