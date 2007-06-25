@@ -1,3 +1,23 @@
+2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* lib/unistd.h (getcwd): New file.
+
+	* lib/unistd_.h (if !): New file.
+
+	* lib/Makefile.am: New file.
+
+	* lib/gettext.h: New file.
+
+	* lib/getopt_int.h: New file.
+
+	* lib/getopt_.h: New file.
+
+	* lib/getopt.c: New file.
+
+	* lib/getopt1.c: New file.
+
+	* lib/dummy.c: New file.
+
 2007-03-31  Peter Breitenlohner <peb@mppmu.mpg.de>
 
 	* src/resource.c (resource_buildDatabase): avoid segfaults when
