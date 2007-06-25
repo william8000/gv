@@ -1,5 +1,13 @@
 2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
 
+	* src/Makefile.am (@echo "GV.gsArguments): Add `-dFIXEMEDIA' to
+	the `GV.gsArguments' default resource. (Patch by Markus
+	Steinborn).
+
+	* src/Ghostview.c (StartInterpreter): Doesnt add the implicit
+	"2x2" parameter to ghostscript invocation command line (patch by
+	Markus Steinborn).
+
 	* src/info.c (cb_popupInfoPopup): Return when calling gs with the
 	`quiet' option (patch by John Bowman).
 
