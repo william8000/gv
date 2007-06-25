@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "06/09/14 20:53:20 jemarch"
+dnl Time-stamp: "07/06/25 19:49:04 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -40,6 +40,9 @@ fail;
 
 dnl Check for programs
 AC_PROG_CC
+AC_PROG_RANLIB
+gl_EARLY
+gl_INIT
 
 dnl Search for libraries
 
@@ -226,4 +229,4 @@ AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
 
 
 dnl Generate output files
-AC_OUTPUT(Makefile doc/version.texi src/Makefile doc/Makefile)
+AC_OUTPUT(Makefile doc/version.texi lib/Makefile src/Makefile doc/Makefile)
