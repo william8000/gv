@@ -2015,6 +2015,7 @@ GhostviewIsInterpreterRunning(w)
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewIsInterpreterRunning)
     ENDMESSAGE(GhostviewIsInterpreterRunning)
+    if(gvw->ghostview.disable_start) return 0;
     return gvw->ghostview.interpreter_pid != -1;
 }
 

@@ -1,5 +1,9 @@
 2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
 
+	* src/Ghostview.c (GhostviewIsInterpreterRunning): Doesnt report
+	the presence of a running gs interpreter if
+	`ghostview.disable_start' is true. Patch from Debian.
+
 	* src/Makefile.am (@echo "GV.gsArguments): Add `-dFIXEMEDIA' to
 	the `GV.gsArguments' default resource. (Patch by Markus
 	Steinborn).
