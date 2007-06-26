@@ -595,6 +595,26 @@ Input(client_data, source, id)
     signal(SIGPIPE, oldsig);
     if (gvw->ghostview.ps_input == NULL &&
 	gvw->ghostview.buffer_bytes_left == 0) {
+
+	INFMESSAGE(Input has no bytes left)
+        {
+           /* gs8.57 starts by doing a peekstring for 1023 bytes */
+           enum gs_peek_enum { PEEK_SIZE = 1023 };
+           char peek_buf[ PEEK_SIZE ];
+           int b;
+           memset(peek_buf, '\n', PEEK_SIZE);
+           INFMESSAGE(################## writing junk for peek)
+           b = write(gvw->ghostview.interpreter_input, peek_buf, PEEK_SIZE);
+           if (broken_pipe) {
+	      broken_pipe = False;
+	      InterpreterFailed(w);
+           } else if (b == -1) {
+	      if ((errno != EWOULDBLOCK) && (errno != EAGAIN)) {
+	         InterpreterFailed(w);	/* Something bad happened */
+	      }
+	   }
+	}
+
 	if (gvw->ghostview.interpreter_input_id != None) {
 	    XtRemoveInput(gvw->ghostview.interpreter_input_id);
 	    gvw->ghostview.interpreter_input_id = None;

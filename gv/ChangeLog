@@ -1,3 +1,9 @@
+2007-06-27  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/Ghostview.c (Input): Send 1023 new line characters to the
+	postscript interpreter. This patch fixes bug #19870. Adapted from
+	http://bugs.ghostscript.com/show_bug.cgi?id=689237
+
 2007-06-25  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/misc.c (misc_setPageMarker): Correctly adjust the page
