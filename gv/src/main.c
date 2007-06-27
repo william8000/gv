@@ -589,13 +589,11 @@ int main(argc, argv)
      }
 
    /*### getting resources ############################################*/
-
-   {
-     XrmDatabase db;
-     INFMESSAGE(getting resources)
-     db = resource_buildDatabase(gv_display,gv_class,gv_name,&argc,argv);
-     XrmCombineDatabase(db,&gv_database,True);
-   }
+   gv_database = resource_buildDatabase (gv_database,
+                                         gv_display,
+                                         gv_class,
+                                         gv_name,
+                                         &argc,argv);
 
 /*### initializing widget set and creating application shell #########################*/
 

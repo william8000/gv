@@ -113,25 +113,25 @@ void resource_freeData()
   resource_buildDatabase
   #######################################################*/
 
-XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
-     Display *display;
-     char *app_class;
-     char *app_name;
-     int *argcP;
-     char **argv;
+XrmDatabase
+resource_buildDatabase (XrmDatabase gvdb,
+                        Display *display,
+                        char *app_class,
+                        char *app_name,
+                        int *argcP,
+                        char **argv)
 {
-  XrmDatabase db=NULL;
+  XrmDatabase db = NULL;
   String *sP;
   String s,t, rpath;
   char *spartan_filename;
   char tmp[GV_MAX_FILENAME_LENGTH];
 
-
   BEGINMESSAGE(resource_buildDatabase)
 
-    /* ### class resources ################# */
-    INFMESSAGE(merging class resources into database)
-    sP = class_resources;
+  /* ### class resources ################# */
+  INFMESSAGE(merging class resources into database)
+  sP = class_resources;
   while (*sP) XrmPutLineResource(&db,*sP++);
 
   /* ### system resources ################# */
@@ -146,6 +146,8 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
       XrmCombineFileDatabase(rpath,&db,True);
     resource_system_file = rpath;
   }
+
+  XrmCombineDatabase (gvdb, &db, True);
 
   /* ### user resources ################# */
   INFMESSAGE(checking for user resources)
@@ -385,7 +387,7 @@ XrmDatabase resource_buildDatabase(display,app_class,app_name,argcP,argv)
   }
 
   ENDMESSAGE(resource_buildDatabase)
-    return(db);
+  return (db);
 }
 
 /*#######################################################
