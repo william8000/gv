@@ -30,7 +30,7 @@ CLEANFILES = $(srcdir)/GV \
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\" \
-              -I$(top_srcdir)/lib -I$(top_builddir)/lib
+              -I$(top_srcdir)/lib -I$(top_builddir)/lib -g
 
 
 AM_CFLAGS = @X_CFLAGS@

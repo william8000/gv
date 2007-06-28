@@ -404,7 +404,7 @@ int main(argc, argv)
      }
      XtGetApplicationNameAndClass(gv_display,&gv_name,&gv_class);
      SMESSAGE(gv_name) SMESSAGE(gv_class)
-     gv_database=XtDatabase(gv_display);
+
    }
 
    /*### Manage GNU command line arguments ########################*/
@@ -589,11 +589,13 @@ int main(argc, argv)
      }
 
    /*### getting resources ############################################*/
-   gv_database = resource_buildDatabase (gv_database,
+   gv_database = resource_buildDatabase (XtDatabase(gv_display),
                                          gv_display,
                                          gv_class,
                                          gv_name,
                                          &argc,argv);
+   XrmSetDatabase (gv_display, gv_database);
+
 
 /*### initializing widget set and creating application shell #########################*/
 

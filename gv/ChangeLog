@@ -1,3 +1,14 @@
+2007-06-28  Jose E. Marchesi  <jose.marchesi@deimos-space.com>
+
+	* src/main.c (main): Call `resource_buildDatabase' to get the
+	application entire resources database. Then, set that database as
+	the display database.
+
+	* src/resource.c (resource_buildDatabase): Get the display
+	resources database as a parameter and take care to give it
+	priority over the gv system resources. Return the entire resource
+	database to the caller.
+
 2007-06-27  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/Ghostview.c (Input): Send 1023 new line characters to the
