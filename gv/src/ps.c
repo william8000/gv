@@ -1450,7 +1450,12 @@ ps_gettext(line, next_char)
 	    } else {
 		*cp++ = *line++;
 	    }
-	}
+        }
+        /* Delete trailing ')' */
+        if (*line)
+          {
+            *line++;
+          }
     } else {
         while (*line && !(*line == ' ' || *line == '\t' || *line == '\n')) {
             if (cp - text >= PSLINELENGTH - 2)

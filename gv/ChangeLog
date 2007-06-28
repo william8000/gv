@@ -1,3 +1,8 @@
+2007-06-28  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* src/ps.c (ps_gettext): Bypass trailing ')' when scanning a
+	postscript string.
+
 2007-06-28  Jose E. Marchesi  <jose.marchesi@deimos-space.com>
 
 	* NEWS (Notation): Updated for gv 3.6.3
