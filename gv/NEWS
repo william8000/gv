@@ -36,8 +36,9 @@ by a '#' or a '*' or a '?'. A
   and command line doing the Right Thing (TM).
 
 # gv is now able to correctly understand DocumentMedia and other DSC
-  directives. It was not possible with previous versions due to a bug
-  in the postscript names scanning routine.
+  directives that uses postscript strings. It was not possible with
+  previous versions due to a bug in the postscript names scanning
+  routine.
 
 * Vulnerability CVE-2006-5864 has been fixed.
 
