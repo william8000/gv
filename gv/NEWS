@@ -35,6 +35,8 @@ by a '#' or a '*' or a '?'. A
   resources from the display database, user file, gv system database
   and command line doing the Right Thing (TM).
 
+* Vulnerability CVE-2006-5864 has been fixed.
+
 * gs is now invoked with `-dFIXEDMEDIA'
 
 * The internal gettext implementation has been renamed to `ps_gettext'
