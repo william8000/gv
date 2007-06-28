@@ -1,6 +1,6 @@
 dnl configure.ac for gv
 
-dnl Time-stamp: "07/06/25 19:49:04 jemarch"
+dnl Time-stamp: "07/06/28 15:57:39 jemarch"
 
 dnl Copyright (C) 2004 José E. Marchesi
 
@@ -8,14 +8,14 @@ dnl Please process this file with `autoconf' to get a configure script
 
 
 AC_INIT(src/ps.c)
-AM_INIT_AUTOMAKE(gv,3.6.2)
+AM_INIT_AUTOMAKE(gv,3.6.3)
 AM_CONFIG_HEADER(src/ac_config.h)
 dnl AM_CONFIG_HEADER(src/ac_config.h)
 
 AM_MAINTAINER_MODE
 
 dnl gv version
-VERSION=3.6.2
+VERSION=3.6.3
 dnl manual edition
 MANUALEDITION=First
 

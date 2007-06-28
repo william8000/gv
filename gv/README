@@ -1,9 +1,9 @@
--*- mode: text; coding: utf-8 -*- Time-stamp: "06/09/14 20:33:19 jemarch"
+-*- mode: text; coding: utf-8 -*- Time-stamp: "07/06/28 16:04:08 jemarch"
 
 README for gv
 =============
 
-This is version 3.6.2 of gv, an X11 ghostscript frontend based on
+This is version 3.6.3 of gv, an X11 ghostscript frontend based on
 Tim Theisen's ghostview 1.5.
 
 The most recent version may be obtained from gv's homepage at

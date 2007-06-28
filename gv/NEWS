@@ -10,6 +10,41 @@ by a '#' or a '*' or a '?'. A
   '?' describes a known problem which is not fixed yet.
 
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.3  (June 2007) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# gv is now able to work with latest ghostscript: gs 8.57
+
+# The bug causing the version not to figure in the manual has been
+  fixed.
+
+# The SIGINT signal is now masked (ignored) by gv.
+
+# gv no more segfaults when reading a configuration file as produced by 
+  State -> Setup Options -> Save
+
+# gv should compile in non-GNU system that doesnt have glib2. The
+  `getopt' gnulib module has been imported to fix this.
+
+# gv now correctly adjust the page index window after PAGE-UP and
+  PAGE-DOWN events.
+
+# gv is now able to open files with minus character beginning
+  filenames.
+
+# X resources related bugs has been fixed. gv is now able to get
+  resources from the display database, user file, gv system database
+  and command line doing the Right Thing (TM).
+
+* gs is now invoked with `-dFIXEDMEDIA'
+
+* The internal gettext implementation has been renamed to `ps_gettext'
+  to avoid collisions with the builtin `gettext' function.
+
+* --quiet and --noquiet now works as expected.
+
+? There are troubles with 64 bits machines: the use of x-pointers to
+  store data should be eliminated in subsequent versions.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.2  (14 December 2006) %%%%%%%%%%%%%%%%%%%%%%
 
 ? There are troubles with 64 bits machines: the use of x-pointers to

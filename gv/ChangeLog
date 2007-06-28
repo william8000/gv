@@ -1,5 +1,16 @@
 2007-06-28  Jose E. Marchesi  <jose.marchesi@deimos-space.com>
 
+	* NEWS (Notation): Updated for gv 3.6.3
+
+	* README: Updated version to 3.6.3
+
+	* doc/gv.1: Regenerated for gv 3.6.3
+
+	* src/Makefile.am (@echo "GV*dirs): Updated copyright notices to
+	2007.
+
+	* configure.ac: Updated version to 3.6.3
+
 	* src/main.c (main): Call `resource_buildDatabase' to get the
 	application entire resources database. Then, set that database as
 	the display database.

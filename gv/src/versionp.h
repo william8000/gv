@@ -40,8 +40,8 @@
 #define  VERSION_APPLIC_CONTEXT	app_con  			/* the Application Context */
 
 char *versionIdentification[] = {
-        "gv 3.6.2",
-        "September 2006",
+        "gv 3.6.3",
+        "June 2007",
 	0
 };
 
@@ -56,7 +56,7 @@ char * copyright = "\
  gv -- An X11 user interface for Ghostscript. \n\
  \n\
  Copyright (C) 1992-1997  Johannes Plass, Timothy O. Theisen  \n\
- Copyright (C) 2004,2005,2006 Jose E. Marchesi \n\
+ Copyright (C) 2004,2005,2006,2007 Jose E. Marchesi \n\
  \n\
  This program is free software; you can redistribute it and/or modify \n\
  it under the terms of the GNU General Public License as published by \n\
