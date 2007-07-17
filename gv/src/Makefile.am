@@ -35,7 +35,7 @@ AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\"
 
 AM_CFLAGS = @X_CFLAGS@
 
-LDADD = $(top_srcdir)/lib/libgnu.a
+LDADD = ../lib/libgnu.a
 
 gv_LDFLAGS = @X_LIBS@
 
