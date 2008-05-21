@@ -589,13 +589,10 @@ int main(argc, argv)
      }
 
    /*### getting resources ############################################*/
-   gv_database = resource_buildDatabase (XtDatabase(gv_display),
-                                         gv_display,
+   gv_database = resource_buildDatabase (gv_display,
                                          gv_class,
                                          gv_name,
                                          &argc,argv);
-   XrmSetDatabase (gv_display, gv_database);
-
 
 /*### initializing widget set and creating application shell #########################*/
 

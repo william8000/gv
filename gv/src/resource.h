@@ -38,9 +38,8 @@ extern void          resource_freeData (
 #endif
 );
 
-extern XrmDatabase  resource_buildDatabase (
+extern XrmDatabase resource_buildDatabase (
 #if NeedFunctionPrototypes
-  XrmDatabase ,                                           
   Display *,
   char *,
   char *,

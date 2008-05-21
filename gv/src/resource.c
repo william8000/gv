@@ -114,13 +114,14 @@ void resource_freeData()
   #######################################################*/
 
 XrmDatabase
-resource_buildDatabase (XrmDatabase gvdb,
+resource_buildDatabase (
                         Display *display,
                         char *app_class,
                         char *app_name,
                         int *argcP,
                         char **argv)
 {
+  XrmDatabase gvdb = XtDatabase(display);
   XrmDatabase db = NULL;
   String *sP;
   String s,t, rpath;
@@ -148,6 +149,9 @@ resource_buildDatabase (XrmDatabase gvdb,
   }
 
   XrmCombineDatabase (gvdb, &db, True);
+  /* CombineDatabase destroyed gvdb==XtDatabase(display), which
+   * XtResolvePathname will access soon, so repair it: */
+  XrmSetDatabase (display, db);
 
   /* ### user resources ################# */
   INFMESSAGE(checking for user resources)
