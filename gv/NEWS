@@ -9,6 +9,19 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.3.90  (May 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# DSC parser now respects the level of BeginDocument/EndDocument
+
+# Possible segfault has been fixed
+
+# Fixed bug #21239: Vlist.c produces garbage if International is set
+
+# Fixed bug #21740: popup windows may partly invisible as not on the screen
+
+# The escape key is now working in more contexts
+
+# The filename can optionally be shown insted of the title
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.3  (June 2007) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
