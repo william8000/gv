@@ -76,7 +76,8 @@ typedef struct _AppResources {
     String      style;
     String      ad;
     String      misc_menu;
-    Boolean     show_title;
+    int         title_style;
+    Boolean     filename_as_title;
     Boolean     use_bpixmap;
 } AppResources;
 
@@ -142,7 +143,7 @@ DECLARE_STRING(watchFileFrequency)
 DECLARE_STRING(style)
 DECLARE_STRING(ad)
 DECLARE_STRING(miscMenu)
-DECLARE_STRING(showTitle)
+DECLARE_STRING(titleStyle)
 DECLARE_STRING(useBackingPixmap)
 
 /*-------------------------------------------------------------*/
@@ -228,8 +229,8 @@ static XtResource resources[] = {
    XtOffsetOf(AppResources, ad), XtRImmediate,(XtPointer)""},
   {n_miscMenu, n_miscMenu, XtRString, sizeof(String),
    XtOffsetOf(AppResources, misc_menu), XtRImmediate,"update"},
-  {n_showTitle, n_showTitle, XtRBoolean, sizeof(Boolean),
-   XtOffsetOf(AppResources, show_title), XtRImmediate, (XtPointer)True},
+  {n_titleStyle, n_titleStyle, XtRInt, sizeof(int),
+   XtOffsetOf(AppResources, title_style), XtRImmediate, (XtPointer)1},
   {n_useBackingPixmap,n_useBackingPixmap, XtRBoolean, sizeof(Boolean),
    XtOffsetOf(AppResources, use_bpixmap), XtRImmediate, (XtPointer)True},
 };

@@ -79,10 +79,12 @@
 static Widget   popup=NULL,optionControl;
 static Widget   eyeGuideToggle,reverseScrollingToggle,confirmPrintToggle,autoCenterToggle;
 static Widget   pixmapToggle,miscLabel;
-static Widget   confirmLabel,confirmButton,confirmMenu,showTitleToggle;
+static Widget   confirmLabel,confirmButton,confirmMenu;
+static Widget	titleLabel,titleButton,titleMenu;
 static Widget   print_command,scales,screenSize,medias,magmenu,miscmenu;
 
 static String confirm_quit_styles[4] = { "Never","When processing","Always", NULL };
+static String title_styles[4] = { "No title","Document title","File name", NULL };
 
 static void options_setup_setOptionsAtEntry();
 static void options_setup_create();
@@ -118,7 +120,6 @@ static void options_setup_setOptionsAtEntry()
   widgets_setToggle(confirmPrintToggle, (app_res.confirm_print ? 1 : 0));
   widgets_setToggle(reverseScrollingToggle, (app_res.reverse_scrolling ? 1 : 0));
   widgets_setToggle(eyeGuideToggle, (app_res.scrolling_eye_guide ? 1 : 0));
-  widgets_setToggle(showTitleToggle, (app_res.show_title ? 1 : 0));
   widgets_setToggle(pixmapToggle, (app_res.use_bpixmap ? 1 : 0));
   widgets_setToggle(autoCenterToggle, (app_res.auto_center ? 1 : 0));
 
@@ -147,6 +148,11 @@ static void options_setup_setOptionsAtEntry()
                                    n=0;
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(confirmButton, args, n);
+
+  s=title_styles[app_res.title_style];
+                                   n=0;
+  XtSetArg(args[n], XtNlabel, s);  n++;
+  XtSetValues(titleButton, args, n);
 
   ENDMESSAGE(options_setup_setOptionsAtEntry)
 }
@@ -179,9 +185,17 @@ static void options_setup_cb_apply(w, client_data, call_data)
    cb_useBackingPixmap(NULL,(XtPointer)2,NULL);
    if (b != app_res.use_bpixmap) reopen=True;
 
-   b = SwitchIsSet(showTitleToggle) ? True : False;
-   if (b != app_res.show_title) {
-     cb_showTitle(NULL,(XtPointer)1,NULL);
+							n=0;
+   XtSetArg(args[n], XtNlabel, &l);                     n++;
+   XtGetValues(titleButton, args, n);
+   i=0;j=0;
+   while (i<3) {
+     if (!strcmp(title_styles[i],l)) j = i;
+     ++i;
+   }
+   if (j != app_res.title_style) {
+     app_res.title_style = j;
+     cb_showTitle(NULL,NULL,NULL);
    }
 
    options_textApply(print_command,NULL,&gv_print_command);
@@ -322,11 +336,18 @@ void options_setup_cb_save(w, client_data, call_data)
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_scrollingEyeGuide   ,gv_class       ,SwitchIsSet(eyeGuideToggle) ? t : f);
        ++argn;
-  options_setArg(&(argi[argn]),&(argv[argn]),s_showTitle           ,gv_class       ,SwitchIsSet(showTitleToggle) ? t : f);
-       ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_autoCenter          ,gv_class       ,SwitchIsSet(autoCenterToggle) ? t : f);
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_useBackingPixmap    ,gv_class       ,SwitchIsSet(pixmapToggle) ? t : f);
+       ++argn;
+	         	       	        n=0;
+  XtSetArg(args[n], XtNlabel, &l);      n++;
+  XtGetValues(titleButton, args, n);
+  i=0; while (i<3) {
+     if (!strcmp(title_styles[i],l)) sprintf(tmp,"%d",i);
+     ++i;
+   }
+  options_setArg(&(argi[argn]),&(argv[argn]),s_titleStyle        ,gv_class        ,tmp);
        ++argn;
 	         	       	        n=0;
   XtSetArg(args[n], XtNlabel, &l);      n++;
@@ -386,9 +407,13 @@ void options_setup_create()
    reverseScrollingToggle = XtCreateManagedWidget("scrolling",switchWidgetClass,optionControl,NULL,(Cardinal)0);
    eyeGuideToggle         = XtCreateManagedWidget("eyeGuide",switchWidgetClass,optionControl,NULL,(Cardinal)0);
    autoCenterToggle       = XtCreateManagedWidget("autoCenter",switchWidgetClass,optionControl,NULL,(Cardinal)0);
-   showTitleToggle        = XtCreateManagedWidget("showTitle",switchWidgetClass,optionControl,NULL,(Cardinal)0);
    pixmapToggle           = XtCreateManagedWidget("pixmap",switchWidgetClass,optionControl,NULL,(Cardinal)0);
 
+   options_createLabeledMenu("title",optionControl,&titleLabel,&titleButton,&titleMenu);
+     for (i = 0; title_styles[i]; i++) {
+       w = XtCreateManagedWidget(title_styles[i],smeBSBObjectClass, titleMenu,NULL,(Cardinal)0);
+       XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL);
+     }
    options_createLabeledMenu("confirm",optionControl,&confirmLabel,&confirmButton,&confirmMenu);
      for (i = 0; confirm_quit_styles[i]; i++) {
        w = XtCreateManagedWidget(confirm_quit_styles[i],smeBSBObjectClass, confirmMenu,NULL,(Cardinal)0);

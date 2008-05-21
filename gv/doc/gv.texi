@@ -473,12 +473,17 @@ Allowed entries are
 @code{line}
 @end itemize
 
-@item showTitle
+@item titleStyle
 Whether the name of the displayed document should be shown in the
 title bar of the window. The name of gv's icon will also change
 accordingly if this resource is set to @code{True}.
 
-It defaults to @code{True}.
+If this is @code{0}, no title will be shown.
+@code{1} means to show a the document title or the file name if there is
+no document title.
+Only the file name is shown with @code{2}.
+
+It defaults to @code{1}.
 @item maximumWidth, maximumHeight
 When resizing gv will not attempt to exceed the size specified
 by these resources.

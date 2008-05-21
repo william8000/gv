@@ -273,7 +273,7 @@ GV*dsc.Label:				Respect document structure
 GV*eof.Label:				Ignore EOF comments
 GV*antialias.Label:			Antialias
 GV*watchFile.Label:			Watch file
-GV*showTitle.Label:			Show Title
+GV*titleLabel.Label:			Show Title
 GV*pixmap.Label:			Backing Pixmap
 GV*size.Label:				Automatic resizing
 GV*watch.Label:				Watch File

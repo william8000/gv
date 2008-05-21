@@ -102,13 +102,15 @@ cb_showTitle(w, client_data, call_data)
   String t=NULL,s;
   Arg args[2];
   Cardinal n;
+  Pixmap bitmap=None;
 
   BEGINMESSAGE(cb_showTitle)
-  if (client_data) {
-    app_res.show_title = app_res.show_title ? False : True;
-  }
-  if (app_res.show_title) {
-    if (doc && doc->title) t = doc->title;
+  if (app_res.title_style != 0) {
+    if (app_res.title_style == 1 && doc && doc->title)
+      {
+	t = doc->title;
+        bitmap = app_res.document_bitmap;
+      }
     else if (gv_filename) 
       {
 	t = gv_filename;
@@ -125,6 +127,14 @@ cb_showTitle(w, client_data, call_data)
   XtSetArg(args[n], XtNtitle, s);	n++;
   XtSetArg(args[n], XtNiconName, t);	n++;
   XtSetValues(toplevel,args,n);
+
+  if (show_title) {
+                                    n=0;
+   XtSetArg(args[n], XtNlabel, t);  n++;
+   XtSetValues(titlebutton, args, n);
+   if (titlemenu) XtDestroyWidget(titlemenu);
+   titlemenu = build_label_menu(titlebutton, "title", t, bitmap);
+  }
   GV_XtFree(s);
   ENDMESSAGE(cb_showTitle)
 }

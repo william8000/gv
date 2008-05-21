@@ -146,7 +146,6 @@
 static Boolean set_new_scale        PT(());
 static Boolean set_new_orientation  PT((int));
 static Boolean set_new_pagemedia    PT((int));
-static Widget  build_label_menu     PT((Widget,String,String,Pixmap));
 static void    layout_ghostview     PT(());
 #undef PT
 
@@ -886,7 +885,7 @@ setup_ghostview()
     int toc_length;
     char *tocp;
     Pixmap bitmap;
-    String label,buttonlabel;
+    String label;
 
     BEGINMESSAGE(setup_ghostview)
     /* Reset to a known state. */
@@ -933,27 +932,6 @@ setup_ghostview()
        }
     }
     cb_showTitle(NULL,NULL,NULL);
-    if (show_title) {
-       if (doc && doc->title) {
-          buttonlabel = doc->title;
-          label = doc->title;
-          bitmap = app_res.document_bitmap;
-       } 
-       else if (gv_filename) {
-
-	   buttonlabel = gv_filename;
-	   label = gv_filename;
-	   bitmap = None;
-       } else {
-	 buttonlabel = ""; label = "";
-	 bitmap = None;
-       }
-                                                  n=0;
-       XtSetArg(args[n], XtNlabel, buttonlabel);  n++;
-       XtSetValues(titlebutton, args, n);  
-       if (titlemenu) XtDestroyWidget(titlemenu); 
-       titlemenu = build_label_menu(titlebutton, "title", label, bitmap);
-    }
 
     if (show_date) {
        if (doc && doc->date) {
@@ -1595,7 +1573,7 @@ void misc_buildPagemediaMenu()
 /* build_label_menu */
 /*------------------------------------------------------------*/
 
-static Widget
+Widget
 build_label_menu(parent, name, label, bitmap)
     Widget parent;
     String name, label;

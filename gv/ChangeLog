@@ -1,3 +1,14 @@
+2007-07-16  Bernhard R. Link  <brlink@debian.org>
+
+	* src/main_resources.h: replace showTitle with titleStyle
+	* src/callbacks.c (cb_showTitle): also set the titlebutton,
+	depending on title_style instead of show_title
+	* src/misc.h (build_label_menu): new prototype
+	* src/misc.c (setup_ghostview): move titlebutton setting code to cb_showTitle
+	* src/options_setup.c: allow setting titleStyle instead of showTitle
+	* src/gv_layout_res.dat: titleStyle instead of showTitle
+	* src/texinfo.tex: document titleStyle
+
 2007-06-28  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* src/ps.c (ps_gettext): Bypass trailing ')' when scanning a

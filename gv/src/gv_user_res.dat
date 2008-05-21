@@ -22,7 +22,7 @@ GV.minimumHeight:	430
 GV.confirmQuit:		1
 GV.watchFile:		False
 GV.watchFileFrequency:	1000
-GV.showTitle:		True
+GV.titleStyle:		1
 GV.miscMenuEntries:	redisplay	\n\
 			# update	\n\
 			stop		\n\

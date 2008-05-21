@@ -127,6 +127,8 @@ extern char *                   quote_filename (
 #endif
 );
 
+Widget  build_label_menu(Widget,String,String,Pixmap);
+
 #endif	/* _GV_MISC_H_ */
 
 

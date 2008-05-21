@@ -247,6 +247,10 @@ GV*optionsetupPopup*layout:\
       $sss\
       confirmButton<+[1]*>\
       $sss\
+      titleLabel<+[1]*>\
+      $sss\
+      titleButton<+[1]*>\
+      $sss\
       misc<+[1]*>\
       $sss\
       scrolling<+[1]*>\
@@ -256,8 +260,6 @@ GV*optionsetupPopup*layout:\
       confirmPrint<+[1]*>\
       $sss\
       autoCenter<+[1]*>\
-      $sss\
-      showTitle<+[1]*>\
       $sss\
       pixmap<+[1]*>\
       $sss\
