@@ -1,4 +1,8 @@
 2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
+	* src/ps.c (psscan): Fixed possible uninitialized local variable
+	text (remained unintialized if sscanf failes for some reason)
+
+2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
 	* src/dialog.c (main): Update call to resource_buildDatabase (Patch from debian)
 	* src/resource.c (resource_buildDatabase): Update signature, fix handling of
 	resources (Patch from debian)

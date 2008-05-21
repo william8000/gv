@@ -464,6 +464,7 @@ unc_ok:
       doc = (struct document *) PS_malloc(sizeof(struct document));
       CHECK_MALLOCED(doc);
       memset(doc, 0, sizeof(struct document));
+      *text=0;
       sscanf(line, "%*s %256s", text);
       /*###jp###*/
       /*doc->epsf = iscomment(text, "EPSF-");*/
