@@ -314,6 +314,16 @@ PaintEntryString(w, entry)
   VlistWidget vw = (VlistWidget)w;
   char * s;
   int i;
+  int yofs, ydelta;
+
+  if( vw->simple.international == True ) {
+    XFontSetExtents *ext = XExtentsOfFontSet(vw->label.fontset);
+    yofs = (ext->max_ink_extent.y<0)?-ext->max_ink_extent.y:ext->max_ink_extent.y;
+    ydelta = ext->max_ink_extent.height;
+  } else {
+    yofs = vw->label.font->max_bounds.ascent;
+    ydelta = vw->label.font->max_bounds.ascent + vw->label.font->max_bounds.descent;
+  }
 
   BEGINMESSAGE1(PaintEntryString)
   s = vw->label.label;
@@ -321,14 +331,20 @@ PaintEntryString(w, entry)
   if (s) while (i > 0 && (s = strchr(s,'\n'))) { s++; i--; }
   if (s) {
     char *nl = strchr(s,'\n');
-    if (nl) *nl = '\0';
-    XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
-		vw->label.label_x, 
-		vw->label.label_y+entry*(vw->label.font->max_bounds.ascent +
-					 vw->label.font->max_bounds.descent) +
-		                         vw->label.font->max_bounds.ascent,
-		s, (int)strlen(s));
-    if (nl) *nl = '\n';
+    int len;
+    if (nl)
+      len = nl - s;
+    else
+      len = strlen(s);
+    if( vw->simple.international == True )
+      XmbDrawString(XtDisplay(w), XtWindow(w), vw->label.fontset,
+		    vw->label.normal_GC,
+		    vw->label.label_x, vw->label.label_y + yofs + entry*ydelta,
+		    s, len);
+    else
+      XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
+		vw->label.label_x, vw->label.label_y + yofs + entry*ydelta,
+		s, len);
   }
   ENDMESSAGE1(PaintEntryString)
 }
