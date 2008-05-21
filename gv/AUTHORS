@@ -1,6 +1,6 @@
 -*- coding: utf-8 -*-
 
-GNU Maintainer:  José E. Marchesi (jemarch@gnu.org)
+GNU Maintainer:  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 Original Author: Johannes Plass
 
@@ -12,4 +12,5 @@ Contributors:
   - Hans Fredrik Nordhaug
   - Bernhard Link
   - Peter Breitenlohner
-
+  - José E. Marchesi (jemarch@gnu.org) [was GNU Maintainer]
+  - Markus Steinborn
