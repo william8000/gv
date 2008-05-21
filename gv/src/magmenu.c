@@ -246,7 +246,8 @@ magmenu_a_magMenu (w, event, params, num_params)
           entry = XtCreateManagedWidget(gv_magmenu_entries[i]->name, smeBSBObjectClass,d->menuwidget,NULL,(Cardinal)0);
        {
 	 int menu_x, menu_y;
-	 Dimension menu_width,entry_height,menu_border;
+	 Dimension menu_width,entry_height,menu_border,menu_height;
+	 Dimension screen_width,screen_height;
 	 Position button_x, button_y;
 	 
 	 if (!XtIsRealized(d->menuwidget)) XtRealizeWidget(d->menuwidget);
@@ -255,12 +256,21 @@ magmenu_a_magMenu (w, event, params, num_params)
 	 XtGetValues(entry, args, n);
 	                                                   n=0;
 	 XtSetArg(args[n], XtNwidth, &menu_width);         ++n;
+	 XtSetArg(args[n], XtNheight, &menu_height);       ++n;
 	 XtSetArg(args[n], XtNborderWidth, &menu_border);  ++n;
 	 XtGetValues(d->menuwidget, args, n);
 
 	 XtTranslateCoords(w, event->xbutton.x, event->xbutton.y, &button_x, &button_y);
 	 menu_x = button_x-menu_width/2 -menu_border;
 	 menu_y = button_y-entry_height/2;
+
+	 screen_width = WidthOfScreen(XtScreen(d->menuwidget));
+	 screen_height = HeightOfScreen(XtScreen(d->menuwidget));
+
+	 if( menu_x + menu_width > screen_width && menu_width < screen_width )
+	   menu_x = screen_width - menu_width;
+	 if( menu_y + menu_height > screen_height && menu_height < screen_height )
+	   menu_y = screen_height - menu_height;
                                                            n=0;
          XtSetArg(args[n], XtNx, menu_x);                  n++;
 	 XtSetArg(args[n], XtNy, menu_y);                  n++;

@@ -243,7 +243,8 @@ void miscmenu_a_miscMenu(w, event, params, num_params)
       int i;
       MiscMenuEntry e;
       int menu_x, menu_y;
-      Dimension menu_width,entry_height,menu_border;
+      Dimension menu_width,menu_height,entry_height,menu_border;
+      Dimension screen_width,screen_height;
       Position button_x, button_y;
       for (i=0; gv_miscmenu_entries[i]; i++) {
         e = gv_miscmenu_entries[i];
@@ -271,14 +272,23 @@ void miscmenu_a_miscMenu(w, event, params, num_params)
 
                                                         n=0;
       XtSetArg(args[n], XtNwidth, &menu_width);         ++n;
+      XtSetArg(args[n], XtNheight, &menu_height);       ++n;
       XtSetArg(args[n], XtNborderWidth, &menu_border);  ++n;
       XtGetValues(menuwidget, args, n);
-  
+
       XtTranslateCoords(w, event->xbutton.x, event->xbutton.y, &button_x, &button_y);
       menu_x = button_x-menu_width/2 -menu_border;
       menu_y = button_y-entry_height/2;
 
-                                                        n=0;
+      screen_width = WidthOfScreen(XtScreen(menuwidget));
+      screen_height = HeightOfScreen(XtScreen(menuwidget));
+
+      if( menu_x + menu_width > screen_width && menu_width < screen_width )
+	menu_x = screen_width - menu_width;
+      if( menu_y + menu_height > screen_height && menu_height < screen_height )
+	menu_y = screen_height - menu_height;
+
+      n=0;
       XtSetArg(args[n], XtNx, menu_x);                  n++;
       XtSetArg(args[n], XtNy, menu_y);                  n++;
       XtSetValues(menuwidget, args, n);
