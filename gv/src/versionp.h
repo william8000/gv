@@ -75,7 +75,7 @@ char * copyright = "\
 
 char *author[] = {
 "\
-   GNU Maintainer:      Jose E. Marchesi (jemarch@gnu.org)\n\
+   GNU Maintainer:      Markus Steinborn (msteinbo@uni-paderborn.de)\n\
 \n\
    Original Author:     Johannes Plass\n\
 \n\
