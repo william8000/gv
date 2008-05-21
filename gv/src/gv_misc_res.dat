@@ -677,6 +677,10 @@ GV.TopLevelShell.Aaa.baseTranslations:#replace\n\
 GV.TopLevelShell*Button.accelerators:#override\n\
  <Key>Return:	set() notify() unset()
 
+GV.TopLevelShell*dismiss.accelerators:#override\n\
+ <Key>Escape:	set() notify() unset()\n\
+ <Key>Return:	set() notify() unset()
+
 GV.TopLevelShell*Button.baseTranslations: #replace\n\
  <Key>Return:	set() notify() unset()\n\
  <LeaveWindow>:	unset()		\n\
@@ -686,6 +690,18 @@ GV.TopLevelShell*Button.baseTranslations: #replace\n\
 !##### Button Widget in Transient Popups
 
 GV*TransientShell*Button.accelerators:#override\n\
+ <Key>Return:	set() notify() unset()
+
+GV*TransientShell*cancel.accelerators:#override\n\
+ <Key>Escape:	set() notify() unset()\n\
+ <Key>Return:	set() notify() unset()
+
+GV*TransientShell*button1.accelerators:#override\n\
+ <Key>Escape:	set() notify() unset()\n\
+ <Key>Return:	set() notify() unset()
+
+GV*TransientShell*dismiss.accelerators:#override\n\
+ <Key>Escape:	set() notify() unset()\n\
  <Key>Return:	set() notify() unset()
 
 GV*TransientShell*Button.baseTranslations: #replace\n\

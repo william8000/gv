@@ -187,6 +187,7 @@ zoom_createZoom(w, call_data)
 							    n=0;
     zdismiss = XtCreateManagedWidget(zoom_dismiss, buttonWidgetClass,zcontrol, args, n);
     XtAddCallback(zdismiss, XtNcallback,cb_destroy,(XtPointer)zshell);
+    XtInstallAccelerators(zcontrol, zdismiss);
 
     XtRealizeWidget(zshell);
     {

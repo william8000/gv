@@ -212,6 +212,8 @@ void makeInfoPopup()
             XtSetArg(args[n], XtNright, XtChainRight);				n++;
     infodismiss = XtCreateManagedWidget("dismiss", buttonWidgetClass,infoform,args,n);
             XtAddCallback(infodismiss, XtNcallback, cb_popdownInfoPopup,NULL);
+            XtInstallAccelerators(infoform, infodismiss);
+            XtInstallAccelerators(infotext, infodismiss);
    
 										n=0;
             XtSetArg(args[n], XtNfont, &font);					n++;

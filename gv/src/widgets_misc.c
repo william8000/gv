@@ -94,6 +94,7 @@ widgets_setToggle(w,value)
 
 static char *LineTextTr =  "\
 <Key>Return: no-op()\n\
+<Key>Escape: no-op()\n\
 <Key>Down: no-op()\n\
 <Key>Up: no-op()\n\
 <Key>Linefeed: no-op()\n\
@@ -157,6 +158,7 @@ widgets_createLabeledLineTextField(name, parent)
 /*##################################################*/
 
 static char *TextTr =  "\
+<Key>Escape: no-op()\n\
 Ctrl<Key>J: no-op()\n\
 Ctrl<Key>M: no-op()\n\
 Ctrl<Key>N: no-op()\n\

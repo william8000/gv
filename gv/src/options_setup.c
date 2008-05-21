@@ -423,10 +423,13 @@ void options_setup_create()
         						n=0;
    w = XtCreateManagedWidget("apply", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_setup_cb_apply,NULL); 
+         XtInstallAccelerators(optionControl, w);
    w = XtCreateManagedWidget("save", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_setup_cb_save,NULL);
+         XtInstallAccelerators(optionControl, w);
    w = XtCreateManagedWidget("dismiss", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_cb_popdown,(XtPointer)gv_options_setup);
+         XtInstallAccelerators(optionControl, w);
  
    miscmenu         = widgets_createLabeledTextField("miscmenu", optionControl);
    magmenu          = widgets_createLabeledTextField("magmenu", optionControl);

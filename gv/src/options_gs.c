@@ -307,12 +307,16 @@ void options_gs_create()
         						n=0;
    w = XtCreateManagedWidget("apply", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_gs_cb_apply,NULL); 
+         XtInstallAccelerators(optionControl, w);
    w = XtCreateManagedWidget("save", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_gs_cb_save,NULL);
+         XtInstallAccelerators(optionControl, w);
    w = XtCreateManagedWidget("dismiss", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_cb_popdown, (XtPointer)gv_options_gs);
+         XtInstallAccelerators(optionControl, w);
    w = XtCreateManagedWidget("defaults", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_gs_cb_defaults, NULL);
+         XtInstallAccelerators(optionControl, w);
 
    options_gs_setOptionsAtEntry();
    options_realize(popup,optionControl);

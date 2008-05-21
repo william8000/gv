@@ -134,6 +134,7 @@ action_preferDialogPopupButton(w, event, params, num_params)
    }
    widgets_preferButton(pref,1);
    widgets_preferButton(pref_old,0);
+   XtInstallAccelerators(dialogText,pref_old);
    XtInstallAccelerators(dialogText,pref);
    ENDMESSAGE(action_preferDialogPopupButton)
 }

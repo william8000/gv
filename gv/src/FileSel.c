@@ -167,11 +167,6 @@ Meta<Key>Z: 	no-op()\n\
 <Btn3Down>:	FS_textfieldFocusAction() extend-start()\
 "; 
 
-static String TextField_accelerators =
-"#override\n\
-<Key>Return:	set() notify() unset()\
-";
-
 #if 0
 #define FILE_SELECTION_LAYOUT \
 "\
@@ -509,6 +504,22 @@ static void Initialize(request, new, argl, num_argl)
       CreateTextField(&FS_FILTERFRAME,&FS_FILTER,value,text_trans,"filter",new);
    }
 
+   if (BUTTONS_RESOURCE > 0 && BUTTONS_RESOURCE < 5 ) {
+	XtInstallAccelerators(FS_PATH,FS_BUTTON1);
+	XtInstallAccelerators(FS_FILTER,FS_BUTTON1);
+      if (BUTTONS_RESOURCE > 1) {
+	 XtInstallAccelerators(FS_PATH,FS_BUTTON2);
+	 XtInstallAccelerators(FS_FILTER,FS_BUTTON2);
+      }
+      if (BUTTONS_RESOURCE > 2) {
+	 XtInstallAccelerators(FS_PATH,FS_BUTTON3);
+	 XtInstallAccelerators(FS_FILTER,FS_BUTTON3);
+      }
+      if (BUTTONS_RESOURCE > 3) {
+	 XtInstallAccelerators(FS_PATH,FS_BUTTON4);
+	 XtInstallAccelerators(FS_FILTER,FS_BUTTON4);
+      }
+   }
    SetPreferredButton(new,PREFERRED_BUTTON,TRUE);
 
    {
@@ -875,22 +886,18 @@ static void SetPreferredButton(w,position,install)
    FS_WIDGET 	w;
    char 	name[10];
    Widget 	button;
-   static XtAccelerators accelerators = (XtAccelerators)NULL;
    USE_Arg(2);
 
    BEGINMESSAGE(SetPreferredButton)
-   if (!accelerators) accelerators=XtParseAcceleratorTable(TextField_accelerators);
 
    IMESSAGE(position)
    if (IS_BUTTON(position)) {
       POSITION_TO_BUTTON_NAME(position,name);
       button = XtNameToWidget((Widget)FS_FILE_SELECTION,name);
       if (!install) { 
-         SET_Value(button,XtNaccelerators,(XtAccelerators)NULL);
          preferButton(button,0);
          if (PREFERRED_BUTTON==position) PREFERRED_BUTTON=0;
       } else {
-         SET_Value(button,XtNaccelerators,(XtAccelerators)accelerators);
          XtInstallAccelerators(FS_PATH,button);
          XtInstallAccelerators(FS_FILTER,button);
          preferButton(button,1);
