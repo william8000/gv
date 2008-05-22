@@ -61,7 +61,7 @@
 #include "main_globals.h"
 
 #ifndef ENODATA
-   #define ENODATA ENOENT
+   #define ENODATA ENOMSG
 #endif
 
 /*############################################################*/
