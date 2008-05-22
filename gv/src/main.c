@@ -1030,7 +1030,8 @@ int main(argc, argv)
             XtSetArg(args[n], XtNinterpreter,gv_gs_interpreter);	n++;
             b = gv_gs_safer ? True : False;
             XtSetArg(args[n], XtNsafer,b);                              n++;
-            XtSetArg(args[n], XtNquiet, True);                          n++;
+            b = gv_gs_quiet ? True : False;
+            XtSetArg(args[n], XtNquiet,b);                              n++;
             b = app_res.use_bpixmap ? True : False;
             XtSetArg(args[n], XtNuseBackingPixmap,b);                   n++;
             XtSetArg(args[n], XtNarguments,gv_gs_arguments);            n++;
