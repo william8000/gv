@@ -1,10 +1,10 @@
 2208-05-22  Markus Steinborn <msteinbo@uni-paderborn.de>
 
-	* src/info.c (cb_popupInfoPopup): Revert returning when calling gs with the
-	`quiet' option (should fix #23199)
+	* src/info.c (cb_popupInfoPopup): Revert returning when calling gs with
+	the `quiet' option (should fix #23199)
 
-	* src/main.c (main): Reverted Forcing the `XtSetArg' call to include XtNquiet
-	to True
+	* src/main.c (main): Reverted Forcing the `XtSetArg' call to include
+	XtNquiet to True
 
 2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
 
@@ -12,9 +12,10 @@
 	text (remained unintialized if sscanf failes for some reason)
 
 2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
-	* src/dialog.c (main): Update call to resource_buildDatabase (Patch from debian)
-	* src/resource.c (resource_buildDatabase): Update signature, fix handling of
-	resources (Patch from debian)
+	* src/dialog.c (main): Update call to resource_buildDatabase (Patch
+	from debian)
+	* src/resource.c (resource_buildDatabase): Update signature, fix
+	handling of resources (Patch from debian)
 	* src/resource.c likewise (Patch from debian)
 	* src/magmenu.c (magmenu_a_magMenu): Calculation of position that is 
 	not outside the screen (Patch from debian)
@@ -23,30 +24,34 @@
 	BeginDocument/EndDocument (Patch from debian)
 	* src/Vlist.c (PaintEntryString): Handle case that international is set
 	(Patch from debian)
-	* src/dialog.c (action_preferDialogPopupButton): Add 2nd XtInstallAccelerators
+	* src/dialog.c (action_preferDialogPopupButton): Add 2nd
+	XtInstallAccelerators (Patch from debian)
+	* src/FileSel.c (global): Remove string TextField_accelerators
 	(Patch from debian)
-	* src/FileSel.c (global): Remove string TextField_accelerators (Patch from debian)
-	* src/FileSel.c (Initialize): Add some XtInstallAccelerators (Patch from debian)
+	* src/FileSel.c (Initialize): Add some XtInstallAccelerators
+	(Patch from debian)
 	* src/info.c (makeInfoPopup):  likewise
 	* src/options_fs.c (options_fs_create): likewise
 	* src/options_gs.c (options_gs_create): likewise
 	* src/options_gv (options_gv_create): likewise
 	* src/options_setup (options_setup_create): likewise
 	* src/zoom.c (zoom_createZoom): likewise
-	* src/widgets_misc.c (global): Adjust strings LineTextTr and TextTr for the escape
-	key (Patch from debian)
+	* src/widgets_misc.c (global): Adjust strings LineTextTr and TextTr
+	for the escape key (Patch from debian)
 	* src/FileSel.c (SetPreferredButton): Remove old handling of esc-key
 	(Patch from debian)
 	* src/gv_misc_res.dat: Update resources
-	 (Patch from debian)
+	(Patch from debian)
 
 	* src/main_resources.h: replace showTitle with titleStyle
 	(Patch from Bernhard R. Link, debian)
 	* src/callbacks.c (cb_showTitle): also set the titlebutton,
-	depending on title_style instead of show_title (Patch from Bernhard R. Link, debian)
-	* src/misc.h (build_label_menu): new prototype (Patch from Bernhard R. Link, debian)
-	* src/misc.c (setup_ghostview): move titlebutton setting code to cb_showTitle
+	depending on title_style instead of show_title
 	(Patch from Bernhard R. Link, debian)
+	* src/misc.h (build_label_menu): new prototype 
+	(Patch from Bernhard R. Link, debian)
+	* src/misc.c (setup_ghostview): move titlebutton setting code to
+	cb_showTitle (Patch from Bernhard R. Link, debian)
 	* src/options_setup.c: allow setting titleStyle instead of showTitle
 	(Patch from Bernhard R. Link, debian)
 	* src/gv_layout_res.dat: titleStyle instead of showTitle

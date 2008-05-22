@@ -60,8 +60,9 @@
 #include "main_resources.h"
 #include "main_globals.h"
 
-
-
+#ifndef ENODATA
+   #define ENODATA ENOENT
+#endif
 
 /*############################################################*/
 /* file_getDirOfPath */
