@@ -5,6 +5,9 @@
 
 	* src/main.c (main): Reverted Forcing the `XtSetArg' call to include
 	XtNquiet to True
+	
+	* src/file.c (global): Define ENODATA as ENOENT if ENODATA if undefined.
+	Should fix compiling on GNU/kFreeBSD
 
 2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
 
