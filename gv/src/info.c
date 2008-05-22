@@ -76,6 +76,8 @@ void cb_popupInfoPopup(w, client_data, call_data)
    Widget	w;
    XtPointer	client_data, call_data;
 {
+   if (getenv("GV_COMPLETLY_SILENT")) return; /* This feature will be replaced 
+                                           in rel. 3.6.5 by a real solution */
    BEGINMESSAGE(cb_popupInfoPopup)
    if (!infoPopupCreated) { makeInfoPopup(); }
    if (infoPopupVisible==True) {INFMESSAGE(InfoPopup already up) ENDMESSAGE(popupInfoPopup) return; }
