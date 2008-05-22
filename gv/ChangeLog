@@ -1,4 +1,13 @@
+2208-05-22  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/info.c (cb_popupInfoPopup): Revert returning when calling gs with the
+	`quiet' option (should fix #23199)
+
+	* src/main.c (main): Reverted Forcing the `XtSetArg' call to include XtNquiet
+	to True
+
 2008-05-21  Markus Steinborn <msteinbo@uni-paderborn.de>
+
 	* src/ps.c (psscan): Fixed possible uninitialized local variable
 	text (remained unintialized if sscanf failes for some reason)
 

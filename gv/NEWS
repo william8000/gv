@@ -23,6 +23,8 @@ by a '#' or a '*' or a '?'. A
 
 # The filename can optionally be shown insted of the title
 
+# Fixed bug #23199: No error message for errors in opened file
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.3  (June 2007) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # gv is now able to work with latest ghostscript: gs 8.57
