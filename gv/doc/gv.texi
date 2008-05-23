@@ -22,6 +22,7 @@ any later version published by the Free Software Foundation.
 @end quotation
 @end copying
 
+@dircategory Viewers
 @direntry
 * gv: (gv).     The GNU PostScript and PDF viewer.
 @end direntry

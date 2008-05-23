@@ -25,6 +25,8 @@ by a '#' or a '*' or a '?'. A
 
 # Fixed bug #23199: No error message for errors in opened file
 
+* Got rid of non-free code.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.3  (June 2007) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # gv is now able to work with latest ghostscript: gs 8.57

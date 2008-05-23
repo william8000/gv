@@ -59,10 +59,6 @@ to `no'.
                           
 Compile X resource files into the executable. Defaults to `yes'
 
-  --enable-setenv-code    
-
-Use extra code for setenv() and getenv(). Defaults to `yes'
-
   --enable-memdebug-code  
 
 Use extra code for debug memory operations. It defaults to `no'

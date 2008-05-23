@@ -99,7 +99,6 @@
 #include "resource.h"
 #include "doc_misc.h"
 #include "version.h"
-#include "stdc.h"
 #include "scale.h"
 
 #if defined(USE_SIGNAL_HANDLER) && (XtSpecificationRelease < 6)
@@ -109,12 +108,12 @@
 #   include "gv_signal.h"
 #endif /* USE_SIGNAL_HANDLER */
 
-
+#define BITSOF(name) name ## _bits
+#define WIDTHOF(name) name ## _height
+#define HEIGHTOF(name) name ## _width
 #define BITMAP_ARGS(name)\
-           (const char*)CONCAT(name,_bits),\
-           CONCAT(name,_width),\
-           CONCAT(name,_height)
- 
+           (const char*)BITSOF(name), WIDTHOF(name), HEIGHTOF(name)
+
 #include FALLBACK_ICON_PIXMAP
 #include FALLBACK_SELECTED_BITMAP
 #include FALLBACK_DOCUMENT_BITMAP

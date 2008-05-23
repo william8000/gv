@@ -133,7 +133,6 @@ gv_SOURCES = Aaa.c \
              zoom.c \
              zoom.h \
              message.h \
-             stdc.h \
              Aaa_intern.h \
              Aaa.h \
              AaaP.h \
@@ -252,10 +251,6 @@ $(srcdir)/gv_make_res.dat :
 
 if USE_SCROLLBAR_CODE
    gv_SOURCES += Scrollbar.c Scrollbar.h ScrollbarP.h
-endif
-
-if USE_SETENV_CODE
-   gv_SOURCES += setenv.c setenv.h getenv.c
 endif
 
 if USE_MEMDEBUG_CODE

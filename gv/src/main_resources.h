@@ -33,8 +33,6 @@
 #ifndef _GV_MAIN_RESOURCES_H_ 
 #define _GV_MAIN_RESOURCES_H_
 
-#include "stdc.h"
-
 /* Application resources */
 
 typedef struct _AppResources {
@@ -83,11 +81,11 @@ typedef struct _AppResources {
 
 #ifdef _GV_MAIN_C_
 #  define DECLARE_STRING(aaa) \
-      static char CONCAT(n_,aaa)[] = STRING(aaa); \
-      char * CONCAT(s_,aaa) = CONCAT(n_,aaa);
+      static char n_ ## aaa[] = #aaa; \
+      char * s_ ## aaa = n_ ## aaa;
 #else
 #  define DECLARE_STRING(aaa) \
-      extern char * CONCAT(s_,aaa);
+      extern char * s_ ## aaa;
 #endif
 
 DECLARE_STRING(miscMenuEntries)

@@ -1,3 +1,32 @@
+2208-05-23  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/stdc.h: removed (it is non-free)
+	
+	* src/getenv.c: likewise (it's not used in standard configuration,
+	anyway)
+	
+	* src/setenv.c: likewise(it's not used in standard configuration,
+	anyway)
+	
+	* src/setenv.h: likewise(it's not used in standard configuration,
+	anyway)
+	
+	* src/Aaa.h: Do not include stdc.h.  (Patch by debian)
+	
+	* src/main.c: likewise (Patch by debian)
+	
+	* src/main.c: Redefine preprocessor macro BITMAP_ARGS (Patch by debian)
+	
+	* src/main_resources.h: Redefine preprocessor macro DECLARE_STRING
+	(Patch by debian)
+	
+	* src/Makefile.am: Remove reference to src/stdc.h src/getenv.c
+	src/setenv.c src/setenv.h
+	
+	* configure.ac: Remove option --enable-setenv-code
+	
+	* INSTALL: Remove description of the option --enable-setenv-code
+
 2208-05-22  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/info.c (cb_popupInfoPopup): Revert returning when calling gs with

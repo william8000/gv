@@ -45,7 +45,6 @@
 #define USE_LAYOUT_DEBUG
 */
 
-#include "stdc.h"
 #include "Aaa_intern.h"
 #include INC_XMU(Converters.h)
 
