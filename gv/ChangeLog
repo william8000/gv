@@ -1,6 +1,25 @@
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
+	* configure.ac, src/versionp.h: Bump version to 3.6.4.90.
+	
+	* src/*: Fix warnings (patch by debian)
+
 	* doc/Makefile.am: build doc/gv.1 by help2man if required
+	
+	* doc/gv.texi: Document new -widgetless switch 
+	(patch by debian)
+	
+	* src/gv_widgetless.dat: Resource for widgetless mode (new file)
+	(patch by debian)
+	
+	* src/gv_message.h: Document new -widgetless switch 
+	(patch by debian)
+	
+	* src/resource.c: Handle new -widgetless switch (patch by debian)
+	
+	* src/main_globals: added widgetless_p	(patch by debian)
+	
+	* src/main.c: Parsing of "-widgetless" (patch by debian)
 
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
