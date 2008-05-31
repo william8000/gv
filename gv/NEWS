@@ -9,6 +9,14 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.4.90  (???? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+* Build-system ensures that the man-page is always up to date
+
+# Fixed some compiler warnings
+
+# Added new widletless mode, usable via option "--vidgetless"
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.3.90 has been released as GV 3.6.4 with no changes
