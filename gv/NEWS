@@ -15,7 +15,9 @@ by a '#' or a '*' or a '?'. A
 
 # Fixed some compiler warnings
 
-# Added new widletless mode, usable via option "--vidgetless"
+# Added new widgetless mode, usable via option "--vidgetless"
+
+# --help, --usage and --version now work without having an X11 display
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -400,13 +400,9 @@ int main(argc, argv)
      gv_display = XtOpenDisplay(app_con,NULL,NULL,gv_class,NULL,0,&argc,argv);
 
      if (xuf) { setenv(xufsp,xuf,1); GV_XtFree(xuf); } else unsetenv(xufsp);
-     if (!gv_display) {
-       fprintf(stderr, "%s: Unable to open the display.\n", GV_APPLICATION_NAME);
-       exit(EXIT_STATUS_ERROR);
-     }
-     XtGetApplicationNameAndClass(gv_display,&gv_name,&gv_class);
+     if (gv_display)
+        XtGetApplicationNameAndClass(gv_display,&gv_name,&gv_class);
      SMESSAGE(gv_name) SMESSAGE(gv_class)
-
    }
 
    /*### Manage GNU command line arguments ########################*/
@@ -595,6 +591,10 @@ int main(argc, argv)
 	 }
      }
 
+     if (!gv_display) {
+       fprintf(stderr, "%s: Unable to open the display.\n", GV_APPLICATION_NAME);
+       exit(EXIT_STATUS_ERROR);
+     }
    /*### getting resources ############################################*/
    gv_database = resource_buildDatabase (gv_display,
                                          gv_class,

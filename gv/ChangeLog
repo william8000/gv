@@ -20,6 +20,10 @@
 	* src/main_globals: added widgetless_p	(patch by debian)
 	
 	* src/main.c: Parsing of "-widgetless" (patch by debian)
+	
+	* src/main.c(main): If no display is availabe, delay the error
+	message until command line options has been parsed. This way, --help,
+	--version and --usage work without having an display
 
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
