@@ -1,8 +1,12 @@
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
-       * ChangeLog: Fixed typo in recent dates
+	* doc/Makefile.am: build doc/gv.1 by help2man if required
 
-       * configure.ac, src/versionp.h: Bump version to 3.6.4.
+2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* ChangeLog: Fixed typo in recent dates
+
+	* configure.ac, src/versionp.h: Bump version to 3.6.4.
 
 2008-05-23  Markus Steinborn <msteinbo@uni-paderborn.de>
 
