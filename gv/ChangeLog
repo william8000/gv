@@ -1,4 +1,10 @@
-2208-05-23  Markus Steinborn <msteinbo@uni-paderborn.de>
+2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+       * ChangeLog: Fixed typo in recent dates
+
+       * configure.ac, src/versionp.h: Bump version to 3.6.4.
+
+2008-05-23  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/stdc.h: removed (it is non-free)
 	
@@ -27,7 +33,7 @@
 	
 	* INSTALL: Remove description of the option --enable-setenv-code
 
-2208-05-22  Markus Steinborn <msteinbo@uni-paderborn.de>
+2008-05-22  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/info.c (cb_popupInfoPopup): Revert returning when calling gs with
 	the `quiet' option (should fix #23199)

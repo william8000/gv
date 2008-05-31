@@ -9,6 +9,10 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# GV 3.6.3.90 has been released as GV 3.6.4 with no changes
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.3.90  (May 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # DSC parser now respects the level of BeginDocument/EndDocument
