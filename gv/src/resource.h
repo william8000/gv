@@ -35,6 +35,7 @@
 
 extern void          resource_freeData (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -81,6 +82,7 @@ extern int           resource_checkResources (
 
 extern char *        resource_userDefaultsFile (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

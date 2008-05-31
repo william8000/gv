@@ -280,11 +280,11 @@ dummyCvtStringToPixmap(dpy, args, num_args, fromVal, toVal,converter_data)
 
 /*### Procedure and Macro Declarations ###########################################*/
 
-static void  main_createMenu();
-void main_setGhostscriptResources();
-void main_setInternResource();
-void main_setResolutions();
-void main_createScaleMenu();
+static void  main_createMenu(MenuEntry*,Widget*,Cardinal*);
+void main_setGhostscriptResources(XrmDatabase);
+void main_setInternResource(XrmDatabase,String*,char*);
+void main_setResolutions(int);
+void main_createScaleMenu(void);
 
 #ifdef max
 #   undef max
@@ -1297,7 +1297,7 @@ void main_setResolutions(query)
    main_createScaleMenu
 ##################################################*/
 
-void main_createScaleMenu()
+void main_createScaleMenu(void)
 {
   Arg args[1];
   Cardinal n;

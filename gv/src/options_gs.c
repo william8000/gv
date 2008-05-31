@@ -75,9 +75,9 @@ static Widget   popup=NULL,optionControl;
 static Widget   quietToggle,saferToggle;
 static Widget   scan,conv,gs,x11dev,x11alphadev,arguments;
 
-static void options_gs_setOptionsAtEntry();
-static void options_gs_create();
-extern void main_setGhostscriptResources();
+static void options_gs_setOptionsAtEntry(void);
+static void options_gs_create(void);
+extern void main_setGhostscriptResources(XrmDatabase);
 extern String intern_resources[]; /* defined in resource.c */
 
 /*------------------------------------------------------
@@ -97,7 +97,7 @@ OptionPopup gv_options_gs = (OptionPopup) &gv_options_gs_struct;
    options_gs_setOptionsAtEntry
 ------------------------------------------------------*/
 
-static void options_gs_setOptionsAtEntry()
+static void options_gs_setOptionsAtEntry(void)
 {
   BEGINMESSAGE(options_gs_setOptionsAtEntry)
 
@@ -266,7 +266,7 @@ static void options_gs_cb_defaults(w, client_data, call_data)
    options_gs_create
 ------------------------------------------------------*/
 
-void options_gs_create()
+void options_gs_create(void)
 {
    Arg       args[5];
    Cardinal  n;

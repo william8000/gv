@@ -42,7 +42,7 @@
 #include INC_XAW(XawInit.h)
 #include "SwitchP.h"
 
-static void ClassInitialize();
+static void ClassInitialize(void);
 
 #define superclass ((ButtonWidgetClass)&buttonClassRec)
 
@@ -127,7 +127,7 @@ WidgetClass switchWidgetClass = (WidgetClass) &switchClassRec;
 /* Private Procedures */
 /*---------------------------------------------------*/
 
-static void ClassInitialize()
+static void ClassInitialize(void)
 {
   XawInitializeWidgetSet();
 }

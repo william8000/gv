@@ -64,8 +64,8 @@
 static Widget popup,optionControl;
 static Widget filter,scratch_dir,default_save_dir,filters,dirs;
 
-static void options_fs_create();
-static void options_fs_setOptionsAtEntry();
+static void options_fs_create(void);
+static void options_fs_setOptionsAtEntry(void);
 
 /*------------------------------------------------------
   OptionPopupStruct
@@ -84,7 +84,7 @@ OptionPopup gv_options_fs = (OptionPopup) &gv_options_fs_struct;
    options_fs_setOptionsAtEntry
 ------------------------------------------------------*/
 
-static void options_fs_setOptionsAtEntry()
+static void options_fs_setOptionsAtEntry(void)
 {
   String s;
 
@@ -171,7 +171,7 @@ void options_fs_cb_save(w, client_data, call_data)
    options_fs_create
 ------------------------------------------------------*/
 
-static void options_fs_create()
+static void options_fs_create(void)
 {
    Arg          args[10];
    Cardinal     n;

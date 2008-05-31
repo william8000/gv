@@ -49,6 +49,7 @@ extern void			process_kill_process (
 
 extern void			process_kill_all_processes (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -70,6 +71,7 @@ extern void			process_menu	(
 
 extern char*  			process_disallow_quit (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

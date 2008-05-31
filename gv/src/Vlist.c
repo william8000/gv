@@ -96,13 +96,15 @@ static XtResource resources[] = {
 };
 #undef offset
 
-static Boolean SetValues();
-static void Initialize(), Redisplay();
-static void Destroy(), PaintVlistWidget();
-static void ClassInitialize();
-static void Resize();
-static void PaintMarkOfEntry();
-static void PaintMarkMarkOfEntry();
+static Boolean SetValues(Widget,Widget,Widget,ArgList,Cardinal*);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void Redisplay(Widget,XEvent*,Region);
+static void Destroy(Widget);
+static void PaintVlistWidget(Widget,XEvent*,Region);
+static void ClassInitialize(void);
+static void Resize(Widget);
+static void PaintMarkOfEntry(Widget,Region,int,int,Boolean);
+static void PaintMarkMarkOfEntry(Widget,Region,int,Boolean);
 
 
 #define SuperClass ((LabelWidgetClass)&labelClassRec)
@@ -163,7 +165,7 @@ WidgetClass vlistWidgetClass = (WidgetClass) &vlistClassRec;
 /* ClassInitialize */
 /*---------------------------------------------------*/
 
-static void ClassInitialize()
+static void ClassInitialize(void)
 {
   BEGINMESSAGE(ClassInitialize)
   XawInitializeWidgetSet();

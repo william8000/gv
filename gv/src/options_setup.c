@@ -86,10 +86,10 @@ static Widget   print_command,scales,screenSize,medias,magmenu,miscmenu;
 static String confirm_quit_styles[4] = { "Never","When processing","Always", NULL };
 static String title_styles[4] = { "No title","Document title","File name", NULL };
 
-static void options_setup_setOptionsAtEntry();
-static void options_setup_create();
-extern void main_setResolutions();
-extern void main_createScaleMenu();
+static void options_setup_setOptionsAtEntry(void);
+static void options_setup_create(void);
+extern void main_setResolutions(int);
+extern void main_createScaleMenu(void);
 
 /*------------------------------------------------------
   OptionPopupStruct
@@ -108,7 +108,7 @@ OptionPopup gv_options_setup = (OptionPopup) &gv_options_setup_struct;
    options_setup_setOptionsAtEntry
 ------------------------------------------------------*/
 
-static void options_setup_setOptionsAtEntry()
+static void options_setup_setOptionsAtEntry(void)
 {
   String s;
   Arg args[2];
@@ -380,7 +380,7 @@ void options_setup_cb_save(w, client_data, call_data)
    options_setup_create
 ------------------------------------------------------*/
 
-void options_setup_create()
+void options_setup_create(void)
 {
    Arg          args[10];
    Cardinal     n;

@@ -44,9 +44,13 @@
 #include INC_XMU(Converters.h)
 #include INC_XMU(CharSet.h)
 
-static void ClassInitialize(),Initialize(),Redisplay(),Destroy();
-static void PaintButtonWidget();
-static void GetSetBackgroundGC(),GetHighlightedBackgroundGC();
+static void ClassInitialize(void);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void Redisplay(Widget,XEvent *,Region);
+static void Destroy(Widget);
+static void PaintButtonWidget(Widget,XEvent *,Region);
+static void GetSetBackgroundGC(ButtonWidget);
+static void GetHighlightedBackgroundGC(ButtonWidget);
 
 /****************************************************************
  *

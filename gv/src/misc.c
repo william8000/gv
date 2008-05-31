@@ -143,10 +143,10 @@
 #else 
 #   define PT(aaa) ()
 #endif
-static Boolean set_new_scale        PT(());
+static Boolean set_new_scale        PT((void));
 static Boolean set_new_orientation  PT((int));
 static Boolean set_new_pagemedia    PT((int));
-static void    layout_ghostview     PT(());
+static void    layout_ghostview     PT((void));
 #undef PT
 
 /*############################################################*/
@@ -1090,7 +1090,7 @@ Dimension page_width, page_height;
 /*------------------------------------------------------------*/
 
 static void
-layout_ghostview()
+layout_ghostview(void)
 {
    Arg       args[10];
    Cardinal  n;
@@ -1170,7 +1170,7 @@ setup_layout_ghostview()
 /*------------------------------------------------------------*/
 
 static Boolean
-set_new_scale()
+set_new_scale(void)
 {
   int new_scale,new_scale_base;
   Boolean changed = False;
@@ -1492,7 +1492,7 @@ set_new_pagemedia(pagenumber)
 /*------------------------------------------------------------*/
 
 static Boolean
-same_document_media()
+same_document_media(void)
 {
    int i;
    Boolean same = True;

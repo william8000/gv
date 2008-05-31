@@ -151,7 +151,7 @@ static char *tabTrans =
 <MapNotify>:display-caret(on,always)\
 ";
 
-void makeDialogPopup()
+void makeDialogPopup(void)
 {
    Arg          args[7];
    Cardinal     n;
@@ -245,7 +245,7 @@ void DialogPopupSetButton(button,label,callback)
     DialogPopupClearText
 ###############################################################################*/
 
-void DialogPopupClearText()
+void DialogPopupClearText(void)
  {
     Arg args[5];
     Cardinal n;
@@ -311,7 +311,7 @@ void DialogPopupSetText(s)
     DialogPopupGetText
 ###############################################################################*/
  
-String DialogPopupGetText()
+String DialogPopupGetText(void)
 {
     Arg args[5];
     Cardinal n;

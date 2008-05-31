@@ -153,7 +153,7 @@ typedef enum {
 #define XtEgrayscale "grayscale"
 #define XtEcolor "color"
 #define XtRPalette "Palette"
-extern Boolean XmuCvtStringToPalette();
+extern Boolean XmuCvtStringToPalette(Display*,XrmValue*,Cardinal*,XrmValue*,XrmValue*,XtPointer*);
 
 /* declare specific GhostviewWidget class and instance datatypes */
 

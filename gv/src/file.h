@@ -60,6 +60,7 @@ extern char*			file_getTmpFilename (
 
 extern void			file_translateTildeInPath (
 #if NeedFunctionPrototypes
+   char *
 #endif
 );
 

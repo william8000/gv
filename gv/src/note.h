@@ -52,6 +52,7 @@ extern void cb_popdownNotePopup(
 
 extern void makeNotePopup(
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

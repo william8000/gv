@@ -103,20 +103,20 @@ static XtResource resources[] = {
 };
 #undef Offset
 
-static void ClassInitialize();
-static void Initialize();
-static void Destroy();
-static void Realize();
-static void Resize();
-static void Redisplay();
-static Boolean SetValues();
+static void ClassInitialize(void);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void Destroy(Widget);
+static void Realize(Widget,XtValueMask*,XSetWindowAttributes*);
+static void Resize(Widget);
+static void Redisplay(Widget,XEvent*,Region);
+static Boolean SetValues(Widget,Widget,Widget,ArgList,Cardinal*);
 
-static void HandleThumb();
-static void HandleAutoscroll();
-static void MoveThumb();
-static void NotifyThumb();
-static void NotifyScroll();
-static void EndScroll();
+static void HandleThumb(Widget,XEvent*,String*,Cardinal*);
+static void HandleAutoscroll(Widget,XEvent*,String*,Cardinal*);
+static void MoveThumb(Widget,XEvent*,String*,Cardinal*);
+static void NotifyThumb(Widget,XEvent*,String*,Cardinal*);
+static void NotifyScroll(Widget,XEvent*,String*,Cardinal*);
+static void EndScroll(Widget,XEvent*,String*,Cardinal*);
 
 static XtActionsRec actions[] = {
     {"HandleThumb",	HandleThumb},
@@ -838,7 +838,7 @@ static void SetDimensions(SBW)
     ClassInitialize
 ###############################################################################*/
 
-static void ClassInitialize()
+static void ClassInitialize(void)
 {
     static Boolean initialized = FALSE;
 

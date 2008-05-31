@@ -35,6 +35,7 @@
 
 extern void	makeInfoPopup (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

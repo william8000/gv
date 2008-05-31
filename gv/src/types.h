@@ -43,11 +43,13 @@
 
 typedef void (*OptionPopupCreateProc)(
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
 typedef void (*OptionPopupUpdateProc)(
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

@@ -85,7 +85,7 @@ static pid_t gv_pid = (pid_t) 0;
 /* signal_signalIsOk */
 /*------------------------------------------------------------*/
 
-static int signal_signalIsOk()
+static int signal_signalIsOk(void)
 {
   BEGINMESSAGE(signal_signalIsOk)
 # ifdef MESSAGES

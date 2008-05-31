@@ -86,7 +86,7 @@ static ProcessData gpd = NULL;
 /* process_get_pd */
 /*------------------------------------------------------------*/
 
-static ProcessData process_get_pd()
+static ProcessData process_get_pd(void)
 {
    ProcessData pd;
    Cardinal size = sizeof(ProcessDataStruct);

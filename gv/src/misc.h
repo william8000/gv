@@ -43,6 +43,7 @@ extern void			misc_drawEyeGuide (
 
 extern void			misc_savePagePosition (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -55,6 +56,7 @@ extern int			misc_restorePagePosition (
 
 extern void			misc_resetPagePosition (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -101,16 +103,19 @@ extern void			show_page (
 
 extern Boolean			setup_ghostview (
 #if NeedFunctionPrototypes
+void
 #endif
 ); 
 
 extern void			setup_layout_ghostview (
 #if NeedFunctionPrototypes
+void
 #endif
 ); 
 
 extern void			misc_buildPagemediaMenu (
 #if NeedFunctionPrototypes
+void
 #endif
 ); 
 

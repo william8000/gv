@@ -99,20 +99,21 @@ static XtResource aaaConstraintResources[] = {
 };
 #undef offset
 
-static void ClassInitialize(), Initialize();
-static void ComputeNaturalSizes();
-static void Destroy();
-static void Resize();
-static Boolean SetValues();
-static XtGeometryResult GeometryManager();
-static void ChangeManaged();
-static void InsertChild();
-static XtGeometryResult QueryGeometry ();
-static void GetDesiredSize ();
+static void ClassInitialize(void);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void ComputeNaturalSizes(AaaWidget,BoxPtr,LayoutDirection);
+static void Destroy(Widget);
+static void Resize(Widget);
+static Boolean SetValues(Widget,Widget,Widget,ArgList,Cardinal*);
+static XtGeometryResult GeometryManager(Widget,XtWidgetGeometry*,XtWidgetGeometry*);
+static void ChangeManaged(Widget);
+static void InsertChild(Widget);
+static XtGeometryResult QueryGeometry(Widget,XtWidgetGeometry*,XtWidgetGeometry*);
+static void GetDesiredSize(Widget);
 
-static void AaaLayout ();
-static void AaaGetNaturalSize ();
-static void AaaFreeLayout ();
+static void AaaLayout(AaaWidget,Bool);
+static void AaaGetNaturalSize(AaaWidget,Dimension*,Dimension*);
+static void AaaFreeLayout(BoxPtr);
 
 #define SuperClass ((ConstraintWidgetClass)&constraintClassRec)
 
@@ -311,7 +312,7 @@ Destroy(w)
 }
 
 static void 
-ClassInitialize()
+ClassInitialize(void)
 {
     BEGINMESSAGE(ClassInitialize)
     XtSetTypeConverter ( XtRString, XtRLayout, CvtStringToLayout,

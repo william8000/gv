@@ -37,6 +37,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -178,7 +179,7 @@ void cb_resetInfoPopup(w, client_data, call_data)
    makeInfoPopup
 ###############################################################################*/
 
-void makeInfoPopup()
+void makeInfoPopup(void)
 {
    Arg          args[12];
    Cardinal     n;

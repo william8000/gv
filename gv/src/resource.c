@@ -93,7 +93,7 @@ static String resource_system_file = NULL;
 static String resource_user_file   = NULL;
 static String resource_style_file  = NULL;
 static String resource_ad_file     = NULL;
-static char* resource_mergeFileIntoDatabase();
+static char* resource_mergeFileIntoDatabase(XrmDatabase*,char*);
 
 /*#######################################################
   resource_freeData

@@ -49,8 +49,6 @@
 #include "options.h"
 #include "media.h"
 
-extern char *main_getResource();
-
 /*##################################################
   media_freeMedias
 ##################################################*/
@@ -73,7 +71,7 @@ void media_freeMedias(medias)
   media_parseMedias
 ##################################################*/
 
-static Media media_mallocMedia()
+static Media media_mallocMedia(void)
 {
   Media media;
   media = (Media) GV_XtMalloc(sizeof(MediaStruct));

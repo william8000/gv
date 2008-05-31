@@ -170,30 +170,30 @@ static XtResource resources[] = {
 #undef offset
 };
 
-static void Message();
-static void Notify();
-static void action_changeCursor();
-static void Input();
-static void Output();
+static void Message(Widget,XEvent*,String*,Cardinal*);
+static void Notify(Widget,XEvent*,String*,Cardinal*);
+static void action_changeCursor(Widget,XEvent*,String*,Cardinal*);
+static void Input(XtPointer,int *,XtInputId*);
+static void Output(XtPointer,int*,XtInputId*);
 
-static void ClassInitialize();
-static void ClassPartInitialize();
-static void Initialize();
-static void Realize();
-static void Redisplay();
-static void Destroy();
-static void Resize();
-static Boolean SetValues();
-static XtGeometryResult QueryGeometry();
+static void ClassInitialize(void);
+static void ClassPartInitialize(WidgetClass);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void Realize(Widget,XtValueMask*,XSetWindowAttributes*);
+static void Redisplay(Widget,XEvent *,Region);
+static void Destroy(Widget);
+static void Resize(Widget);
+static Boolean SetValues(Widget,Widget,Widget,ArgList,Cardinal*);
+static XtGeometryResult QueryGeometry(Widget,XtWidgetGeometry *,XtWidgetGeometry *);
 
-static void Layout();
-static Boolean ComputeSize();
-static void SetBackground();
-static Boolean Setup();
-static void StartInterpreter();
-static void StopInterpreter();
-static void InterpreterFailed();
-static void ChangeCursor();
+static void Layout(Widget,Boolean,Boolean);
+static Boolean ComputeSize(Widget,Boolean,Boolean,Dimension*,Dimension*);
+static void SetBackground(Widget,Bool);
+static Boolean Setup(Widget);
+static void StartInterpreter(Widget);
+static void StopInterpreter(Widget);
+static void InterpreterFailed(Widget);
+static void ChangeCursor(GhostviewWidget,int);
 
 static XtActionsRec actions[] =
 {
@@ -273,10 +273,11 @@ static void Copy_pixmap(w)
       int scr = DefaultScreen(dpy);
       GC gc = DefaultGC(dpy, scr);
       Window win = XtWindow(w);
-      int x, gwidth, gheight;
+      int x;
+      unsigned int gwidth, gheight, dummy;
       Window r;
     
-      XGetGeometry(dpy,win, &r,&x,&x,&gwidth, &gheight,&x,&x);
+      XGetGeometry(dpy, win, &r, &x, &x, &gwidth, &gheight, &dummy, &dummy);
       XCopyArea(dpy, pix, win, gc, 0,0, gwidth, gheight, 0,0);
     }
   }      
@@ -289,10 +290,11 @@ static void Realize_pixmap(w)
         Display *dpy = XtDisplay(w);
         int scr = DefaultScreen(dpy);
         Window win = XtWindow(w);
-        int x, gwidth, gheight;
+        int x;
+	unsigned int gwidth, gheight, dummy;
         Window r;
 
-        XGetGeometry(dpy,win, &r,&x,&x,&gwidth, &gheight,&x,&x);
+        XGetGeometry(dpy, win, &r, &x, &x, &gwidth, &gheight, &dummy, &dummy);
 /*        printf("Realize_pixmap %d %d\n", gwidth, gheight);         */
         pix =  XCreatePixmap(dpy, win, gwidth, gheight, DefaultDepth(dpy,scr));
     } 
@@ -688,7 +690,7 @@ Output(client_data, source, id)
 /*###################################################################################*/
 
 static void
-ClassInitialize()
+ClassInitialize(void)
 {
     BEGINMESSAGE(ClassInitialize)
 #ifndef GV_CODE
@@ -892,8 +894,7 @@ Resize(w)
 /*###################################################################################*/
 
 static Boolean
-SetValues(current, request, new)
-    Widget current, request, new;
+SetValues(Widget current, Widget request, Widget new, ArgList unused1, Cardinal *unused2)
 {
     GhostviewWidget cgvw = (GhostviewWidget) current;
     GhostviewWidget rgvw = (GhostviewWidget) request;

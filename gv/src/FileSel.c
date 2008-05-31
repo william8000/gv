@@ -95,18 +95,18 @@
 static String unknownList[] = {"<cannot enter directory>",NULL};
 static String cannotopenList[] = {"<cannot read directory>",NULL};
 
-static void FS_textfieldFocusAction();
-static void FS_textfieldBackSpaceAction();
-static void FS_textfieldDeleteAction();
-static void FS_listAction();
-static void FS_preferButtonAction();
+static void FS_textfieldFocusAction(Widget,XEvent*,String*,Cardinal*);
+static void FS_textfieldBackSpaceAction(Widget,XEvent*,String*,Cardinal*);
+static void FS_textfieldDeleteAction(Widget,XEvent*,String*,Cardinal*);
+static void FS_listAction(Widget,XEvent*,String*,Cardinal*);
+static void FS_preferButtonAction(Widget,XEvent*,String*,Cardinal*);
 
 static XtActionsRec file_selectionActionsTable[] = {
-       { "FS_textfieldFocusAction",  (XtActionProc) FS_textfieldFocusAction },
-       { "FS_textfieldBackSpaceAction", (XtActionProc) FS_textfieldBackSpaceAction },
-       { "FS_textfieldDeleteAction", (XtActionProc) FS_textfieldDeleteAction },
-       { "FS_preferButton",          (XtActionProc) FS_preferButtonAction },
-       { "List",      (XtActionProc) FS_listAction }
+       { "FS_textfieldFocusAction",  FS_textfieldFocusAction },
+       { "FS_textfieldBackSpaceAction", FS_textfieldBackSpaceAction },
+       { "FS_textfieldDeleteAction", FS_textfieldDeleteAction },
+       { "FS_preferButton",          FS_preferButtonAction },
+       { "List",      FS_listAction }
 };
 
 static String list_translations =
@@ -347,16 +347,23 @@ static XtResource resources[] = {
 #undef offset
 #undef lay_offset
 
-static Boolean SetValues();
-static void ClassInitialize(), Initialize(), Realize(), Destroy();
-static void filtersProc(),dirsProc(),rescanProc();
-static void TopDirSelectionProc(), CurDirSelectionProc(), SubDirSelectionProc();
-static void changeLists();
-static Widget BuildMenu();
-static void SetDirectoryView();
-static void CreateTextField();
-static void SetPreferredButton();
-static void CreateList();
+static Boolean SetValues(Widget,Widget,Widget,ArgList,Cardinal*);
+static void ClassInitialize(void);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void Realize(Widget,XtValueMask*,XSetWindowAttributes*);
+static void Destroy(Widget);
+static void filtersProc(Widget,XtPointer,XtPointer);
+static void dirsProc(Widget,XtPointer,XtPointer);
+static void rescanProc(Widget,XtPointer,XtPointer);
+static void TopDirSelectionProc(Widget,XtPointer,XtPointer);
+static void CurDirSelectionProc(Widget,XtPointer,XtPointer);
+static void SubDirSelectionProc(Widget,XtPointer,XtPointer);
+static void changeLists(FileSelectionWidget);
+static Widget BuildMenu(Widget,String,String,XtCallbackProc);
+static void SetDirectoryView(FileSelectionWidget,char*);
+static void CreateTextField(Widget*,Widget*,char*,XtTranslations,String,Widget);
+static void SetPreferredButton(Widget,int,int);
+static void CreateList(Widget*,Widget*,Widget*,Widget*,Widget*,XtTranslations,String,Widget);
 
 FileSelectionClassRec file_selectionClassRec = {
   {
@@ -435,7 +442,7 @@ WidgetClass file_selectionWidgetClass = (WidgetClass) &file_selectionClassRec;
 -------------------------------------------------------------------------------*/
 
 static void 
-ClassInitialize()
+ClassInitialize(void)
 {
    BEGINMESSAGE(ClassInitialize)
    XawInitializeWidgetSet();
@@ -565,7 +572,7 @@ static void Realize (w, valueMask, attrs)
    FS_WIDGET w;
    BEGINMESSAGE(Realize)
    (*file_selectionWidgetClass->core_class.superclass->core_class.realize)(w, valueMask, attrs);
-   changeLists(w);
+   changeLists((FileSelectionWidget)w);
    FS_textfieldFocusAction(FS_PATH, NULL, NULL, NULL);
    ENDMESSAGE(Realize)
 }
@@ -886,7 +893,6 @@ static void SetPreferredButton(w,position,install)
    FS_WIDGET 	w;
    char 	name[10];
    Widget 	button;
-   USE_Arg(2);
 
    BEGINMESSAGE(SetPreferredButton)
 
@@ -1327,12 +1333,8 @@ static void changeLists(FS_FILE_SELECTION)
 ----------------------------------------------------------------------*/
 
 static void
-SetIncompleteDirectoryView(w,list)
-   Widget	w;
-   String	*list;
+SetIncompleteDirectoryView(FileSelectionWidget fs, String *list)
 {
-   FS_WIDGET 	w;
-
    BEGINMESSAGE(SetIncompleteDirectoryView)
    changeList(FS_CURLIST, list, 1);
    chdir(APP_DIR);
@@ -1397,11 +1399,10 @@ CombineToPath(path,dir,file)
    SetDirectoryView
 ----------------------------------------------------------------------*/
 
-static void SetDirectoryView(w,dir)
-   Widget	w;
+static void SetDirectoryView(fs,dir)
+   FileSelectionWidget	fs;
    char *dir;
 {
-   FS_WIDGET 		w;
    DIR			*dirp;
    struct dirent	*dp;
    String  		str;
@@ -1460,8 +1461,8 @@ static void SetDirectoryView(w,dir)
    if (error) {
      INFIMESSAGE(cannot analyze directory,error)
      changeLists(FS_FILE_SELECTION);
-     if (error==1) SetIncompleteDirectoryView(w,unknownList); 
-     else          SetIncompleteDirectoryView(w,cannotopenList);
+     if (error==1) SetIncompleteDirectoryView(fs,unknownList); 
+     else          SetIncompleteDirectoryView(fs,cannotopenList);
      chdir(APP_DIR);
      ENDMESSAGE(SetDirectoryView)
      return;
@@ -1644,7 +1645,7 @@ dirsProc(w, client_data, call_data)
     if (TMP_DIR_RESOURCE) newpath = TMP_DIR_RESOURCE;
     else newpath = HOME;
   }
-  SetDirectoryView((Widget)FS_FILE_SELECTION,newpath);
+  SetDirectoryView(FS_FILE_SELECTION,newpath);
   ClipWidgetSetCoordinates(FS_CURCLIP, 0, 0);
   ENDMESSAGE(dirsProc)
 }
@@ -1774,7 +1775,7 @@ SubDirSelectionProc(w, client_data, call_data)
       appendDirEndSeparator(newpath);
     }
     SMESSAGE(newpath)
-    SetDirectoryView((Widget)FS_FILE_SELECTION,newpath);
+    SetDirectoryView(FS_FILE_SELECTION,newpath);
     ClipWidgetSetCoordinates(FS_CURCLIP, 0, 0);
   }
   ENDMESSAGE(SubDirSelectionProc)

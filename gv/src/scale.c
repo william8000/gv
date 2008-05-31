@@ -75,7 +75,7 @@ void scale_freeScales(scales)
   scale_parseScales
 ##################################################*/
 
-static Scale scale_mallocScale()
+static Scale scale_mallocScale(void)
 {
   Scale scale;
   scale = (Scale) GV_XtMalloc(sizeof(ScaleStruct));

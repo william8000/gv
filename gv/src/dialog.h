@@ -63,6 +63,7 @@ extern void action_preferDialogPopupButton (
 
 extern void makeDialogPopup (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -76,6 +77,7 @@ extern void DialogPopupSetButton (
 
 extern void DialogPopupClearText (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
@@ -87,6 +89,7 @@ extern void DialogPopupSetText (
 
 extern String DialogPopupGetText (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

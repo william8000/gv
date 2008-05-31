@@ -35,11 +35,13 @@
 
 extern void options_gv_createScaleMenus (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 
 extern void options_gv_createMediaMenus (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

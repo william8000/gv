@@ -227,7 +227,7 @@ static char *tabTrans =
 <Key>Tab: GV_TogConfPrefBut()\
 ";
 
-void makeConfirmPopup()
+void makeConfirmPopup(void)
 {
   Arg args[7];
   Cardinal n;

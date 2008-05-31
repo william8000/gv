@@ -48,6 +48,7 @@ typedef struct SaveDataStruct_ {
 
 extern SaveData			save_allocSaveData (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

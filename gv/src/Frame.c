@@ -89,18 +89,18 @@ static XtResource resources[] = {
  *
  ***************************************************************************/
 
-static void ClassInitialize();
-static void Resize();
-static void Redisplay();
-static void Initialize();
-static void InsertChild();
-static void ChangeManaged();
-static XtGeometryResult GeometryManager();
-static XtGeometryResult QueryGeometry();
-static XtGeometryResult LayoutFrame();
-static void Destroy();
-static void GetDesiredSizeOfChild();
-static void GetNaturalSize();
+static void ClassInitialize(void);
+static void Resize(Widget);
+static void Redisplay(Widget,XEvent *,Region);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
+static void InsertChild(Widget);
+static void ChangeManaged(Widget);
+static XtGeometryResult GeometryManager(Widget,XtWidgetGeometry*,XtWidgetGeometry*);
+static XtGeometryResult QueryGeometry(Widget,XtWidgetGeometry*,XtWidgetGeometry*);
+static XtGeometryResult LayoutFrame(FrameWidget);
+static void Destroy(Widget);
+static void GetDesiredSizeOfChild(Widget);
+static void GetNaturalSize(FrameWidget,Dimension*,Dimension*);
 
 #define SuperClass ((CompositeWidgetClass)&compositeClassRec)
 
@@ -204,7 +204,7 @@ FrameConvertStringToFrameType ( display, args, num_args,  from, to, converter_da
 /*---------------------------------------------------*/
 
 static void
-ClassInitialize()
+ClassInitialize(void)
 {
    BEGINMESSAGE(ClassInitialize)
    XawInitializeWidgetSet();

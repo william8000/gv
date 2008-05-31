@@ -78,7 +78,7 @@ void magmenu_freeMagMenuEntries(entries)
   magmenu_parseMagMenuEntries
 ##################################################*/
 
-static MagMenuEntry magmenu_mallocMagMenuEntry()
+static MagMenuEntry magmenu_mallocMagMenuEntry(void)
 {
   MagMenuEntry entry;
   entry = (MagMenuEntry) GV_XtMalloc(sizeof(MagMenuEntryStruct));

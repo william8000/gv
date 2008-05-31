@@ -64,6 +64,7 @@ extern void action_preferConfirmPopupButton (
 
 extern void makeConfirmPopup (
 #if NeedFunctionPrototypes
+void
 #endif
 );
 

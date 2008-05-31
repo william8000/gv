@@ -79,17 +79,17 @@ static XtResource resources[] = {
 /*
  * widget class methods used below
  */
-static void InsertChild();
-static void Initialize();
+static void InsertChild(Widget);
+static void Initialize(Widget,Widget,ArgList,Cardinal*);
 #if 0
 static Boolean SetValues();
 #endif
-static void Realize();			/* set gravity and upcall */
-static void Resize();			/* report new size */
-static XtGeometryResult GeometryManager();  /* deal with child requests */
-static void ChangeManaged();		/* somebody added a new widget */
-static XtGeometryResult QueryGeometry();  /* say how big would like to be */
-static XtGeometryResult LayoutClip();
+static void Realize(Widget,XtValueMask*,XSetWindowAttributes*);	/* set gravity and upcall */
+static void Resize(Widget);		/* report new size */
+static XtGeometryResult GeometryManager(Widget,XtWidgetGeometry*,XtWidgetGeometry*);  /* deal with child requests */
+static void ChangeManaged(Widget);		/* somebody added a new widget */
+static XtGeometryResult QueryGeometry(Widget,XtWidgetGeometry*,XtWidgetGeometry*);  /* say how big would like to be */
+static XtGeometryResult LayoutClip(ClipWidget);
 
 #define SuperClass ((CompositeWidgetClass)&compositeClassRec)
 

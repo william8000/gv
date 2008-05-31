@@ -96,7 +96,7 @@ void miscmenu_freeMiscMenuEntries(entries)
   miscmenu_parseMiscMenuEntries
 ##################################################*/
 
-static MiscMenuEntry miscmenu_mallocMiscMenuEntry()
+static MiscMenuEntry miscmenu_mallocMiscMenuEntry(void)
 {
   MiscMenuEntry entry;
   entry = (MiscMenuEntry) GV_XtMalloc(sizeof(MiscMenuEntryStruct));

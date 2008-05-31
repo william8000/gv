@@ -68,6 +68,8 @@
 
 #include <string.h>
 
+#include <sys/stat.h>
+
 #ifndef SEEK_SET
 #define SEEK_SET 0
 #endif
@@ -308,7 +310,7 @@ static char    *empty_string = "";
 
 /*-----------------------------------------------------------*/
 
-static void ps_dynMemExhaust()
+static void ps_dynMemExhaust(void)
 {
    fprintf(stderr,"Fatal Error: Dynamic memory exhausted.\n");
    exit(EXIT_STATUS_FATAL);
@@ -1455,7 +1457,7 @@ ps_gettext(line, next_char)
         /* Delete trailing ')' */
         if (*line)
           {
-            *line++;
+            line++;
           }
     } else {
         while (*line && !(*line == ' ' || *line == '\t' || *line == '\n')) {

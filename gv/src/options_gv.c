@@ -86,8 +86,8 @@ static String orientations[5] = { "Portrait","Landscape","Upside-Down","Seascape
 static int opt_orientation;
 static int opt_pagemedia;
 
-static void options_gv_create();
-static void options_gv_setOptionsAtEntry();
+static void options_gv_create(void);
+static void options_gv_setOptionsAtEntry(void);
 
 /*------------------------------------------------------
   OptionPopupStruct
@@ -106,7 +106,7 @@ OptionPopup gv_options_gv = (OptionPopup) &gv_options_gv_struct;
    options_gv_setOptionsAtEntry
 ------------------------------------------------------*/
 
-static void options_gv_setOptionsAtEntry()
+static void options_gv_setOptionsAtEntry(void)
 {
   String s;
   Arg args[2];
@@ -500,7 +500,7 @@ void options_gv_createMediaMenus()
    options_gv_create
 ------------------------------------------------------*/
 
-void options_gv_create()
+void options_gv_create(void)
 {
    Arg          args[10];
    Cardinal     n;

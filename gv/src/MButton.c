@@ -42,8 +42,8 @@
 #include INC_XAW(XawInit.h)
 #include "MButtonP.h"
 
-static void ClassInitialize();
-static void PopupMenu();
+static void ClassInitialize(void);
+static void PopupMenu(Widget,XEvent*,String*,Cardinal*);
 
 #define superclass ((ButtonWidgetClass)&buttonClassRec)
 
@@ -128,7 +128,7 @@ WidgetClass mbuttonWidgetClass = (WidgetClass) &mbuttonClassRec;
  *
  ****************************************************************/
 
-static void ClassInitialize()
+static void ClassInitialize(void)
 {
   XawInitializeWidgetSet();
   XtRegisterGrabAction(PopupMenu, True, 
