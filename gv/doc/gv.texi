@@ -120,6 +120,7 @@ PostScript and PDF viewer.
   [-]-style=FILE                      read and use additional resources from FILE. These resources
                                       have lower priority than those provided on the context of --ad
   [-]-spartan                         shortcut for --style=gv_spartan.dat
+  [-]-widgetless                      shortcut for --style=gv_widgetless.dat
   [-]-version                         show gv version and exit
 @end verbatim
 
@@ -211,6 +212,8 @@ Note that sending gv the @strong{SIGHUP} signal also causes
 an update of the displayed document. This method
 may be used by document creators to trigger gv
 remotely.
+@item --widgetless
+This is a shortcut for @code{--style=gv_widgetless.dat}.
 @end table
 
 @node Resources, Mouse and key bindings, Invoking gv, Top

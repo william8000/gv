@@ -164,6 +164,7 @@ enum
     ORIENTATION_ARG,
     PAGE_ARG,
     SPARTAN_ARG,
+    WIDGETLESS_ARG,
     USAGE_ARG,
     VERSION_ARG
   };
@@ -205,6 +206,7 @@ static struct option const GNU_longOptions[] =
     {"page", required_argument, NULL, PAGE_ARG},
     {"usage", no_argument, NULL, USAGE_ARG},
     {"spartan", no_argument, NULL, SPARTAN_ARG},
+    {"widgetless", no_argument, NULL, WIDGETLESS_ARG},
     {"version", no_argument, NULL, VERSION_ARG},
     {NULL, 0, NULL, 0}
   };
@@ -354,6 +356,7 @@ int main(argc, argv)
     orientation_p = 0;
     page_p = 0;
     spartan_p = 0;
+    widgetless_p = 0;
     center_p = 0;
     nocenter_p = 0;
     scale_p = 0;
@@ -570,6 +573,11 @@ int main(argc, argv)
 
 	 case SPARTAN_ARG:
 	   spartan_p = 1;
+	   opt_counter++;
+	   break;
+
+	 case WIDGETLESS_ARG:
+	   widgetless_p = 1;
 	   opt_counter++;
 	   break;
 

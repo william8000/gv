@@ -70,6 +70,7 @@ PostScript and PDF viewer.\n\
   [-]-style=FILE                      read and use additional resources from FILE. These resources\n\
                                       have lower priority than those provided on the context of --ad\n\
   [-]-spartan                         shortcut for --style=gv_spartan.dat\n\
+  [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
   [-]-version                         show gv version and exit\n\
 ";
 
@@ -116,6 +117,8 @@ gv help:\n\
      [-style <resource file>]\n\
    # Shortcut for '-style gv_spartan.dat'\n\
      [-spartan]\n\
+   # Shortcut for '-style gv_widgetless.dat'\n\
+     [-widgetless]\n\
    # Toolkit Options\n\
      [<other toolkit options>]\n\
    # Show help\n\

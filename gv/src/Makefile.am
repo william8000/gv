@@ -6,7 +6,7 @@
 
 # File distribution
 bin_PROGRAMS = gv
-dist_pkglib_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat
+dist_pkglib_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
 
 appdefaultsdir = $(pkglibdir)
 

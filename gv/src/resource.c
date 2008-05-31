@@ -125,7 +125,6 @@ resource_buildDatabase (
   XrmDatabase db = NULL;
   String *sP;
   String s,t, rpath;
-  char *spartan_filename;
   char tmp[GV_MAX_FILENAME_LENGTH];
 
   BEGINMESSAGE(resource_buildDatabase)
@@ -215,13 +214,23 @@ resource_buildDatabase (
     }
   if (spartan_p)
     {
-      spartan_filename = (char *) 
+      char *spartan_filename = (char *)
 	GV_XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_spartan.dat") + 1);
       spartan_filename[0] = '\0';
       strcat(spartan_filename, GV_LIBDIR);
       strcat(spartan_filename, "/gv_spartan.dat");
       resource_putResource (&db, app_name, ".style", spartan_filename);
       GV_XtFree (spartan_filename);
+    }
+  if (widgetless_p)
+    {
+      char *widgetless_filename = (char *)
+	GV_XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_widgetless.dat") + 1);
+      widgetless_filename[0] = '\0';
+      strcat(widgetless_filename, GV_LIBDIR);
+      strcat(widgetless_filename, "/gv_widgetless.dat");
+      resource_putResource (&db, app_name, ".style", widgetless_filename);
+      GV_XtFree (widgetless_filename);
     }
   if (quiet_p)
     {

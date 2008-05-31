@@ -276,6 +276,7 @@ EXTERN int nosafer_p;
 EXTERN int color_p;
 EXTERN int grayscale_p;
 EXTERN int spartan_p;
+EXTERN int widgetless_p;
 EXTERN int quiet_p;
 EXTERN int monochrome_p;
 EXTERN int media_p;
