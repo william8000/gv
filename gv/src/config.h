@@ -67,6 +67,9 @@ Inline copies of optional external files.
 #ifdef USE_FALLBACK_STYLES
 #   define FALLBACK_STYLE_1_DAT         "gv_spartan.dat"
 #   define FALLBACK_STYLE_1_H           "gv_spartan.h"
+
+#   define FALLBACK_STYLE_2_DAT         "gv_widgetless.dat"
+#   define FALLBACK_STYLE_2_H           "gv_widgetless.h"
 #endif
 
 #define FALLBACK_ICON_PIXMAP         "gv_icon.xbm"

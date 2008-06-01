@@ -24,6 +24,13 @@
 	* src/main.c(main): If no display is availabe, delay the error
 	message until command line options has been parsed. This way, --help,
 	--version and --usage work without having an display
+	
+	* src/Makefile.am: Build and clean gv_widgetless.h
+	
+	* src/config.h: Define FALLBACK_STYLE_2_* as "gv_widgetless.*"
+	
+	* src/resource.c (resource_buildDatabase): Check full pathname for
+	embedded resource, not only the basename. Also embed gv_widletless.dat.
 
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 

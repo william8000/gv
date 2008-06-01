@@ -22,6 +22,7 @@ CLEANFILES = $(srcdir)/GV \
              $(srcdir)/gv_system.ad \
              $(srcdir)/gv_user.ad \
              $(srcdir)/gv_spartan.h \
+             $(srcdir)/gv_widgetless.h \
              $(srcdir)/gv_intern_res_unix.h \
              $(srcdir)/gv_class.ad \
              $(srcdir)/gv_class.h \
@@ -147,7 +148,7 @@ gv_SOURCES = Aaa.c \
              gv_message.h \
              types.h
 
-BUILT_SOURCES = gv_spartan.h gv_intern_res_unix.h gv_class.h
+BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 
 
 # Additional rules for generating styles
@@ -180,6 +181,9 @@ $(srcdir)/gv_user.ad : $(srcdir)/gv_user_res.dat $(srcdir)/gv_intern_res_unix.da
 
 $(srcdir)/gv_spartan.h : $(srcdir)/gv_spartan.dat
 	@sh $(srcdir)/ad2c $(srcdir)/gv_spartan.dat > $(srcdir)/gv_spartan.h
+
+$(srcdir)/gv_widgetless.h : $(srcdir)/gv_widgetless.dat
+	@sh $(srcdir)/ad2c $(srcdir)/gv_widgetless.dat > $(srcdir)/gv_widgetless.h
 
 $(srcdir)/gv_intern_res_unix.h : $(srcdir)/gv_intern_res_unix.dat
 	@echo "creating gv_intern_res_unix.h"

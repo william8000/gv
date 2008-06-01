@@ -341,12 +341,15 @@ resource_buildDatabase (
 #   ifdef USE_FALLBACK_STYLES
     sP = NULL;
 #     ifdef FALLBACK_STYLE_1_DAT
+    if (!strcmp(GV_LIBDIR "/" FALLBACK_STYLE_1_DAT,s)) sP = fallback_style_1;
     if (!strcmp(FALLBACK_STYLE_1_DAT,s)) sP = fallback_style_1;
 #     endif
 #     ifdef FALLBACK_STYLE_2_DAT
+    if (!strcmp(GV_LIBDIR "/" FALLBACK_STYLE_2_DAT,s)) sP = fallback_style_2;
     if (!strcmp(FALLBACK_STYLE_2_DAT,s)) sP = fallback_style_2;
 #     endif
 #     ifdef FALLBACK_STYLE_3_DAT
+    if (!strcmp(GV_LIBDIR "/" FALLBACK_STYLE_3_DAT,s)) sP = fallback_style_3;
     if (!strcmp(FALLBACK_STYLE_3_DAT,s)) sP = fallback_style_3;
 #     endif
     if (sP) {
