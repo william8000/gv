@@ -19,6 +19,9 @@ by a '#' or a '*' or a '?'. A
 
 # --help, --usage and --version now work without having an X11 display
 
+# --spartan and --widgetless now use embedded resources. Before this bugfix,
+  you had to use --style=gv_spartan.dat to use the embedded resource.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.3.90 has been released as GV 3.6.4 with no changes
