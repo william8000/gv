@@ -15,7 +15,7 @@ by a '#' or a '*' or a '?'. A
 
 # Fixed some compiler warnings
 
-# Added new widgetless mode, usable via option "--vidgetless"
+# Added new widgetless mode, usable via option "--widgetless"
 
 # --help, --usage and --version now work without having an X11 display
 
