@@ -23,7 +23,7 @@ echo "Bootstrapping CVS gv with:"
 : ${AUTOCONF=autoconf}
 
 # So instead:
-cmd="$ACLOCAL -I m4 && $AUTOHEADER && $AUTOMAKE && $AUTOCONF"
+cmd="$ACLOCAL -I m4 && $AUTOHEADER && $AUTOMAKE --add-missing && $AUTOCONF"
 echo "  $cmd"
 $chicken eval $cmd || exit 1
 
