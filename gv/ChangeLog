@@ -174,7 +174,7 @@
 	Steinborn).
 
 	* src/Ghostview.c (StartInterpreter): Doesnt add the implicit
-	"2x2" parameter to ghostscript invocation command line (patch by
+	"-g2x2" parameter to ghostscript invocation command line (patch by
 	Markus Steinborn).
 
 	* src/info.c (cb_popupInfoPopup): Return when calling gs with the
