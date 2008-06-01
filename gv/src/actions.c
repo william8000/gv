@@ -40,6 +40,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <inttypes.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -897,7 +898,7 @@ action_setPageMark(w, event, params, num_params)
     else if (!strcmp(params[1],mark))      spm=spm|SPM_MARK;
     else                                   spm=spm|SPM_UNMARK;
    
-    cb_setPageMark((Widget)NULL,(XtPointer)spm,NULL);
+    cb_setPageMark((Widget)NULL,(XtPointer)(intptr_t)spm,NULL);
 
     ENDMESSAGE(action_setPageMark)
 }
@@ -945,7 +946,7 @@ action_setScale(w, event, params, num_params)
       if (i<0) i = (-i)|SCALE_MIN;
       i |= SCALE_REL;
     }
-    cb_setScale(w, (XtPointer)i, NULL);
+    cb_setScale(w, (XtPointer)(intptr_t)i, NULL);
     ENDMESSAGE(action_setScale)
 }
 
@@ -971,7 +972,7 @@ action_setOrientation(w, event, params, num_params)
        return;
     }
     o = doc_convStringToDocOrient(params[0]);
-    if (o != O_UNSPECIFIED) cb_setOrientation(w, (XtPointer)o, NULL);
+    if (o != O_UNSPECIFIED) cb_setOrientation(w, (XtPointer)(intptr_t)o, NULL);
     ENDMESSAGE(action_setOrientation)
 }
 
@@ -999,7 +1000,7 @@ action_setPagemedia(w, event, params, num_params)
     }
 
     m = doc_convStringToPageMedia(doc,params[0]);
-    if (m!= MEDIA_ID_INVALID) cb_setPagemedia(w, (XtPointer)m, NULL);
+    if (m!= MEDIA_ID_INVALID) cb_setPagemedia(w, (XtPointer)(intptr_t)m, NULL);
 
     ENDMESSAGE(action_setPagemedia)
 }

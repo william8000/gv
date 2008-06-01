@@ -40,6 +40,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <inttypes.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -252,7 +253,7 @@ static void options_gv_cb_apply(w, client_data, call_data)
      k = gv_pagemedia;
      gv_pagemedia_auto = 0;
      i = doc_convStringToPageMedia(doc,app_res.default_pagemedia);
-     cb_setPagemedia(NULL,(XtPointer)i,(XtPointer)1);
+     cb_setPagemedia(NULL,(XtPointer)(intptr_t)i,(XtPointer)1);
      if ((j != gv_pagemedia_auto) || (k != gv_pagemedia)) redisplay = True;
    }
    s_media = True;
@@ -277,7 +278,7 @@ static void options_gv_cb_apply(w, client_data, call_data)
      j = gv_orientation_auto;
      k = gv_orientation;
      gv_orientation_auto = 0;
-     cb_setOrientation(NULL,(XtPointer)i,(XtPointer)1);
+     cb_setOrientation(NULL,(XtPointer)i,(XtPointer)(intptr_t)1);
      if ((j != gv_orientation_auto) || (k != gv_orientation)) redisplay = True;
    }
    s_orient = True;

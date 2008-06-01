@@ -1051,9 +1051,9 @@ static void FS_listAction(w, event, params, nparams)
     if (!scrolling) {
       int entry = VlistEntryOfPosition(list,(int)event->xbutton.y);
       if (entry >=0 && entry < VlistEntries(list)) {
-	if      (list == FS_CURLIST) CurDirSelectionProc(list,NULL,(XtPointer)entry);
-	else if (list == FS_SUBLIST) SubDirSelectionProc(list,NULL,(XtPointer)entry);
-	else if (list == FS_TOPLIST) TopDirSelectionProc(list,NULL,(XtPointer)entry);
+	if      (list == FS_CURLIST) CurDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
+	else if (list == FS_SUBLIST) SubDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
+	else if (list == FS_TOPLIST) TopDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
       }
     }
   }
@@ -1661,7 +1661,7 @@ TopDirSelectionProc(w, client_data, call_data)
   XtPointer	client_data, call_data;
 {
   FS_WIDGET XtParent(XtParent(XtParent(XtParent(w))));
-  int item = (int) call_data;
+  int item = (int)(intptr_t)call_data;
   char newpath[FS_MAXNAMLEN];
    
   BEGINMESSAGE(TopDirSelectionProc)
@@ -1707,7 +1707,7 @@ CurDirSelectionProc(w, client_data, call_data)
 {
    FS_WIDGET	XtParent(XtParent(XtParent(XtParent(w))));
    char		name[10];
-   int item = (int) call_data;
+   int item = (int)(intptr_t) call_data;
 
    BEGINMESSAGE(CurDirSelectionProc)
 
@@ -1749,7 +1749,7 @@ SubDirSelectionProc(w, client_data, call_data)
   Widget	w;
   XtPointer	client_data, call_data;
 {
-  int item = (int)call_data;
+  int item = (int)(intptr_t) call_data;
   FS_WIDGET XtParent(XtParent(XtParent(XtParent(w))));
   char newpath[FS_MAXNAMLEN];
    
@@ -1846,15 +1846,15 @@ SMESSAGE(XtName(p))
   {
     Widget clip=NULL,aaa=NULL,scroll=NULL;
     FS_WIDGET p;
-    int style = (int)client_data;
+    int style = (int)(intptr_t)client_data;
     if      (s[0] == 'c') { clip = FS_CURCLIP; aaa = FS_CURAAA; scroll = FS_CURSCROLL; }
     else if (s[0] == 's') { clip = FS_SUBCLIP; aaa = FS_SUBAAA; scroll = FS_SUBSCROLL; }
     else style=0;
     if (style == SCROLL_SCROLLPROC || style == SCROLL_JUMPPROC) {
       int x,y;
       x = (int) aaa->core.x;
-      if (((int)client_data)==1) y = (int) aaa->core.y - (int)call_data;
-      else                       y = (int)(-*((float*)call_data) * aaa->core.height);
+      if (((int)(intptr_t)client_data)==1) y = (int)(intptr_t) aaa->core.y - (int)(intptr_t)call_data;
+      else                               y = (int)(-*((float*)call_data) * aaa->core.height);
       ClipWidgetSetCoordinates(clip, x, y);
     } else if (style == SCROLL_CLIPREPORT) {
       float h = (float)aaa->core.height;

@@ -1323,8 +1323,8 @@ void main_createScaleMenu(void)
       have_line=True;
     }
     scaleEntry[i] = XtCreateManagedWidget(gv_scales[i]->name, smeBSBObjectClass,scaleMenu,args,n);
-    if (gv_scales[i]->is_base) XtAddCallback(scaleEntry[i], XtNcallback,cb_setScale,(XtPointer)(i|SCALE_BAS));
-    else XtAddCallback(scaleEntry[i], XtNcallback,cb_setScale,(XtPointer)(i|SCALE_ABS));
+    if (gv_scales[i]->is_base) XtAddCallback(scaleEntry[i], XtNcallback,cb_setScale,(XtPointer)(intptr_t)(i|SCALE_BAS));
+    else XtAddCallback(scaleEntry[i], XtNcallback,cb_setScale,(XtPointer)(intptr_t)(i|SCALE_ABS));
   }
   ENDMESSAGE(main_createScaleMenu)
 }

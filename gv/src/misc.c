@@ -1549,7 +1549,7 @@ void misc_buildPagemediaMenu()
   if (doc && doc->nummedia) {
     for (i = 0; i < doc->nummedia; i++) {
       pagemediaEntry[i] = XtCreateManagedWidget(doc->media[i].name,smeBSBObjectClass, pagemediaMenu,NULL,(Cardinal)0);
-      XtAddCallback(pagemediaEntry[i], XtNcallback,cb_setPagemedia, (XtPointer)i);
+      XtAddCallback(pagemediaEntry[i], XtNcallback,cb_setPagemedia, (XtPointer)(intptr_t)i);
     }
     w = XtCreateManagedWidget("line", smeLineObjectClass, pagemediaMenu,NULL,(Cardinal)0);
   }
@@ -1559,7 +1559,7 @@ void misc_buildPagemediaMenu()
     if (!(gv_medias[i]->used)) continue;
     pagemediaEntry[i+num_doc_media] = 
       XtCreateManagedWidget(gv_medias[i]->name,smeBSBObjectClass, pagemediaMenu,NULL,(Cardinal)0);
-    XtAddCallback(pagemediaEntry[i+num_doc_media], XtNcallback,cb_setPagemedia, (XtPointer)(i+num_doc_media));
+    XtAddCallback(pagemediaEntry[i+num_doc_media], XtNcallback,cb_setPagemedia, (XtPointer)(intptr_t)(i+num_doc_media));
   }
   {
     Boolean b = (doc_mediaIsOk(doc,current_page,num_doc_media) ? True : False);

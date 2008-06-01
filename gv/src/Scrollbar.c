@@ -38,6 +38,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <inttypes.h>
 
 #include "paths.h"
 #include INC_X11(IntrinsicP.h)
@@ -259,7 +260,7 @@ WidgetClass scrollbarWidgetClass = (WidgetClass)&scrollbarClassRec;
 #define DESTROY_TIMER	if (TIMER) { XtRemoveTimeOut(TIMER); TIMER = DISABLED; }
 
 #define CALLscrollProc(widget,data) \
-           XtCallCallbacks ( ((Widget)(widget)),XtNscrollProc,((XtPointer)(data)))
+           XtCallCallbacks ( ((Widget)(widget)),XtNscrollProc,((XtPointer)(intptr_t)(data)))
 
 #define POINT(name,xcoord,ycoord)  name.x=(short)(xcoord);name.y=(short)(ycoord)
 

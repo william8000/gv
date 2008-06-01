@@ -152,8 +152,8 @@ cb_newtocScrollbar(w, client_data, call_data)
 
   BEGINMESSAGE(cb_newtocScrollbar)
   x = (int) newtocControl->core.x;
-  if (((int)client_data)==1) {
-    int dy = (int)call_data;
+  if (((int)(intptr_t)client_data)==1) {
+    int dy = (int)(intptr_t)call_data;
     y = (int) newtocControl->core.y - dy;
   } else {
     float *percent = (float *) call_data;
@@ -262,7 +262,7 @@ void cb_useBackingPixmap(w, client_data, call_data)
   Widget w;
   XtPointer client_data, call_data;
 {
-  int i = (int)client_data;
+  int i = (int)(intptr_t)client_data;
 
   BEGINMESSAGE(cb_useBackingPixmap)
   if (i&1) {
@@ -366,7 +366,7 @@ cb_checkFile(w, client_data, call_data)
     int changed;
 
     BEGINMESSAGE(cb_checkFile)
-    changed = check_file(((int)client_data));
+    changed = check_file(((int)(intptr_t)client_data));
     if (changed==1)
     {
        cb_stopInterpreter(page,NULL,NULL);
@@ -392,7 +392,7 @@ static void watch_file (client_data, idp)
 
   BEGINMESSAGE(watch_file)
   /* notification after timeout */
-  if ((int)client_data && app_res.watch_file) {
+  if ((int)(intptr_t)client_data && app_res.watch_file) {
     if (!file_fileIsNotUseful(gv_filename)) {
       int error;
       String s;
@@ -509,7 +509,7 @@ cb_print(w, client_data, call_data)
        return;
     }
 
-    gv_print_mode = (int)client_data;
+    gv_print_mode = (int)(intptr_t)client_data;
     pagelist=get_pagelist(&gv_print_mode);
     if (pagelist) GV_XtFree(pagelist);
     if (gv_print_mode==PAGE_MODE_INVALID) {
@@ -627,7 +627,7 @@ cb_save(w, client_data, call_data)
 
     BEGINMESSAGE(cb_save)
 
-    gv_save_mode = (int)client_data;
+    gv_save_mode = (int)(intptr_t)client_data;
     pagelist=get_pagelist(&gv_save_mode);
     if (pagelist) GV_XtFree(pagelist);
     if (gv_save_mode==PAGE_MODE_INVALID) {
@@ -711,7 +711,7 @@ cb_doSave(w, client_data, call_data)
     int type;
 
     BEGINMESSAGE(cb_doSave)
-    if (client_data) type = (int)client_data;
+    if (client_data) type = (int)(intptr_t)client_data;
     else type = FILE_TYPE_PS;
 
     name = XawFileSelectionGetPath(FileSel);
@@ -938,7 +938,7 @@ cb_positionPage(w, client_data, call_data)
   cow = (int)control->core.width;
   coh = (int)control->core.height;
 
-  if ((int)client_data) center = True;
+  if ((int)(intptr_t)client_data) center = True;
   if (!center) have_pagepos=misc_restorePagePosition(&px,&py);
   if (app_res.auto_center == True) center = True;
 
@@ -979,7 +979,7 @@ cb_setPageMark(w, client_data, call_data)
     Widget w;
     XtPointer client_data, call_data;
 {
-    int r=(int)client_data;
+    int r=(int)(intptr_t)client_data;
     int entry=XawVlistInvalid,change=XawVlistInvalid;
 
     BEGINMESSAGE(cb_setPageMark)
@@ -1032,7 +1032,7 @@ cb_setScale(w, client_data, call_data)
   Widget w;
   XtPointer client_data, call_data;
 {
-  int i=(int)client_data;
+  int i=(int)(intptr_t)client_data;
 
   BEGINMESSAGE(cb_setScale)
   i = scale_checkScaleNum(gv_scales,i);
@@ -1057,7 +1057,7 @@ cb_setOrientation(w, client_data, call_data)
     Widget w;
     XtPointer client_data, call_data;
 {
-    int o = (int) client_data;
+    int o = (int)(intptr_t) client_data;
     int changed = 1;
 
     BEGINMESSAGE(cb_setOrientation)
@@ -1103,7 +1103,7 @@ cb_setPagemedia(w, client_data, call_data)
    Widget w;
    XtPointer client_data, call_data;
 {
-   int media = (int)client_data;
+   int media = (int)(intptr_t)client_data;
    int media_bbox = doc ? doc->nummedia : 0;
 
    BEGINMESSAGE(cb_setPagemedia)

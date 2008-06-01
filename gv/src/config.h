@@ -30,7 +30,6 @@
 **
 */
 
-
 #ifndef _GV_CONFIG_H_
 #define _GV_CONFIG_H_
 
@@ -119,8 +118,3 @@ Miscellaneous defaults
 #define EXIT_STATUS_FATAL    -1
 
 #endif /* _GV_CONFIG_H_ */
-
-
-
-
-
