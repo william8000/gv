@@ -32,6 +32,12 @@
 	* src/resource.c (resource_buildDatabase): Check full pathname for
 	embedded resource, not only the basename. Also embed gv_widletless.dat.
 
+	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, 
+	src/gv_message.h, src/main.c, src/main_globals.h,
+	src/resource.c: Add handling of infoVerbose resource
+	
+	* src/info.c: infoPopup respects infoVerbose-Resource (Part I)
+
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* ChangeLog: Fixed typo in recent dates
