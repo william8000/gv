@@ -36,7 +36,7 @@
 	src/gv_message.h, src/main.c, src/main_globals.h,
 	src/resource.c: Add handling of infoVerbose resource
 	
-	* src/info.c: infoPopup respects infoVerbose-Resource (Part I)
+	* src/info.c: infoPopup respects infoVerbose-Resource
 
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
