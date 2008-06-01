@@ -201,6 +201,7 @@ $(srcdir)/gv_intern_res_unix.dat :
 	@echo "GV.gsX11AlphaDevice:	-sDEVICE=x11 -dTextAlphaBits=4 -dGraphicsAlphaBits=2 -dMaxBitmap=10000000 -dNOPLATFONTS" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsSafer:		True" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsQuiet:		True" >> $(srcdir)/gv_intern_res_unix.dat
+	@echo "GV.infoVerbose:		Warnings" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsArguments:		-dFIXEDMEDIA" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.uncompressCommand:	gzip -d -c %s > %s" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.printCommand:	$(PRINT_COMMAND)" >> $(srcdir)/gv_intern_res_unix.dat
