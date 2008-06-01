@@ -146,6 +146,7 @@ EXTERN String			gv_gs_cmd_scan_pdf;	/* command used to extract DSC outlines from
 EXTERN String			gv_gs_cmd_conv_pdf;	/* command used to convert a pdf file to ps  */
 EXTERN int			gv_gs_safer;
 EXTERN int                      gv_gs_quiet;
+EXTERN int			gv_infoVerbose;
 EXTERN String                   gv_gs_arguments;
 
 /* if a page is requested but gv is busy the following variable
@@ -278,6 +279,7 @@ EXTERN int grayscale_p;
 EXTERN int spartan_p;
 EXTERN int widgetless_p;
 EXTERN int quiet_p;
+EXTERN int infoverbose_p;
 EXTERN int monochrome_p;
 EXTERN int media_p;
 EXTERN char *media_value;

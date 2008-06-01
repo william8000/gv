@@ -70,6 +70,7 @@ typedef struct {
     XtCallbackList	output_callback;
     String		interpreter;
     Boolean		quiet;
+    int                 infoVerbose;
     Boolean		safer;
     Boolean		use_bpixmap;
     String		arguments;

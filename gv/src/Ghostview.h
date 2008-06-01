@@ -54,6 +54,7 @@
  filename	     Filename		String		"-"
  foreground	     Foreground 	Pixel		XtDefaultForeground
  height		     Height		Dimension	0
+ infoVerbose         InfoVerbose        int             0
  interpreter	     Interpreter	String		"gs"
  leftMargin	     Margin		int		0
  llx		     BoundingBox	Int		0
@@ -87,6 +88,7 @@
 #define XtNpalette "palette"
 #define XtNarguments "arguments"
 #define XtNquiet "quiet"
+#define XtNinfoVerbose "infoVerbose"
 #define XtNllx "llx"
 #define XtNlly "lly"
 #define XtNurx "urx"
@@ -108,6 +110,7 @@
 #define XtCPalette "Palette"
 #define XtCArguments "Arguments"
 #define XtCQuiet "Quiet"
+#define XtCinfoVerbose "infoVerbose"
 #define XtCLResolution "LResolution"
 #define XtCUseBackingPixmap "UseBackingPixmap"
 #define XtCPreferredWidth  "PreferredWidth"

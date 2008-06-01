@@ -139,6 +139,8 @@ static XtResource resources[] = {
 	  offset(palette), XtRImmediate, (XtPointer)XtPaletteColor },
     { XtNquiet, XtCQuiet, XtRBoolean, sizeof(Boolean),
 	  offset(quiet), XtRImmediate, (XtPointer)True },
+    { XtNinfoVerbose, XtCinfoVerbose, XtRInt, sizeof(int),
+	  offset(infoVerbose), XtRImmediate, (XtPointer)0 },
     { XtNrightMargin, XtCMargin, XtRInt, sizeof(int),
 	  offset(right_margin), XtRImmediate, (XtPointer)0 },
     { XtNscrollCursor, XtCCursor, XtRCursor, sizeof(XtPointer),
@@ -955,6 +957,7 @@ SetValues(Widget current, Widget request, Widget new, ArgList unused1, Cardinal 
 	   strcmp(cgvw->ghostview.interpreter, ngvw->ghostview.interpreter)	||
 	   strcmp(carguments, rarguments)					||
 	   (cgvw->ghostview.quiet != ngvw->ghostview.quiet)			||
+	   (cgvw->ghostview.infoVerbose != ngvw->ghostview.infoVerbose)			||
 	   (cgvw->ghostview.safer != ngvw->ghostview.safer)			||
 	   strcmp(cfilename, rfilename)						||
            (cgvw->ghostview.orientation != ngvw->ghostview.orientation)		||

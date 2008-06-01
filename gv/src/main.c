@@ -158,6 +158,9 @@ enum
     GRAYSCALE_ARG,
     HELP_ARG,
     QUIET_ARG,
+    INFOSILENT_ARG,
+    INFOWARNINGS_ARG,
+    INFOALL_ARG,
     MONOCHROME_ARG,
     NOQUIET_ARG,
     MEDIA_ARG,
@@ -199,6 +202,9 @@ static struct option const GNU_longOptions[] =
     {"color", no_argument, NULL, COLOR_ARG},
     {"help", no_argument, NULL, HELP_ARG},
     {"quiet", no_argument, NULL, QUIET_ARG},
+    {"infoSilent", no_argument, NULL, INFOSILENT_ARG},
+    {"infoWarnings", no_argument, NULL, INFOWARNINGS_ARG},
+    {"infoAll", no_argument, NULL, INFOALL_ARG},
     {"monochrome", no_argument, NULL, MONOCHROME_ARG},
     {"noquiet", no_argument, NULL, NOQUIET_ARG},
     {"media", required_argument, NULL, MEDIA_ARG},
@@ -350,6 +356,7 @@ int main(argc, argv)
     color_p = 0;
     grayscale_p = 0;
     quiet_p = 0;
+    infoverbose_p = -1;
     monochrome_p = 0;
     noquiet_p = 0;
     media_p = 0;
@@ -528,6 +535,18 @@ int main(argc, argv)
 	   exit(0);
 	 case QUIET_ARG:
 	   quiet_p = 1;
+	   opt_counter++;
+	   break;
+	 case INFOSILENT_ARG:
+	   infoverbose_p = 0;
+	   opt_counter++;
+	   break;
+	 case INFOWARNINGS_ARG:
+	   infoverbose_p = 1;
+	   opt_counter++;
+	   break;
+	 case INFOALL_ARG:
+	   infoverbose_p = 2;
 	   opt_counter++;
 	   break;
 	 case MONOCHROME_ARG:
@@ -1039,6 +1058,7 @@ int main(argc, argv)
             XtSetArg(args[n], XtNsafer,b);                              n++;
             b = gv_gs_quiet ? True : False;
             XtSetArg(args[n], XtNquiet,b);                              n++;
+            XtSetArg(args[n], XtNinfoVerbose,gv_infoVerbose);           n++;
             b = app_res.use_bpixmap ? True : False;
             XtSetArg(args[n], XtNuseBackingPixmap,b);                   n++;
             XtSetArg(args[n], XtNarguments,gv_gs_arguments);            n++;
@@ -1279,6 +1299,13 @@ void main_setGhostscriptResources(db)
   if (!strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;
   s = resource_getResource(db,gv_class,gv_name,"gsQuiet",NULL);
   if (!strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
+  s = resource_getResource(db,gv_class,gv_name,"infoVerbose",NULL);
+//TODO?
+  if (!strcmp(s, "Silent"))   gv_infoVerbose=0;
+  else if (!strcmp(s, "Warnings")) gv_infoVerbose=1;
+  else if (!strcmp(s, "All"))      gv_infoVerbose=2;
+  else gv_infoVerbose = 3;
+printf("DEBUG: gv_infoVerbose=%i\n", gv_infoVerbose);
   ENDMESSAGE(main_setGhostscriptResources)
 }
 

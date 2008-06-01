@@ -36,6 +36,9 @@ PostScript and PDF viewer.\n\
   [-]-nosafer                         do not start ghostscript in safe mode\n\
   [-]-quiet                           start ghostscript with the -dQUIET option\n\
   [-]-noquiet                         do not start ghostscript with the -dQUIET option\n\
+  [-]-infoSilent                      do not show any messages in the info popup window\n\
+  [-]-infoWarnings                    do not show warning messages in the info popup window\n\
+  [-]-infoAll                         do show all messages in the info popup window\n\
   [-]-arguments=ARGS                  start ghostscript with additional options as specified\n\
                                       by the string ARGS\n\
   [-]-page=LABEL                      display the page with label LABEL first\n\
@@ -73,60 +76,3 @@ PostScript and PDF viewer.\n\
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
   [-]-version                         show gv version and exit\n\
 ";
-
-char *message_help = "\
-gv help:\n\
-   \n\
-   # Document to be displayed\n\
-     [<name of file to display>[.ps][.pdf]] ! The extension may be omitted\n\
-   # Color environment:\n\
-     [-monochrome] [-grayscale] [-color]\n\
-   # Ghostscript Options:\n\
-     [-[no]safer]             ! [Do not] pass -dSAFER to Ghostscript\n\
-     [-[no]quiet]             ! [Do not] pass -dQUIET to Ghostscript\n\
-     [-arguments <arguments>] ! Start Ghostscript with <arguments>\n\
-   # Page specific \n\
-     [-page <label>]          ! Display the page with label <label>\n\
-     [-[no]center]            ! Center the displayed page\n\
-   # Page Media\n\
-     [-media <media>]\n\
-   # Page Orientation\n\
-     [-portrait] [-landscape] [-upsidedown] [-seascape]\n\
-     [-[no]swap]              ! Swap landscape/seascape\n\
-   # Scales\n\
-     [-scalebase <n>]\n\
-     [-scale <n>]\n\
-   # Antialiasing\n\
-     [-[no]antialias] \n\
-   # Updating the file automatically\n\
-     [-[no]watch]             ! Whether to check the file periodically\n\
-   # How to handle 'End of File' Comments\n\
-     [-[no]eof]               ! Whether to respect 'End of File' comments\n\
-   # How to handle Document Structuring Comments (DSC)\n\
-     [-[no]dsc]               ! Whether to respect structuring comments\n\
-   # How to handle obscured window regions\n\
-     [-[no]pixmap]            ! Whether to maintain a backing pixmap\n\
-   # Resize Behaviour of the Main Window \n\
-     [-[no]resize]            ! Adjust size of main window automatically\n\
-   # Geometry of Main Window\n\
-     [-geometry [<width>][x<height>][{+-}<xoffset>{+-}<yoffset>]\n\
-        where {+-} means either + or -\n\
-   # Load additional Resources at startup\n\
-     [-ad <resource file>]\n\
-   # Load additional resource style file at startup\n\
-     [-style <resource file>]\n\
-   # Shortcut for '-style gv_spartan.dat'\n\
-     [-spartan]\n\
-   # Shortcut for '-style gv_widgetless.dat'\n\
-     [-widgetless]\n\
-   # Toolkit Options\n\
-     [<other toolkit options>]\n\
-   # Show help\n\
-     [-v]                     ! Version information\n\
-     [-?] [-h]\n\
-     [-help]                  ! More explicit than -h and -?\n\
-   \n\
-   More information about gv may be found on its Web page\n\
-     http://wwwthep.physik.uni-mainz.de/~plass/gv/\
-";
-

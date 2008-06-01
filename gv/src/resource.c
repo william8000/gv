@@ -236,6 +236,12 @@ resource_buildDatabase (
     {
       resource_putResource (&db, app_name, ".gsQuiet", "True");
     }
+  if (infoverbose_p != -1)
+    {
+      if (infoverbose_p == 0) resource_putResource (&db, app_name, ".infoVerbose", "Silent");
+      if (infoverbose_p == 1) resource_putResource (&db, app_name, ".infoVerbose", "Warnings");
+      if (infoverbose_p == 2) resource_putResource (&db, app_name, ".infoVerbose", "All");
+    }
   if (monochrome_p)
     {
       resource_putResource (&db, app_name, "*Ghostview.palette", "Monochrome");
