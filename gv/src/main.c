@@ -1300,12 +1300,10 @@ void main_setGhostscriptResources(db)
   s = resource_getResource(db,gv_class,gv_name,"gsQuiet",NULL);
   if (!strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
   s = resource_getResource(db,gv_class,gv_name,"infoVerbose",NULL);
-//TODO?
-  if (!strcmp(s, "Silent"))   gv_infoVerbose=0;
-  else if (!strcmp(s, "Warnings")) gv_infoVerbose=1;
-  else if (!strcmp(s, "All"))      gv_infoVerbose=2;
-  else gv_infoVerbose = 3;
-printf("DEBUG: gv_infoVerbose=%i\n", gv_infoVerbose);
+  if (!strcasecmp(s, "Silent"))   gv_infoVerbose=0;
+  else if (!strcasecmp(s, "Warnings")) gv_infoVerbose=1;
+  else if (!strcasecmp(s, "All"))      gv_infoVerbose=2;
+  else gv_infoVerbose = 1;
   ENDMESSAGE(main_setGhostscriptResources)
 }
 
