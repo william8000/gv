@@ -139,7 +139,7 @@ static XtResource resources[] = {
 	  offset(palette), XtRImmediate, (XtPointer)XtPaletteColor },
     { XtNquiet, XtCQuiet, XtRBoolean, sizeof(Boolean),
 	  offset(quiet), XtRImmediate, (XtPointer)True },
-    { XtNinfoVerbose, XtCinfoVerbose, XtRInt, sizeof(int),
+    { XtNinfoVerbose, XtCinfoVerbose, XtRinfoVerbose, sizeof(int),
 	  offset(infoVerbose), XtRImmediate, (XtPointer)0 },
     { XtNrightMargin, XtCMargin, XtRInt, sizeof(int),
 	  offset(right_margin), XtRImmediate, (XtPointer)0 },

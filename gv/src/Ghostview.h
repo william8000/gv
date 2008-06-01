@@ -54,7 +54,7 @@
  filename	     Filename		String		"-"
  foreground	     Foreground 	Pixel		XtDefaultForeground
  height		     Height		Dimension	0
- infoVerbose         InfoVerbose        int             0
+ infoVerbose         InfoVerbose        InfoVerbose     0
  interpreter	     Interpreter	String		"gs"
  leftMargin	     Margin		int		0
  llx		     BoundingBox	Int		0
@@ -143,6 +143,7 @@ typedef enum {
    extern Boolean XmuCvtStringToPageOrientation();
 #endif /* GV_CODE */
 #define XtRPageOrientation "PageOrientation"
+#define XtRinfoVerbose "InfoVerbose"
 
 /******************************************************************************
  * XmuCvtStringToPalette
