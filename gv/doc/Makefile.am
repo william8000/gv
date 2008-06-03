@@ -14,4 +14,4 @@ gv_TEXINFOS = gpl.texi version.texi
 man_MANS = gv.1
 
 gv.1: ../src/versionp.h ../src/gv_message.h
-	help2man ../src/gv > gv.1
+	help2man -n 'Postscript and PDF viewer' -o gv.1 ../src/gv
