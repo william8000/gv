@@ -69,7 +69,7 @@ char * copyright = "\
  GNU General Public License for more details. \n\
  \n\
  You should have received a copy of the GNU General Public License\n\
- along with GNU gv; see the file COPYING.  If not, see\n
+ along with GNU gv; see the file COPYING.  If not, see\n\
  <http://www.gnu.org/licenses/>.";
 
 char *author[] = {
