@@ -258,6 +258,11 @@ if USE_SCROLLBAR_CODE
    gv_SOURCES += Scrollbar.c Scrollbar.h ScrollbarP.h
 endif
 
+if USE_SETENV_CODE
+   gv_SOURCES += setenv.c setenv.h
+   AM_CFLAGS += -DUSE_SETENV_CODE
+endif
+
 if USE_MEMDEBUG_CODE
    gv_SOURCES += d_mem.c d_mem.h d_xtmem.c d_xtmem.h
 endif

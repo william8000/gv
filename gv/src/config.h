@@ -120,4 +120,9 @@ Miscellaneous defaults
 #define EXIT_STATUS_ERROR	1
 #define EXIT_STATUS_FATAL    -1
 
+#ifdef USE_SETENV_CODE
+   #include "setenv.h"
+#endif
+
+
 #endif /* _GV_CONFIG_H_ */

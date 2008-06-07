@@ -198,6 +198,27 @@ test "$opt_memmove_code" = "yes" && {
      AC_DEFINE(USE_MEMMOVE_CODE,[],[Define USE_MEMMOVE_CODE])
 
 }
+
+
+
+AC_ARG_ENABLE(setenv-code, AC_HELP_STRING([--enable-setenv-code],[Use extra code for setenv() and getenv(). Defaults to `yes']),
+[case "${enableval}" in
+   yes) opt_setenv_code=true ;;
+   no)  opt_setenv_code=false ;;
+   *) AC_MSG_ERROR(bad value ${enableval} for --enable-setenv-code) ;;
+ esac],[opt_setenv_code=false])
+
+AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)
+
+
+
+
+
+
+
+
+
+
 AC_ARG_ENABLE(memdebug-code, AC_HELP_STRING([--enable-memdebug-code],[Use extra code for debug memory operations. It defaults to `no']), 
 [case "${enableval}" in
    yes) opt_memdebug_code=true ;;
