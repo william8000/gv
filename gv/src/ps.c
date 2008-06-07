@@ -5,7 +5,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -269,7 +269,7 @@ static char    *empty_string = "";
  *      The Prolog should end with %%EndProlog, however the proglog implicitly
  *      ends when %%BeginSetup, %%Page, %%Trailer or %%EOF are encountered.
  *
- *      The Setup section is where the version 2 page defaults are found.
+ *      The Setup section is where the version 3 page defaults are found.
  *      This section either explicitly begins with %%BeginSetup or implicitly
  *      with any nonblank line after the Prolog.
  *

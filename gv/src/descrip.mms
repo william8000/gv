@@ -6,7 +6,7 @@
 !XCOMM 
 !XCOMM  This program is free software; you can redistribute it and/or modify
 !XCOMM  it under the terms of the GNU General Public License as published by
-!XCOMM  the Free Software Foundation; either version 2 of the License, or
+!XCOMM  the Free Software Foundation; either version 3 of the License, or
 !XCOMM  (at your option) any later version.
 !XCOMM 
 !XCOMM  This program is distributed in the hope that it will be useful,
