@@ -41,6 +41,11 @@
 #include <time.h>
 #include <ctype.h>
 
+#include "ac_config.h"
+#ifdef HAVE_INTTYPES_H
+  #include <inttypes.h>
+#endif
+
 #ifndef BUFSIZ
 #   define BUFSIZ 1024
 #endif

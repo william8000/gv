@@ -46,6 +46,11 @@
 #include <math.h>
 #include <getopt.h>
 
+#include "ac_config.h"
+#ifdef HAVE_INTTYPES_H
+  #include <inttypes.h>
+#endif
+
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
 #include INC_X11(cursorfont.h)

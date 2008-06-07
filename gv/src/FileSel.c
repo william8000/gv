@@ -45,6 +45,11 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
+
+#include "ac_config.h"
+#ifdef HAVE_INTTYPES_H
+  #include <inttypes.h>
+#endif
     /* Damn it, don't ever use getwd with stupid linux ###jp### */
 #define getwd(aaa) getcwd((aaa),(FS_MAXNAMLEN-2))    
 

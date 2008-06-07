@@ -40,7 +40,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifdef HAVE_HAVE_INTTYPES_H
+
+#include "ac_config.h"
+#ifdef HAVE_INTTYPES_H
   #include <inttypes.h>
 #endif
 
