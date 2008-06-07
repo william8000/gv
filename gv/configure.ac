@@ -201,12 +201,24 @@ test "$opt_memmove_code" = "yes" && {
 
 
 
-AC_ARG_ENABLE(setenv-code, AC_HELP_STRING([--enable-setenv-code],[Use extra code for setenv() and getenv(). Defaults to `yes']),
+
+
+
+
+
+opt_setenv_code=false
+
+AC_ARG_ENABLE(setenv-code, AC_HELP_STRING([--enable-setenv-code],[Use extra code for setenv() and getenv(). Defaults to `no']),
 [case "${enableval}" in
    yes) opt_setenv_code=true ;;
    no)  opt_setenv_code=false ;;
    *) AC_MSG_ERROR(bad value ${enableval} for --enable-setenv-code) ;;
  esac],[opt_setenv_code=false])
+ 
+if test x$opt_setenv_code = xfalse
+then
+   AC_CHECK_FUNCS([setenv unsetenv],[],[AC_MSG_ERROR(The configure option  --enable-setenv-code should help.)])
+fi
 
 AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)
 
