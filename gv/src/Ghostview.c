@@ -1386,6 +1386,7 @@ StartInterpreter(w)
     char *dptr;
     int argc = 0;
     int ret;
+    String filename = 0;
 
     BEGINMESSAGE(StartInterpreter)
 
@@ -1455,7 +1456,6 @@ StartInterpreter(w)
 	}
     }
 
-    String filename = 0;
 #   ifdef ALLOW_PDF
     if (gvw->ghostview.filename && strcmp(gvw->ghostview.filename,"-")) {
           if ( *(gvw->ghostview.filename) == '-' ) {

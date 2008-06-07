@@ -40,7 +40,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <inttypes.h>
+#ifdef HAVE_HAVE_INTTYPES_H
+  #include <inttypes.h>
+#endif
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
