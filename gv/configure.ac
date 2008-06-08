@@ -228,7 +228,9 @@ AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)
 AC_CHECK_HEADER([inttypes.h],,[
    AC_ARG_WITH(intptr_t, [--with-intptr_t=TYPE], [ 
      AC_DEFINE_UNQUOTED([intptr_t],[$withval],[Use the given type for intptr_t -- only available if ! HAVE_INTTYPES_H])
-   ], [AC_MSG_ERROR([You must supply --with-intptr_t=TYPE])], [])
+   ], [
+            AC_CHECK_TYPE([intptr_t],, [AC_MSG_ERROR([You must supply --with-intptr_t=TYPE])])
+      ], [])
 ])
 
 
