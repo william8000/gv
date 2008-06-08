@@ -1522,8 +1522,8 @@ StartInterpreter(w)
          } else {
            sprintf(buf, "%ld", XtWindow(w));
          }
-	setenv("GHOSTVIEW", buf, True);
-	setenv("DISPLAY", XDisplayString(XtDisplay(w)), True);
+	gnu_gv_setenv("GHOSTVIEW", buf, True);
+	gnu_gv_setenv("DISPLAY", XDisplayString(XtDisplay(w)), True);
 	if (gvw->ghostview.filename == NULL) {
 	    close(std_in[1]);
 	    dup2(std_in[0], 0);

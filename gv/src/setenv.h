@@ -20,10 +20,12 @@
 #ifndef setenv_h
 #define setenv_h
 
-#define setenv __gnu_setenv
-#define unsetenv __gnu_unsetenv
+#ifdef USE_SETENV_CODE
+   int gnu_gv_setenv (const char *name, const char *value, int overwrite);
+   int gnu_gv_unsetenv (const char *name);
+#else
+   #define gnu_gv_setenv setenv
+   #define gnu_gv_unsetenv unsetenv
 
-int __gnu_setenv (const char *name, const char *value, int overwrite);
-int __gnu_unsetenv (const char *name);
-
+#endif
 #endif

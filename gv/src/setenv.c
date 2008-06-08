@@ -25,7 +25,7 @@
 
 extern char **environ;
 
-int __gnu_setenv (const char *name, const char *value, int overwrite)
+int gnu_gv_setenv (const char *name, const char *value, int overwrite)
 {
    if (!overwrite && getenv(name))
       return 0;
@@ -40,7 +40,7 @@ int __gnu_setenv (const char *name, const char *value, int overwrite)
       so we cannot free it. */
 }
 
-int __gnu_unsetenv (const char *name) /* Taken from GNULIB, slightly modified */
+int gnu_gv_unsetenv (const char *name) /* Taken from GNULIB, slightly modified */
 {
   size_t len;
   char **ep;

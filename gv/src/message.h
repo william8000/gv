@@ -63,7 +63,7 @@
 #define MESSAGE_FILE (__FILE__)
 
 #define MESSAGE_SAVEINDENT(indent) {		\
-	setenv("MESSAGE_INDENT",indent,1);	\
+	gnu_gv_setenv("MESSAGE_INDENT",indent,1);	\
 	}
 
 #define MESSAGE_GETINDENT(indent,len) {					\

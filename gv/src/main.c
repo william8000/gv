@@ -408,10 +408,10 @@ int main(argc, argv)
      const char *xufsp="XUSERFILESEARCHPATH";
      char *xuf;
      xuf = getenv(xufsp); if (xuf) xuf = GV_XtNewString(xuf);
-     setenv(xufsp,"___",1);
+     gnu_gv_setenv(xufsp,"___",1);
      gv_display = XtOpenDisplay(app_con,NULL,NULL,gv_class,NULL,0,&argc,argv);
 
-     if (xuf) { setenv(xufsp,xuf,1); GV_XtFree(xuf); } else unsetenv(xufsp);
+     if (xuf) { gnu_gv_setenv(xufsp,xuf,1); GV_XtFree(xuf); } else gnu_gv_unsetenv(xufsp);
      if (gv_display)
         XtGetApplicationNameAndClass(gv_display,&gv_name,&gv_class);
      SMESSAGE(gv_name) SMESSAGE(gv_class)
