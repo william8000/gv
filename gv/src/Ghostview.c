@@ -31,6 +31,7 @@
  * February 1995, March 1996 ###jp###
  *
 */
+#include "ac_config.h"
 
 
 /*

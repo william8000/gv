@@ -30,6 +30,8 @@
 **
 */
 
+#include "ac_config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 /*

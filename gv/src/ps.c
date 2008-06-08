@@ -53,6 +53,7 @@
  * ###jp### 04/96
  * 
  */
+#include "ac_config.h"
 #define USE_ACROREAD_WORKAROUND
 
 /*

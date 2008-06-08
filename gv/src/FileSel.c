@@ -29,6 +29,7 @@
 **           GNU Project
 **
 */
+#include "ac_config.h"
 
 /*
 #define MESSAGES
@@ -46,7 +47,6 @@
 #include <dirent.h>
 #include <unistd.h>
 
-#include "ac_config.h"
 #ifdef HAVE_INTTYPES_H
   #include <inttypes.h>
 #endif

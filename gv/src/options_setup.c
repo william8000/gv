@@ -33,6 +33,7 @@
 **
 **       - Code for handle bzip2 compressed files.
 */
+#include "ac_config.h"
 
 /*
 #define MESSAGES

@@ -29,6 +29,7 @@
 **           GNU Project
 **
 */
+#include "ac_config.h"
 
 /*
  * This code is derived from:

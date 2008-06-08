@@ -29,6 +29,7 @@
 **           GNU Project
 **
 */
+#include "ac_config.h"
 
 #define _GV_RESOURCE_C_
 

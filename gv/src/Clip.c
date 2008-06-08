@@ -29,6 +29,7 @@
 **            GNU Project
 ** 
 */
+#include "ac_config.h"
 
 /*
 #define MESSAGES

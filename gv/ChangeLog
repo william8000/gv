@@ -1,3 +1,14 @@
+2008-06-08  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/*.c:  include ac_config.h  first
+
+2008-06-07  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* include inttypes.h only if HAVE_INTTYPES_H is set
+	
+	* src/main_resources.h: Do not use empty array size for initialized
+	array of size 0 -- it makes problems with ISO C89.
+
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.4.90.

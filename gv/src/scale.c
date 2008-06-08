@@ -30,6 +30,7 @@
 **
 */
 
+#include "ac_config.h"
 /*
 #define MESSAGES
 */

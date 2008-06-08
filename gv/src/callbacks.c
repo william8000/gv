@@ -28,6 +28,7 @@
 **            Jose E. Marchesi (jemarch@gnu.org)
 **            GNU Project
 */
+#include "ac_config.h"
 
 /*
 #define MESSAGES
@@ -41,7 +42,6 @@
 #include <time.h>
 #include <ctype.h>
 
-#include "ac_config.h"
 #ifdef HAVE_INTTYPES_H
   #include <inttypes.h>
 #endif

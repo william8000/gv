@@ -28,7 +28,8 @@
 **           Jose E. Marchesi (jemarch@gnu.org)
 **           GNU Project
 */
- 
+#include "ac_config.h"
+
 /*
 #define MESSAGES
 */

@@ -30,6 +30,7 @@
 **
 */
 
+#include "ac_config.h"
 /*
 #define MESSAGES
 */
@@ -39,7 +40,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "ac_config.h"
 #ifdef HAVE_INTTYPES_H
   #include <inttypes.h>
 #endif
