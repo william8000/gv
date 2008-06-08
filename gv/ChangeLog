@@ -2,7 +2,7 @@
 
 	* src/*.c:  include ac_config.h  first
 	
-	* configure.ac: Define inttypes_t as preprocessor macro if necessary
+	* configure.ac: Define intptr_t as preprocessor macro if necessary
 
 2008-06-07  Markus Steinborn <msteinbo@uni-paderborn.de>
 
