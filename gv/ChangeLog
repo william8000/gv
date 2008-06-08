@@ -1,6 +1,8 @@
 2008-06-08  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/*.c:  include ac_config.h  first
+	
+	* configure.ac: Define inttypes_t as preprocessor macro if necessary
 
 2008-06-07  Markus Steinborn <msteinbo@uni-paderborn.de>
 
@@ -8,6 +10,12 @@
 	
 	* src/main_resources.h: Do not use empty array size for initialized
 	array of size 0 -- it makes problems with ISO C89.
+	
+	* configure.ac: added "--with-setenv-code"
+	
+	* src/setenv.[ch]: setenv emulation code
+	
+	* src/Makefile.am: include setenv.c if necessary
 
 2008-06-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
