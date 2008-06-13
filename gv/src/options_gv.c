@@ -80,6 +80,7 @@ static Widget   popup=NULL,optionControl;
 static Widget   antialiasToggle;
 static Widget   dscToggle,eofToggle,autoResizeToggle;
 static Widget   swapLandscapeToggle,watchToggle;
+static Widget   infoPopupLabel,infoPopupButton,infoPopupMenu;
 static Widget   mediaLabel,mediaButton,mediaMenu=NULL;
 static Widget   fmediaLabel,fmediaButton,fmediaMenu=NULL;
 static Widget   orientLabel,orientButton,orientMenu;
@@ -90,6 +91,9 @@ static Widget   scaleBaseLabel,scaleBaseButton,scaleBaseMenu=NULL;
 static String orientations[5] = { "Portrait","Landscape","Upside-Down","Seascape", NULL };
 static int opt_orientation;
 static int opt_pagemedia;
+
+static String popupVerb[5] = { "None", "Errors", "All", NULL };
+static String popupVerbExtern[5] = { "Silent", "Errors", "All", NULL };
 
 static void options_gv_create(void);
 static void options_gv_setOptionsAtEntry(void);
@@ -148,6 +152,13 @@ static void options_gv_setOptionsAtEntry(void)
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(forientButton, args, n);
 
+  s=popupVerb[gv_infoVerbose];
+printf("DEBUG: Setting infoVerbose to %s\n", s);
+                                   n=0;
+  XtSetArg(args[n], XtNlabel, s);  n++;
+  XtSetValues(infoPopupButton, args, n);
+
+
   ENDMESSAGE(options_gv_setOptionsAtEntry)
 }
 
@@ -200,6 +211,7 @@ static void options_gv_cb_apply(w, client_data, call_data)
    static Boolean s_forient = False;
    Boolean b;
    int i,j,k;
+   char* l;
    Boolean redisplay=False;
    Boolean reopen=False;
 
@@ -305,6 +317,19 @@ static void options_gv_cb_apply(w, client_data, call_data)
       redisplay = True;
    }
 
+							n=0;
+   XtSetArg(args[n], XtNlabel, &l);                     n++;
+   XtGetValues(infoPopupButton, args, n);
+   i=0;j=0;
+   while (i<3) {
+     if (!strcmp(popupVerb[i],l)) j = i;
+     ++i;
+   }
+   if (j != gv_infoVerbose) {
+     gv_infoVerbose = j;
+   }
+
+
    if (reopen && gv_filename) {
      cb_stopInterpreter(page,NULL,NULL);
      show_page(REQUEST_REOPEN,NULL);
@@ -374,6 +399,18 @@ void options_gv_cb_save(w, client_data, call_data)
      options_setArg(&(argi[argn]),&(argv[argn]),s_scale,           gv_class        ,tmp);
        ++argn;
   }
+
+
+	         	       	        n=0;
+  XtSetArg(args[n], XtNlabel, &l);      n++;
+  XtGetValues(infoPopupButton, args, n);
+  i=0; while (i<3) {
+     if (!strcmp(popupVerb[i],l)) sprintf(tmp,"%s",popupVerbExtern[i]);
+     ++i;
+   }
+  options_setArg(&(argi[argn]),&(argv[argn]),s_infoVerbose        ,gv_class        ,tmp);
+       ++argn;
+
 
   options_save(argn,argi,argv);
   while (--argn >=0) {
@@ -548,6 +585,12 @@ void options_gv_create(void)
        XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL); 
      }
         						n=0;
+options_createLabeledMenu("infoVerbose",optionControl,&infoPopupLabel,&infoPopupButton,&infoPopupMenu);
+     for (i = 0; popupVerb[i]; i++) {
+       w = XtCreateManagedWidget(popupVerb[i],smeBSBObjectClass, infoPopupMenu,NULL,(Cardinal)0);
+       XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL);
+     }
+
    w = XtCreateManagedWidget("apply", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_gv_cb_apply,NULL); 
          XtInstallAccelerators(optionControl, w);

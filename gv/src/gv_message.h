@@ -37,7 +37,7 @@ PostScript and PDF viewer.\n\
   [-]-quiet                           start ghostscript with the -dQUIET option\n\
   [-]-noquiet                         do not start ghostscript with the -dQUIET option\n\
   [-]-infoSilent                      do not show any messages in the info popup window\n\
-  [-]-infoWarnings                    do not show warning messages in the info popup window\n\
+  [-]-infoErrors                      do not show warning messages in the info popup window\n\
   [-]-infoAll                         do show all messages in the info popup window\n\
   [-]-arguments=ARGS                  start ghostscript with additional options as specified\n\
                                       by the string ARGS\n\

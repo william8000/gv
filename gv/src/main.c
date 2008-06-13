@@ -164,7 +164,7 @@ enum
     HELP_ARG,
     QUIET_ARG,
     INFOSILENT_ARG,
-    INFOWARNINGS_ARG,
+    INFOERRORS_ARG,
     INFOALL_ARG,
     MONOCHROME_ARG,
     NOQUIET_ARG,
@@ -208,7 +208,7 @@ static struct option const GNU_longOptions[] =
     {"help", no_argument, NULL, HELP_ARG},
     {"quiet", no_argument, NULL, QUIET_ARG},
     {"infoSilent", no_argument, NULL, INFOSILENT_ARG},
-    {"infoWarnings", no_argument, NULL, INFOWARNINGS_ARG},
+    {"infoErrors", no_argument, NULL, INFOERRORS_ARG},
     {"infoAll", no_argument, NULL, INFOALL_ARG},
     {"monochrome", no_argument, NULL, MONOCHROME_ARG},
     {"noquiet", no_argument, NULL, NOQUIET_ARG},
@@ -546,7 +546,7 @@ int main(argc, argv)
 	   infoverbose_p = 0;
 	   opt_counter++;
 	   break;
-	 case INFOWARNINGS_ARG:
+	 case INFOERRORS_ARG:
 	   infoverbose_p = 1;
 	   opt_counter++;
 	   break;
@@ -1305,9 +1305,9 @@ void main_setGhostscriptResources(db)
   s = resource_getResource(db,gv_class,gv_name,"gsQuiet",NULL);
   if (!strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
   s = resource_getResource(db,gv_class,gv_name,"infoVerbose",NULL);
-  if (!strcasecmp(s, "Silent"))   gv_infoVerbose=0;
-  else if (!strcasecmp(s, "Warnings")) gv_infoVerbose=1;
-  else if (!strcasecmp(s, "All"))      gv_infoVerbose=2;
+  if (!strcasecmp(s, "Silent"))      gv_infoVerbose=0;
+  else if (!strcasecmp(s, "Errors")) gv_infoVerbose=1;
+  else if (!strcasecmp(s, "All"))    gv_infoVerbose=2;
   else gv_infoVerbose = 1;
   ENDMESSAGE(main_setGhostscriptResources)
 }

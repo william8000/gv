@@ -195,6 +195,10 @@ GV*optiongvPopup*layout:\
       autoResize<+[1]*>\
       $sss\
       watch<+[1]*>\
+      $sss\
+      infoVerboseLabel<+[1]*>\
+      $sss\
+      infoVerboseButton<+[1]*>\
     }\
     $ss\
     |v{\

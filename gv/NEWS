@@ -22,10 +22,10 @@ by a '#' or a '*' or a '?'. A
 # --spartan and --widgetless now use embedded resources. Before this bugfix,
   you had to use --style=gv_spartan.dat to use the embedded resource.
   
-# --infoSilent, --infoWarnings and --infoAll will control, which ghostscript
+# --infoSilent, --infoErrors and --infoAll will control, which ghostscript
   messages will lead to an info pop-up window.
   The same effect can be reached via a resource "infoVerbose", which values can
-  be "Silent", "Warnings" and "All".
+  be "Silent", "Errors" and "All".
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

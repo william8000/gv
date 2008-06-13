@@ -13,6 +13,8 @@ GV.?.Button*font:		-*-Helvetica-Medium-R-Normal--*-100-*-*-P-*-ISO8859-1
 GV.?.locator*font:		-*-Helvetica-Medium-R-Normal--*-100-*-*-P-*-ISO8859-1
 GV.?.dateButton*font:		-*-Helvetica-Medium-R-Normal--*-120-*-*-P-*-ISO8859-1
 GV.?.titleButton*font:		-*-Helvetica-Medium-R-Normal--*-120-*-*-P-*-ISO8859-1
+GV*optiongvPopup*infoVerboseButton.font:-*-Helvetica-Medium-R-Normal--*-100-*-*-P-*-ISO8859-1
+GV.?.infoVerboseButton*font:	-*-Helvetica-Medium-R-Normal--*-120-*-*-P-*-ISO8859-1
 GV.?.prevPage*font:		-*-Helvetica-Medium-R-Normal--*-140-*-*-P-*-ISO8859-1
 GV.?.nextPage*font:		-*-Helvetica-Medium-R-Normal--*-140-*-*-P-*-ISO8859-1
 

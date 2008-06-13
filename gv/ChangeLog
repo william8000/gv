@@ -1,3 +1,13 @@
+2008-06-13  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/main.c, src/gv_message.h, src/resource.c:  Rename infoWarnings to
+	infoErrors,  likewise for resource infoVerbose
+
+	* src/gv_font_res.dat, src/gv_layout_res.dat, src/gv_misc_res.dat:
+	Entries for new setting for infoVerbose on gv options popup
+
+	* src/options_gv.c: Visual editing of resource infoVerbose
+
 2008-06-08  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/*.c:  include ac_config.h  first
