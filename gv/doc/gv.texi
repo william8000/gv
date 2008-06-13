@@ -86,6 +86,9 @@ PostScript and PDF viewer.
   [-]-nosafer                         do not start ghostscript in safe mode
   [-]-quiet                           start ghostscript with the -dQUIET option
   [-]-noquiet                         do not start ghostscript with the -dQUIET option
+  [-]-infoSilent                      do not show any messages in the info popup window
+  [-]-infoErrors                      do not show warning messages in the info popup window
+  [-]-infoAll                         do show all messages in the info popup window
   [-]-arguments=ARGS                  start ghostscript with additional options as specified
                                       by the string ARGS
   [-]-page=LABEL                      display the page with label LABEL first
@@ -159,6 +162,12 @@ viewing documents which import other documents without enclosing them
 within the proper "BeginDocument" and "EndDocument" comments.  If
 @code{--eof} is used, the scanner treats an @acronym{EOF} comment as
 marking the end of the file.
+@item --infoSilent
+Do not show any ghostscript messages in an info popup window.
+@item --infoErrors
+Only show error messages from ghostscript in an info popup window.
+@item --infoAll
+Shows all ghostscript messages in an info popup window.
 @item --pixmap, --nopixmap
 If @code{--pixmap} is used gv tries to maintain off-screen regions of
 the displayed page by allocating a sufficiently large pixmap.  If
@@ -296,6 +305,11 @@ previously visible area of the page.
 Allowed values are @code{True} and @code{False}.   
 
 It defaults to @code{True}.
+@item infoVerbose
+Defines the behavior of the info popup which shows messages from ghostscript. Valid values are @code{Silent} (Never), @code{Errors}
+(show only errror messages) and @code{All} (Any message is being shown).
+
+It defaults to @code{Errors}.
 @item ignoreEOF
 Defines the behaviour of the postscript scanner as described
 in the Options section.
