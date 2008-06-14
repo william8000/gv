@@ -153,7 +153,6 @@ static void options_gv_setOptionsAtEntry(void)
   XtSetValues(forientButton, args, n);
 
   s=popupVerb[gv_infoVerbose];
-printf("DEBUG: Setting infoVerbose to %s\n", s);
                                    n=0;
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(infoPopupButton, args, n);
