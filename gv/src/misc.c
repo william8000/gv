@@ -1183,12 +1183,14 @@ set_new_scale(void)
   Arg args[2];
   Cardinal n;
   Scale scale;
+  float ascale;
 
   BEGINMESSAGE(set_new_scale)
 
   new_scale_base = gv_scale_base;
   if (!default_xdpi || !default_ydpi || new_scale_base != gv_scale_base_current) {
     scale = gv_scales[new_scale_base];
+    ascale = scale->scale;
     if ((scale->is_base)&SCALE_IS_REAL_BASED) {
       default_xdpi = gv_real_xdpi; 
       default_ydpi = gv_real_ydpi;
@@ -1196,8 +1198,8 @@ set_new_scale(void)
       default_xdpi = gv_pixel_xdpi; 
       default_ydpi = gv_pixel_ydpi;
     }
-    default_xdpi *= scale->scale;
-    default_ydpi *= scale->scale;
+    default_xdpi *= ascale;
+    default_ydpi *= ascale;
     XtSetArg(args[0], XtNleftBitmap, None);
     if (gv_scale_base_current >=0) XtSetValues(scaleEntry[gv_scale_base_current],args, ONE);
     XtSetArg(args[0], XtNleftBitmap, app_res.selected_bitmap);
@@ -1207,12 +1209,33 @@ set_new_scale(void)
   }
   
   new_scale = gv_scale;
-  if (changed || new_scale != gv_scale_current) {
+  if (changed || new_scale != gv_scale_current || !gv_scales[new_scale]->scale) {
     float xdpi, ydpi;
     GhostviewDisableInterpreter(page);
     scale = gv_scales[new_scale];
-    xdpi = default_xdpi / scale->scale;
-    ydpi = default_ydpi / scale->scale;
+    ascale = scale->scale;
+
+    if (!ascale)
+    {
+       int dx = (current_urx - current_llx);
+       int dy = (current_ury - current_lly);
+       
+       if (gv_orientation % 2 == 0)
+       {
+          int hlp = dx;
+	  dx = dy;
+	  dy = hlp;
+       }
+       
+       float ascale1 = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
+       float ascale2 = (float)viewClip->core.height / dy / 72.0 * default_ydpi;
+       
+       ascale = ascale1 < ascale2 ? ascale1 : ascale2;
+    }
+    
+    
+    xdpi = default_xdpi / ascale;
+    ydpi = default_ydpi / ascale;
                                               n=0;
     XtSetArg(args[n], XtNlabel, scale->name); n++;
     XtSetValues(scaleButton, args, n);

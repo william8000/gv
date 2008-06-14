@@ -94,6 +94,12 @@ action_shellConfigureNotify(w, event, params, num_params)
      IIMESSAGE(new_width,new_height)
   }
   if (new_width && new_height) {
+    if (!gv_scales[gv_scale]->scale && !app_res.auto_resize)
+    {
+       misc_savePagePosition();
+       show_page(REQUEST_NEW_SCALE,NULL);
+       misc_resetPagePosition();
+    }
     if (width != new_width || height != new_height) {
        misc_setPageMarker(0,2,event,True); /* bring selected in sight */
        width = new_width;

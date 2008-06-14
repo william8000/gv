@@ -26,6 +26,9 @@ by a '#' or a '*' or a '?'. A
   messages will lead to an info pop-up window.
   The same effect can be reached via a resource "infoVerbose", which values can
   be "Silent", "Errors" and "All".
+  
+# "Fit to window magnification" -- currently works best with "Automatic
+  resizing" turned off.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

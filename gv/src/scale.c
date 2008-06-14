@@ -105,10 +105,10 @@ Scale *scale_parseScales(s)
     nl = strchr(c,'\n'); 
     if (nl) *nl='\0';
     name[0]=kind[0]='\0';
-    f=0.0;
+    f=-10.0;
     if (*c=='#' || *c=='!') i=0; 
     else i=sscanf(c," %[^,] , %f , %[^,] ",name,&f,kind);
-    if (i>=2 && f>0) {
+    if (i>=2 && f>=0) {
       scale = scale_mallocScale();
       scale->name = GV_XtNewString(name);
       scale->scale = sqrt(f);

@@ -40,6 +40,7 @@ GV.scale:		0
 GV.scaleBase:		1
 GV.scales:		Natural	size,	1.000,	screen	\n\
 			Pixel based,	1.000,	pixel	\n\
+			Fit to window,	0.000		\n\
 			0.100,		0.100		\n\
 			0.125,		0.125		\n\
 			0.250,		0.250		\n\
