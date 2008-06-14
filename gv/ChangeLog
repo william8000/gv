@@ -1,7 +1,7 @@
 2008-06-14  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/action.c(action_shellConfigureNotify): If autoresize is turned
-	off and actual scale is "Fit to window", then rescale.
+	off and actual scale is "Fit to window" then rescale.
 	
 	* src/gv_user_res.dat: New scale "Fit to window"
 	
@@ -9,6 +9,10 @@
 	
 	* src/scale.c (scale_parseScales): Adjust parser to handle new
 	"Fit to window"-scale (symbolic scale factor is 0.000).
+	
+	* src/action.c, src/gv_user_res.dat, src/misc.c, src/scale.c:
+	some as above for "Fit width to window"-scale
+	(symbolic scale factor is -1.000).
 
 2008-06-13  Markus Steinborn <msteinbo@uni-paderborn.de>
 

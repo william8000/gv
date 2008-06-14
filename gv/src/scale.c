@@ -108,10 +108,13 @@ Scale *scale_parseScales(s)
     f=-10.0;
     if (*c=='#' || *c=='!') i=0; 
     else i=sscanf(c," %[^,] , %f , %[^,] ",name,&f,kind);
-    if (i>=2 && f>=0) {
+    if (i>=2 && f>=-1.1) {
       scale = scale_mallocScale();
       scale->name = GV_XtNewString(name);
-      scale->scale = sqrt(f);
+      if (f>0)
+         scale->scale = sqrt(f);
+      else
+         scale->scale = f;
       if (i==3) {
         if (!strcasecmp(kind,"screen")) { scale->is_base = SCALE_IS_REAL_BASED; have_base=1;}
         else if (!strcasecmp(kind,"pixel")) { scale->is_base = SCALE_IS_PIXEL_BASED; have_base=1;}

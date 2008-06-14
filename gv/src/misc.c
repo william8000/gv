@@ -1209,7 +1209,7 @@ set_new_scale(void)
   }
   
   new_scale = gv_scale;
-  if (changed || new_scale != gv_scale_current || !gv_scales[new_scale]->scale) {
+  if (changed || new_scale != gv_scale_current || !gv_scales[new_scale]->scale <=0) {
     float xdpi, ydpi;
     GhostviewDisableInterpreter(page);
     scale = gv_scales[new_scale];
@@ -1231,6 +1231,20 @@ set_new_scale(void)
        float ascale2 = (float)viewClip->core.height / dy / 72.0 * default_ydpi;
        
        ascale = ascale1 < ascale2 ? ascale1 : ascale2;
+    }
+    if (fabs(ascale+1) <= 0.001)
+    {
+       int dx = (current_urx - current_llx);
+       int dy = (current_ury - current_lly);
+       
+       if (gv_orientation % 2 == 0)
+       {
+          int hlp = dx;
+	  dx = dy;
+	  dy = hlp;
+       }
+       
+       ascale = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
     }
     
     

@@ -27,8 +27,8 @@ by a '#' or a '*' or a '?'. A
   The same effect can be reached via a resource "infoVerbose", which values can
   be "Silent", "Errors" and "All".
   
-# "Fit to window magnification" -- currently works best with "Automatic
-  resizing" turned off.
+# "Fit to window magnification" and "Fit with to window magnification" --
+  currently works best with "Automatic resizing" turned off.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
