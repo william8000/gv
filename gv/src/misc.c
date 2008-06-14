@@ -1209,7 +1209,7 @@ set_new_scale(void)
   }
   
   new_scale = gv_scale;
-  if (changed || new_scale != gv_scale_current || !gv_scales[new_scale]->scale <=0) {
+  if (changed || new_scale != gv_scale_current || gv_scales[new_scale]->scale <=0) {
     float xdpi, ydpi;
     GhostviewDisableInterpreter(page);
     scale = gv_scales[new_scale];
