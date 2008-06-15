@@ -1232,7 +1232,7 @@ set_new_scale(void)
        
        ascale = ascale1 < ascale2 ? ascale1 : ascale2;
     }
-    if (fabs(ascale+1) <= 0.001)
+    else if (fabs(ascale+1) <= 0.001)
     {
        int dx = (current_urx - current_llx);
        int dy = (current_ury - current_lly);
@@ -1246,7 +1246,10 @@ set_new_scale(void)
        
        ascale = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
     }
-    
+    else if (fabs(ascale+2) <= 0.001)
+    {
+       ascale = gv_ascale;
+    }
     
     xdpi = default_xdpi / ascale;
     ydpi = default_ydpi / ascale;

@@ -81,6 +81,7 @@ static Widget   antialiasToggle;
 static Widget   dscToggle,eofToggle,autoResizeToggle;
 static Widget   swapLandscapeToggle,watchToggle;
 static Widget   infoPopupLabel,infoPopupButton,infoPopupMenu;
+static Widget   ascaleLabel, ascale;
 static Widget   mediaLabel,mediaButton,mediaMenu=NULL;
 static Widget   fmediaLabel,fmediaButton,fmediaMenu=NULL;
 static Widget   orientLabel,orientButton,orientMenu;
@@ -157,7 +158,12 @@ static void options_gv_setOptionsAtEntry(void)
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(infoPopupButton, args, n);
 
-
+  {
+     char number[80];
+     sprintf(number, "%.3f", gv_ascale*gv_ascale);
+     widgets_setText(ascale, number); //TODO
+  }
+  
   ENDMESSAGE(options_gv_setOptionsAtEntry)
 }
 
@@ -213,6 +219,8 @@ static void options_gv_cb_apply(w, client_data, call_data)
    char* l;
    Boolean redisplay=False;
    Boolean reopen=False;
+   String v;
+   float Ascale;
 
    BEGINMESSAGE(options_gv_cb_apply)
 
@@ -326,6 +334,15 @@ static void options_gv_cb_apply(w, client_data, call_data)
    }
    if (j != gv_infoVerbose) {
      gv_infoVerbose = j;
+   }
+   
+   v = options_squeeze(widgets_getText(ascale));
+   sscanf(v, "%f", &Ascale);
+   Ascale=sqrt(Ascale);
+   if (Ascale != gv_ascale)
+   {
+      gv_ascale = Ascale;
+      redisplay = True;
    }
 
 
@@ -589,6 +606,8 @@ options_createLabeledMenu("infoVerbose",optionControl,&infoPopupLabel,&infoPopup
        w = XtCreateManagedWidget(popupVerb[i],smeBSBObjectClass, infoPopupMenu,NULL,(Cardinal)0);
        XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL);
      }
+
+   ascale = widgets_createLabeledLineTextField("ascale", optionControl);
 
    w = XtCreateManagedWidget("apply", buttonWidgetClass,optionControl, args, n);
          XtAddCallback(w, XtNcallback, options_gv_cb_apply,NULL); 

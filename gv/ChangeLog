@@ -1,3 +1,19 @@
+2008-06-15  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/main_globals.h: New globat variable gv_ascale with the arbitraty
+	scale
+	
+	* src/gv_user_res.dat: In gv options, enable input of arbitrary scale
+	
+	* src/main.c: Initialize gv_ascale
+	
+	* src/scale.c (scale_parseScales): Adjust parser for arbitrary scale
+	 (symbolic scale factor is -2)
+	 
+	* src/misc.c (set_new_scale): Handle arbitrary scale
+	
+	* src/options_gv.c: Handle editing of arbitrary scale
+
 2008-06-14  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/action.c(action_shellConfigureNotify): If autoresize is turned

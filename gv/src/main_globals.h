@@ -102,6 +102,7 @@ EXTERN MagMenuEntry*		gv_magmenu_entries;
 EXTERN char*			gv_scales_res;
 EXTERN Scale*			gv_scales;
 EXTERN int			gv_scale;
+EXTERN float			gv_ascale;
 EXTERN int			gv_scale_base;
 EXTERN int			gv_scale_base_current;
 EXTERN int			gv_scale_current;

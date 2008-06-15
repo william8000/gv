@@ -219,6 +219,10 @@ GV*optiongvPopup*layout:\
       eof<+[1]*>\
       $sss\
       antialias<+[1]*>\
+      $sss\
+      ascaleLabel<+[1]*>\
+      $sss\
+      ascaleFrame<+[1]*>\
     }\
     $bs\
   }\

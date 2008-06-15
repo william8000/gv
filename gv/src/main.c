@@ -697,6 +697,8 @@ int main(argc, argv)
     if (gv_scale_base < 0) gv_scale_base = 0;
     gv_scale_base &= SCALE_VAL;
 
+    gv_ascale = 1.0;
+
     if      (app_res.confirm_quit < 0) app_res.confirm_quit = 0;
     else if (app_res.confirm_quit > 2) app_res.confirm_quit = 2;
 
