@@ -1092,7 +1092,10 @@ cb_setOrientation(w, client_data, call_data)
     if (!call_data) {
       if (changed) {
 	misc_savePagePosition();
-	show_page(REQUEST_NEW_ORIENTATION,NULL);
+	if (gv_scales[gv_scale]->scale > 0 || app_res.auto_resize)
+	   show_page(REQUEST_NEW_ORIENTATION,NULL);
+	else
+	   show_page(REQUEST_SETUP,NULL);
 	misc_resetPagePosition();
       }
     }

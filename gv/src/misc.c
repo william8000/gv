@@ -1220,7 +1220,7 @@ set_new_scale(void)
        int dx = (current_urx - current_llx);
        int dy = (current_ury - current_lly);
        
-       if (gv_orientation % 2 == 0)
+       if (gv_orientation == 2 || gv_orientation == 3)
        {
           int hlp = dx;
 	  dx = dy;
@@ -1237,7 +1237,7 @@ set_new_scale(void)
        int dx = (current_urx - current_llx);
        int dy = (current_ury - current_lly);
        
-       if (gv_orientation % 2 == 0)
+       if (gv_orientation == 2 || gv_orientation == 3)
        {
           int hlp = dx;
 	  dx = dy;

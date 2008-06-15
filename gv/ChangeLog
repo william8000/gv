@@ -13,6 +13,9 @@
 	* src/misc.c (set_new_scale): Handle arbitrary scale
 	
 	* src/options_gv.c: Handle editing of arbitrary scale
+	
+	* src/callbacks.c(cb_setOrientation): If autoresize is off and any
+	special scale is used, then recalculate the scale.
 
 2008-06-14  Markus Steinborn <msteinbo@uni-paderborn.de>
 
