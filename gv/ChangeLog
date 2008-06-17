@@ -1,3 +1,12 @@
+2008-06-17  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/callbacks.c (cb_setPagemedia): If autoresize is off and any
+	special scale is used, then recalculate the scale.
+	
+	* src/misc.c (show_page): If autoresize is off and any
+	special scale is used, display of new page is required and orientation
+	or Pagemedia differs, then recalculate the scale.
+
 2008-06-15  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/main_globals.h: New globat variable gv_ascale with the arbitraty

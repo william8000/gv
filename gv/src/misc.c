@@ -713,6 +713,9 @@ show_page(number,data1)
       }
       need_layout = need_setup = 
           set_new_orientation(number)|set_new_pagemedia(number);
+//TODO?
+      if (need_layout && !app_res.auto_resize && gv_scales[gv_scale]->scale <= 0)
+          set_new_scale();
       need_render = True;
    } else if (request<NO_CURRENT_PAGE) {
       INFIMESSAGE(analyzing,request)
@@ -734,9 +737,9 @@ show_page(number,data1)
       case REQUEST_SETUP:
 		INFMESSAGE(### request for setup)
 		number=current_page;
-		need_layout =	set_new_scale()
-				|set_new_orientation(number)
-				|set_new_pagemedia(number);
+		need_layout =	set_new_orientation(number)
+				|set_new_pagemedia(number)
+				|set_new_scale();
                 need_setup  = True;
 		need_render = True;
 		break;
@@ -1217,8 +1220,8 @@ set_new_scale(void)
 
     if (!ascale)
     {
-       int dx = (current_urx - current_llx);
-       int dy = (current_ury - current_lly);
+       int dx = current_urx - current_llx + 1;
+       int dy = current_ury - current_lly + 1;
        
        if (gv_orientation == 2 || gv_orientation == 3)
        {
@@ -1234,8 +1237,8 @@ set_new_scale(void)
     }
     else if (fabs(ascale+1) <= 0.001)
     {
-       int dx = (current_urx - current_llx);
-       int dy = (current_ury - current_lly);
+       int dx = current_urx - current_llx + 1;
+       int dy = current_ury - current_lly + 1;
        
        if (gv_orientation == 2 || gv_orientation == 3)
        {

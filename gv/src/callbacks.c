@@ -1127,7 +1127,10 @@ cb_setPagemedia(w, client_data, call_data)
      gv_pagemedia = media;
    }
    if (!call_data) {
-     show_page(REQUEST_NEW_PAGEMEDIA,NULL);
+     if (gv_scales[gv_scale]->scale > 0 || app_res.auto_resize)
+	   show_page(REQUEST_NEW_PAGEMEDIA,NULL);
+     else
+	   show_page(REQUEST_SETUP,NULL);
    }
    ENDMESSAGE(cb_setPagemedia)
 }

@@ -161,7 +161,7 @@ static void options_gv_setOptionsAtEntry(void)
   {
      char number[80];
      sprintf(number, "%.3f", gv_ascale*gv_ascale);
-     widgets_setText(ascale, number); //TODO
+     widgets_setText(ascale, number);
   }
   
   ENDMESSAGE(options_gv_setOptionsAtEntry)
