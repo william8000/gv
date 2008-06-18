@@ -56,6 +56,7 @@
 #include INC_X11(cursorfont.h)
 #include INC_X11(StringDefs.h)
 #include INC_X11(Shell.h)
+#include INC_X11(Xatom.h)
 #include INC_XAW(Cardinals.h)
 #include INC_XAW(SimpleMenu.h)
 #include INC_XAW(SmeBSB.h)
@@ -166,6 +167,8 @@ enum
     INFOSILENT_ARG,
     INFOERRORS_ARG,
     INFOALL_ARG,
+    FULLSCREEN_ARG,
+    PRESENTATION_ARG,
     MONOCHROME_ARG,
     NOQUIET_ARG,
     MEDIA_ARG,
@@ -210,6 +213,8 @@ static struct option const GNU_longOptions[] =
     {"infoSilent", no_argument, NULL, INFOSILENT_ARG},
     {"infoErrors", no_argument, NULL, INFOERRORS_ARG},
     {"infoAll", no_argument, NULL, INFOALL_ARG},
+    {"fullscreen", no_argument, NULL, FULLSCREEN_ARG},
+    {"presentation", no_argument, NULL, PRESENTATION_ARG},
     {"monochrome", no_argument, NULL, MONOCHROME_ARG},
     {"noquiet", no_argument, NULL, NOQUIET_ARG},
     {"media", required_argument, NULL, MEDIA_ARG},
@@ -387,6 +392,8 @@ int main(argc, argv)
     ad_p = 0;
     style_p = 0;
     arguments_p = 0;
+    fullscreen_p = 0;
+    ascale_p = 1.0;
 
 
     /*###  initializing toolkit and the application context ########*/
@@ -433,8 +440,17 @@ int main(argc, argv)
 	   opt_counter++;
 	   break;
 	 case SCALE_ARG:
-	   scale_p = 1;
-	   scale_value = optarg;
+	   if (strstr(optarg, "."))
+	   {
+	      scale_p = 1;
+	      scale_value = "-1002";
+	      sscanf(optarg, "%f", &ascale_p);
+	   }
+	   else
+	   {
+	      scale_p = 1;
+	      scale_value = optarg;
+	   }
 	   opt_counter++;
 	   break;
 	 case MAGSTEP_ARG:
@@ -453,6 +469,18 @@ int main(argc, argv)
 	   break;
 	 case NORESIZE_ARG:
 	   noresize_p = 1;
+	   opt_counter++;
+	   break;
+	 case FULLSCREEN_ARG:
+	   fullscreen_p = 1;
+	   opt_counter++;
+	   break;
+	 case PRESENTATION_ARG:
+	   fullscreen_p = 1;
+	   noresize_p = 1;
+	   widgetless_p = 1;
+	   scale_p = 1;
+	   scale_value = "-1000";
 	   opt_counter++;
 	   break;
 	 case SWAP_ARG:
@@ -686,18 +714,61 @@ int main(argc, argv)
     gv_scales_res = GV_XtNewString(gv_scales_res);
     gv_scales = scale_parseScales(gv_scales_res);
     gv_scale_current = gv_scale_base_current = -1;
-    if (app_res.scale < 0) app_res.scale = (-app_res.scale)|SCALE_MIN;
-    app_res.scale &= (SCALE_VAL|SCALE_MIN);
-    gv_scale = scale_checkScaleNum(gv_scales,app_res.scale|SCALE_REL);
-    if (gv_scale < 0) gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL);
-    gv_scale &= SCALE_VAL;
+
+    gv_ascale = 1.0;
+
+    if (app_res.scale == -1000)
+    {
+       int j;
+       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL);
+       for (j=0; gv_scales[j]; j++)
+          if (!gv_scales[j]->scale)
+	  {
+	     gv_scale = j;
+	     break;
+          }
+    }
+    else if (app_res.scale == -1001)
+    {
+       int j;
+
+       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL) & SCALE_VAL;
+
+       for (j=0; gv_scales[j]; j++)
+          if (fabs(gv_scales[j]->scale+1) <= 0.001)
+	  {
+	     gv_scale = j;
+	     break;
+          }
+       gv_ascale = sqrt(ascale_p);
+    }
+    else if (app_res.scale == -1002)
+    {
+       int j;
+
+       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL) & SCALE_VAL;
+
+       for (j=0; gv_scales[j]; j++)
+          if (fabs(gv_scales[j]->scale+2) <= 0.001)
+	  {
+	     gv_scale = j;
+	     break;
+          }
+       gv_ascale = sqrt(ascale_p);
+    }
+    else
+    {
+       if (app_res.scale < 0) app_res.scale = (-app_res.scale)|SCALE_MIN;
+       app_res.scale &= (SCALE_VAL|SCALE_MIN);
+       gv_scale = scale_checkScaleNum(gv_scales,app_res.scale|SCALE_REL);
+       if (gv_scale < 0) gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL);
+       gv_scale &= SCALE_VAL;
+    }
     if (app_res.scale_base<1) app_res.scale_base = 1;
     app_res.scale_base &= SCALE_VAL;
     gv_scale_base = scale_checkScaleNum(gv_scales,(app_res.scale_base-1)|SCALE_BAS);
     if (gv_scale_base < 0) gv_scale_base = 0;
     gv_scale_base &= SCALE_VAL;
-
-    gv_ascale = 1.0;
 
     if      (app_res.confirm_quit < 0) app_res.confirm_quit = 0;
     else if (app_res.confirm_quit > 2) app_res.confirm_quit = 2;
@@ -1222,6 +1293,21 @@ int main(argc, argv)
 
     /* must allow control to resize */
     AaaWidgetAllowResize((AaaWidget)control,True,True);
+
+    if (fullscreen_p) {
+      Atom net_wm_state;
+
+      net_wm_state = XInternAtom(XtDisplay(toplevel), "_NET_WM_STATE", True);
+      if (net_wm_state != None) {
+        Atom wm_fullstate;
+        wm_fullstate = XInternAtom(XtDisplay(toplevel), "_NET_WM_STATE_FULLSCREEN", False);
+
+        XtRealizeWidget(toplevel);
+        XChangeProperty(XtDisplay(toplevel), XtWindow(toplevel),
+                        net_wm_state, XA_ATOM, 32, PropModeReplace,
+                        (unsigned char *)&wm_fullstate, 1);
+      }
+    }
 
     INFMESSAGE(mapping toplevel)
     XtMapWidget(toplevel);

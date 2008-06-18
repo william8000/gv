@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 
 #ifdef HAVE_INTTYPES_H
   #include <inttypes.h>

@@ -1,3 +1,16 @@
+2008-06-18  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* doc/gv.texi: Update manual
+
+	* src/gv_message.h: Update usage message
+	
+	* src/main_globals: Add fullscreen_p, presentation_p and ascale_p
+	
+	* src/main.c: Add parsing of --fullscreen and of --scale with a float and
+	--presentation
+	
+	* src/options_gv.c: Include math.h
+
 2008-06-17  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/callbacks.c (cb_setPagemedia): If autoresize is off and any

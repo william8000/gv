@@ -29,14 +29,16 @@ by a '#' or a '*' or a '?'. A
   dialog.
   
 # "Fit to window magnification" and "Fit with to window magnification" --
-  currently works best with "Automatic resizing" turned off.
+  currently works best with "Automatic resizing" turned off. With --scale=-1000
+  resp. --scale=-1001, you can access these special scales from the command line.
   
 ? "Fit to window magnification" and "Fit with to window magnification" with
   "Automatic resizing" turned on sometime miss rescaling, especially when
   changing the orientation or resizing the window. You can force
   rescaling by selecting the active "special" scale in the scales menu.
 
-# Arbitrary scales are now possible - input them in the gv options dialog.
+# Arbitrary scales are now possible - input them in the gv options dialog
+  or with --scale=n, where n is a float.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

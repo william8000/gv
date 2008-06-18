@@ -279,6 +279,7 @@ EXTERN int color_p;
 EXTERN int grayscale_p;
 EXTERN int spartan_p;
 EXTERN int widgetless_p;
+EXTERN int fullscreen_p;
 EXTERN int quiet_p;
 EXTERN int infoverbose_p;
 EXTERN int monochrome_p;
@@ -314,6 +315,7 @@ EXTERN char *ad_value;
 EXTERN int style_p;
 EXTERN char *style_value;
 EXTERN int arguments_p;
+EXTERN float ascale_p;
 EXTERN char *arguments_value;
 
 #undef EXTERN
