@@ -720,7 +720,7 @@ int main(argc, argv)
     if (app_res.scale == -1000)
     {
        int j;
-       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL);
+       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL) & SCALE_VAL;
        for (j=0; gv_scales[j]; j++)
           if (!gv_scales[j]->scale)
 	  {

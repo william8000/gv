@@ -74,8 +74,8 @@ PostScript and PDF viewer.\n\
                                       have lower priority than those provided on the context of --ad\n\
   [-]-spartan                         shortcut for --style=gv_spartan.dat\n\
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
-  [-]-fullscreen                      enable fullscreen mode\n\
-  [-]-presentation                    Presentation mode (fullscreen, Fit to window and\n\
-                                      no resizing of window)\n\
+  [-]-fullscreen                      start in fullscreen mode (needs support from WM)\n\
+  [-]-presentation                    Presentation mode (fullscreen, Fit to window,\n\
+                                      widgetless and no resizing of window)\n\
   [-]-version                         show gv version and exit\n\
 ";

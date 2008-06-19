@@ -209,7 +209,7 @@ Whether to start ghostscript with the @code{-dQUIET} option.
 Whether ghostscrip is allowed to automatically fit the
 size of its window to the size of the displayed page.
 @item --presentation
-Is actually a shortcur for @code{--fullscreen --noresize --scale=-1000 --widgetless}.
+Is actually a shortcut for @code{--fullscreen --noresize --scale=-1000 --widgetless}.
 @item --safer, --nosafer
 Whether to start ghostscript with the @code{-dSAFER} option.
 @item --spartan
