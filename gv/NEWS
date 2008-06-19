@@ -9,7 +9,7 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.4.90  (???? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.4.90  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 * Build-system ensures that the man-page is always up to date
 
@@ -39,6 +39,8 @@ by a '#' or a '*' or a '?'. A
 
 # Arbitrary scales are now possible - input them in the gv options dialog
   or with --scale=n, where n is a float.
+
+# New fullscreen mode which needs support from the window manager
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
