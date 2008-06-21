@@ -155,7 +155,7 @@ BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 
 GV : $(srcdir)/GV.ad
 	@echo "creating GV"
-	@cp $(srcdir)/GV.ad $(srcdir)/GV
+	sed -e 's/^[^!]/!&/' $(srcdir)/GV.ad > $(srcdir)/GV
 
 $(srcdir)/GV.ad : $(srcdir)/gv_system.ad
 	@echo "creating GV.ad"

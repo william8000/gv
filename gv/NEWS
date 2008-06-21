@@ -28,11 +28,11 @@ by a '#' or a '*' or a '?'. A
   be "Silent", "Errors" and "All". It can also be edited via the "gv options"
   dialog.
   
-# "Fit to window magnification" and "Fit with to window magnification" --
+# "Fit to window magnification" and "Fit width to window magnification" --
   currently works best with "Automatic resizing" turned off. With --scale=-1000
   resp. --scale=-1001, you can access these special scales from the command line.
   
-? "Fit to window magnification" and "Fit with to window magnification" with
+? "Fit to window magnification" and "Fit width to window magnification" with
   "Automatic resizing" turned on sometime miss rescaling, especially when
   changing the orientation or resizing the window. You can force
   rescaling by selecting the active "special" scale in the scales menu.
