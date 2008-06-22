@@ -9,6 +9,10 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.4.91  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# ~/.gv now contains the version that has saved that configuration.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.4.90  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 * Build-system ensures that the man-page is always up to date

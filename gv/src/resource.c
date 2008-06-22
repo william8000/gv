@@ -166,6 +166,8 @@ resource_buildDatabase (
   }
   if (s) {
     INFSMESSAGE(merging user resource file into database,s)
+//TODO      resource_putResource (&db, app_name, ".version", "gv 3.5.2");
+      XrmPutLineResource(&db,"GV.version: gv 0.0.0");
       XrmCombineFileDatabase(s,&db,True);
     resource_user_file = s;
   } else {
@@ -533,16 +535,17 @@ int resource_checkResources(app_name,v,vc)
      char *v;
      char *vc;
 {
-  int n,nc,v1,v2,v3,v1c,v2c,v3c,r=1;
+  int n,nc,v1,v2,v3,v4,v1c,v2c,v3c,v4c,r=1;
 
   BEGINMESSAGE(resource_checkResources)
-    v1 = v2 = v3 = v1c = v2c = v3c = 0;
-  n  = sscanf(v,"%*s %d.%d.%d",&v1,&v2,&v3);
-  nc = sscanf(vc,"%*s %d.%d.%d",&v1c,&v2c,&v3c);
+    v1 = v2 = v3 = v4 = v1c = v2c = v3c = v4c = 0;
+  n  = sscanf(v,"%*s %d.%d.%d.%d",&v1,&v2,&v3,&v4);
+  nc = sscanf(vc,"%*s %d.%d.%d.%d",&v1c,&v2c,&v3c,&v4c);
   if ((n < 2) || (nc < 2)
       || (v1 < v1c)
       || (v1 == v1c && v2 < v2c)
-      || (v1 == v1c && v2 == v2c && v3 < v3c)) {
+      || (v1 == v1c && v2 == v2c && v3 < v3c)
+      || (v1 == v1c && v2 == v2c && v3 == v3c && v4 < v4c)) {
     fprintf(stderr,"%s Error: incompatible resources.\n",app_name);
     fprintf(stderr,"One of the files\n");
     if (resource_system_file) fprintf(stderr,"    %s\n",resource_system_file);

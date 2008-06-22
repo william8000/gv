@@ -74,6 +74,7 @@
 #include "options_gv.h"
 #include "ps.h"
 #include "doc_misc.h"
+#include "version.h"
 
 #include <string.h>
 
@@ -377,6 +378,8 @@ void options_gv_cb_save(w, client_data, call_data)
 
   BEGINMESSAGE(options_gv_cb_save)
 
+  options_setArg(&(argi[argn]),&(argv[argn]),s_version             ,gv_class       ,versionResource);
+       ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_respectDSC          ,gv_class       ,SwitchIsSet(dscToggle) ? t : f);
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_ignoreEOF           ,gv_class       ,SwitchIsSet(eofToggle) ? t : f);

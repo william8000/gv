@@ -11,7 +11,7 @@ GV*initialResourcesPersistent:		False
 
 !##### Version (do not modify this resource)
 
-GV.version:				gv 3.6.0
+GV.version:				gv 3.6.5
 
 !##### Background, Foreground
 

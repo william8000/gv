@@ -76,6 +76,7 @@
 #include "scale.h"
 #include "ps.h"
 #include "doc_misc.h"
+#include "version.h"
 
 static Widget   popup=NULL,optionControl;
 static Widget   eyeGuideToggle,reverseScrollingToggle,confirmPrintToggle,autoCenterToggle;
@@ -321,6 +322,8 @@ void options_setup_cb_save(w, client_data, call_data)
 
   BEGINMESSAGE(options_setup_cb_save)
 
+  options_setArg(&(argi[argn]),&(argv[argn]),s_version             ,gv_class       ,versionResource);
+       ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_miscMenuEntries     ,gv_class       ,widgets_getText(miscmenu));
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_magMenu             ,gv_class       ,widgets_getText(magmenu));

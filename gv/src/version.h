@@ -51,6 +51,7 @@ extern void cb_popdownVersionPopup(
 
 extern char *versionIdentification[];
 extern char versionCompatibility[];
+extern char versionResource[];
 
 #endif	/* _GV_VERSION_H_ */
 

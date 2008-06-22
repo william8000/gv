@@ -1,3 +1,8 @@
+2008-06-22  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/options_*.c, src/resource.c: Save GV.version resource to ~/.gv,
+	if GV.version in ~/.gv is missing, assume it to be "gv 3.5.2".
+
 2008-06-21  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.4.91.

@@ -61,6 +61,7 @@
 #include "note.h"
 #include "options.h"
 #include "options_fs.h"
+#include "version.h"
 
 static Widget popup,optionControl;
 static Widget filter,scratch_dir,default_save_dir,filters,dirs;
@@ -148,6 +149,8 @@ void options_fs_cb_save(w, client_data, call_data)
 
   BEGINMESSAGE(options_fs_cb_save)
 
+  options_setArg(&(argi[argn]),&(argv[argn]),s_version             ,gv_class       ,versionResource);
+       ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),"*filter"              ,gv_class       ,widgets_getText(filter));
        ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),"*filters"             ,gv_class       ,widgets_getText(filters));

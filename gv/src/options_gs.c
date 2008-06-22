@@ -71,6 +71,7 @@
 #include "resource.h"
 #include "ps.h"
 #include "doc_misc.h"
+#include "version.h"
 
 static Widget   popup=NULL,optionControl;
 static Widget   quietToggle,saferToggle;
@@ -223,6 +224,8 @@ void options_gs_cb_save(w, client_data, call_data)
 
   BEGINMESSAGE(options_gv_cb_save)
 
+  options_setArg(&(argi[argn]),&(argv[argn]),s_version             ,gv_class       ,versionResource);
+       ++argn;
   options_gs_setArg(gs         ,&(argi[argn]),&(argv[argn]),&argn,s_gsInterpreter    ,gv_class);
   options_gs_setArg(scan       ,&(argi[argn]),&(argv[argn]),&argn,s_gsCmdScanPDF     ,gv_class);
   options_gs_setArg(conv       ,&(argi[argn]),&(argv[argn]),&argn,s_gsCmdConvPDF     ,gv_class);
