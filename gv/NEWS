@@ -46,6 +46,9 @@ by a '#' or a '*' or a '?'. A
 
 # New fullscreen mode which needs support from the window manager
 
+# New command line switch "--presentation" as a shortcur for
+  "--fullscreen --noresize --scale=-1000 --widgetless"
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.3.90 has been released as GV 3.6.4 with no changes
