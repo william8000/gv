@@ -713,7 +713,6 @@ show_page(number,data1)
       }
       need_layout = need_setup = 
           set_new_orientation(number)|set_new_pagemedia(number);
-//TODO?
       if (need_layout && !app_res.auto_resize && gv_scales[gv_scale]->scale <= 0)
           set_new_scale();
       need_render = True;

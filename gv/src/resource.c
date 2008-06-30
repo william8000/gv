@@ -166,7 +166,6 @@ resource_buildDatabase (
   }
   if (s) {
     INFSMESSAGE(merging user resource file into database,s)
-//TODO      resource_putResource (&db, app_name, ".version", "gv 3.5.2");
       XrmPutLineResource(&db,"GV.version: gv 0.0.0");
       XrmCombineFileDatabase(s,&db,True);
     resource_user_file = s;
