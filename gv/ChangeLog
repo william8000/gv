@@ -1,3 +1,7 @@
+2008-07-05  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* configure.ac, src/versionp.h: Bump version to 3.6.5.
+
 2008-06-22  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/options_*.c, src/resource.c: Save GV.version resource to ~/.gv,

@@ -9,6 +9,15 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.5  (July 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# GV 3.6.4.91 has been released as GV 3.6.5 with no changes
+
+? "Fit to window magnification" and "Fit width to window magnification" with
+  "Automatic resizing" turned on sometime miss rescaling, especially when
+  changing the orientation or resizing the window. You can force
+  rescaling by selecting the active "special" scale in the scales menu.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.4.91  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # ~/.gv now contains the version that has saved that configuration.
@@ -46,7 +55,7 @@ by a '#' or a '*' or a '?'. A
 
 # New fullscreen mode which needs support from the window manager
 
-# New command line switch "--presentation" as a shortcur for
+# New command line switch "--presentation" as a shortcut for
   "--fullscreen --noresize --scale=-1000 --widgetless"
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.4  (June 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
