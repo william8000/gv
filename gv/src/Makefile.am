@@ -38,7 +38,7 @@ AM_CFLAGS = @X_CFLAGS@
 
 LDADD = ../lib/libgnu.a
 
-gv_LDFLAGS = @X_LIBS@
+gv_LDFLAGS = @X_LIBS@ -lXinerama
 
 gv_SOURCES = Aaa.c \
              Aaa_bison.c \

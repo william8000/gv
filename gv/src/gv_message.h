@@ -46,7 +46,7 @@ PostScript and PDF viewer.\n\
   [-]-nocenter                        the page should not be centered automatically\n\
   [-]-media=MEDIA                     selects the paper size to be used\n\
   [-]-orientation=ORIENTATION         sets the orientation of the page\n\
-  [-]-scale=N                         selects the scale N\n\
+  [-]-scale=N|f.f                     selects the scale N, or arbitrary scale f.f\n\
   [-]-scalebase=N                     selects the scale base N\n\
   [-]-swap                            interchange the meaning of the orientations landscape\n\
                                       and seascape\n\
