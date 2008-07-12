@@ -65,7 +65,6 @@
 #include INC_XAW(Scrollbar.h)
 #include INC_XAW(XawInit.h)
 #include INC_XMU(Editres.h)
-#include "X11/extensions/Xinerama.h"
 #include "Aaa.h"
 #include "Button.h"
 #include "Clip.h"
@@ -1410,16 +1409,8 @@ void main_setResolutions(query)
 {
   BEGINMESSAGE(main_setResolutions)
   if (query) scale_getScreenSize(gv_display,gv_screen,gv_database,gv_class,gv_name,&gv_screen_width,&gv_screen_height);
-  if (XineramaIsActive(gv_display)) {
-    int num_heads;
-    XineramaScreenInfo *head_info;
-    head_info = (XineramaScreenInfo *) XineramaQueryScreens(gv_display,&num_heads);
-    gv_real_xdpi = 72.0 * 72.0 * (float)gv_screen_width  / (25.4 * head_info[0].width);
-    gv_real_ydpi = 72.0 * 72.0 * (float)gv_screen_height / (25.4 * head_info[0].height);
-  } else {
-    gv_real_xdpi = 72.0 * 72.0 * (float)gv_screen_width  / (25.4 * WidthOfScreen(gv_screen));
-    gv_real_ydpi = 72.0 * 72.0 * (float)gv_screen_height / (25.4 * HeightOfScreen(gv_screen));
-  }
+  gv_real_xdpi = 72.0 * 72.0 * (float)gv_screen_width  / (25.4 * WidthOfScreen(gv_screen));
+  gv_real_ydpi = 72.0 * 72.0 * (float)gv_screen_height / (25.4 * HeightOfScreen(gv_screen));
   gv_pixel_xdpi = 72.0;
   gv_pixel_ydpi = 72.0;
   IIMESSAGE(gv_screen_width,gv_screen_height)
