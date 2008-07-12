@@ -60,6 +60,7 @@ AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
 AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
    AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
    $X_LIBS)
+AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 
 
 

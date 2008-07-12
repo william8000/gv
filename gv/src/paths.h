@@ -37,6 +37,7 @@
 #define INC_X11(aaa) <X11/aaa>
 #define INC_XMU(aaa) <X11/Xmu/aaa>
 #define INC_XAW(aaa) <X11/Xaw3d/aaa>
+#define INC_EXT(aaa) <X11/extensions/aaa>
 
 #endif /* _PATHS_H_ */
 

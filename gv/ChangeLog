@@ -1,3 +1,14 @@
+2008-07-12  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* configure.ac, src/versionp.h: Bump version to 3.6.5.90.
+
+	* src/main.c, src/paths.h: Heuristically use Xinerama to get display
+	resolution iff the current display size looks like a single monitor
+	(experimental)
+	
+	* src/gv_message.h: Improvement of "--scale" documentation which should
+	have been included in 3.6.4.91, but it has not been.
+
 2008-07-05  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.5.

@@ -38,7 +38,6 @@
 */
 #include "message.h"
 
-#include "ac_config.h"
 #include "config.h"
 
 #include <stdlib.h>
@@ -65,6 +64,9 @@
 #include INC_XAW(Scrollbar.h)
 #include INC_XAW(XawInit.h)
 #include INC_XMU(Editres.h)
+#ifdef HAVE_LIBXINERAMA
+   #include INC_EXT(Xinerama.h)
+#endif
 #include "Aaa.h"
 #include "Button.h"
 #include "Clip.h"
@@ -1407,10 +1409,53 @@ void main_setGhostscriptResources(db)
 void main_setResolutions(query)
   int query;
 {
+  int checkXinerama = 1;
+  int sizeX, sizeY;
+  float ratio;
+  
   BEGINMESSAGE(main_setResolutions)
   if (query) scale_getScreenSize(gv_display,gv_screen,gv_database,gv_class,gv_name,&gv_screen_width,&gv_screen_height);
-  gv_real_xdpi = 72.0 * 72.0 * (float)gv_screen_width  / (25.4 * WidthOfScreen(gv_screen));
-  gv_real_ydpi = 72.0 * 72.0 * (float)gv_screen_height / (25.4 * HeightOfScreen(gv_screen));
+  
+  printf("Your detected screen size is: %i mm x %i mm\n", gv_screen_width, gv_screen_height);
+
+  /* Some Xinerama implementations summarize the size over all displays.
+     In this case you must use the summarized resolution, too.
+     
+     Other systems return the size of one (which?) display.
+     In this case you have to ask Xinerama about the size of one display. 
+  */
+  
+  ratio = (float) gv_screen_width / (float) gv_screen_height;
+  if ( ratio >= 2 || ratio < 1 ) /* does not look like a single monitor */
+  {
+     checkXinerama = 0;
+     printf ("That does not look like a single monitor, as the ratio is %.2f.\n", ratio);
+  }
+  else
+     printf ("That looks like a single monitor, as the ratio is %.2f.\n", ratio);
+     
+  sizeX = WidthOfScreen(gv_screen);
+  sizeY = HeightOfScreen(gv_screen);
+  printf("Your detected screen resolution is: %i x %i\n", sizeX, sizeY);
+
+#if HAVE_LIBXINERAMA
+  /* In case we do not have Xinerama at all */
+  if (!XineramaIsActive(gv_display))
+     checkXinerama = 0;
+
+  if (checkXinerama)
+  {
+    int num_heads;
+    XineramaScreenInfo *head_info;
+    head_info = (XineramaScreenInfo *) XineramaQueryScreens(gv_display,&num_heads);
+    sizeX = head_info[0].width;
+    sizeY = head_info[0].height;
+    printf("Xinerama's resolution of screen 0 is: %i x %i\n", sizeX, sizeY);
+  }
+#endif
+
+  gv_real_xdpi = 72.0 * 72.0 * (float)gv_screen_width  / (25.4 * sizeX);
+  gv_real_ydpi = 72.0 * 72.0 * (float)gv_screen_height / (25.4 * sizeY);
   gv_pixel_xdpi = 72.0;
   gv_pixel_ydpi = 72.0;
   IIMESSAGE(gv_screen_width,gv_screen_height)
