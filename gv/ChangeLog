@@ -1,3 +1,7 @@
+2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/info.c: Trigger info popup on "ERROR:", too. Needed for older gs.
+
 2008-07-12  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.5.90.
