@@ -140,7 +140,7 @@ void cb_appendInfoPopup(w, client_data, call_data)
     XtSetValues(infotext,args,n);
     XawTextEnableRedisplay(infotext);
     if (!infoPopupVisible && gv_infoVerbose)
-       if (gv_infoVerbose == 2 || (strstr((char*)call_data, "Error:") && strstr((char*)call_data, "ERROR:") && strstr((char*)call_data, "error:")))
+       if (gv_infoVerbose == 2 || strstr((char*)call_data, "Error:") || strstr((char*)call_data, "ERROR:") || strstr((char*)call_data, "error:"))
           cb_popupInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
     ENDMESSAGE(cb_appendInfoPopup)
 }
