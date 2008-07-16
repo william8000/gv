@@ -1,6 +1,7 @@
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 
-	* src/info.c: Trigger info popup on "ERROR:", too. Needed for older gs.
+	* src/info.c: Trigger info popup on "ERROR:" and "error:", too. 
+	Needed for older gs.
 
 2008-07-12  Markus Steinborn <msteinbo@uni-paderborn.de>
 
