@@ -1,3 +1,8 @@
+2008-07-19  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/Makefile.am: The .ad and .dat files are put into /usr/share/gv
+	(Patch from Orion Poplawski <orion@cora.nwra.com>)
+
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/info.c: Trigger info popup on "ERROR:" and "error:", too. 

@@ -6,9 +6,9 @@
 
 # File distribution
 bin_PROGRAMS = gv
-dist_pkglib_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
+dist_pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
 
-appdefaultsdir = $(pkglibdir)
+appdefaultsdir = $(pkgdatadir)
 
 appdefaults_DATA = GV
 
@@ -30,7 +30,7 @@ CLEANFILES = $(srcdir)/GV \
 	     $(srcdir)/gv_intern_res_unix.dat
 
 # Compilation flags
-AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkglibdir)\" \
+AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
               -I$(top_srcdir)/lib -I$(top_builddir)/lib -g
 
 

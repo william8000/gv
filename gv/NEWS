@@ -9,6 +9,12 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# *.ad and *.dat files are installed to $PREFIX/share/gv
+
+# "ERROR:" and "error:" now also trigger the info popup in error mode
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.5  (July 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.4.91 has been released as GV 3.6.5 with no changes
