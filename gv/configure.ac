@@ -62,6 +62,10 @@ AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
    $X_LIBS)
 AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 
+opt_mkstemp=false
+
+AC_CHECK_FUNCS([mkstemp],[opt_setenv_code=true],[opt_setenv_code=false])
+AM_CONDITIONAL(HAVE_MKSTEMP, test x$opt_mkstemp = xtrue)
 
 
 dnl WITH options

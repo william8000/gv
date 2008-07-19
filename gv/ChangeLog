@@ -2,6 +2,11 @@
 
 	* src/Makefile.am: The .ad and .dat files are put into /usr/share/gv
 	(Patch from Orion Poplawski <orion@cora.nwra.com>)
+	
+	* configure.ac: Test for the presence of "mkstemp()"
+	
+	* src/file.c (file_getTmpFilename): Use mkstemp (if available) for
+	getting the temporary filename
 
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 

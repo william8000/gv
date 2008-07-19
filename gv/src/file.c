@@ -198,6 +198,16 @@ file_getTmpFilename(baseDirectory,baseFilename)
       int no_such_file;
       int i=1;
       do {
+#if HAVE_MKSTEMP
+#ifdef VMS
+         sprintf(tempFilename,"%sgv_%s_%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
+#else
+         sprintf(tempFilename,"%sgv_%s.%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
+#endif
+         file_translateTildeInPath(tempFilename);
+         no_such_file = 1;
+         close(mkstemp(tempFilename));
+#else
 #ifdef VMS
          sprintf(tempFilename,"%sgv_%lx_%x_%s_%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
 #else
@@ -205,6 +215,7 @@ file_getTmpFilename(baseDirectory,baseFilename)
 #endif
          file_translateTildeInPath(tempFilename);
          no_such_file = stat(tempFilename,&s);
+#endif
          i++;
       } while (!no_such_file);
    } 
