@@ -553,6 +553,8 @@ int resource_checkResources(app_name,v,vc)
     if (resource_ad_file)     fprintf(stderr,"    %s\n",resource_ad_file);
     fprintf(stderr,"belongs to an older version of gv and can not be used.\n");
     fprintf(stderr,"Please remove or update the outdated file.\n");
+    if (resource_user_file) fprintf(stderr,"Quite probable your ~/.gv is too old.\n");
+    if (resource_user_file) fprintf(stderr,"Running gv-update-userconfig should help\nby removing all incomatible resources.\n");
     r=0;
   }
   ENDMESSAGE(resource_checkResources)

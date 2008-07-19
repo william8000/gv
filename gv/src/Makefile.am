@@ -6,6 +6,7 @@
 
 # File distribution
 bin_PROGRAMS = gv
+bin_SCRIPTS = gv-update-userconfig
 dist_pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
 
 appdefaultsdir = $(pkgdatadir)
@@ -250,8 +251,6 @@ $(srcdir)/gv_make_res.dat :
 	@echo "			*.pdf*  no  .*\n\\"			>> $(srcdir)/gv_make_res.dat
 	@echo "			no  .*"					>> $(srcdir)/gv_make_res.dat
 	@echo ""							>> $(srcdir)/gv_make_res.dat
-
-
 
 # Conditional source files
 

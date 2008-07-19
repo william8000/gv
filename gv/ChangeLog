@@ -15,6 +15,12 @@
 	* Use Xinerama to get display resolution if the xinerama resource 
 	is set to "On". If it is set to "Auto", let the heuristic from
 	2008-07-12 decide. If it is set to "off", do not use Xinerama at all.
+	
+	* src/resource.c: More informative error message in case of too old
+	~/.gv
+	
+	* src/Makefile.am src/gv-update-userconfig: New script for upating the
+	user config.
 
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 
