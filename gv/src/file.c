@@ -198,7 +198,7 @@ file_getTmpFilename(baseDirectory,baseFilename)
       int no_such_file;
       int i=1;
       do {
-#if HAVE_MKSTEMP
+#ifdef HAVE_MKSTEMP
 #ifdef VMS
          sprintf(tempFilename,"%sgv_%s_%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
 #else
