@@ -7,6 +7,14 @@
 	
 	* src/file.c (file_getTmpFilename): Use mkstemp (if available) for
 	getting the temporary filename
+	
+	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, 
+	src/main.c, src/main_globals.h, src/resource.c: Add handling of 
+	xinerama resource
+	
+	* Use Xinerama to get display resolution if the xinerama resource 
+	is set to "On". If it is set to "Auto", let the heuristic from
+	2008-07-12 decide. If it is set to "off", do not use Xinerama at all.
 
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 

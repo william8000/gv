@@ -71,6 +71,7 @@ typedef struct {
     String		interpreter;
     Boolean		quiet;
     int                 infoVerbose;
+    int                 xinerama;
     Boolean		safer;
     Boolean		use_bpixmap;
     String		arguments;

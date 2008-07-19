@@ -142,6 +142,8 @@ static XtResource resources[] = {
 	  offset(quiet), XtRImmediate, (XtPointer)True },
     { XtNinfoVerbose, XtCinfoVerbose, XtRinfoVerbose, sizeof(int),
 	  offset(infoVerbose), XtRImmediate, (XtPointer)0 },
+    { XtNxinerama, XtCxinerama, XtRxinerama, sizeof(int),
+	  offset(xinerama), XtRImmediate, (XtPointer)0 },
     { XtNrightMargin, XtCMargin, XtRInt, sizeof(int),
 	  offset(right_margin), XtRImmediate, (XtPointer)0 },
     { XtNscrollCursor, XtCCursor, XtRCursor, sizeof(XtPointer),

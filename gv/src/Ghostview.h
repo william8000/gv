@@ -89,6 +89,7 @@
 #define XtNarguments "arguments"
 #define XtNquiet "quiet"
 #define XtNinfoVerbose "infoVerbose"
+#define XtNxinerama "xinerama"
 #define XtNllx "llx"
 #define XtNlly "lly"
 #define XtNurx "urx"
@@ -111,6 +112,7 @@
 #define XtCArguments "Arguments"
 #define XtCQuiet "Quiet"
 #define XtCinfoVerbose "infoVerbose"
+#define XtCxinerama "Xinerama"
 #define XtCLResolution "LResolution"
 #define XtCUseBackingPixmap "UseBackingPixmap"
 #define XtCPreferredWidth  "PreferredWidth"
@@ -144,6 +146,7 @@ typedef enum {
 #endif /* GV_CODE */
 #define XtRPageOrientation "PageOrientation"
 #define XtRinfoVerbose "InfoVerbose"
+#define XtRxinerama "xinerama"
 
 /******************************************************************************
  * XmuCvtStringToPalette

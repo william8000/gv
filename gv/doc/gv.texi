@@ -96,7 +96,7 @@ PostScript and PDF viewer.
   [-]-nocenter                        the page should not be centered automatically
   [-]-media=MEDIA                     selects the paper size to be used
   [-]-orientation=ORIENTATION         sets the orientation of the page
-  [-]-scale=N                         selects the scale N
+  [-]-scale=N|f.f                     selects the scale N, or arbitrary scale f.f
   [-]-scalebase=N                     selects the scale base N
   [-]-swap                            interchange the meaning of the orientations landscape
                                       and seascape
@@ -124,9 +124,9 @@ PostScript and PDF viewer.
                                       have lower priority than those provided on the context of --ad
   [-]-spartan                         shortcut for --style=gv_spartan.dat
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat
-  [-]-fullscreen                      enable fullscreen mode
-  [-]-presentation                    Presentation mode (fullscreen, Fit to window and
-                                      no resizing of window)
+  [-]-fullscreen                      start in fullscreen mode (needs support from WM)
+  [-]-presentation                    Presentation mode (fullscreen, Fit to window,
+                                      widgetless and no resizing of window)
   [-]-version                         show gv version and exit
 @end verbatim
 
@@ -320,6 +320,12 @@ Defines the behavior of the info popup which shows messages from ghostscript. Va
 (show only errror messages) and @code{All} (Any message is being shown).
 
 It defaults to @code{Errors}.
+@item xinerama
+Defines whether the display resolution is determined by xinerama. Valid values are @code{On} (use
+Xinerama if available),  qcode{Off} (do not use Xinerama) and @code{Auto}
+(heuristically decide whether to use Xinerama or not).
+
+It defaults to @code{Auto}.
 @item ignoreEOF
 Defines the behaviour of the postscript scanner as described
 in the Options section.

@@ -169,6 +169,7 @@ enum
     INFOSILENT_ARG,
     INFOERRORS_ARG,
     INFOALL_ARG,
+    DEBUG_ARG,
     FULLSCREEN_ARG,
     PRESENTATION_ARG,
     MONOCHROME_ARG,
@@ -215,6 +216,7 @@ static struct option const GNU_longOptions[] =
     {"infoSilent", no_argument, NULL, INFOSILENT_ARG},
     {"infoErrors", no_argument, NULL, INFOERRORS_ARG},
     {"infoAll", no_argument, NULL, INFOALL_ARG},
+    {"debug", no_argument, NULL, DEBUG_ARG},
     {"fullscreen", no_argument, NULL, FULLSCREEN_ARG},
     {"presentation", no_argument, NULL, PRESENTATION_ARG},
     {"monochrome", no_argument, NULL, MONOCHROME_ARG},
@@ -582,6 +584,10 @@ int main(argc, argv)
 	   break;
 	 case INFOALL_ARG:
 	   infoverbose_p = 2;
+	   opt_counter++;
+	   break;
+	 case DEBUG_ARG:
+	   debug_p = 1;
 	   opt_counter++;
 	   break;
 	 case MONOCHROME_ARG:
@@ -1399,6 +1405,11 @@ void main_setGhostscriptResources(db)
   else if (!strcasecmp(s, "Errors")) gv_infoVerbose=1;
   else if (!strcasecmp(s, "All"))    gv_infoVerbose=2;
   else gv_infoVerbose = 1;
+  s = resource_getResource(db,gv_class,gv_name,"xinerama",NULL);
+  if (!strcasecmp(s, "Off"))      gv_xinerama=0;
+  else if (!strcasecmp(s, "On")) gv_xinerama=1;
+  else if (!strcasecmp(s, "Auto"))    gv_xinerama=-1;
+  else gv_xinerama = 0;
   ENDMESSAGE(main_setGhostscriptResources)
 }
 
@@ -1416,7 +1427,7 @@ void main_setResolutions(query)
   BEGINMESSAGE(main_setResolutions)
   if (query) scale_getScreenSize(gv_display,gv_screen,gv_database,gv_class,gv_name,&gv_screen_width,&gv_screen_height);
   
-  printf("Your detected screen size is: %i mm x %i mm\n", gv_screen_width, gv_screen_height);
+  if (debug_p) printf("Your detected screen size is: %i mm x %i mm\n", gv_screen_width, gv_screen_height);
 
   /* Some Xinerama implementations summarize the size over all displays.
      In this case you must use the summarized resolution, too.
@@ -1429,17 +1440,21 @@ void main_setResolutions(query)
   if ( ratio >= 2 || ratio < 1 ) /* does not look like a single monitor */
   {
      checkXinerama = 0;
-     printf ("That does not look like a single monitor, as the ratio is %.2f.\n", ratio);
+     if (debug_p) printf ("That does not look like a single monitor, as the ratio is %.2f.\n", ratio);
   }
   else
-     printf ("That looks like a single monitor, as the ratio is %.2f.\n", ratio);
+     if (debug_p) printf ("That looks like a single monitor, as the ratio is %.2f.\n", ratio);
      
   sizeX = WidthOfScreen(gv_screen);
   sizeY = HeightOfScreen(gv_screen);
-  printf("Your detected screen resolution is: %i x %i\n", sizeX, sizeY);
+  if (debug_p) printf("Your detected screen resolution is: %i x %i\n", sizeX, sizeY);
 
 #if HAVE_LIBXINERAMA
   /* In case we do not have Xinerama at all */
+  if (gv_xinerama == 0)
+     checkXinerama = 0;
+  else if (gv_xinerama == 1)
+     checkXinerama = 1;
   if (!XineramaIsActive(gv_display))
      checkXinerama = 0;
 
@@ -1450,7 +1465,7 @@ void main_setResolutions(query)
     head_info = (XineramaScreenInfo *) XineramaQueryScreens(gv_display,&num_heads);
     sizeX = head_info[0].width;
     sizeY = head_info[0].height;
-    printf("Xinerama's resolution of screen 0 is: %i x %i\n", sizeX, sizeY);
+    if (debug_p) printf("Xinerama's resolution of screen 0 is: %i x %i\n", sizeX, sizeY);
   }
 #endif
 
