@@ -322,7 +322,7 @@ Defines the behavior of the info popup which shows messages from ghostscript. Va
 It defaults to @code{Errors}.
 @item xinerama
 Defines whether the display resolution is determined by xinerama. Valid values are @code{On} (use
-Xinerama if available),  qcode{Off} (do not use Xinerama) and @code{Auto}
+Xinerama if available),  @code{Off} (do not use Xinerama) and @code{Auto}
 (heuristically decide whether to use Xinerama or not).
 
 It defaults to @code{Auto}.
