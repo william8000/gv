@@ -218,6 +218,7 @@ gv_class.h : gv_class.ad
 gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
 	@echo "creating gv_class.ad"
 	cp $(srcdir)/gv_copyright.dat gv_class.ad
+	chmod u+w gv_class.ad
 	@echo "!" >> gv_class.ad
 	@echo "!  gv_class.ad" >> gv_class.ad
 	@echo "!  Application class defaults for gv" >> gv_class.ad
