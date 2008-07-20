@@ -73,7 +73,7 @@ sub compare
 }
 
 $remove{"GV.version"} = 1;
-$remove{"GV.scales"} = 1 if compare($VER, "gv 3.5.8");
+$remove{"GV.scales"} = 1 if compare($VER, "gv 3.6.4.90");
 
 $newfile = "";
 
@@ -81,12 +81,11 @@ for $line (@res)
 {
    $line =~ /^([^:]+):/ ;
    $name = $1;
-   
    $newfile .= "$line\n" unless defined $remove{$name};
+   print "Removing resource $name\n" if defined $remove{$name} && $name ne "GV.version";
 }
 
 $newfile .= "GV.version:\t\tgv 3.6.5\n";
-
 
 open ($file, ">", "$ENV{HOME}/.gv") or die "Cannot open ~/.gv for writing.\n";
 print $file $newfile;
