@@ -7,7 +7,8 @@
 # File distribution
 bin_PROGRAMS = gv
 bin_SCRIPTS = gv-update-userconfig
-dist_pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
+dist_pkgdata_DATA = gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
+pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad
 
 appdefaultsdir = $(pkgdatadir)
 
@@ -19,13 +20,13 @@ EXTRA_DIST=ad2c gv_font_res.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc
 
 # Clean files
 CLEANFILES = ../GV \
-             $(srcdir)/GV.ad \
-             $(srcdir)/gv_system.ad \
-             $(srcdir)/gv_user.ad \
+             GV.ad \
+             gv_system.ad \
+             gv_user.ad \
              gv_spartan.h \
              gv_widgetless.h \
              gv_intern_res_unix.h \
-             $(srcdir)/gv_class.ad \
+             gv_class.ad \
              gv_class.h \
              gv_make_res.dat \
 	     gv_intern_res_unix.dat
@@ -159,25 +160,25 @@ BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 	@echo "creating GV"
 	sed -e 's/^[^!]/!&/' GV.ad > ../GV
 
-GV.ad : $(srcdir)/gv_system.ad
+GV.ad : gv_system.ad
 	@echo "creating GV.ad"
-	@cp $(srcdir)/gv_system.ad GV.ad
+	@cp gv_system.ad GV.ad
 
-$(srcdir)/gv_system.ad : $(srcdir)/gv_user.ad
+gv_system.ad : gv_user.ad
 	@echo "creating gv_system.ad"
-	@cp $(srcdir)/gv_user.ad $(srcdir)/gv_system.ad
+	@cp gv_user.ad gv_system.ad
 
-$(srcdir)/gv_user.ad : $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat gv_make_res.dat
+gv_user.ad : $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat gv_make_res.dat
 	@echo "creating gv_user.ad"
-	@echo "!"						>  $(srcdir)/gv_user.ad
-	@echo "!  gv_user.ad"				>> $(srcdir)/gv_user.ad
-	@echo "!  User specific application defaults for gv"	>> $(srcdir)/gv_user.ad
-	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass"	>> $(srcdir)/gv_user.ad
-	@echo "!  Copyright (C) 2004,2005,2006,2007 José E. Marchesi"	>> $(srcdir)/gv_user.ad
-	@echo "!"						>> $(srcdir)/gv_user.ad
-	@cat $(srcdir)/gv_user_res.dat					>> $(srcdir)/gv_user.ad
-	@cat gv_intern_res_unix.dat				>> $(srcdir)/gv_user.ad
-	@cat gv_make_res.dat					>> $(srcdir)/gv_user.ad
+	@echo "!"						>  gv_user.ad
+	@echo "!  gv_user.ad"				>> gv_user.ad
+	@echo "!  User specific application defaults for gv"	>> gv_user.ad
+	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass"	>> gv_user.ad
+	@echo "!  Copyright (C) 2004,2005,2006,2007 José E. Marchesi"	>> gv_user.ad
+	@echo "!"						>> gv_user.ad
+	@cat $(srcdir)/gv_user_res.dat					>> gv_user.ad
+	@cat gv_intern_res_unix.dat				>> gv_user.ad
+	@cat gv_make_res.dat					>> gv_user.ad
 
 
 
@@ -210,26 +211,26 @@ gv_intern_res_unix.dat :
 	@echo "GV.printCommand:	$(PRINT_COMMAND)" >> gv_intern_res_unix.dat
 
 
-gv_class.h : $(srcdir)/gv_class.ad
+gv_class.h : gv_class.ad
 	@echo "creating gv_class.h"
-	@sh $(srcdir)/ad2c $(srcdir)/gv_class.ad > gv_class.h
+	@sh $(srcdir)/ad2c gv_class.ad > gv_class.h
 
-$(srcdir)/gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
+gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
 	@echo "creating gv_class.ad"
-	cp $(srcdir)/gv_copyright.dat $(srcdir)/gv_class.ad
-	@echo "!" >> $(srcdir)/gv_class.ad
-	@echo "!  gv_class.ad" >> $(srcdir)/gv_class.ad
-	@echo "!  Application class defaults for gv" >> $(srcdir)/gv_class.ad
-	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass" >> $(srcdir)/gv_class.ad
-	@echo "!  Copyright (C) 2004,2005,2006,2007 José E. Marchesi" >> $(srcdir)/gv_class.ad
-	@echo "!" >> $(srcdir)/gv_class.ad
-	@echo ""  >> $(srcdir)/gv_class.ad
-	@cat $(srcdir)/gv_user_res.dat >> $(srcdir)/gv_class.ad
-	@cat gv_intern_res_unix.dat >> $(srcdir)/gv_class.ad
-	@cat gv_make_res.dat >> $(srcdir)/gv_class.ad
-	@cat $(srcdir)/gv_font_res.dat >> $(srcdir)/gv_class.ad
-	@cat $(srcdir)/gv_misc_res.dat >> $(srcdir)/gv_class.ad
-	@cat $(srcdir)/gv_layout_res.dat >> $(srcdir)/gv_class.ad
+	cp $(srcdir)/gv_copyright.dat gv_class.ad
+	@echo "!" >> gv_class.ad
+	@echo "!  gv_class.ad" >> gv_class.ad
+	@echo "!  Application class defaults for gv" >> gv_class.ad
+	@echo "!  Copyright (C) 1995, 1996, 1997  Johannes Plass" >> gv_class.ad
+	@echo "!  Copyright (C) 2004,2005,2006,2007 José E. Marchesi" >> gv_class.ad
+	@echo "!" >> gv_class.ad
+	@echo ""  >> gv_class.ad
+	@cat $(srcdir)/gv_user_res.dat >> gv_class.ad
+	@cat gv_intern_res_unix.dat >> gv_class.ad
+	@cat gv_make_res.dat >> gv_class.ad
+	@cat $(srcdir)/gv_font_res.dat >> gv_class.ad
+	@cat $(srcdir)/gv_misc_res.dat >> gv_class.ad
+	@cat $(srcdir)/gv_layout_res.dat >> gv_class.ad
 
 
 gv_make_res.dat :
