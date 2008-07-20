@@ -29,5 +29,5 @@ $chicken eval $cmd || exit 1
 
 echo
 echo "Now run configure with your desired options, for instance:"
-echo "  ./configure CFLAGS=-g --enable-backing-pixmap"
+echo "  ./configure --enable-maintainer-mode CFLAGS=-g --enable-backing-pixmap"
 echo

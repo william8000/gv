@@ -263,4 +263,4 @@ AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
 
 
 dnl Generate output files
-AC_OUTPUT(Makefile doc/version.texi lib/Makefile src/Makefile doc/Makefile)
+AC_OUTPUT(Makefile lib/Makefile src/Makefile doc/Makefile)

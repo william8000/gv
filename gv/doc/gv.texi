@@ -6,10 +6,11 @@
 @comment %**end of header
 
 @include version.texi
+@set MYEDITION First
 
 @copying
-This is the @value{EDITION} edition of the @cite{GNU gv Manual},
-updated for gv version @value{GVVER}.
+This is the @value{MYEDITION} edition of the @cite{GNU gv Manual},
+updated for gv version @value{VERSION}.
 
 Copyright @copyright{} 1995, 1996, 1997 Johannes Plass
 
@@ -31,7 +32,7 @@ any later version published by the Free Software Foundation.
 @sp 6
 @center @titlefont{GNU gv Manual}
 @sp 4
-@center @value{EDITION} Edition, Updated for gv Version @value{GVVER}.
+@center @value{MYEDITION} Edition, Updated for gv Version @value{VERSION}.
 @sp 5
 @center Johannes Plass
 @center Jos@'e E. Marchesi

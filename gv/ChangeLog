@@ -12,7 +12,7 @@
 	src/main.c, src/main_globals.h, src/resource.c: Add handling of 
 	xinerama resource
 	
-	* Use Xinerama to get display resolution if the xinerama resource 
+	* src/main.c: Use Xinerama to get display resolution if the xinerama resource 
 	is set to "On". If it is set to "Auto", let the heuristic from
 	2008-07-12 decide. If it is set to "off", do not use Xinerama at all.
 	
@@ -21,6 +21,11 @@
 	
 	* src/Makefile.am src/gv-update-userconfig: New script for upating the
 	user config.
+	
+	* doc/Makefile.am src/Makefile.am: Out of tree built
+	Build GV outside of src directory (Patch by Bernhard R. Link)
+	
+	* configure.ac: Out of tree build
 
 2008-07-16  Markus Steinborn <msteinbo@uni-paderborn.de>
 

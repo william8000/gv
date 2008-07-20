@@ -11,14 +11,14 @@ dist_pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad gv_spartan.dat gv_user_r
 
 appdefaultsdir = $(pkgdatadir)
 
-appdefaults_DATA = GV
+appdefaults_DATA = ../GV
 
 EXTRA_DIST=ad2c gv_font_res.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
            gv_selected.xbm gv_unmark.xbm
 
 # Clean files
-CLEANFILES = $(srcdir)/GV \
+CLEANFILES = ../GV \
              $(srcdir)/GV.ad \
              $(srcdir)/gv_system.ad \
              $(srcdir)/gv_user.ad \
@@ -155,9 +155,9 @@ BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 
 # Additional rules for generating styles
 
-GV : $(srcdir)/GV.ad
+../GV : $(srcdir)/GV.ad
 	@echo "creating GV"
-	sed -e 's/^[^!]/!&/' $(srcdir)/GV.ad > $(srcdir)/GV
+	sed -e 's/^[^!]/!&/' $(srcdir)/GV.ad > ../GV
 
 $(srcdir)/GV.ad : $(srcdir)/gv_system.ad
 	@echo "creating GV.ad"
