@@ -15,3 +15,6 @@ man_MANS = gv.1
 
 $(srcdir)/gv.1: $(top_srcdir)/src/versionp.h $(top_srcdir)/src/gv_message.h
 	help2man -n 'Postscript and PDF viewer' -o $(srcdir)/gv.1 ../src/gv
+
+# This hack allows building CVS without having to anable maintainer mode
+$(srcdir)/version.texi: $(srcdir)/stamp-vti
