@@ -147,7 +147,8 @@ gv_SOURCES = Aaa.c \
              d_ps_mem.h \
              d_ps_xtmem.h \
              gv_message.h \
-             types.h
+             types.h \
+             gv-update-userconfig
 
 BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 
