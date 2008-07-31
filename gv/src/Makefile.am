@@ -233,7 +233,7 @@ gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.
 	@cat $(srcdir)/gv_misc_res.dat >> gv_class.ad
 	@cat $(srcdir)/gv_layout_res.dat >> gv_class.ad
 
-
+sysdocdir = /usr/doc
 gv_make_res.dat :
 	@echo "creating gv_make_res.dat"
 	@echo ""							>  gv_make_res.dat
@@ -245,7 +245,7 @@ gv_make_res.dat :
 	@echo "GV.useBackingPixmap:	$(USE_BACKING_PIXMAP)"		>> gv_make_res.dat
 	@echo "GV*dirs:		Home\n\\"				>> gv_make_res.dat
 	@echo "			Tmp\n\\"				>> gv_make_res.dat
-	@echo "			/usr/doc\n\\"				>> gv_make_res.dat
+	@echo "			$(sysdocdir)\n\\"			>> gv_make_res.dat
 	@echo "			/usr/local/doc"				>> gv_make_res.dat
 	@echo "GV*filter:		no .*"				>> gv_make_res.dat
 	@echo "GV*filters:		None\n\\"			>> gv_make_res.dat

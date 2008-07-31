@@ -15,8 +15,11 @@ by a '#' or a '*' or a '?'. A
 
 # "ERROR:" and "error:" now also trigger the info popup in error mode
 
-# Xinerama support. It can be configured by the "xinerama"-resource. Its values
-can be "On", "Off" or "Auto". "Auto" is the default.
+# Xinerama support. It can be configured by the "xinerama"-resource.
+Its values can be "On", "Off" or "Auto". "Auto" is the default.
+
+# New helper Script "gv-update-userconfig", which is a simple script to
+update an .gv config file to the current version of gv.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5  (July 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

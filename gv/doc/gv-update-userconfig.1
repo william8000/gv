@@ -1,0 +1,40 @@
+.TH GV 1 "2008-07-31" "gv" "User Commands"
+.SH NAME
+gv\-update\-userconfig \- update ~/.gv config file
+.SH SYNOPSIS
+.B gv\-update\-userconfig
+.SH DESCRIPTION
+.B gv\-update\-userconfig
+is a simple script to update an
+.B .gv
+config file
+to the current version of
+.BR gv (1).
+
+This is done by removing all entries known to cause problems with
+the current version of gv (i.e. the one the version of this program
+belongs to) and updating the version information in that file.
+This resets all problematic items back to the default values.
+
+.SH BACKGROUND
+The \fI$(HOME)\fP\fB/.gv\fP file is written by gv when activating the
+\fBSave\fP button in one of the configuration dialogs.
+
+The values in there are used, if there is no display-specific
+resource value (loaded from \fI$(HOME)\fP\fB/.Xresources\fP at login time
+or manually \fBxrdb\fP(1)).
+
+Sometimes older values miss things needed by the new gv to work properly.
+This gv will noticy by an old (or missing) version information in this
+file and refuse to start until fixed.
+
+.SH "SEE ALSO"
+.BR gv (1),
+.BR xrdb (1).
+
+.SH COPYRIGHT
+This manpage is Copyright \(co 2008 Bernhard R. Link
+and can be used, copied, distributed and/or modified without restrictions.
+.br
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

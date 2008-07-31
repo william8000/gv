@@ -1,3 +1,12 @@
+2008-07-31  Bernhard R. Link <brlink@debian.org>
+
+	* doc/gv-update-userconfig.1: Man-page for gv-update-userconfig
+	
+	* doc/Makefile.am: include and install doc/gv-update-userconfig.1
+	
+	* src/Makefile.am: Use configurable "sysconfdir" for generating
+	src/gv_make_res.dat
+
 2008-07-19  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/Makefile.am: The .ad and .dat files are put into /usr/share/gv
