@@ -168,6 +168,9 @@ AaaClassRec aaaClassRec = {
     /* destroy            */   NULL,
     /* set_values         */   NULL,
     /* extension          */   NULL
+   }, {
+/* dummy Aaa fields */
+    /* foo                */   0,
    }
 };
 

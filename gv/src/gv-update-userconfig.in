@@ -22,6 +22,26 @@
 
 @res = ();
 %res = ();
+%resDefault = ();
+
+$saveUnchanged = 1;
+$help = 0;
+
+for $i (@ARGV)
+{
+   $saveUnchanged = 0  if $i eq "-r";
+   $help = 1 if $i eq "-h";
+}
+
+if ($help)
+{
+   print "Syntax: gv-update-userconfig [-r]\n\n";
+   print "-r : Remove resources that have default value, too\n\n";
+   print "gv-update-userconfig is a simple script to update an .gv config file to\n";
+   print "the current version of gv by removing all entries known to cause problems\n";
+   print "with the current version of gv.\n\n";
+}
+
 
 open ($file, "<", "$ENV{HOME}/.gv") or die "Cannot open ~/.gv for reading.\n";
 while (<$file>)
@@ -44,6 +64,24 @@ while (<$file>)
    }
 }
 close $file;
+
+while (<DATA>)
+{
+   chomp;
+   $read = $_;
+   $line = $read;
+   while ( $read =~ /\\$/ )
+   {
+      $read = <DATA>;
+      chomp $read;
+      $line .= "\n$read";
+   }
+   
+   if ($line =~ /^([^:]+):/ )
+   {
+      $resDefault{$1} = $line;
+   }
+}
 
 $VER = "gv 3.5.8";
 $VER = $res{"GV.version"} if defined $res{"GV.version"};
@@ -79,10 +117,45 @@ $newfile = "";
 
 for $line (@res)
 {
-   $line =~ /^([^:]+):/ ;
-   $name = $1;
-   $newfile .= "$line\n" unless defined $remove{$name};
-   print "Removing resource $name\n" if defined $remove{$name} && $name ne "GV.version";
+   if ($line =~ /^([^:]+):/ )
+   {
+      $name = $1;
+      $changed = 0;
+
+      $tmp1 = $resDefault{$name};
+      $tmp2 = $line;
+
+      $tmp1 =~ s/\t+/ /g;
+      $tmp1 =~ s/\x09+/ /g;
+      $tmp1 =~ s/:  +/: /g;
+      $tmp1 =~ s/^[\t ]+/\t/mg;
+      $tmp1 =~ s/[\t ]+\\n/\\n/g;
+
+      $tmp2 =~ s/\t+/ /g;
+      $tmp2 =~ s/\x09+/ /g;
+      $tmp2 =~ s/:  +/: /g;
+      $tmp2 =~ s/^[\t ]+/\t/mg;
+      $tmp2 =~ s/[\t ]+\\n/\\m/g;
+
+      $changed = 1 if $tmp1 ne $tmp2;
+
+      $newfile .= "$line\n" if !defined $remove{$name} and ($saveUnchanged or $changed);
+      if (defined $remove{$name} && $name ne "GV.version")
+      {
+         print "Removing resource $name\n";
+      }
+      else
+      {
+	 if (!$saveUnchanged and !$changed)
+	 {
+            print "Removing default resource $name\n";
+	 }
+      }
+   }
+   else
+   {
+      $newfile .= $line."\n";
+   }
 }
 
 $newfile .= "GV.version:\t\tgv 3.6.5\n";

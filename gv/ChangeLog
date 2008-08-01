@@ -1,3 +1,13 @@
+2008-08-01  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/gv-update-userconfig: Renamed to src/gv-update-userconfig.in
+
+	* src/Makefile.am: Built src/gv-update-userconfig from
+	src/gv-update-userconfig.in by appending the default resources
+	
+	* src/gv-update-userconfig.in: Option "-r" to remove all resources from
+	~/.gv that have their default value
+
 2008-07-31  Bernhard R. Link <brlink@debian.org>
 
 	* doc/gv-update-userconfig.1: Man-page for gv-update-userconfig
@@ -6,6 +16,15 @@
 	
 	* src/Makefile.am: Use configurable "sysconfdir" for generating
 	src/gv_make_res.dat
+	
+	* src/Aaa.c (aaaClassRec): Initialize the "dummy"-field.
+	
+	* src/Scrollbar.c src/actions.c : Some arguments miss a type.
+	
+	* src/file.c: Include unistd.h as close is used
+	
+	* src/file.c(file_getTmpFilename): a variable "struct stat s" is
+	sometimes not used and therefore need not to be declared in that cases.
 
 2008-07-19  Markus Steinborn <msteinbo@uni-paderborn.de>
 

@@ -3,9 +3,9 @@
 
 !##### Application specific Resources
 
-GV.pageMedia:		automatic
-GV.orientation:		automatic
-GV.fallbackOrientation:	portrait
+GV.pageMedia:		Automatic
+GV.orientation:		Automatic
+GV.fallbackOrientation:	Portrait
 GV.swapLandscape:	False
 GV.autoCenter:		True
 GV.antialias:		True

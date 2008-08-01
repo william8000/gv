@@ -70,11 +70,11 @@ AM_CONDITIONAL(HAVE_MKSTEMP, test x$opt_mkstemp = xtrue)
 
 dnl WITH options
 
-AC_ARG_WITH(default-papersize, AC_HELP_STRING([--with-default-papersize=PSIZE],[The default papersize (can be changed at runtime). Defaults to `a4']), opt_default_papersize=$withval, opt_default_papersize=a4)
+AC_ARG_WITH(default-papersize, AC_HELP_STRING([--with-default-papersize=PSIZE],[The default papersize (can be changed at runtime). Defaults to `A4']), opt_default_papersize=$withval, opt_default_papersize=A4)
 
 test "$opt_default_papersize" = "yes" && {
 
-     opt_default_papersize=a4
+     opt_default_papersize=A4
 
 }
 

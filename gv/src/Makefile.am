@@ -29,7 +29,8 @@ CLEANFILES = ../GV \
              gv_class.ad \
              gv_class.h \
              gv_make_res.dat \
-	     gv_intern_res_unix.dat
+	     gv_intern_res_unix.dat \
+             gv-update-userconfig
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
@@ -149,7 +150,7 @@ gv_SOURCES = Aaa.c \
              d_ps_xtmem.h \
              gv_message.h \
              types.h \
-             gv-update-userconfig
+             gv-update-userconfig.in
 
 BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
 
@@ -254,6 +255,11 @@ gv_make_res.dat :
 	@echo "			*.pdf*  no  .*\n\\"			>> gv_make_res.dat
 	@echo "			no  .*"					>> gv_make_res.dat
 	@echo ""							>> gv_make_res.dat
+
+gv-update-userconfig: $(srcdir)/gv-update-userconfig.in GV.ad
+	cat $(srcdir)/gv-update-userconfig.in > gv-update-userconfig
+	echo "__END__" >> gv-update-userconfig
+	cat GV.ad >> gv-update-userconfig
 
 # Conditional source files
 

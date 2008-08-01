@@ -113,10 +113,7 @@ action_shellConfigureNotify(w, event, params, num_params)
 /* action_page */
 /*##################################################################*/
 
-static int scroll_success(clip,e,x,y,nx,ny)
-  Widget clip;
-  int e;
-  int x,y;
+static int scroll_success(Widget clip, int e, int x, int y, int nx, int ny)
 {
   int tx,ty;
   ClipWidgetCheckCoordinates(clip,nx,ny,&tx,&ty);

@@ -43,6 +43,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <time.h>
 #include <ctype.h>
@@ -194,7 +195,9 @@ file_getTmpFilename(baseDirectory,baseFilename)
       if (strlen(tmpName)+strlen(tmpExt)>23) tmpName[23-strlen(tmpExt)] = '\0';
    }
    {
+#ifndef HAVE_MKSTEMP
       struct stat s;
+#endif
       int no_such_file;
       int i=1;
       do {

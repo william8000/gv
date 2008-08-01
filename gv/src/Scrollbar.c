@@ -416,10 +416,7 @@ static void PaintShadowAtEndOfThumb(SBW,yt,yb,xl,xr,s,part)
     PaintWholeThumb
 ###############################################################################*/
 
-static void PaintWholeThumb(SBW,yt,yb,xl,xr,s)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension s;
+static void PaintWholeThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr, Dimension s)
 {
    BEGINMESSAGE(PaintWholeThumb)
    if (s) { 
@@ -435,10 +432,7 @@ static void PaintWholeThumb(SBW,yt,yb,xl,xr,s)
     PaintMiddleOfThumb
 ###############################################################################*/
 
-static void PaintMiddleOfThumb(SBW,yt,yb,xl,xr,s)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension s;
+static void PaintMiddleOfThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr, Dimension s)
 {
    BEGINMESSAGE(PaintMiddleOfThumb)
    if ((int)s) PaintShadowAtSidesOfThumb(SBW,yt,yb,xl,xr,s);
