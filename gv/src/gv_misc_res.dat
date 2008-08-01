@@ -485,8 +485,8 @@ GV.control.baseTranslations:#replace		\n\
  <Key>KP_Add:		GV_Page(highlight+1)	\n\
  <Key>KP_Enter:		GV_Page(page=highlighted)\n\
 						\
- ~c ~s <Key>Return: 	GV_Page(page+1)		\n\
- <Key>Return: 	GV_Page(page-1)			\n\
+ ~c ~s <Key>Return: 	GV_Page(down,!page+1,top)	\n\
+ <Key>Return: 	GV_Page(top,!page-1,down)	\n\
  <Key>B:		GV_Page(page-1)		\n\
  <Key>F:		GV_Page(page+1)
 

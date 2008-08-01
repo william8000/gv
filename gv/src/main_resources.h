@@ -239,11 +239,5 @@ static XtResource resources[] = {
 
 
 /*-------------------------------------------------------------*/
-#ifdef _GV_RESOURCE_C_
-
-static XrmOptionDescRec options[0] = {
-};
-#endif /* _GV_RESOURCE_C_ */
-/*-------------------------------------------------------------*/
 
 #endif /* _GV_MAIN_RESOURCES_H_ */

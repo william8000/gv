@@ -11,6 +11,10 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+# The return key now scrolls through the whole document vertically.
+Unlike the space key no horizontal scrolling is performed. The old function
+of the return key is still available through the "Page Down" and the "f" key.
+
 # *.ad and *.dat files are installed to $PREFIX/share/gv
 
 # "ERROR:" and "error:" now also trigger the info popup in error mode
@@ -20,6 +24,8 @@ Its values can be "On", "Off" or "Auto". "Auto" is the default.
 
 # New helper Script "gv-update-userconfig", which is a simple script to
 update an .gv config file to the current version of gv.
+
+# Should build on Solaris now using sun studio 11 compiler
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5  (July 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -338,9 +338,6 @@ resource_buildDatabase (
        resource_putResource (&db, app_name, ".arguments", arguments_value);
      }
   
-  INFMESSAGE(parsing command line)
-    XrmParseCommand(&db,options,XtNumber(options),app_name,argcP,argv);
-
   /* ### style resources ######################## */
   INFMESSAGE(checking for style resources)
     s = resource_getResource(db,app_class,app_name,"style","Style");

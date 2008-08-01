@@ -1,3 +1,11 @@
+2008-08-01  Bernhard R. Link <brlink@debian.org>
+
+	* src/main_resources.h: Remive global variable options
+	
+	* src/esource.c (resource_buildDatabase): Do not call XrmParseCommand
+	to parse an empty option list. It is not needed since 
+	the cvs checkin from 2004-12-06 12:52:10 GMT.
+
 2008-08-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/gv-update-userconfig: Renamed to src/gv-update-userconfig.in
@@ -7,6 +15,10 @@
 	
 	* src/gv-update-userconfig.in: Option "-r" to remove all resources from
 	~/.gv that have their default value
+	
+	* src/gv_misc_res.dat: The return key now scrolls through the whole
+	document vertically. Unlike the space key no horizontal scrolling
+	is performed.
 
 2008-07-31  Bernhard R. Link <brlink@debian.org>
 
