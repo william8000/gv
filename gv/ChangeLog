@@ -1,3 +1,9 @@
+2008-08-02  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/action.c (action_print_pos): Code cleanup
+	
+	* src/callbacks.c (cb_printpos, cb_doPrintPos): likewise
+
 2008-08-02  Thanh Han The <hanthethanh@gmail.com>
 
 	* arc/action.c (action_savepos): Handling the new "z"-key for saving
@@ -27,8 +33,10 @@
 	* src/main.c: Add event handlers for GV_PrintPos and GV_SavePos.
 	Update gv_savepos_filename by resource GV.saveposFIlename
 	
-	* src/main_globals.h: Add Widget "saveposEntry". Add String
-	gv_savepos_filename.
+	* src/main_globals.h: Add Widget "saveposEntry". 
+	
+	* src/main_globals.h: Add String gv_savepos_filename 
+	(Improvement by Markus Steinborn)
 	
 	* src/misc.c: Set Sensitivity of new "saveposEntry".
 

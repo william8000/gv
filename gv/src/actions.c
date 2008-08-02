@@ -897,26 +897,7 @@ action_print_pos(w, event, params, num_params)
 {
 
     BEGINMESSAGE(action_print_pos)
-    if (*num_params<1)  {
-       INFMESSAGE(no parameter)
-       ENDMESSAGE(action_print_pos)
-       return;
-    }
-    if (!strcmp(params[0],"marked")) {
-       if (!XtIsSensitive(printMarkedEntry)) {
-          INFMESSAGE(print denied)
-          ENDMESSAGE(action_print_pos)
-          return;
-       }
-       cb_print_pos((Widget)NULL,(XtPointer)(PAGE_MODE_CURRENT|PAGE_MODE_MARKED),NULL);
-    } else if (!strcmp(params[0],"all")) {
-       if (!XtIsSensitive(printAllEntry)) {
-          INFMESSAGE(print denied)
-          ENDMESSAGE(action_print_pos)
-          return;
-       }
-       cb_print_pos((Widget)NULL,(XtPointer)PAGE_MODE_ALL,NULL);
-    }
+    cb_print_pos((Widget)NULL,0,NULL);
     ENDMESSAGE(action_print_pos)
 }
 

@@ -558,7 +558,6 @@ cb_print_pos(w, client_data, call_data)
 {
     char *prompt=GV_PRINT_MESSAGE;
     char *buttonlabel=GV_PRINT_BUTTON_LABEL;
-    char *message;
     char *pagelist=NULL;
 
     BEGINMESSAGE(cb_print_pos)
@@ -572,33 +571,16 @@ cb_print_pos(w, client_data, call_data)
     gv_print_mode = (int)client_data;
     pagelist=get_pagelist(&gv_print_mode);
     if (pagelist) GV_XtFree(pagelist);
-    if (gv_print_mode==PAGE_MODE_INVALID) {
-       INFMESSAGE(invalid print mode)
-       ENDMESSAGE(cb_print_pos)
-       return;
-    }
 
-    if (app_res.confirm_print) {
-       if        (gv_print_mode==PAGE_MODE_MARKED) {
-          message=GV_PRINT_MARKED_MESSAGE; INFMESSAGE(printing marked pages)
-       } else if (gv_print_mode == PAGE_MODE_CURRENT) {
-          message=GV_PRINT_PAGE_MESSAGE;   INFMESSAGE(printing current page)
-       } else {
-          message=GV_PRINT_ALL_MESSAGE;    INFMESSAGE(printing document)
-       }
-       DialogPopupSetMessage("Put a TeX command at the current position");
-       DialogPopupSetPrompt("TeX command");
-       DialogPopupSetButton(DIALOG_BUTTON_DONE,"Save",cb_doPrintPos);
-       DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPrint);
+    DialogPopupSetMessage("Put a TeX command at the current position");
+    DialogPopupSetPrompt("TeX command");
+    DialogPopupSetButton(DIALOG_BUTTON_DONE,"Save",cb_doPrintPos);
+    DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPrint);
 
-			 static char buf[MAX_LOCATOR_LENGTH];
-    	 sprintf(buf, "\\PutAtPos(%i,%i){%s}", last_psx, last_psy, "") ;
-       DialogPopupSetText(buf);
-       cb_popupDialogPopup((Widget)NULL,NULL,NULL);
-       ENDMESSAGE(cb_print_pos)
-       return;
-    }   
-    cb_doPrint((Widget)NULL,NULL,(XtPointer)gv_print_command);
+    static char buf[MAX_LOCATOR_LENGTH];
+    sprintf(buf, "\\PutAtPos(%i,%i){%s}", last_psx, last_psy, "") ;
+    DialogPopupSetText(buf);
+    cb_popupDialogPopup((Widget)NULL,NULL,NULL);
     ENDMESSAGE(cb_print_pos)
 }
 
@@ -614,7 +596,7 @@ cb_doPrintPos(w, client_data, call_data)
     BEGINMESSAGE(cb_doPrintPos)
 
     if (call_data) print_command = (String)(call_data);  /* dialog was not used */  
-    else  print_command = DialogPopupGetText(); /* dialog was used */  
+    print_command = DialogPopupGetText(); /* dialog was used */  
     if (!print_command) print_command="";
 
     FILE* posfile = fopen(gv_savepos_filename, "a");
