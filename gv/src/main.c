@@ -255,8 +255,10 @@ static XtActionsRec actions[] = {
  { "GV_Page"		, action_page			},
  { "GV_Panner"		, action_panner			},
  { "GV_Print"		, action_print			},
+ { "GV_PrintPos", action_print_pos			},
  { "GV_Quit"		, action_quit			},
  { "GV_Reopen"		, action_reopen			},
+ { "GV_SavePos"		, action_savepos			},
  { "GV_Resizing"	, action_autoResize		},
  { "GV_Save"		, action_save			},
  { "GV_SetScale"	, action_setScale		},
@@ -692,6 +694,14 @@ int main(argc, argv)
 
     main_setGhostscriptResources(gv_database);
     main_setInternResource(gv_database,&gv_print_command,"printCommand");
+
+    {    
+       char* tmp_savepos_filename;
+       main_setInternResource(gv_database,&tmp_savepos_filename,"saveposFilename");
+       strcpy(gv_savepos_filename, tmp_savepos_filename);
+       file_translateTildeInPath(gv_savepos_filename);
+    }
+    
     main_setInternResource(gv_database,&gv_uncompress_command,"uncompressCommand");
 
     gv_user_defaults_file = resource_userDefaultsFile();
@@ -889,6 +899,7 @@ int main(argc, argv)
        { &fileMenu,         "menu", NULL ,NULL},
        { &openEntry,        "open", cb_openFile, NULL},
        { &reopenEntry,      "reopen", cb_reopen, NULL},
+       { &saveposEntry,     "savepos", cb_savepos, NULL},
        { &updateEntry,      "update", cb_checkFile, (XtPointer)CHECK_FILE_VERSION },
        { NULL,              "line", NULL, NULL },
        { &printAllEntry,    "printAllPages", cb_print, (XtPointer)PAGE_MODE_ALL},

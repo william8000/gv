@@ -403,6 +403,8 @@ GV.control.baseTranslations:#replace		\n\
  <Key>p:		GV_Print(all)		\n\
  ~c ~s <Key>period:	GV_Page(redisplay)	\n\
  <Key>period:		GV_Reopen()		\n\
+ <Key>Z:               GV_SavePos()            \n\
+ <Key>U:               GV_PrintPos(marked)             \n\
  c <Key>L:		GV_Page(redisplay)	\n\
  <Key>M:		GV_SetPageMark(current,mark)\n\
  <Key>N:		GV_SetPageMark(current,unmark)\n\

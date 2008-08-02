@@ -391,6 +391,10 @@ which will be replaced by the name of the file to be
 printed.
 
 It defaults to @code{lpr}.
+@item saveposFilename
+This file is used for saving positions by the @code{z} and @code{u} keys.
+
+It defaults to @code{~/gv.savepos}.
 @item gsInterpreter
 The command used to start the ghostscript interpreter.
 
@@ -785,6 +789,13 @@ Reopen the current file
 Mark the current page
 @item N
 Unmark the current page
+@item Z
+append the current coordinate to a file whose name is given by the @code{GV.saveposFilename} resource.
+@item U
+enter a command with the current coordinate as its default parameter. By defalt it is 
+% TODO
+@cite{\PutAtPos(x,y)()}, where x,y are the current coordinate and the user can put needed commands into ().
+This command is appended to a file whose name is given by the @code{GV.saveposFilename} resource.
 @end table
 
 @node Orientation, Magnification, Miscellaneous keys, Key Bindings
@@ -902,11 +913,11 @@ Highlight next page number
 @item Keypad Enter 
 Jump to the highlighted page
 @item C-Enter
-Jump  -1 pages
+Scroll columns up
 @item S-Enter
-Jump  -1 pages
+Scroll columns up
 @item Enter
-Jump   1 pages
+Scroll columns down
 @item B
 Jump  -1 pages
 @item F

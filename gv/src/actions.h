@@ -150,6 +150,15 @@ extern void 			action_reopen (
 #endif
 );
 
+extern void 			action_savepos (
+#if NeedFunctionPrototypes
+    Widget,
+    XEvent *,
+    String *,
+    Cardinal *
+#endif
+);
+
 extern void 			action_save (
 #if NeedFunctionPrototypes
     Widget,
@@ -160,6 +169,15 @@ extern void 			action_save (
 );
 
 extern void 			action_print (
+#if NeedFunctionPrototypes
+    Widget,
+    XEvent *,
+    String *,
+    Cardinal *
+#endif
+);
+
+extern void 			action_print_pos (
 #if NeedFunctionPrototypes
     Widget,
     XEvent *,

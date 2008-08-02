@@ -137,7 +137,23 @@ extern void			cb_print (
 #endif
 );
 
+extern void			cb_print_pos (
+#if NeedFunctionPrototypes
+   Widget,
+   XtPointer,
+   XtPointer
+#endif
+);
+
 extern void			cb_doPrint (
+#if NeedFunctionPrototypes
+   Widget,
+   XtPointer,
+   XtPointer
+#endif
+);
+
+extern void			cb_doPrintPos (
 #if NeedFunctionPrototypes
    Widget,
    XtPointer,
@@ -186,6 +202,14 @@ extern void			cb_doOpenFile (
 );
 
 extern void			cb_reopen (
+#if NeedFunctionPrototypes
+   Widget,
+   XtPointer,
+   XtPointer
+#endif
+);
+
+extern void			cb_savepos (
 #if NeedFunctionPrototypes
    Widget,
    XtPointer,
@@ -312,5 +336,6 @@ extern void			cb_cancelQuit (
    XtPointer
 #endif
 );
+
 
 #endif /* _GV_CALLBACKS_H_ */

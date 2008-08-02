@@ -95,6 +95,9 @@
 static char* save_directory = NULL;
 static char* open_directory = NULL;
 
+static int last_psx;
+static int last_psy;
+
 /*############################################################*/
 /* cb_showTitle */
 /*############################################################*/
@@ -545,6 +548,90 @@ cb_print(w, client_data, call_data)
 }
 
 /*##################################################################*/
+/* cb_print_pos */
+/*##################################################################*/
+
+void
+cb_print_pos(w, client_data, call_data)
+    Widget w;
+    XtPointer client_data, call_data;
+{
+    char *prompt=GV_PRINT_MESSAGE;
+    char *buttonlabel=GV_PRINT_BUTTON_LABEL;
+    char *message;
+    char *pagelist=NULL;
+
+    BEGINMESSAGE(cb_print_pos)
+
+    if (!gv_filename) {
+       INFMESSAGE(no file)
+       ENDMESSAGE(cb_print_pos)
+       return;
+    }
+
+    gv_print_mode = (int)client_data;
+    pagelist=get_pagelist(&gv_print_mode);
+    if (pagelist) GV_XtFree(pagelist);
+    if (gv_print_mode==PAGE_MODE_INVALID) {
+       INFMESSAGE(invalid print mode)
+       ENDMESSAGE(cb_print_pos)
+       return;
+    }
+
+    if (app_res.confirm_print) {
+       if        (gv_print_mode==PAGE_MODE_MARKED) {
+          message=GV_PRINT_MARKED_MESSAGE; INFMESSAGE(printing marked pages)
+       } else if (gv_print_mode == PAGE_MODE_CURRENT) {
+          message=GV_PRINT_PAGE_MESSAGE;   INFMESSAGE(printing current page)
+       } else {
+          message=GV_PRINT_ALL_MESSAGE;    INFMESSAGE(printing document)
+       }
+       DialogPopupSetMessage("Put a TeX command at the current position");
+       DialogPopupSetPrompt("TeX command");
+       DialogPopupSetButton(DIALOG_BUTTON_DONE,"Save",cb_doPrintPos);
+       DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPrint);
+
+			 static char buf[MAX_LOCATOR_LENGTH];
+    	 sprintf(buf, "\\PutAtPos(%i,%i){%s}", last_psx, last_psy, "") ;
+       DialogPopupSetText(buf);
+       cb_popupDialogPopup((Widget)NULL,NULL,NULL);
+       ENDMESSAGE(cb_print_pos)
+       return;
+    }   
+    cb_doPrint((Widget)NULL,NULL,(XtPointer)gv_print_command);
+    ENDMESSAGE(cb_print_pos)
+}
+
+void
+cb_doPrintPos(w, client_data, call_data)
+    Widget w;
+    XtPointer client_data, call_data;
+{
+    String print_command;
+    String error=NULL;
+    char *pagelist=NULL;
+
+    BEGINMESSAGE(cb_doPrintPos)
+
+    if (call_data) print_command = (String)(call_data);  /* dialog was not used */  
+    else  print_command = DialogPopupGetText(); /* dialog was used */  
+    if (!print_command) print_command="";
+
+    FILE* posfile = fopen(gv_savepos_filename, "a");
+
+    if (posfile == NULL) {
+       INFMESSAGE(cannot open file for writting)
+       ENDMESSAGE(cb_doPrintPos)
+       return;
+    }
+    fprintf(posfile, "%s\n", print_command);
+    fclose(posfile);
+    cb_popdownNotePopup((Widget)NULL,(XtPointer)NULL,NULL);
+    cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
+    ENDMESSAGE(cb_doPrintPos)
+}
+
+/*##################################################################*/
 /* cb_doPrint */
 /*##################################################################*/
 
@@ -842,6 +929,28 @@ cb_reopen(w, client_data, call_data)
        show_page(REQUEST_REOPEN,NULL);
     }
     ENDMESSAGE(reopen_file)
+}
+
+/*##################################################################*/
+/* cb_savepos */
+/*##################################################################*/
+
+void
+cb_savepos(w, client_data, call_data)
+    Widget w;
+    XtPointer client_data, call_data;
+{
+    FILE* posfile = fopen(gv_savepos_filename, "a");
+
+    BEGINMESSAGE(cb_savepos)
+    if (posfile == NULL) {
+       INFMESSAGE(cannot open file for writting)
+       ENDMESSAGE(cb_savepos)
+       return;
+    }
+    fprintf(posfile, "%i %i\n", last_psx, last_psy);
+    fclose(posfile);
+    ENDMESSAGE(cb_savepos)
 }
 
 /*##################################################################*/
@@ -1159,6 +1268,8 @@ cb_track(w, client_data, call_data)
            }
            x=p->psx; y=p->psy;
         }
+        last_psx = p->psx;
+        last_psy = p->psy;
         ENDMESSAGE1(cb_track)
 	return;
     }
@@ -1399,5 +1510,3 @@ cb_doQuit(w, client_data, call_data)
   XtDestroyWidget(toplevel);
   ENDMESSAGE(cb_doQuit)
 }
-
-

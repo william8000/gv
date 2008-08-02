@@ -1073,6 +1073,7 @@ setup_ghostview()
     misc_setSensitive(w_unmarkAllPages    , show_unmarkAllPages    , (toc_text    != NULL));
 
     XtSetSensitive(reopenEntry,      (gv_psfile   != NULL));
+    XtSetSensitive(saveposEntry,      (gv_psfile   != NULL));
     XtSetSensitive(printAllEntry,    (gv_psfile   != NULL));
     XtSetSensitive(printMarkedEntry, (toc_text    != NULL));
     XtSetSensitive(saveAllEntry,     (gv_psfile   != NULL));

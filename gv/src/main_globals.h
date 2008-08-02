@@ -70,6 +70,7 @@ EXTERN float                   gv_pixel_xdpi;
 EXTERN float                   gv_pixel_ydpi;
 EXTERN int                     num_ghosts;             /* number of ghostview widgets active */
 EXTERN FILE                    *gv_psfile;             /* file to display */
+EXTERN char                    gv_savepos_filename[GV_MAX_FILENAME_LENGTH];    /* filename used for savepos */
 EXTERN String                  gv_filename;            /* its filename */
 EXTERN String                  gv_filename_old;        /* previous filename */
 EXTERN String                  gv_filename_dsc;        /* file resulting from PDF->DSC conversion */
@@ -174,6 +175,7 @@ EXTERN Widget         fileButton;
 EXTERN Widget            fileMenu;
 EXTERN Widget               openEntry;
 EXTERN Widget               reopenEntry;
+EXTERN Widget               saveposEntry;
 EXTERN Widget               updateEntry;
 EXTERN Widget               printAllEntry;
 EXTERN Widget               printMarkedEntry;

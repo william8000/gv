@@ -797,6 +797,23 @@ action_reopen(w, event, params, num_params)
 }
 
 /*##################################################################*/
+/* action_savepos */
+/*##################################################################*/
+
+void
+action_savepos(w, event, params, num_params)
+  Widget w;
+  XEvent *event;
+  String *params;
+  Cardinal *num_params;
+{
+  BEGINMESSAGE(action_savepos)
+  if (!XtIsSensitive(saveposEntry)) {INFMESSAGE(insensitive) ENDMESSAGE(action_savepos) return; }
+  cb_savepos((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
+  ENDMESSAGE(action_savepos)
+}
+
+/*##################################################################*/
 /* action_save */
 /* Popup the save file dialog box. */
 /*##################################################################*/
@@ -869,6 +886,38 @@ action_print(w, event, params, num_params)
        cb_print((Widget)NULL,(XtPointer)PAGE_MODE_ALL,NULL);
     }
     ENDMESSAGE(action_print)
+}
+
+void
+action_print_pos(w, event, params, num_params)
+    Widget w;
+    XEvent *event;
+    String *params;
+    Cardinal *num_params;
+{
+
+    BEGINMESSAGE(action_print_pos)
+    if (*num_params<1)  {
+       INFMESSAGE(no parameter)
+       ENDMESSAGE(action_print_pos)
+       return;
+    }
+    if (!strcmp(params[0],"marked")) {
+       if (!XtIsSensitive(printMarkedEntry)) {
+          INFMESSAGE(print denied)
+          ENDMESSAGE(action_print_pos)
+          return;
+       }
+       cb_print_pos((Widget)NULL,(XtPointer)(PAGE_MODE_CURRENT|PAGE_MODE_MARKED),NULL);
+    } else if (!strcmp(params[0],"all")) {
+       if (!XtIsSensitive(printAllEntry)) {
+          INFMESSAGE(print denied)
+          ENDMESSAGE(action_print_pos)
+          return;
+       }
+       cb_print_pos((Widget)NULL,(XtPointer)PAGE_MODE_ALL,NULL);
+    }
+    ENDMESSAGE(action_print_pos)
 }
 
 /*##################################################################*/

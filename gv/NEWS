@@ -11,6 +11,9 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+# the current coordinate can be saved to a file by the z resp. the u key.
+See gv.info for details.
+
 # The return key now scrolls through the whole document vertically.
 Unlike the space key no horizontal scrolling is performed. The old function
 of the return key is still available through the "Page Down" and the "f" key.

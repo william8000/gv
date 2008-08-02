@@ -1,3 +1,37 @@
+2008-08-02  Thanh Han The <hanthethanh@gmail.com>
+
+	* arc/action.c (action_savepos): Handling the new "z"-key for saving
+        positions.
+	
+	* src/action.c (action_print_pos): Handling the new "u"-key for saving
+        positions.
+
+	* src/actions.h: likewise for the prototypes
+	
+	* src/callbacks.c: New static globals last_psx, last_psy for the last
+	cursor position
+	
+	* src/callbacks.c (cb_printpos): Displaying of popup dialog for entering
+	command to save
+	
+	* src/callbacks.c (cb_doPrintPos): saving the command entered above
+	
+	* src/callbacks.c (cb_savepos): saving the actual position
+	
+	* src/callbacks.c (cb_track): Update last_ps{xy}
+
+        * src/callbacks.h: Likewise for the prototypes.
+	
+	* src/gv_misc_res.dat: Add handling for Z und U key
+	
+	* src/main.c: Add event handlers for GV_PrintPos and GV_SavePos.
+	Update gv_savepos_filename by resource GV.saveposFIlename
+	
+	* src/main_globals.h: Add Widget "saveposEntry". Add String
+	gv_savepos_filename.
+	
+	* src/misc.c: Set Sensitivity of new "saveposEntry".
+
 2008-08-01  Bernhard R. Link <brlink@debian.org>
 
 	* src/main_resources.h: Remive global variable options
