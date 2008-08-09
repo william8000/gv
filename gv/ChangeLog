@@ -5,6 +5,9 @@
 	
 	* src/gv-update-userconfig.in: "--help", "--usage" as an alias for "-h".
 	"sub compare" fixed for version strings of different length.
+	
+	* doc/gv-update-userconfig.1: Describe options "-h", "--help",
+	"--usage", "-r". s/gv/GNU gv/ according to GNU guidelines.
 
 2008-08-02  Markus Steinborn <msteinbo@uni-paderborn.de>
 
