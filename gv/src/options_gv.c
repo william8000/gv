@@ -303,7 +303,7 @@ static void options_gv_cb_apply(w, client_data, call_data)
      j = gv_orientation_auto;
      k = gv_orientation;
      gv_orientation_auto = 0;
-     cb_setOrientation(NULL,(XtPointer)i,(XtPointer)(intptr_t)1);
+     cb_setOrientation(NULL,(XtPointer)(intptr_t)i,(XtPointer)(intptr_t)1);
      if ((j != gv_orientation_auto) || (k != gv_orientation)) redisplay = True;
    }
    s_orient = True;

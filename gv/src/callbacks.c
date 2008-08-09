@@ -556,8 +556,6 @@ cb_print_pos(w, client_data, call_data)
     Widget w;
     XtPointer client_data, call_data;
 {
-    char *prompt=GV_PRINT_MESSAGE;
-    char *buttonlabel=GV_PRINT_BUTTON_LABEL;
     char *pagelist=NULL;
 
     BEGINMESSAGE(cb_print_pos)
@@ -590,8 +588,6 @@ cb_doPrintPos(w, client_data, call_data)
     XtPointer client_data, call_data;
 {
     String print_command;
-    String error=NULL;
-    char *pagelist=NULL;
 
     BEGINMESSAGE(cb_doPrintPos)
 
