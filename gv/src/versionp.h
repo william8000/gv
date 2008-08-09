@@ -41,7 +41,7 @@
 
 char *versionIdentification[] = {
         "gv 3.6.5.90",
-        "July 2008",
+        "August 2008",
 	0
 };
 

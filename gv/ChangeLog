@@ -8,6 +8,8 @@
 	
 	* doc/gv-update-userconfig.1: Describe options "-h", "--help",
 	"--usage", "-r". s/gv/GNU gv/ according to GNU guidelines.
+	
+	* NEWS, src/versionp.h: Update release date for GNU gv 3.6.5.90
 
 2008-08-02  Markus Steinborn <msteinbo@uni-paderborn.de>
 
