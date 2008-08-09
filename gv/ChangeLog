@@ -2,6 +2,9 @@
 
 	* src/resource.c(resource_checkResources): Corrected misspellings in
 	message displayed to the user.
+	
+	* src/gv-update-userconfig.in: "--help", "--usage" as an alias for "-h".
+	"sub compare" fixed for version strings of different length.
 
 2008-08-02  Markus Steinborn <msteinbo@uni-paderborn.de>
 

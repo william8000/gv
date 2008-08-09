@@ -31,6 +31,8 @@ for $i (@ARGV)
 {
    $saveUnchanged = 0  if $i eq "-r";
    $help = 1 if $i eq "-h";
+   $help = 1 if $i eq "--help";
+   $help = 1 if $i eq "--usage";
 }
 
 if ($help)
@@ -40,6 +42,7 @@ if ($help)
    print "gv-update-userconfig is a simple script to update an .gv config file to\n";
    print "the current version of gv by removing all entries known to cause problems\n";
    print "with the current version of gv.\n\n";
+   exit(0);
 }
 
 
@@ -99,6 +102,9 @@ sub compare
    
    my @c1 = split(/\./, $b1);
    my @c2 = split(/\./, $b2);
+   
+   push (@c1, "0") while @c1 < @c2;
+   push (@c2, "0") while @c1 > @c2;
   
    for (my $i = 0; $i < @c1; $i++)
    {
