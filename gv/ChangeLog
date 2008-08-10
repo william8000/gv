@@ -1,6 +1,9 @@
 2008-08-10  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.5.91.
+	
+	* src/resource.c (resource_buildDatabase): Setting resource
+	"gv.arguments" is useless as it is not read.
 
 2008-08-09  Markus Steinborn <msteinbo@uni-paderborn.de>
 

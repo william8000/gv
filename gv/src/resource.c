@@ -333,10 +333,6 @@ resource_buildDatabase (
      {
        resource_putResource (&db, app_name, ".style", style_value);
      }
-   if (arguments_p)
-     {
-       resource_putResource (&db, app_name, ".arguments", arguments_value);
-     }
   
   /* ### style resources ######################## */
   INFMESSAGE(checking for style resources)
