@@ -9,6 +9,9 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.5.91  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (August 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # the current coordinate can be saved to a file by the z resp. the u key.

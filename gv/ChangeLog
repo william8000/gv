@@ -1,3 +1,7 @@
+2008-08-10  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* configure.ac, src/versionp.h: Bump version to 3.6.5.91.
+
 2008-08-09  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/resource.c(resource_checkResources): Corrected misspellings in
