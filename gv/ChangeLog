@@ -4,6 +4,11 @@
 	
 	* src/resource.c (resource_buildDatabase): Setting resource
 	"gv.arguments" is useless as it is not read.
+	
+	* src/Makefile.am: Append the contents of gv_misc_res.dat to
+	gv-update-userconfig, too.
+	
+	* src/gv-update-userconfig.in: Handling of -n, -N and -s.
 
 2008-08-09  Markus Steinborn <msteinbo@uni-paderborn.de>
 

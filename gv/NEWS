@@ -11,6 +11,12 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.91  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+# gv-update-userconfig now offers the options -n resp. -N to switch to an
+alternative navigation: After each page switch (expect if selected by the page number) the page is scrolled to the top (if switching forward) resp.
+the bottom (if switching backward).
+
+# gv-update-userconfig can remove the resources inserted by -n resp. -N with
+the new option -s.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (August 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 

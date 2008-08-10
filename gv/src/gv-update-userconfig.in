@@ -26,10 +26,15 @@
 
 $saveUnchanged = 1;
 $help = 0;
+$altNavigation = 0;
+$replaceNavigation = 0;
 
 for $i (@ARGV)
 {
    $saveUnchanged = 0  if $i eq "-r";
+   $altNavigation = $replaceNavigation = 1 if $i eq "-n";
+   $altNavigation = $replaceNavigation = 2 if $i eq "-N";
+   $replaceNavigation = 1 if $i eq "-s";
    $help = 1 if $i eq "-h";
    $help = 1 if $i eq "--help";
    $help = 1 if $i eq "--usage";
@@ -37,8 +42,11 @@ for $i (@ARGV)
 
 if ($help)
 {
-   print "Syntax: gv-update-userconfig [-r]\n\n";
-   print "-r : Remove resources that have default value, too\n\n";
+   print "Syntax: gv-update-userconfig [-r] [-n] [-N] [-s]\n\n";
+   print "-r : Remove resources that have default value, too\n";
+   print "-n : Switch to alternative navigation\n";
+   print "-N : Switch to standard navigation\n";
+   print "-s : Remove navigation resources\n\n";
    print "gv-update-userconfig is a simple script to update an .gv config file to\n";
    print "the current version of gv by removing all entries known to cause problems\n";
    print "with the current version of gv.\n\n";
@@ -86,6 +94,7 @@ while (<DATA>)
    }
 }
 
+
 $VER = "gv 3.5.8";
 $VER = $res{"GV.version"} if defined $res{"GV.version"};
 
@@ -118,6 +127,9 @@ sub compare
 
 $remove{"GV.version"} = 1;
 $remove{"GV.scales"} = 1 if compare($VER, "gv 3.6.4.90");
+$remove{"GV.control.baseTranslations"} = 1 if $replaceNavigation;
+$remove{"GV.control.prevPage.baseTranslations"} = 1 if $replaceNavigation;
+$remove{"GV.control.nextPage.baseTranslations"} = 1 if $replaceNavigation;
 
 $newfile = "";
 
@@ -165,6 +177,51 @@ for $line (@res)
 }
 
 $newfile .= "GV.version:\t\tgv 3.6.5\n";
+
+if ($altNavigation == 1)
+{
+   $res = $resDefault{"GV.control.prevPage.baseTranslations"};
+   $res = $res{"GV.control.prevPage.baseTranslations"} if defined $res{"GV.control.prevPage.baseTranslations"};
+   $res =~ s/(<Btn1Up>:[^\n]+GV_Page\().*?\)/\1!page-1,bottom)/ ;
+   $res =~ s/(<Btn2Up>:[^\n]+GV_Page\().*?\)/\1!page-5,bottom)/ ;
+   $res =~ s/(<Btn3Up>:[^\n]+GV_Page\().*?\)/\1!page-10,bottom)/ ;
+   $newfile .= "$res\n";
+
+   $res = $resDefault{"GV.control.nextPage.baseTranslations"};
+   $res = $res{"GV.control.nextPage.baseTranslations"} if defined $res{"GV.control.nextPage.baseTranslations"};
+   $res =~ s/(<Btn1Up>:[^\n]+GV_Page\().*?\)/\1!page+1,top)/ ;
+   $res =~ s/(<Btn2Up>:[^\n]+GV_Page\().*?\)/\1!page+5,top)/ ;
+   $res =~ s/(<Btn3Up>:[^\n]+GV_Page\().*?\)/\1!page+10,top)/ ;
+   $newfile .= "$res\n";
+
+   $res = $resDefault{"GV.control.baseTranslations"};
+   $res = $res{"GV.control.baseTranslations"} if defined $res{"GV.control.baseTranslations"};
+   $res =~ s/(<Key>Prior:[^\n]+GV_Page\().*?\)/\1!page-1,bottom)/ ;
+   $res =~ s/(<Key>Next:[^\n]+GV_Page\().*?\)/\1!page+1,top)/ ;
+   $newfile .= "$res\n";
+}
+elsif ($altNavigation == 2)
+{
+   $res = $resDefault{"GV.control.prevPage.baseTranslations"};
+   $res = $res{"GV.control.prevPage.baseTranslations"} if defined $res{"GV.control.prevPage.baseTranslations"};
+   $res =~ s/(<Btn1Up>:[^\n]+GV_Page\().*?\)/\1!page-1)/ ;
+   $res =~ s/(<Btn2Up>:[^\n]+GV_Page\().*?\)/\1!page-5)/ ;
+   $res =~ s/(<Btn3Up>:[^\n]+GV_Page\().*?\)/\1!page-10)/ ;
+   $newfile .= "$res\n";
+
+   $res = $resDefault{"GV.control.nextPage.baseTranslations"};
+   $res = $res{"GV.control.nextPage.baseTranslations"} if defined $res{"GV.control.nextPage.baseTranslations"};
+   $res =~ s/(<Btn1Up>:[^\n]+GV_Page\().*?\)/\1!page+1)/ ;
+   $res =~ s/(<Btn2Up>:[^\n]+GV_Page\().*?\)/\1!page+5)/ ;
+   $res =~ s/(<Btn3Up>:[^\n]+GV_Page\().*?\)/\1!page+10)/ ;
+   $newfile .= "$res\n";
+
+   $res = $resDefault{"GV.control.baseTranslations"};
+   $res = $res{"GV.control.baseTranslations"} if defined $res{"GV.control.baseTranslations"};
+   $res =~ s/(<Key>Prior:[^\n]+GV_Page\().*?\)/\1!page-1)/ ;
+   $res =~ s/(<Key>Next:[^\n]+GV_Page\().*?\)/\1!page+1)/ ;
+   $newfile .= "$res\n";
+}
 
 open ($file, ">", "$ENV{HOME}/.gv") or die "Cannot open ~/.gv for writing.\n";
 print $file $newfile;

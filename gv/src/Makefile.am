@@ -260,6 +260,7 @@ gv-update-userconfig: $(srcdir)/gv-update-userconfig.in GV.ad
 	cat $(srcdir)/gv-update-userconfig.in > gv-update-userconfig
 	echo "__END__" >> gv-update-userconfig
 	cat GV.ad >> gv-update-userconfig
+	cat $(srcdir)/gv_misc_res.dat >> gv-update-userconfig
 
 # Conditional source files
 
