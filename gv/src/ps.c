@@ -492,6 +492,7 @@ unc_ok:
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
+redo_dsc_parse:
       quoted_filename = quote_filename(filename);
       quoted_filename_dsc = quote_filename(filename_dsc);
       if ((pdfpos = strstr(cmd_scan_pdf,"%pdf")) &&
@@ -532,7 +533,6 @@ unc_ok:
       INFSMESSAGE(scan command,cmd)
       
       tmp_filename=file_getTmpFilename(NULL,filename_raw);
-redo_dsc_parse:
       tmp_file = fopen(tmp_filename, "w");
       dup2(2,100);
       close(2); dup2( fileno(tmp_file), 2);
@@ -552,7 +552,6 @@ redo_dsc_parse:
         tmp_file = fopen( tmp_filename, "r" );
 	while ( fgets( line, 999, tmp_file) )
 	{
-puts(line);
 	   if (strstr(line,"This file requires a password for access."))
 	      found = 1;
 	   if (strstr(line,"Password did not work."))
