@@ -567,8 +567,11 @@ redo_dsc_parse:
 	   char password[80];
 	   *password = 0;
 	   /********* TODO FIXME *************/
-	   printf("Password: ");
-	   gets(password);
+	   if (isatty(0))
+	   {
+	      printf("Password: ");
+	      gets(password);
+	   }
 	   /**********************************/
 	   if (*password)
 	   {
