@@ -30,6 +30,8 @@
 	
 	* src/versionp.h: Bump required resource version.
 	
+	* src/gv_misc_res.dat: likewise
+	
 	* src/Makefile.am: Update GV.gsCmdConvPDF
 
 	* src/gv-update-userconfig.in: remove GV.gsCmdConvPDF iff necessary.
