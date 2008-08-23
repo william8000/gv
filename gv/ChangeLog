@@ -14,6 +14,8 @@
 	* src/ps.c (psscan): Pass actual PDF password to ghostscript.
 	
 	* src/versionp.h: Bump required resource version.
+	
+	* src/Makefile.am: Update GV.gsCmdConvPDF
 
 	* src/gv-update-userconfig.in: remove GV.gsCmdConvPDF iff necessary.
 

@@ -563,6 +563,19 @@ redo_dsc_parse:
 	if (found)
 	{
 	   sprintf(s,"This file is password protected.");
+
+	   char password[80];
+	   *password = 0;
+	   /********* TODO FIXME *************/
+	   printf("Password: ");
+	   gets(password);
+	   /**********************************/
+	   if (*password)
+	   {
+	      gv_pdf_password = GV_XtNewString(password);
+	      goto redo_dsc_parse;
+	   }
+
            GV_XtFree(tmp_filename);
 	   goto scan_failed;
 	}
