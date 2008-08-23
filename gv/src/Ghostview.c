@@ -1389,6 +1389,7 @@ StartInterpreter(w)
     char *dptr;
     int argc = 0;
     int ret;
+    void* toBeFreed = 0;
     String filename = 0;
 
     BEGINMESSAGE(StartInterpreter)
@@ -1427,11 +1428,12 @@ StartInterpreter(w)
     {
        char* password;
        
-       String parameter = malloc(100); /* TODO: free it somewhere */
+       String parameter = malloc(100);
+       toBeFreed = (void*) parameter;
        strcpy(parameter, "-sPDFPassword=");
        password = quote_filename(gv_pdf_password);
        strcat(parameter, password);
-printf("DEBUG: %s", parameter);
+       GV_XtFree(password);
        argv[argc++] = parameter;
     }
     
@@ -1558,6 +1560,8 @@ printf("DEBUG: %s", parameter);
 	perror(buf);
 	_exit(EXIT_STATUS_ERROR);
     } else {
+        if (toBeFreed)
+	   free(toBeFreed);
         if (filename)
 	   free(filename);
 	if (gvw->ghostview.filename == NULL) {
