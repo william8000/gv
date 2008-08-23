@@ -632,7 +632,7 @@ int main(argc, argv)
 	   exit(0);
 
 	 case PASSWORD_ARG:
-	   gv_pdf_password = optarg;
+	   gv_pdf_password = GV_XtNewString(optarg);
 	   opt_counter++;
 	   break;
 

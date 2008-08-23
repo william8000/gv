@@ -575,6 +575,8 @@ redo_dsc_parse:
 	   /**********************************/
 	   if (*password)
 	   {
+	      if (gv_pdf_password)
+	         GV_XtFree(gv_pdf_password);
 	      gv_pdf_password = GV_XtNewString(password);
 	      goto redo_dsc_parse;
 	   }
