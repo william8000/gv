@@ -1423,6 +1423,19 @@ StartInterpreter(w)
 	 while (isspace(*dptr)) dptr++;
     }
     argv[argc++] = "-dNOPAUSE";
+    if (gv_pdf_password)
+    {
+       char* password;
+       
+       String parameter = malloc(100); /* TODO: free it somewhere */
+       strcpy(parameter, "-sPDFPassword=");
+       password = quote_filename(gv_pdf_password);
+       strcat(parameter, password);
+printf("DEBUG: %s", parameter);
+       argv[argc++] = parameter;
+    }
+    
+    
     if (gvw->ghostview.quiet) argv[argc++] = "-dQUIET";
     if (gvw->ghostview.safer) 
       {

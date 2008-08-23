@@ -177,6 +177,7 @@ enum
     MEDIA_ARG,
     ORIENTATION_ARG,
     PAGE_ARG,
+    PASSWORD_ARG,
     SPARTAN_ARG,
     WIDGETLESS_ARG,
     USAGE_ARG,
@@ -224,6 +225,7 @@ static struct option const GNU_longOptions[] =
     {"media", required_argument, NULL, MEDIA_ARG},
     {"orientation", required_argument, NULL, ORIENTATION_ARG},
     {"page", required_argument, NULL, PAGE_ARG},
+    {"password", required_argument, NULL, PASSWORD_ARG},
     {"usage", no_argument, NULL, USAGE_ARG},
     {"spartan", no_argument, NULL, SPARTAN_ARG},
     {"widgetless", no_argument, NULL, WIDGETLESS_ARG},
@@ -629,6 +631,11 @@ int main(argc, argv)
 	   fprintf(stdout,"%s\n", message_usage);
 	   exit(0);
 
+	 case PASSWORD_ARG:
+	   gv_pdf_password = optarg;
+	   opt_counter++;
+	   break;
+
 	 case SPARTAN_ARG:
 	   spartan_p = 1;
 	   opt_counter++;
@@ -657,6 +664,7 @@ int main(argc, argv)
        fprintf(stderr, "%s: Unable to open the display.\n", GV_APPLICATION_NAME);
        exit(EXIT_STATUS_ERROR);
      }
+
    /*### getting resources ############################################*/
    gv_database = resource_buildDatabase (gv_display,
                                          gv_class,

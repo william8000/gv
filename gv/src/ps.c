@@ -91,6 +91,8 @@
 #include "note.h"
 #include "d_memdebug.h"
 extern Media *gv_medias;
+extern String gv_pdf_password;
+
 
 #ifdef BSD4_2
 #define memset(a,b,c) bzero(a,c)
@@ -485,6 +487,8 @@ unc_ok:
       char cmd[512];
       char s[512];
       mode_t old_umask;
+      FILE* tmp_file;
+      String tmp_filename;
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
@@ -507,7 +511,18 @@ unc_ok:
 	  strcat(cmd,pdfpos+4);
 	}
       } else {
-	sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc);
+        char* password = "";
+	if (gv_pdf_password)
+	{
+	   char parameter[100];
+	   strcpy(parameter, " -sPDFPassword=");
+	   password = quote_filename(gv_pdf_password);
+	   strcat(parameter, password);
+	   GV_XtFree(password);
+	   sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc, parameter);
+	}
+	else   
+	   sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc, "");
       }
       GV_XtFree(quoted_filename);
       GV_XtFree(quoted_filename_dsc);
@@ -515,8 +530,45 @@ unc_ok:
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
       INFSMESSAGE(scan command,cmd)
+      
+      tmp_filename=file_getTmpFilename(NULL,filename_raw);
+redo_dsc_parse:
+      tmp_file = fopen(tmp_filename, "w");
+      dup2(2,100);
+      close(2); dup2( fileno(tmp_file), 2);
+      
+
       if (system(cmd) || file_fileIsNotUseful(filename_dsc)) {
+        char line[1000];
+	int found;
+	found = 0;
+      
 	INFMESSAGE(scan subprocess failed)
+	close(2);
+	dup2(100,2);
+	close(100);
+	fclose(tmp_file);
+	
+        tmp_file = fopen( tmp_filename, "r" );
+	while ( fgets( line, 999, tmp_file) )
+	{
+puts(line);
+	   if (strstr(line,"This file requires a password for access."))
+	      found = 1;
+	   if (strstr(line,"Password did not work."))
+	      found = 1;
+        }
+	fclose(tmp_file);	
+	unlink((char*) tmp_file);
+	
+	if (found)
+	{
+	   sprintf(s,"This file is password protected.");
+           GV_XtFree(tmp_filename);
+	   goto scan_failed;
+	}
+        GV_XtFree(tmp_filename);
+	
 scan_exec_failed:
 	sprintf(s,"Execution of\n%s\nfailed.",cmd);
 scan_failed:
@@ -529,6 +581,14 @@ scan_ok:
 	ENDMESSAGE(psscan)
         return(retval);
       }
+
+      close(2);
+      dup2(100,2);
+      close(100);
+      fclose(tmp_file);
+      unlink((char*) tmp_filename);
+      GV_XtFree(tmp_filename);
+
       umask (old_umask);
       tmpfile = fopen(filename_dsc, "r");
       if (!tmpfile) goto scan_exec_failed;

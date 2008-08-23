@@ -72,6 +72,7 @@ PostScript and PDF viewer.\n\
   [-]-ad=FILE                         read and use additional resources from FILE\n\
   [-]-style=FILE                      read and use additional resources from FILE. These resources\n\
                                       have lower priority than those provided on the context of --ad\n\
+  [-]-password=PASSWORD               Sets the password for opening encrypted PDF files\n\
   [-]-spartan                         shortcut for --style=gv_spartan.dat\n\
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)\n\

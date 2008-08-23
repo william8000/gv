@@ -123,6 +123,7 @@ PostScript and PDF viewer.
   [-]-ad=FILE                         read and use additional resources from FILE
   [-]-style=FILE                      read and use additional resources from FILE. These resources
                                       have lower priority than those provided on the context of --ad
+  [-]-password=PASSWORD               Sets the password for opening encrypted PDF files
   [-]-spartan                         shortcut for --style=gv_spartan.dat
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)
@@ -209,6 +210,9 @@ Whether to start ghostscript with the @code{-dQUIET} option.
 @item --resize, --noresize
 Whether ghostscrip is allowed to automatically fit the
 size of its window to the size of the displayed page.
+@item --password=PASSWORD
+When opening a file, use PASSWORD to decrypt it. This Option is
+usefull for viewing encrypted PDF files.
 @item --presentation
 Is actually a shortcut for @code{--fullscreen --noresize --scale=-1000 --widgetless}.
 @item --safer, --nosafer

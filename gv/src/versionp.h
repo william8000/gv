@@ -50,8 +50,8 @@ char *versionIdentification[] = {
    on HP/UX 9.07
    [suggested by Christian Illinger (illinger@lepsi.in2p3.fr)]
 */
-char versionResource[] = "gv 3.6.5";
-char versionCompatibility[] = "gv 3.6.4.91";
+char versionResource[] = "gv 3.6.5.91";
+char versionCompatibility[] = "gv 3.6.5.91";
                                             
 char * copyright = "\
  gv -- An X11 user interface for Ghostscript. \n\

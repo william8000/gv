@@ -127,6 +127,7 @@ sub compare
 
 $remove{"GV.version"} = 1;
 $remove{"GV.scales"} = 1 if compare($VER, "gv 3.6.4.90");
+$remove{"GV.gsCmdConvPDF"} = 1 if compare($VER, "gv 3.6.5.91");
 $remove{"GV.control.baseTranslations"} = 1 if $replaceNavigation;
 $remove{"GV.control.prevPage.baseTranslations"} = 1 if $replaceNavigation;
 $remove{"GV.control.nextPage.baseTranslations"} = 1 if $replaceNavigation;
@@ -176,7 +177,7 @@ for $line (@res)
    }
 }
 
-$newfile .= "GV.version:\t\tgv 3.6.5\n";
+$newfile .= "GV.version:\t\tgv 3.6.5.91\n";
 
 if ($altNavigation == 1)
 {

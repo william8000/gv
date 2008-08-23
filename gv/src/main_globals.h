@@ -151,6 +151,7 @@ EXTERN int                      gv_gs_quiet;
 EXTERN int			gv_infoVerbose;
 EXTERN int			gv_xinerama;
 EXTERN String                   gv_gs_arguments;
+EXTERN String                   gv_pdf_password;
 
 /* if a page is requested but gv is busy the following variable
 holds the number of the requested page.

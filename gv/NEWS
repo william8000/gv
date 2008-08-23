@@ -18,6 +18,8 @@ the bottom (if switching backward).
 # gv-update-userconfig can remove the resources inserted by -n resp. -N with
 the new option -s.
 
+# New command line switch "--password=PASSWORD" for opening encrypted PDFs.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (August 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # the current coordinate can be saved to a file by the z resp. the u key.

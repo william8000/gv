@@ -1,3 +1,22 @@
+2008-08-23  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* doc/gv.texi: Describe new option "--password=PASSWORD".
+	
+	* src/Ghostview.c (StartInterpreter): Pass actual PDF password
+	to ghostscript.
+	
+	* src/gv_message.h: Add description of new "--password=PASSWORD" option.
+	
+	* src/main.c (main): Parse new password-Option from command line
+	
+	* src/main_globals.h: New global variable for the PDF password.
+	
+	* src/ps.c (psscan): Pass actual PDF password to ghostscript.
+	
+	* src/versionp.h: Bump required resource version.
+
+	* src/gv-update-userconfig.in: remove GV.gsCmdConvPDF iff necessary.
+
 2008-08-10  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* configure.ac, src/versionp.h: Bump version to 3.6.5.91.
