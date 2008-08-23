@@ -1,3 +1,18 @@
+2008-08-23  Bernhard R. Link <brlink@debian.org>
+
+	* src/callbacks.c (cb_setPassword): New callback for setting password.
+	
+	* src/callbacks.c (cb_cancelPassword): New callback aborting
+	password dialog.
+	
+	* src/callbacks.c (cb_askPassword): New callback Displaying the 
+	password dialog.
+	
+	* src/callbacks.h: likewise
+	
+	* src/ps.c (psscan): Use new callback cb_askPassword to query the user
+	for the password.
+
 2008-08-23  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* doc/gv.texi: Describe new option "--password=PASSWORD".

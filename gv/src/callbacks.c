@@ -1510,7 +1510,7 @@ cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
 }
 
 /*##################################################################*/
-/* cb_cancelPrint */
+/* cb_cancelPassword */
 /*##################################################################*/
 
 static void
