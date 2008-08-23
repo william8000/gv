@@ -83,7 +83,7 @@ static Widget   antialiasToggle;
 static Widget   dscToggle,eofToggle,autoResizeToggle;
 static Widget   swapLandscapeToggle,watchToggle;
 static Widget   infoPopupLabel,infoPopupButton,infoPopupMenu;
-static Widget   ascaleLabel, ascale;
+static Widget   ascale;
 static Widget   mediaLabel,mediaButton,mediaMenu=NULL;
 static Widget   fmediaLabel,fmediaButton,fmediaMenu=NULL;
 static Widget   orientLabel,orientButton,orientMenu;
