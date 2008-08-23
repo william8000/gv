@@ -337,5 +337,6 @@ extern void			cb_cancelQuit (
 #endif
 );
 
+extern void cb_askPassword(Widget, XtPointer, XtPointer);
 
 #endif /* _GV_CALLBACKS_H_ */

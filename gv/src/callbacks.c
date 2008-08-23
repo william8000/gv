@@ -1488,3 +1488,49 @@ cb_doQuit(w, client_data, call_data)
   XtDestroyWidget(toplevel);
   ENDMESSAGE(cb_doQuit)
 }
+
+/*##################################################################*/
+/* cb_setPassword */
+/*##################################################################*/
+
+static void
+cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
+{
+    String password;
+
+    password = DialogPopupGetText();
+    if (!password) password="";
+
+    if (gv_pdf_password)
+      GV_XtFree(gv_pdf_password);
+    gv_pdf_password = GV_XtNewString(password);
+
+    cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
+    /* TODO trigger reload of postscript */
+}
+
+/*##################################################################*/
+/* cb_cancelPrint */
+/*##################################################################*/
+
+static void
+cb_cancelPassword(Widget w, XtPointer client_data, XtPointer call_data)
+{
+    cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
+}
+
+/*##################################################################*/
+/* cb_askPassword */
+/* Ask for the password needed to view a pdf file */
+/*##################################################################*/
+void
+cb_askPassword(Widget w, XtPointer client_data, XtPointer call_data)
+{
+  DialogPopupSetPrompt("Password:");
+  DialogPopupSetMessage("Password required");
+  DialogPopupSetButton(DIALOG_BUTTON_DONE,NULL,cb_setPassword);
+  DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPassword);
+  DialogPopupSetText("");
+  cb_popupDialogPopup((Widget)NULL,NULL,NULL);
+  return;
+}

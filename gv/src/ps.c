@@ -84,6 +84,7 @@
 #include INC_X11(Xos.h)                /* #includes the appropriate <string.h> */
 #include INC_X11(Xfuncs.h)
 
+#include "callbacks.h"
 #include "types.h"
 #include "file.h"
 #include "misc.h"
@@ -492,7 +493,6 @@ unc_ok:
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
-redo_dsc_parse:
       quoted_filename = quote_filename(filename);
       quoted_filename_dsc = quote_filename(filename_dsc);
       if ((pdfpos = strstr(cmd_scan_pdf,"%pdf")) &&
@@ -562,27 +562,8 @@ redo_dsc_parse:
 	
 	if (found)
 	{
-	   sprintf(s,"This file is password protected.");
-
-	   char password[80];
-	   *password = 0;
-	   /********* TODO FIXME *************/
-	   if (isatty(0))
-	   {
-	      printf("Password: ");
-	      gets(password);
-	   }
-	   /**********************************/
-	   if (*password)
-	   {
-	      if (gv_pdf_password)
-	         GV_XtFree(gv_pdf_password);
-	      gv_pdf_password = GV_XtNewString(password);
-	      goto redo_dsc_parse;
-	   }
-
-           GV_XtFree(tmp_filename);
-	   goto scan_failed;
+	   cb_askPassword((Widget)NULL, NULL, NULL);
+	   /* TODO FIXME: do not show error but wait for password dialog */
 	}
         GV_XtFree(tmp_filename);
 	
