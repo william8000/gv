@@ -119,6 +119,7 @@ void cb_appendInfoPopup(w, client_data, call_data)
     Arg args[5];
     Cardinal n;
     XawTextBlock message_block;
+    int skipErrors;
 
     BEGINMESSAGE(cb_appendInfoPopup)
     SMESSAGE((char*)call_data)
@@ -139,7 +140,12 @@ void cb_appendInfoPopup(w, client_data, call_data)
     XtSetArg(args[1], XtNinsertPosition, info_length);	n++;
     XtSetValues(infotext,args,n);
     XawTextEnableRedisplay(infotext);
-    if (!infoPopupVisible && gv_infoVerbose)
+
+    if (skipErrors = gv_infoSkipErrors)
+       if (strstr((char*)call_data, "Error:") || strstr((char*)call_data, "ERROR:") || strstr((char*)call_data, "error:"))
+          --gv_infoSkipErrors;
+
+    if (!infoPopupVisible && gv_infoVerbose && !skipErrors)
        if (gv_infoVerbose == 2 || strstr((char*)call_data, "Error:") || strstr((char*)call_data, "ERROR:") || strstr((char*)call_data, "error:"))
           cb_popupInfoPopup((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
     ENDMESSAGE(cb_appendInfoPopup)

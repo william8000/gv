@@ -149,6 +149,7 @@ EXTERN String			gv_gs_cmd_conv_pdf;	/* command used to convert a pdf file to ps 
 EXTERN int			gv_gs_safer;
 EXTERN int                      gv_gs_quiet;
 EXTERN int			gv_infoVerbose;
+EXTERN int			gv_infoSkipErrors;
 EXTERN int			gv_xinerama;
 EXTERN String                   gv_gs_arguments;
 EXTERN String                   gv_pdf_password;

@@ -93,7 +93,7 @@
 #include "d_memdebug.h"
 extern Media *gv_medias;
 extern String gv_pdf_password;
-
+extern int gv_infoSkipErrors;
 
 #ifdef BSD4_2
 #define memset(a,b,c) bzero(a,c)
@@ -563,7 +563,10 @@ unc_ok:
 	if (found)
 	{
 	   cb_askPassword((Widget)NULL, NULL, NULL);
-	   /* TODO FIXME: do not show error but wait for password dialog */
+	   /* do not show error  */
+	   gv_infoSkipErrors = 1;
+	   goto scan_password_required;
+	   /* TODO? but wait for password dialog */
 	}
         GV_XtFree(tmp_filename);
 	
@@ -571,6 +574,7 @@ scan_exec_failed:
 	sprintf(s,"Execution of\n%s\nfailed.",cmd);
 scan_failed:
 	NotePopupShowMessage(s);
+scan_password_required:
 	if (tmpfile) fclose(tmpfile);
 	unlink(filename_dsc);
 scan_ok:

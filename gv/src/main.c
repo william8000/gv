@@ -364,6 +364,7 @@ int main(argc, argv)
     FileSel_popup    = NULL;
     pagemediaEntry   = NULL;
     gv_print_kills_file = 0;
+    gv_infoSkipErrors = 0;
 
     antialias_p = 0;
     noantialias_p = 0;

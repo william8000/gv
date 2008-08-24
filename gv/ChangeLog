@@ -1,3 +1,19 @@
+2008-08-24  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/info.c: Skip displaying info-popup until gv_infoSkipErrors
+	are sent -- usually gv_infoSkipErrors is 0, but after recognising an
+	encrypted pdf, it is set to 1.
+	
+	* src/callbacks.c (cb_setPassword): Trigger reload of ghostscript by
+	calling "cb_reopen(...)".
+	
+	* src/main.c: Initialize gv_infoSkipErrors with 0
+	
+	* src/main_globals.h: Declare gv_infoSkipErrors.
+	
+	* src/ps.c (psscan): Set gv_infoSkipErrors to 1 and jump over
+	displaying dsc-parser error.
+
 2008-08-23  Bernhard R. Link <brlink@debian.org>
 
 	* src/callbacks.c (cb_setPassword): New callback for setting password.

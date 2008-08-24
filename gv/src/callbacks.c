@@ -1506,7 +1506,7 @@ cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
     gv_pdf_password = GV_XtNewString(password);
 
     cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
-    /* TODO trigger reload of postscript */
+    cb_reopen(page,0,0);
 }
 
 /*##################################################################*/

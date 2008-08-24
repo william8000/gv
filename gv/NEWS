@@ -12,32 +12,39 @@ by a '#' or a '*' or a '?'. A
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.91  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # gv-update-userconfig now offers the options -n resp. -N to switch to an
-alternative navigation: After each page switch (expect if selected by the page number) the page is scrolled to the top (if switching forward) resp.
-the bottom (if switching backward).
+  alternative navigation: After each page switch (expect if selected by the 
+  page number) the page is scrolled to   the top (if switching forward) resp.
+  the bottom (if switching backward).
 
 # gv-update-userconfig can remove the resources inserted by -n resp. -N with
-the new option -s.
+  the new option -s.
 
-# New command line switch "--password=PASSWORD" for opening encrypted PDFs.
+# Support for encrypted PDF files. New command line switch 
+  "--password=PASSWORD" for opening encrypted PDFs. If the password
+  is not supplied via command line, the user will be asked to enter it.
+
+? Interactive prompting for the password of encrypted PDF files do not work
+  if and only if DSC is turned off. As a workarouund, you can load the file
+  with DSC turned on and then turn DSC off.
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.5.90  (August 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # the current coordinate can be saved to a file by the z resp. the u key.
-See gv.info for details.
+  See gv.info for details.
 
 # The return key now scrolls through the whole document vertically.
-Unlike the space key no horizontal scrolling is performed. The old function
-of the return key is still available through the "Page Down" and the "f" key.
+  Unlike the space key no horizontal scrolling is performed. The old function
+  of the return key is still available through the "Page Down" and the "f" key.
 
 # *.ad and *.dat files are installed to $PREFIX/share/gv
 
 # "ERROR:" and "error:" now also trigger the info popup in error mode
 
 # Xinerama support. It can be configured by the "xinerama"-resource.
-Its values can be "On", "Off" or "Auto". "Auto" is the default.
+  Its values can be "On", "Off" or "Auto". "Auto" is the default.
 
 # New helper Script "gv-update-userconfig", which is a simple script to
-update an .gv config file to the current version of gv.
+  update an .gv config file to the current version of gv.
 
 # Should build on Solaris now using sun studio 11 compiler
 
