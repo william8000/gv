@@ -557,6 +557,7 @@ cb_print_pos(w, client_data, call_data)
     XtPointer client_data, call_data;
 {
     char *pagelist=NULL;
+    static char buf[MAX_LOCATOR_LENGTH];
 
     BEGINMESSAGE(cb_print_pos)
 
@@ -575,7 +576,6 @@ cb_print_pos(w, client_data, call_data)
     DialogPopupSetButton(DIALOG_BUTTON_DONE,"Save",cb_doPrintPos);
     DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPrint);
 
-    static char buf[MAX_LOCATOR_LENGTH];
     sprintf(buf, "\\PutAtPos(%i,%i){%s}", last_psx, last_psy, "") ;
     DialogPopupSetText(buf);
     cb_popupDialogPopup((Widget)NULL,NULL,NULL);
@@ -588,14 +588,13 @@ cb_doPrintPos(w, client_data, call_data)
     XtPointer client_data, call_data;
 {
     String print_command;
+    FILE* posfile = fopen(gv_savepos_filename, "a");
 
     BEGINMESSAGE(cb_doPrintPos)
 
     if (call_data) print_command = (String)(call_data);  /* dialog was not used */  
     print_command = DialogPopupGetText(); /* dialog was used */  
     if (!print_command) print_command="";
-
-    FILE* posfile = fopen(gv_savepos_filename, "a");
 
     if (posfile == NULL) {
        INFMESSAGE(cannot open file for writting)

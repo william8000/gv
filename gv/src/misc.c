@@ -1222,6 +1222,8 @@ set_new_scale(void)
     {
        int dx = current_urx - current_llx + 1;
        int dy = current_ury - current_lly + 1;
+       float ascale1;
+       float ascale2;
        
        if (gv_orientation == 2 || gv_orientation == 3)
        {
@@ -1230,8 +1232,8 @@ set_new_scale(void)
 	  dy = hlp;
        }
        
-       float ascale1 = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
-       float ascale2 = (float)viewClip->core.height / dy / 72.0 * default_ydpi;
+       ascale1 = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
+       ascale2 = (float)viewClip->core.height / dy / 72.0 * default_ydpi;
        
        ascale = ascale1 < ascale2 ? ascale1 : ascale2;
     }
