@@ -173,7 +173,7 @@ typedef struct FileDataStruct_ *FileData;
 typedef struct FileDataStruct_ {
    FILE *file;           /* file */
    int   file_desc;      /* file descriptor corresponding to file */
-   int   filepos;        /* file position corresponding to the start of the line */
+   long   filepos;       /* file position corresponding to the start of the line */
    char *buf;            /* buffer */
    int   buf_size;       /* size of buffer */
    int   buf_end;        /* last char in buffer given as offset to buf */
@@ -187,8 +187,8 @@ typedef struct FileDataStruct_ {
 static FileData ps_io_init PT((FILE *));
 static void     ps_io_exit PT((FileData));
 static char    *ps_io_fgetchars PT((FileData, int));
-static int      ps_io_fseek PT((FileData, int));
-static int      ps_io_ftell PT((FileData));
+static int      ps_io_fseek PT((FileData, long));
+static long     ps_io_ftell PT((FileData));
 
 static char    *readline PT((FileData, char **, long *, unsigned int *));
 static char    *gettextline PT((char *));
@@ -1606,7 +1606,7 @@ ps_io_exit(fd)
 static int
 ps_io_fseek(fd,offset)
    FileData fd;
-   int offset;
+   long offset;
 {
    int status;
    BEGINMESSAGE(ps_io_fseek)
@@ -1622,7 +1622,7 @@ ps_io_fseek(fd,offset)
 /* ps_io_ftell */
 /*----------------------------------------------------------*/
 
-static int
+static long
 ps_io_ftell(fd)
    FileData fd;
 {
