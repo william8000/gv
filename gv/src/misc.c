@@ -367,7 +367,11 @@ misc_openFile(name, fpP)
          error = GV_XtMalloc(l*sizeof(char));
          sprintf(error,str,name);
       }
+#ifdef HAVE_LFS64
+      else if ((fp = fopen64(name, "r")) == NULL) {
+#else
       else if ((fp = fopen(name, "r")) == NULL) {
+#endif
          INFMESSAGE(failed to open)
          INFIMESSAGE(error number,errno)
          error = open_fail_error(errno,GV_ERROR_OPEN_FAIL,name,0);
@@ -455,8 +459,13 @@ String misc_changeFile(name)
   gv_filename_raw = file_getUsefulName(gv_filename_raw);
   gv_psfile = fp;     
   if (strcmp(name,"-")) {
+#ifdef HAVE_LFS64
+    struct stat64 sbuf;
+    stat64(gv_filename, &sbuf);
+#else
     struct stat sbuf;
     stat(gv_filename, &sbuf);
+#endif
     mtime = sbuf.st_mtime;
     INFSMESSAGE(new,gv_filename)
   }
@@ -500,7 +509,11 @@ check_file(mode)
 int mode;
 {
    int status=0;
+#ifdef HAVE_LFS64
+   struct stat64 sbuf;
+#else
    struct stat sbuf;
+#endif
    char *tmpname;
    int  r = -1;
 
@@ -521,7 +534,11 @@ int mode;
    if (1) {
 
       INFMESSAGE(checking file date)
+#ifdef HAVE_LFS64
+      status = stat64(gv_filename, &sbuf);
+#else
       status = stat(gv_filename, &sbuf);
+#endif
       if (!status && mtime != sbuf.st_mtime) {
          INFMESSAGE(file has changed)
          ENDMESSAGE(check_file)

@@ -69,17 +69,23 @@ typedef struct document {
     char *title;			/* Title of document. */
     char *date;				/* Creation date. */
     int  pageorder;			/* ASCEND, DESCEND, SPECIAL */
-    long beginheader, endheader;	/* offsets into file */
+#ifdef HAVE_LFS64
+    off64_t beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
+            beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
+#else
+#ifdef HAVE_OFF_T
+    off_t beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
+          beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
+#else
+    long beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
+         beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
+#endif
+#endif
     unsigned int lenheader;
-    long beginpreview, endpreview;
     unsigned int lenpreview;
-    long begindefaults, enddefaults;
     unsigned int lendefaults;
-    long beginprolog, endprolog;
     unsigned int lenprolog;
-    long beginsetup, endsetup;
     unsigned int lensetup;
-    long begintrailer, endtrailer;
     unsigned int lentrailer;
     int  boundingbox[4];
     int  default_page_boundingbox[4];
@@ -97,7 +103,15 @@ struct page {
     int  boundingbox[4];
     struct documentmedia *media;
     int  orientation;			/* PORTRAIT, LANDSCAPE */
+#ifdef HAVE_LFS64
+    off64_t begin, end;			/* offsets into file */
+#else
+#ifdef HAVE_OFF_T
+    off_t begin, end;			/* offsets into file */
+#else
     long begin, end;			/* offsets into file */
+#endif
+#endif
     unsigned int len;
 };
 

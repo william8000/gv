@@ -196,7 +196,11 @@ file_getTmpFilename(baseDirectory,baseFilename)
    }
    {
 #ifndef HAVE_MKSTEMP
+#ifdef HAVE_LFS64
+      struct stat64 s;
+#else
       struct stat s;
+#endif
 #endif
       int no_such_file;
       int i=1;
@@ -217,7 +221,11 @@ file_getTmpFilename(baseDirectory,baseFilename)
          sprintf(tempFilename,"%sgv_%lx_%x_%s.%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
 #endif
          file_translateTildeInPath(tempFilename);
+#ifdef HAVE_LFS64
+         no_such_file = stat64(tempFilename,&s);
+#else
          no_such_file = stat(tempFilename,&s);
+#endif
 #endif
          i++;
       } while (!no_such_file);
@@ -262,7 +270,11 @@ file_translateTildeInPath(path)
 int file_fileIsDir(fn)
   char *fn;
 {
+#ifdef HAVE_LFS64
+  struct stat64 s;
+#else
   struct stat s;
+#endif
   int r=0;
   char *c;
   BEGINMESSAGE(file_fileIsNotUseful)
@@ -270,7 +282,11 @@ int file_fileIsDir(fn)
      c = strrchr(fn,'/');
      if (c && (!*(c+1) || isspace(*(c+1)))) r = 1;
 
+#ifdef HAVE_LFS64
+     if (!r && !stat64(fn,&s)  && (S_ISDIR(s.st_mode))) r=1;
+#else
      if (!r && !stat(fn,&s)  && (S_ISDIR(s.st_mode))) r=1;
+#endif
   }
   IMESSAGE(r)
   ENDMESSAGE(file_fileIsDir)
@@ -285,10 +301,18 @@ int
 file_fileIsNotUseful(fn)
   char *fn;
 {
+#ifdef HAVE_LFS64
+  struct stat64 s;
+#else
   struct stat s;
+#endif
   int r=0;
   BEGINMESSAGE(file_fileIsNotUseful)
+#ifdef HAVE_LFS64
+  if (!fn || stat64(fn, &s))
+#else
   if (!fn || stat(fn, &s))
+#endif
     r = 1;
   else if (S_ISDIR(s.st_mode)) {
     r = 1;

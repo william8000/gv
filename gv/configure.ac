@@ -261,6 +261,48 @@ test "$opt_memdebug_code" = "true" && {
 
 AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
 
+AC_CHECK_FUNCS([ftello64 fseeko64 fopen64 stat64 ftello fseeko])
+
+AC_ARG_ENABLE(lfs64, AC_HELP_STRING([--enable-lfs64],[Use _LARGEFILE64_SOURCE for large file support. It defaults to auto detection.]), 
+[case "${enableval}" in
+   yes) opt_lfs64=true ;;
+   no)  opt_lfs64=false ;;
+   *) AC_MSG_ERROR(bad value ${enableval} for --enable-lfs64) ;;
+ esac],[
+          AC_CHECK_FUNCS([ftello64 fseeko64 fopen64 stat64],
+                [opt_lfs64=true],
+                [opt_lfs64=false])
+       ])
+
+test "$opt_lfs64" = "true" && {
+   echo Enabling LFS by _LARGEFILE64_SOURCE
+   opt_off_t=false
+}
+
+test "$opt_lfs64" = "false" && {
+ AC_ARG_ENABLE(off_t, AC_HELP_STRING([--enable-off_t],[Use code with off_t for potential large file support. It defaults to auto detection. This option only has effect if lfs64 is turned off. largefile only has effects if this option is turned on.]), 
+ [case "${enableval}" in
+   yes) opt_off_t=true ;;
+   no)  opt_off_t=false ;;
+   *) AC_MSG_ERROR(bad value ${enableval} for --enable-off_t) ;;
+ esac],[
+          AC_CHECK_FUNCS([ftello fseeko],
+                [opt_off_t=true],
+                [opt_off_t=false])
+       ])
+
+}
+
+
+
+test "$opt_off_t" = "true" && {
+     AC_SYS_LARGEFILE
+     AC_FUNC_FSEEKO
+     echo Enabling LFS.
+}
+
+AM_CONDITIONAL(USE_LFS64, test x$opt_lfs64 = xtrue)
+AM_CONDITIONAL(USE_OFF_T, test x$opt_off_t = xtrue)
 
 dnl Generate output files
 AC_OUTPUT(Makefile lib/Makefile src/Makefile doc/Makefile)

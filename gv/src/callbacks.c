@@ -404,10 +404,18 @@ static void watch_file (client_data, idp)
     if (!file_fileIsNotUseful(gv_filename)) {
       int error;
       String s;
+#ifdef HAVE_LFS64
+      struct stat64 sbuf;
+#else
       struct stat sbuf;
+#endif
       INFMESSAGE(checking file)
       s = GV_XtNewString(gv_filename);
+#ifdef HAVE_LFS64
+      error = stat64(s, &sbuf);
+#else
       error = stat(s, &sbuf);
+#endif
       if (!error && mtime != sbuf.st_mtime && sbuf.st_mtime < time(NULL))
          cb_checkFile(NULL,(XtPointer)(CHECK_FILE_VERSION|CHECK_FILE_DATE),NULL);
       GV_XtFree(s);

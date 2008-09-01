@@ -23,6 +23,8 @@ by a '#' or a '*' or a '?'. A
   "--password=PASSWORD" for opening encrypted PDFs. If the password
   is not supplied via command line, the user will be asked to enter it.
 
+# Support for files > 2GB on file systems with large file support.
+
 ? Interactive prompting for the password of encrypted PDF files do not work
   if and only if DSC is turned off. As a workarouund, you can load the file
   with DSC turned on and then turn DSC off.

@@ -279,7 +279,15 @@ extern Boolean			GhostviewSendPS (
 #if NeedFunctionPrototypes
     Widget	/* widget */,
     FILE*	/* fp */,
+#ifdef HAVE_LFS64
+    off64_t	/* begin */,
+#else
+#ifdef HAVE_OFF_T
+    off_t	/* begin */,
+#else
     long	/* begin */,
+#endif
+#endif
     unsigned int	/* len */,
     Bool	/* close */
 #endif

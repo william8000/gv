@@ -1,3 +1,13 @@
+2008-09-01  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/callbacks.c,
+	src/file.c, src/misc.c, src/ps.c, src/ps.h, src/zoom.c:
+	Large File Support (LFS) - it has to be enabled by the preprocessor
+	macros HAVE_LFS64 resp. HAVE_OFF_T.
+
+	* configure.ac, src/Makefile.am: Support setting the macros
+	HAVE_LFS64 resp. HAVE_OFF_T.
+	
 2008-08-30  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/ps.c (ps_io_ftell): Changed return type to long
@@ -5,6 +15,8 @@
 	* src/ps.c (ps_io_fseek): Changed 2nd argument to long
 	
 	* src/ps.c (FileDataStruct_): Changed type of filepos to long
+	
+	Purpose: At least on x86_64, long files are supported now
 
 2008-08-24  Markus Steinborn <msteinbo@uni-paderborn.de>
 

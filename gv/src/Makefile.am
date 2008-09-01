@@ -33,7 +33,7 @@ CLEANFILES = ../GV \
              gv-update-userconfig
 
 # Compilation flags
-AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
+AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
               -I$(top_srcdir)/lib -I$(top_builddir)/lib -g
 
 
@@ -275,4 +275,12 @@ endif
 
 if USE_MEMDEBUG_CODE
    gv_SOURCES += d_mem.c d_mem.h d_xtmem.c d_xtmem.h
+endif
+
+if USE_LFS64
+   AM_CFLAGS += -DHAVE_LFS64 -D_LARGEFILE64_SOURCE
+endif
+
+if USE_OFF_T
+   AM_CFLAGS += -DHAVE_OFF_T
 endif
