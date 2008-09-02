@@ -33,6 +33,8 @@
 #ifndef _GV_CONFIG_H_
 #define _GV_CONFIG_H_
 
+#include <sys/types.h>
+
 /*
 ----------------------------------------------------------
 Enabling the following option causes ghostscript to be 
@@ -122,5 +124,14 @@ Miscellaneous defaults
 
 #include "setenv.h"
 
+#ifdef HAVE_OFF_T
+   typedef off_t gv_off_t;
+   #define GV_FSEEK fseeko
+   #define GV_FTELL ftello
+#else
+   typedef long gv_off_t;
+   #define GV_FSEEK fseek
+   #define GV_FTELL ftell
+#endif
 
 #endif /* _GV_CONFIG_H_ */

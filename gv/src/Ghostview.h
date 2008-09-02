@@ -279,11 +279,7 @@ extern Boolean			GhostviewSendPS (
 #if NeedFunctionPrototypes
     Widget	/* widget */,
     FILE*	/* fp */,
-#ifdef HAVE_OFF_T
-    off_t	/* begin */,
-#else
-    long	/* begin */,
-#endif
+    gv_off_t	/* begin */,
     unsigned int	/* len */,
     Bool	/* close */
 #endif

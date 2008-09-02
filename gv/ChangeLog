@@ -1,3 +1,12 @@
+2008-09-02  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/callbacks.c,
+	src/file.c, src/misc.c, src/ps.c, src/ps.h, src/zoom.c:
+	Large File Support (LFS) - removed variant that was enabled by the
+	macros HAVE_LFS64.
+
+	* configure.ac, src/Makefile.am: likewise
+	
 2008-09-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/callbacks.c,

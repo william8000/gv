@@ -520,13 +520,8 @@ Input(client_data, source, id)
 	    if (gvw->ghostview.ps_input &&
 		gvw->ghostview.ps_input->seek_needed) {
 		if (gvw->ghostview.ps_input->len > 0)
-#ifdef HAVE_OFF_T
-		    fseeko(gvw->ghostview.ps_input->fp,
+		    GV_FSEEK(gvw->ghostview.ps_input->fp,
 			  gvw->ghostview.ps_input->begin, SEEK_SET);
-#else
-		    fseek(gvw->ghostview.ps_input->fp,
-			  gvw->ghostview.ps_input->begin, SEEK_SET);
-#endif
 		gvw->ghostview.ps_input->seek_needed = False;
 		gvw->ghostview.bytes_left = gvw->ghostview.ps_input->len;
 	    }
@@ -2098,11 +2093,7 @@ Boolean
 GhostviewSendPS(w, fp, begin, len, close)
     Widget w;
     FILE *fp;
-#ifdef HAVE_OFF_T
-    off_t begin;
-#else
-    long begin;
-#endif
+    gv_off_t begin;
     unsigned int len;
     Bool close;
 {

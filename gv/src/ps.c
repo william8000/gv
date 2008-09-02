@@ -173,11 +173,7 @@ typedef struct FileDataStruct_ *FileData;
 typedef struct FileDataStruct_ {
    FILE *file;           /* file */
    int   file_desc;      /* file descriptor corresponding to file */
-#ifdef HAVE_OFF_T
-   off_t   filepos;       /* file position corresponding to the start of the line */
-#else
-   long   filepos;       /* file position corresponding to the start of the line */
-#endif
+   gv_off_t   filepos;       /* file position corresponding to the start of the line */
    char *buf;            /* buffer */
    int   buf_size;       /* size of buffer */
    int   buf_end;        /* last char in buffer given as offset to buf */
@@ -191,15 +187,10 @@ typedef struct FileDataStruct_ {
 static FileData ps_io_init PT((FILE *));
 static void     ps_io_exit PT((FileData));
 static char    *ps_io_fgetchars PT((FileData, int));
-#ifdef HAVE_OFF_T
-  static int      ps_io_fseek PT((FileData, off_t));
-  static off_t     ps_io_ftell PT((FileData));
-  static char    *readline PT((FileData, char **, off_t *, unsigned int *));
-#else
-  static int      ps_io_fseek PT((FileData, long));
-  static long     ps_io_ftell PT((FileData));
-  static char    *readline PT((FileData, char **, long *, unsigned int *));
-#endif
+
+static int      ps_io_fseek PT((FileData, gv_off_t));
+static gv_off_t     ps_io_ftell PT((FileData));
+static char    *readline PT((FileData, char **, gv_off_t *, unsigned int *));
 
 static char    *gettextline PT((char *));
 static char    *ps_gettext PT((char *,char **));
@@ -364,13 +355,9 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     char *line;
                            	/* 255 characters + 1 newline + 1 NULL */
     char text[PSLINELENGTH];	/* Temporary storage for text */
-#ifdef HAVE_OFF_T
-    off_t position;		/* Position of the current line */
-    off_t beginsection;		/* Position of the beginning of the section */
-#else
-    long position;		/* Position of the current line */
-    long beginsection;		/* Position of the beginning of the section */
-#endif
+    gv_off_t position;		/* Position of the current line */
+    gv_off_t beginsection;		/* Position of the beginning of the section */
+
     unsigned int line_len; 	/* Length of the current line */
     unsigned int section_len;	/* Place to accumulate the section length */
     char *next_char;		/* 1st char after text returned by ps_gettext() */
@@ -1592,11 +1579,7 @@ static FileData ps_io_init(file)
    rewind(file);
    FD_FILE      = file;
    FD_FILE_DESC = fileno(file);
-#ifdef HAVE_OFF_T
-   FD_FILEPOS   = ftello(file);
-#else
-   FD_FILEPOS   = ftell(file);
-#endif
+   FD_FILEPOS   = GV_FTELL(file);
    FD_BUF_SIZE  = (2*LINE_CHUNK_SIZE)+1;
    FD_BUF       = PS_XtMalloc(FD_BUF_SIZE);
    FD_BUF[0]    = '\0';
@@ -1625,19 +1608,11 @@ ps_io_exit(fd)
 static int
 ps_io_fseek(fd,offset)
    FileData fd;
-#ifdef HAVE_OFF_T
-   off_t offset;
-#else
-   long offset;
-#endif
+   gv_off_t offset;
 {
    int status;
    BEGINMESSAGE(ps_io_fseek)
-#ifdef HAVE_OFF_T
-   status=fseeko(FD_FILE,offset,SEEK_SET);
-#else
-   status=fseek(FD_FILE,offset,SEEK_SET);
-#endif
+   status=GV_FSEEK(FD_FILE,offset,SEEK_SET);
    FD_BUF_END = FD_LINE_BEGIN = FD_LINE_END = FD_LINE_LEN = 0;
    FD_FILEPOS = offset;
    FD_STATUS  = FD_STATUS_OKAY;
@@ -1649,11 +1624,7 @@ ps_io_fseek(fd,offset)
 /* ps_io_ftell */
 /*----------------------------------------------------------*/
 
-#ifdef HAVE_OFF_T
-static off_t
-#else
-static long
-#endif
+static gv_off_t
 ps_io_ftell(fd)
    FileData fd;
 {
@@ -1787,11 +1758,7 @@ static char * ps_io_fgetchars(fd,num)
       case).
       (Tim Adye, adye@v2.rl.ac.uk)
       */
-#ifdef HAVE_OFF_T
-      FD_FILEPOS         = ftello(FD_FILE);
-#else
-      FD_FILEPOS         = ftell(FD_FILE);
-#endif
+      FD_FILEPOS         = GV_FTELL(FD_FILE);
    } else
 #endif /* USE_FTELL_FOR_FILEPOS */
       FD_FILEPOS        += FD_LINE_LEN;
@@ -1815,11 +1782,7 @@ static char * ps_io_fgetchars(fd,num)
 static char * readline (fd, lineP, positionP, line_lenP)
    FileData fd;
    char **lineP;
-#ifdef HAVE_OFF_T
-   off_t *positionP;
-#else
-   long *positionP;
-#endif
+   gv_off_t *positionP;
    unsigned int *line_lenP;
 {
    unsigned int nbytes=0;
