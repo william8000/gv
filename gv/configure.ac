@@ -272,7 +272,6 @@ AC_ARG_ENABLE(off_t, AC_HELP_STRING([--enable-off_t],[Use code with off_t and fo
                 [opt_off_t=false])
        ])
 
-}
 
 
 
