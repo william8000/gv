@@ -1,3 +1,7 @@
+2008-09-02  Bernhard R. Link <brlink@debian.org>
+
+	* src/GhostviewP.h: Changed type of bytes_left from int to gv_off_t.
+
 2008-09-02  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/callbacks.c,

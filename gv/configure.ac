@@ -261,7 +261,7 @@ test "$opt_memdebug_code" = "true" && {
 
 AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
 
-AC_ARG_ENABLE(off_t, AC_HELP_STRING([--enable-off_t],[Use code with off_t and fopen, ftello, fseeko, stat for potential large file support. It defaults to auto detection. This option only has effect if lfs64 is turned off. largefile only has effects if this option is turned on.]), 
+AC_ARG_ENABLE(off_t, AC_HELP_STRING([--enable-off_t],[Use code with off_t and fopen, ftello, fseeko, stat for potential large file support. It defaults to auto detection. largefile only has effects if this option is turned on.]),
  [case "${enableval}" in
    yes) opt_off_t=true ;;
    no)  opt_off_t=false ;;

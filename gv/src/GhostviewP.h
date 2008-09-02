@@ -101,7 +101,7 @@ typedef struct {
     int			interpreter_pid;/* pid of ghostscript, -1 if none */
     struct record_list	*ps_input;	/* pointer it gs input queue */
     char		*input_buffer;	/* pointer to input buffer */
-    unsigned int	bytes_left;	/* bytes left in section */
+    gv_off_t		bytes_left;	/* bytes left in section */
     char		*input_buffer_ptr; /* pointer into input buffer */
     unsigned int	buffer_bytes_left; /* bytes left in buffer */
     int			interpreter_input; /* fd gs stdin, -1 if None */
