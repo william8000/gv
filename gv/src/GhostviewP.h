@@ -52,7 +52,7 @@ extern GhostviewClassRec ghostviewClassRec;
 struct record_list {
     FILE *fp;
     gv_off_t begin;
-    unsigned int len;
+    gv_off_t len;
     Boolean seek_needed;
     Boolean close;
     struct record_list *next;

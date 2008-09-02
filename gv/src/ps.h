@@ -71,12 +71,12 @@ typedef struct document {
     int  pageorder;			/* ASCEND, DESCEND, SPECIAL */
     gv_off_t beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
           beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
-    unsigned int lenheader;
-    unsigned int lenpreview;
-    unsigned int lendefaults;
-    unsigned int lenprolog;
-    unsigned int lensetup;
-    unsigned int lentrailer;
+    gv_off_t lenheader;
+    gv_off_t lenpreview;
+    gv_off_t lendefaults;
+    gv_off_t lenprolog;
+    gv_off_t lensetup;
+    gv_off_t lentrailer;
     int  boundingbox[4];
     int  default_page_boundingbox[4];
     int  orientation;			/* PORTRAIT, LANDSCAPE */
@@ -94,7 +94,7 @@ struct page {
     struct documentmedia *media;
     int  orientation;			/* PORTRAIT, LANDSCAPE */
     gv_off_t begin, end;			/* offsets into file */
-    unsigned int len;
+    gv_off_t len;
 };
 
 	/* scans a PostScript file and return a pointer to the document

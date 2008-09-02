@@ -2094,7 +2094,7 @@ GhostviewSendPS(w, fp, begin, len, close)
     Widget w;
     FILE *fp;
     gv_off_t begin;
-    unsigned int len;
+    gv_off_t len;
     Bool close;
 {
     GhostviewWidget gvw = (GhostviewWidget) w;

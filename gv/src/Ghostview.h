@@ -280,7 +280,7 @@ extern Boolean			GhostviewSendPS (
     Widget	/* widget */,
     FILE*	/* fp */,
     gv_off_t	/* begin */,
-    unsigned int	/* len */,
+    gv_off_t	/* len */,
     Bool	/* close */
 #endif
 );

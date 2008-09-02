@@ -359,7 +359,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     gv_off_t beginsection;		/* Position of the beginning of the section */
 
     unsigned int line_len; 	/* Length of the current line */
-    unsigned int section_len;	/* Place to accumulate the section length */
+    gv_off_t section_len;	/* Place to accumulate the section length */
     char *next_char;		/* 1st char after text returned by ps_gettext() */
     char *cp;
     Media dmp;
