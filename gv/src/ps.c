@@ -173,14 +173,10 @@ typedef struct FileDataStruct_ *FileData;
 typedef struct FileDataStruct_ {
    FILE *file;           /* file */
    int   file_desc;      /* file descriptor corresponding to file */
-#ifdef HAVE_LFS64
-   off64_t   filepos;       /* file position corresponding to the start of the line */
-#else
 #ifdef HAVE_OFF_T
    off_t   filepos;       /* file position corresponding to the start of the line */
 #else
    long   filepos;       /* file position corresponding to the start of the line */
-#endif
 #endif
    char *buf;            /* buffer */
    int   buf_size;       /* size of buffer */
@@ -195,11 +191,6 @@ typedef struct FileDataStruct_ {
 static FileData ps_io_init PT((FILE *));
 static void     ps_io_exit PT((FileData));
 static char    *ps_io_fgetchars PT((FileData, int));
-#ifdef HAVE_LFS64
-  static int      ps_io_fseek PT((FileData, off64_t));
-  static off64_t     ps_io_ftell PT((FileData));
-  static char    *readline PT((FileData, char **, off64_t *, unsigned int *));
-#else
 #ifdef HAVE_OFF_T
   static int      ps_io_fseek PT((FileData, off_t));
   static off_t     ps_io_ftell PT((FileData));
@@ -208,7 +199,6 @@ static char    *ps_io_fgetchars PT((FileData, int));
   static int      ps_io_fseek PT((FileData, long));
   static long     ps_io_ftell PT((FileData));
   static char    *readline PT((FileData, char **, long *, unsigned int *));
-#endif
 #endif
 
 static char    *gettextline PT((char *));
@@ -374,17 +364,12 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     char *line;
                            	/* 255 characters + 1 newline + 1 NULL */
     char text[PSLINELENGTH];	/* Temporary storage for text */
-#ifdef HAVE_LFS64
-    off64_t position;		/* Position of the current line */
-    off64_t beginsection;		/* Position of the beginning of the section */
-#else
 #ifdef HAVE_OFF_T
     off_t position;		/* Position of the current line */
     off_t beginsection;		/* Position of the beginning of the section */
 #else
     long position;		/* Position of the current line */
     long beginsection;		/* Position of the beginning of the section */
-#endif
 #endif
     unsigned int line_len; 	/* Length of the current line */
     unsigned int section_len;	/* Place to accumulate the section length */
@@ -459,11 +444,7 @@ unc_ok:
         return(retval);
       }
       umask(old_umask);
-#ifdef HAVE_LFS64
-      tmpfile = fopen64(filename_unc, "r");
-#else
       tmpfile = fopen(filename_unc, "r");
-#endif
       if (!tmpfile) goto unc_exec_failed;
       fclose(*fileP);
       *fileP = tmpfile;
@@ -567,11 +548,7 @@ unc_ok:
       INFSMESSAGE(scan command,cmd)
       
       tmp_filename=file_getTmpFilename(NULL,filename_raw);
-#ifdef HAVE_LFS64
-      tmp_file = fopen64(tmp_filename, "w");
-#else
       tmp_file = fopen(tmp_filename, "w");
-#endif
       dup2(2,100);
       close(2); dup2( fileno(tmp_file), 2);
       
@@ -587,11 +564,7 @@ unc_ok:
 	close(100);
 	fclose(tmp_file);
 	
-#ifdef HAVE_LFS64
-        tmp_file = fopen64( tmp_filename, "r" );
-#else
         tmp_file = fopen( tmp_filename, "r" );
-#endif
 	while ( fgets( line, 999, tmp_file) )
 	{
 	   if (strstr(line,"This file requires a password for access."))
@@ -634,11 +607,7 @@ scan_ok:
       GV_XtFree(tmp_filename);
 
       umask (old_umask);
-#ifdef HAVE_LFS64
-      tmpfile = fopen64(filename_dsc, "r");
-#else
       tmpfile = fopen(filename_dsc, "r");
-#endif
       if (!tmpfile) goto scan_exec_failed;
       fclose(*fileP);
       *fileP = tmpfile;
@@ -1623,14 +1592,10 @@ static FileData ps_io_init(file)
    rewind(file);
    FD_FILE      = file;
    FD_FILE_DESC = fileno(file);
-#ifdef HAVE_LFS64
-   FD_FILEPOS   = ftello64(file);
-#else
 #ifdef HAVE_OFF_T
    FD_FILEPOS   = ftello(file);
 #else
    FD_FILEPOS   = ftell(file);
-#endif
 #endif
    FD_BUF_SIZE  = (2*LINE_CHUNK_SIZE)+1;
    FD_BUF       = PS_XtMalloc(FD_BUF_SIZE);
@@ -1660,26 +1625,18 @@ ps_io_exit(fd)
 static int
 ps_io_fseek(fd,offset)
    FileData fd;
-#ifdef HAVE_LFS64
-   off64_t offset;
-#else
 #ifdef HAVE_OFF_T
    off_t offset;
 #else
    long offset;
 #endif
-#endif
 {
    int status;
    BEGINMESSAGE(ps_io_fseek)
-#ifdef HAVE_LFS64
-   status=fseeko64(FD_FILE,offset,SEEK_SET);
-#else
 #ifdef HAVE_OFF_T
    status=fseeko(FD_FILE,offset,SEEK_SET);
 #else
    status=fseek(FD_FILE,offset,SEEK_SET);
-#endif
 #endif
    FD_BUF_END = FD_LINE_BEGIN = FD_LINE_END = FD_LINE_LEN = 0;
    FD_FILEPOS = offset;
@@ -1692,14 +1649,10 @@ ps_io_fseek(fd,offset)
 /* ps_io_ftell */
 /*----------------------------------------------------------*/
 
-#ifdef HAVE_LFS64
-static off64_t
-#else
 #ifdef HAVE_OFF_T
 static off_t
 #else
 static long
-#endif
 #endif
 ps_io_ftell(fd)
    FileData fd;
@@ -1834,14 +1787,10 @@ static char * ps_io_fgetchars(fd,num)
       case).
       (Tim Adye, adye@v2.rl.ac.uk)
       */
-#ifdef HAVE_LFS64
-      FD_FILEPOS         = ftello64(FD_FILE);
-#else
 #ifdef HAVE_OFF_T
       FD_FILEPOS         = ftello(FD_FILE);
 #else
       FD_FILEPOS         = ftell(FD_FILE);
-#endif
 #endif
    } else
 #endif /* USE_FTELL_FOR_FILEPOS */
@@ -1866,14 +1815,10 @@ static char * ps_io_fgetchars(fd,num)
 static char * readline (fd, lineP, positionP, line_lenP)
    FileData fd;
    char **lineP;
-#ifdef HAVE_LFS64
-   off64_t *positionP;
-#else
 #ifdef HAVE_OFF_T
    off_t *positionP;
 #else
    long *positionP;
-#endif
 #endif
    unsigned int *line_lenP;
 {
@@ -2146,11 +2091,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
     BEGINMESSAGE(pscopydoc)
 
     INFSMESSAGE(copying from file, src_filename)
-#ifdef HAVE_LFS64
-    src_file = fopen64(src_filename, "r");
-#else
     src_file = fopen(src_filename, "r");
-#endif
     fd = ps_io_init(src_file);
 
     i=0;

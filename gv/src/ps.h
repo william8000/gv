@@ -69,17 +69,12 @@ typedef struct document {
     char *title;			/* Title of document. */
     char *date;				/* Creation date. */
     int  pageorder;			/* ASCEND, DESCEND, SPECIAL */
-#ifdef HAVE_LFS64
-    off64_t beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
-            beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
-#else
 #ifdef HAVE_OFF_T
     off_t beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
           beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
 #else
     long beginheader, endheader, beginpreview, endpreview, begindefaults, enddefaults,
          beginprolog, endprolog, beginsetup, endsetup, begintrailer, endtrailer;
-#endif
 #endif
     unsigned int lenheader;
     unsigned int lenpreview;
@@ -103,14 +98,10 @@ struct page {
     int  boundingbox[4];
     struct documentmedia *media;
     int  orientation;			/* PORTRAIT, LANDSCAPE */
-#ifdef HAVE_LFS64
-    off64_t begin, end;			/* offsets into file */
-#else
 #ifdef HAVE_OFF_T
     off_t begin, end;			/* offsets into file */
 #else
     long begin, end;			/* offsets into file */
-#endif
 #endif
     unsigned int len;
 };

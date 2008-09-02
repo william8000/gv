@@ -86,11 +86,8 @@ zoom_createZoom(w, call_data)
 {
     Arg args[25];
     Cardinal n;
-#ifdef HAVE_LFS64
-    struct stat64 sbuf;
-#else
     struct stat sbuf;
-#endif
+
     GhostviewReturnStruct *p = (GhostviewReturnStruct *)call_data;
     Boolean b;
     int llx;
@@ -113,11 +110,8 @@ zoom_createZoom(w, call_data)
        INFMESSAGE(no file) ENDMESSAGE(zoom_createZoom)
        return;
     }
-#ifdef HAVE_LFS64
-    stat64(gv_filename, &sbuf);
-#else
     stat(gv_filename, &sbuf);
-#endif
+
     if (mtime != sbuf.st_mtime) {
        INFMESSAGE1(file has changed) ENDMESSAGE1(zoom_createZoom)return;
     }

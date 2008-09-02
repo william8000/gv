@@ -51,14 +51,10 @@ extern GhostviewClassRec ghostviewClassRec;
 /* structure to describe section of file to send to ghostscript */
 struct record_list {
     FILE *fp;
-#ifdef HAVE_LFS64
-    off64_t begin;
-#else
 #ifdef HAVE_OFF_T
     off_t begin;
 #else
     long begin;
-#endif
 #endif
     unsigned int len;
     Boolean seek_needed;
