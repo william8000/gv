@@ -11,6 +11,8 @@
 
 	* configure.ac, src/Makefile.am: likewise
 	
+	* src/versionp.h: Updated release month
+	
 2008-09-01  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/callbacks.c,
