@@ -1,3 +1,9 @@
+2008-09-08  Markus Steinborn <msteinbo@uni-paderborn.de>
+
+	* src/ps.c (psscan): Code cleanup: Use dup to use a new 
+	guaranteed free non-arbitrary number, use open instead of 
+	fopen & fileno.
+
 2008-09-02  Bernhard R. Link <brlink@debian.org>
 
 	* src/GhostviewP.h: Changed type of bytes_left from int to gv_off_t.

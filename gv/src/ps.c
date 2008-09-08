@@ -490,8 +490,8 @@ unc_ok:
       char cmd[512];
       char s[512];
       mode_t old_umask;
-      FILE* tmp_file;
       String tmp_filename;
+      int tmpfd, tmp_fd;
 
       filename_dsc=file_getTmpFilename(NULL,filename_raw);
       /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
@@ -535,21 +535,24 @@ unc_ok:
       INFSMESSAGE(scan command,cmd)
       
       tmp_filename=file_getTmpFilename(NULL,filename_raw);
-      tmp_file = fopen(tmp_filename, "w");
-      dup2(2,100);
-      close(2); dup2( fileno(tmp_file), 2);
+
+      tmp_fd = open(tmp_filename, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+      tmpfd = dup(2);
+      close(2); dup2( tmp_fd, 2);
       
 
       if (system(cmd) || file_fileIsNotUseful(filename_dsc)) {
         char line[1000];
 	int found;
+	FILE* tmp_file;
+	
 	found = 0;
       
 	INFMESSAGE(scan subprocess failed)
 	close(2);
-	dup2(100,2);
-	close(100);
-	fclose(tmp_file);
+	dup2(tmpfd,2);
+	close(tmpfd);
+	close(tmp_fd);
 	
         tmp_file = fopen( tmp_filename, "r" );
 	while ( fgets( line, 999, tmp_file) )
@@ -587,9 +590,10 @@ scan_ok:
       }
 
       close(2);
-      dup2(100,2);
-      close(100);
-      fclose(tmp_file);
+      dup2(tmpfd,2);
+      close(tmpfd);
+      close(tmp_fd);
+      
       unlink((char*) tmp_filename);
       GV_XtFree(tmp_filename);
 
