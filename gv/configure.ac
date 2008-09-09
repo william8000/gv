@@ -49,6 +49,25 @@ dnl Search for libraries
 AC_CHECK_LIB(m, sqrt)
 AC_CHECK_LIB(fl, yywrap)
 
+#
+# Check for zlib and libbz2 libraries to use this together
+# with SuSE's libzio to open compressed info files.
+#
+AC_CHECK_HEADER(zlib.h,[
+  for lib in z gz
+  do
+    AC_CHECK_LIB($lib, gzopen, [LIBS="$LIBS -l$lib" ; break])
+  done])
+AC_CHECK_HEADER(bzlib.h,[
+  for lib in bz2 bzip2
+  do
+    AC_CHECK_LIB($lib, BZ2_bzopen, [LIBS="$LIBS -l$lib" ; break])
+  done])
+AC_CHECK_HEADER(zio.h,[
+    AC_CHECK_LIB(zio, fzopen, [LIBS="$LIBS -lzio" ; AC_DEFINE(HAVE_ZIO, 1, [Have ZIO Library])])
+  ])
+
+
 AC_PATH_XTRA()
 AC_CHECK_LIB(X11, XOpenDisplay, , , $X_LIBS)
 AC_CHECK_LIB(ICE, main, , , $X_LIBS)

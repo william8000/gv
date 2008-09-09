@@ -66,8 +66,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <string.h>
+
+#ifdef HAVE_ZIO
+# include <zio.h>
+#endif
 
 #include <sys/stat.h>
 
@@ -397,6 +403,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
 	cmd_uncompress=NULL;
       }
     }
+#ifndef HAVE_ZIO
     if (cmd_uncompress) {
       struct document *retval = NULL;
       FILE *tmpfile = (FILE*)NULL;
@@ -450,6 +457,23 @@ unc_ok:
       *filename_uncP = (char*)GV_XtNewString(filename_unc);
       goto unc_ok;
     }
+#else
+    if (cmd_uncompress) {
+      FILE *zfile = fzopen(filename, "r");
+      INFMESSAGE(is compressed)
+      if (!zfile) {
+	char s[512];
+	sprintf(s,"Uncompressing of\n%s\nfailed.",filename);
+	NotePopupShowMessage(s);
+	ENDMESSAGE(psscan)
+	return(NULL);
+      }
+      fclose(*fileP);
+      *fileP = zfile;
+      cmd_uncompress = NULL;
+      *filename_uncP = NULL;
+    }
+#endif
 
     respect_eof = (scanstyle & SCANSTYLE_IGNORE_EOF) ? 0 : 1;
     ignore_dsc = (scanstyle & SCANSTYLE_IGNORE_DSC) ? 1 : 0;
