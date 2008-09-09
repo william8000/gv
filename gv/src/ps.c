@@ -78,6 +78,7 @@
 #define BUFSIZ 1024
 #endif
 #include <ctype.h>
+#include <sys/types.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)

@@ -1,3 +1,17 @@
+2008-09-09  Dr. Werner Fink <werner@suse.de>
+
+	* src/Ghostview.c: Under some circimstances add "-dDELAYSAFER"
+	to the commandline of gs.
+	
+	* src/misc.c (set_new_orientation): Handle the case Widget w is
+	not initialized.
+	
+	* src/misc.c (set_new_pagemedia): likewise
+	
+	* src/musc.c (set_pagemediaButton_label): likewise
+	
+	* src/ps.c: Add include <sys/types.h>
+
 2008-09-08  Markus Steinborn <msteinbo@uni-paderborn.de>
 
 	* src/ps.c (psscan): Code cleanup: Use dup to use a new 

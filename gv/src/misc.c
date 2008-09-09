@@ -1388,7 +1388,8 @@ set_new_orientation(pagenumber)
    else if ( no == O_LANDSCAPE)  w = landscapeEntry;
    else if ( no == O_UPSIDEDOWN) w = upsidedownEntry;
    else                          w = seascapeEntry;
-   set_newBitmapIfChanged(w,bitmap);
+      if (w)
+         set_newBitmapIfChanged(w,bitmap);
 
    if (gv_swap_landscape != gv_swap_landscape_old)
       widgets_setSelectedBitmap(swapEntry,gv_swap_landscape);
@@ -1420,13 +1421,17 @@ set_pagemediaButton_label(media_id)
       Widget w;
       if (pagemediaEntry[media_id]) w = pagemediaEntry[media_id];
       else                          w = pagemediaEntry[media_id-1];
+      if (!w)
+	  goto out;
       XtSetArg(args[0], XtNlabel, &s);
       XtGetValues(w, args, ONE);
    } 
    else s = "?";
    XtSetArg(args[0], XtNlabel, s);
    XtSetValues(pagemediaButton, args, ONE);          
+out:
    ENDMESSAGE(set_pagemediaButton_label)
+   return;
 }
 
 /*------------------------------------------------------------*/
@@ -1494,7 +1499,8 @@ set_new_pagemedia(pagenumber)
       else          bitmap = app_res.selected_bitmap;
       if (pagemediaEntry[gv_pagemedia]) w = pagemediaEntry[gv_pagemedia];
       else                              w = pagemediaEntry[gv_pagemedia-1];
-      set_newBitmapIfChanged(w,bitmap);
+         if (w)
+          set_newBitmapIfChanged(w,bitmap);
    }
 
    if (gv_pagemedia_auto != gv_pagemedia_auto_old) widgets_setSelectedBitmap(autoMediaEntry,gv_pagemedia_auto);

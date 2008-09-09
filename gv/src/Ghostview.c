@@ -1442,6 +1442,12 @@ StartInterpreter(w)
     if (gvw->ghostview.safer) 
       {
 	argv[argc++] = "-dSAFER";
+#   ifdef ALLOW_PDF
+	/* The file created by pdf2dsc opens the original
+	   pdf file with the read operator. */
+	if (gv_filename_dsc && (!gvw->ghostview.filename || !strcmp(gvw->ghostview.filename,"-")))
+	   argv[argc++] = "-dDELAYSAFER";
+#   endif
       }
 
     if (gvw->ghostview.arguments) {
