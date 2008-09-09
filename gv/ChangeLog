@@ -1,3 +1,13 @@
+2008-09-09  Olaf Kirch <okir@suse.de>
+
+	* src/secscanf.c: New file providing sec_sscanf with an additional 
+	size argument for string arguments. All format specifiers should work
+	as in the standard scanf - except for those writing to a string
+	buffer provided by the caller. These specifiers take an additional
+	argument of type size_t that specifies the size of the buffer.
+
+	* src/ps.c: Replace all calls (with %s) to sscanf by sec_sscanf.
+	
 2008-09-09  Dr. Werner Fink <werner@suse.de>
 
 	* src/Ghostview.c: Under some circimstances add "-dDELAYSAFER"

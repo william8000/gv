@@ -100,6 +100,10 @@ extern int gv_infoSkipErrors;
 #define memset(a,b,c) bzero(a,c)
 #endif
 
+extern int sec_sscanf(const char *, const char *, ...);
+
+
+
 /* We use this helper function for providing proper */
 /* case and colon :-) insensitive DSC matching */
 static int dsc_strncmp(s1, s2, n)
@@ -474,7 +478,7 @@ unc_ok:
       CHECK_MALLOCED(doc);
       memset(doc, 0, sizeof(struct document));
       *text=0;
-      sscanf(line, "%*s %256s", text);
+      sec_sscanf(line, "%*s %256s", text);
       /*###jp###*/
       /*doc->epsf = iscomment(text, "EPSF-");*/
       doc->epsf = iscomment(text, "EPSF");
@@ -633,11 +637,11 @@ scan_ok:
 	} else if (doc->date == NULL && iscomment(line+2, "CreationDate:")) {
 	    doc->date = gettextline(line+length("%%CreationDate:"));
 	} else if (bb_set == NONE && iscomment(line+2, "BoundingBox:")) {
-	    sscanf(line+length("%%BoundingBox:"), "%256s", text);
+	    sec_sscanf(line+length("%%BoundingBox:"), "%256s", text);
 	    if (strcmp(text, "(atend)") == 0) {
 		bb_set = ATEND;
 	    } else {
-		if (sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
+		if (sec_sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
 			   &(doc->boundingbox[LLX]),
 			   &(doc->boundingbox[LLY]),
 			   &(doc->boundingbox[URX]),
@@ -645,7 +649,7 @@ scan_ok:
 		    bb_set = 1;
 		else {
 		    float fllx, flly, furx, fury;
-		    if (sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
+		    if (sec_sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
 			       &fllx, &flly, &furx, &fury) == 4) {
 			bb_set = 1;
 			doc->boundingbox[LLX] = fllx;
@@ -665,7 +669,7 @@ scan_ok:
 	    }
 	} else if (orientation_set == NONE &&
 		   iscomment(line+2, "Orientation:")) {
-	    sscanf(line+length("%%Orientation:"), "%256s", text);
+	    sec_sscanf(line+length("%%Orientation:"), "%256s", text);
 	    if (strcmp(text, "(atend)") == 0) {
 		orientation_set = ATEND;
 	    } else if (strcmp(text, "Portrait") == 0) {
@@ -676,7 +680,7 @@ scan_ok:
 		orientation_set = 1;
 	    }
 	} else if (page_order_set == NONE && iscomment(line+2, "PageOrder:")) {
-	    sscanf(line+length("%%PageOrder:"), "%256s", text);
+	    sec_sscanf(line+length("%%PageOrder:"), "%256s", text);
 	    if (strcmp(text, "(atend)") == 0) {
 		page_order_set = ATEND;
 	    } else if (strcmp(text, "Ascend") == 0) {
@@ -690,11 +694,11 @@ scan_ok:
 		page_order_set = 1;
 	    }
 	} else if (pages_set == NONE && iscomment(line+2, "Pages:")) {
-	    sscanf(line+length("%%Pages:"), "%256s", text);
+	    sec_sscanf(line+length("%%Pages:"), "%256s", text);
 	    if (strcmp(text, "(atend)") == 0) {
 		pages_set = ATEND;
 	    } else {
-		switch (sscanf(line+length("%%Pages:"), "%d %d",
+		switch (sec_sscanf(line+length("%%Pages:"), "%d %d",
 			       &maxpages, &i)) {
 		    case 2:
 			if (page_order_set == NONE) {
@@ -726,7 +730,7 @@ scan_ok:
 	    doc->media[0].name = ps_gettext(line+length("%%DocumentMedia:"),
 					    &next_char);
 	    if (doc->media[0].name != NULL) {
-		if (sscanf(next_char, "%f %f", &w, &h) == 2) {
+		if (sec_sscanf(next_char, "%f %f", &w, &h) == 2) {
 		    doc->media[0].width = w + 0.5;
 		    doc->media[0].height = h + 0.5;
 		}
@@ -747,7 +751,7 @@ scan_ok:
 		doc->media[doc->nummedia].name = ps_gettext(line+length("%%+"),
 							    &next_char);
 		if (doc->media[doc->nummedia].name != NULL) {
-		    if (sscanf(next_char, "%f %f", &w, &h) == 2) {
+		    if (sec_sscanf(next_char, "%f %f", &w, &h) == 2) {
 			doc->media[doc->nummedia].width = w + 0.5;
 			doc->media[doc->nummedia].height = h + 0.5;
 		    }
@@ -910,7 +914,7 @@ scan_ok:
 		/* Do nothing */
 	    } else if (doc->default_page_orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sscanf(line+length("%%PageOrientation:"), "%256s", text);
+		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text);
 		if (strcmp(text, "Portrait") == 0) {
 		    doc->default_page_orientation = PORTRAIT;
 		} else if (strcmp(text, "Landscape") == 0) {
@@ -929,7 +933,7 @@ scan_ok:
 		PS_free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		if (sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
+		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
 			   &(doc->default_page_boundingbox[LLX]),
 			   &(doc->default_page_boundingbox[LLY]),
 			   &(doc->default_page_boundingbox[URX]),
@@ -937,7 +941,7 @@ scan_ok:
 		    page_bb_set = 1;
 		else {
 		    float fllx, flly, furx, fury;
-		    if (sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
+		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
 			       &fllx, &flly, &furx, &fury) == 4) {
 			page_bb_set = 1;
 			doc->default_page_boundingbox[LLX] = fllx;
@@ -1032,7 +1036,7 @@ scan_ok:
 		/* Do nothing */
 	    } else if (doc->default_page_orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sscanf(line+length("%%PageOrientation:"), "%256s", text);
+		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text);
 		if (strcmp(text, "Portrait") == 0) {
 		    doc->default_page_orientation = PORTRAIT;
 		} else if (strcmp(text, "Landscape") == 0) {
@@ -1055,7 +1059,7 @@ scan_ok:
 		PS_free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		if (sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
+		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
 			   &(doc->default_page_boundingbox[LLX]),
 			   &(doc->default_page_boundingbox[LLY]),
 			   &(doc->default_page_boundingbox[URX]),
@@ -1063,7 +1067,7 @@ scan_ok:
 		    page_bb_set = 1;
 		else {
 		    float fllx, flly, furx, fury;
-		    if (sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
+		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
 			       &fllx, &flly, &furx, &fury) == 4) {
 			page_bb_set = 1;
 			doc->default_page_boundingbox[LLX] = fllx;
@@ -1131,7 +1135,7 @@ newpage:
             CHECK_MALLOCED(doc->pages);
 	}
 	label = ps_gettext(line+length("%%Page:"), &next_char);
-	if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
+	if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	if (nextpage == 1) {
 	    ignore = thispage != 1;
 	}
@@ -1169,7 +1173,7 @@ continuepage:
 		/* Do nothing */
 	    } else if (doc->pages[doc->numpages].orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sscanf(line+length("%%PageOrientation:"), "%256s", text);
+		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text);
 		if (strcmp(text, "Portrait") == 0) {
 		    doc->pages[doc->numpages].orientation = PORTRAIT;
 		} else if (strcmp(text, "Landscape") == 0) {
@@ -1201,11 +1205,11 @@ continuepage:
 		PS_free(cp);
 	    } else if ((page_bb_set == NONE || page_bb_set == ATEND) &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		sscanf(line+length("%%PageBoundingBox:"), "%256s", text);
+		sec_sscanf(line+length("%%PageBoundingBox:"), "%256s", text);
 		if (strcmp(text, "(atend)") == 0) {
 		    page_bb_set = ATEND;
 		} else {
-		    if (sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
+		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
 			    &(doc->pages[doc->numpages].boundingbox[LLX]),
 			    &(doc->pages[doc->numpages].boundingbox[LLY]),
 			    &(doc->pages[doc->numpages].boundingbox[URX]),
@@ -1215,7 +1219,7 @@ continuepage:
 		      }
 		    else {
 			float fllx, flly, furx, fury;
-			if (sscanf(line+length("%%PageBoundingBox:"),
+			if (sec_sscanf(line+length("%%PageBoundingBox:"),
 				   "%f %f %f %f",
 				   &fllx, &flly, &furx, &fury) == 4) {
 			    if (page_bb_set == NONE) page_bb_set = 1;
@@ -1266,7 +1270,7 @@ continuepage:
 	    /* Do nothing */
 	} else if (iscomment(line+2, "Page:")) {
 	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
-	    if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
+	    if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
 		    doc->pages[doc->numpages-1].end = position;
@@ -1293,13 +1297,13 @@ continuepage:
 	    doc->begintrailer = position;
 	    section_len = line_len;
 	} else if (bb_set == ATEND && iscomment(line+2, "BoundingBox:")) {
-	    if (sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
+	    if (sec_sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
 		       &(doc->boundingbox[LLX]),
 		       &(doc->boundingbox[LLY]),
 		       &(doc->boundingbox[URX]),
 		       &(doc->boundingbox[URY])) != 4) {
 		float fllx, flly, furx, fury;
-		if (sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
+		if (sec_sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
 			   &fllx, &flly, &furx, &fury) == 4) {
 		    doc->boundingbox[LLX] = fllx;
 		    doc->boundingbox[LLY] = flly;
@@ -1317,14 +1321,14 @@ continuepage:
 	    }
 	} else if (orientation_set == ATEND &&
 		   iscomment(line+2, "Orientation:")) {
-	    sscanf(line+length("%%Orientation:"), "%256s", text);
+	    sec_sscanf(line+length("%%Orientation:"), "%256s", text);
 	    if (strcmp(text, "Portrait") == 0) {
 		doc->orientation = PORTRAIT;
 	    } else if (strcmp(text, "Landscape") == 0) {
 		doc->orientation = LANDSCAPE;
 	    }
 	} else if (page_order_set == ATEND && iscomment(line+2, "PageOrder:")) {
-	    sscanf(line+length("%%PageOrder:"), "%256s", text);
+	    sec_sscanf(line+length("%%PageOrder:"), "%256s", text);
 	    if (strcmp(text, "Ascend") == 0) {
 		doc->pageorder = ASCEND;
 	    } else if (strcmp(text, "Descend") == 0) {
@@ -1333,7 +1337,7 @@ continuepage:
 		doc->pageorder = SPECIAL;
 	    }
 	} else if (pages_set == ATEND && iscomment(line+2, "Pages:")) {
-	    if (sscanf(line+length("%%Pages:"), "%*u %d", &i) == 1) {
+	    if (sec_sscanf(line+length("%%Pages:"), "%*u %d", &i) == 1) {
 		if (page_order_set == NONE) {
 		    if (i == -1) doc->pageorder = DESCEND;
 		    else if (i == 0) doc->pageorder = SPECIAL;
@@ -1359,7 +1363,7 @@ continuepage:
 	preread = 0;
 	if (DSCcomment(line) && iscomment(line+2, "Page:")) {
 	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
-	    if (sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
+	    if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
 		    doc->pages[doc->numpages-1].end = position;
@@ -1879,7 +1883,7 @@ static char * readline (fd, lineP, positionP, line_lenP)
       INFMESSAGE(encountered "BeginData:")
       if (FD_LINE_LEN > 100) FD_BUF[100] = '\0';
       text[0] = '\0';
-      if (sscanf(line+length("%%BeginData:"), "%d %*s %100s", &num, text) >= 1) {
+      if (sec_sscanf(line+length("%%BeginData:"), "%d %*s %100s", &num, text) >= 1) {
          if (strcmp(text, "Lines") == 0) {
             INFIMESSAGE(number of lines to skip:,num)
             while (num) {
@@ -1903,7 +1907,7 @@ static char * readline (fd, lineP, positionP, line_lenP)
    else if IS_BEGIN("Binary:") {
       int  num;
       INFMESSAGE(encountered "BeginBinary:")
-      if (sscanf(line+length("%%BeginBinary:"), "%d", &num) == 1) {
+      if (sec_sscanf(line+length("%%BeginBinary:"), "%d", &num) == 1) {
          int read_chunk_size = LINE_CHUNK_SIZE;
          INFIMESSAGE(number of chars to skip:,num)
          while (num>0) {
@@ -1978,7 +1982,7 @@ pscopyuntil(fd, to, begin, end, comment)
          INFMESSAGE(encountered "BeginData:")
          if (FD_LINE_LEN > 100) FD_BUF[100] = '\0';
          text[0] = '\0';
-         if (sscanf(line+length("%%BeginData:"), "%d %*s %100s", &num, text) >= 1) {
+         if (sec_sscanf(line+length("%%BeginData:"), "%d %*s %100s", &num, text) >= 1) {
             if (strcmp(text, "Lines") == 0) {
                INFIMESSAGE(number of lines:,num)
                while (num) {
@@ -2001,7 +2005,7 @@ pscopyuntil(fd, to, begin, end, comment)
       else if IS_BEGIN("Binary:") {
          int  num;
          INFMESSAGE(encountered "BeginBinary:")
-         if (sscanf(line+length("%%BeginBinary:"), "%d", &num) == 1) {
+         if (sec_sscanf(line+length("%%BeginBinary:"), "%d", &num) == 1) {
             int read_chunk_size = LINE_CHUNK_SIZE;
             INFIMESSAGE(number of chars:,num)
             while (num>0) {
@@ -2075,12 +2079,12 @@ pscopydoc(dest_file,src_filename,d,pagelist)
           PS_free(comment);
           continue;
        }
-       sscanf(comment+length("%%Pages:"), "%256s", text);
+       sec_sscanf(comment+length("%%Pages:"), "%256s", text);
        if (strcmp(text, "(atend)") == 0) {
           fputs(comment, dest_file);
           pages_atend = True;
        } else {
-          switch (sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
+          switch (sec_sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
              case 1:
                 fprintf(dest_file, "%%%%Pages: %d %d\n", pages, i);
                 break;
@@ -2115,7 +2119,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
          PS_free(comment);
          continue;
       }
-      switch (sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
+      switch (sec_sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
          case 1:
             fprintf(dest_file, "%%%%Pages: %d %d\n", pages, i);
             break;
