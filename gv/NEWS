@@ -9,7 +9,11 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.5.91  (??? 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.5.92  (September 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# libzio is now used if available during compile time
+
+%%%%%%%%%%%%%%%%%%% GV 3.6.5.91  (September 2008) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # gv-update-userconfig now offers the options -n resp. -N to switch to an
   alternative navigation: After each page switch (except if selected by the 
