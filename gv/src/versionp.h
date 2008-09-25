@@ -40,7 +40,7 @@
 #define  VERSION_APPLIC_CONTEXT	app_con  			/* the Application Context */
 
 char *versionIdentification[] = {
-        "gv 3.6.5.92",
+        "gv 3.6.6",
         "September 2008",
 	0
 };
@@ -75,7 +75,7 @@ char * copyright = "\
 
 char *author[] = {
 "\
-   GNU Maintainer:      Markus Steinborn (msteinbo@uni-paderborn.de)\n\
+   GNU Maintainer:      Markus Steinborn (gnugv_maintainer@yahoo.de)\n\
 \n\
    Original Author:     Johannes Plass\n\
 \n\

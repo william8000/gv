@@ -1,3 +1,9 @@
+2008-09-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* Bumped version to 3.6.6
+	
+	* Updated my e-mail address.
+
 2008-09-09  Dr. Werner Fink <werner@suse.de>
 
 	* configure.ac: Check if the ZIO Library is available.
