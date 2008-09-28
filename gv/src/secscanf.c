@@ -32,6 +32,25 @@
 #include <string.h>
 #include <ctype.h>
 
+static size_t GNU_strnlen(const char *s, size_t len)
+{
+   size_t i;
+   for(i=0; i<len && *(s+i); i++);
+   return i;
+}
+
+static char* GNU_strndup (char const *s, size_t n)
+{
+   size_t len = GNU_strnlen (s, n);
+   char *new = malloc (len + 1);
+
+   if (new == NULL)
+   return NULL;
+
+   new[len] = '\0';
+   return memcpy (new, s, len);
+}
+
 enum {
 	CONV_ANY,
 	CONV_STR,
@@ -244,7 +263,7 @@ sec_sscanf(const char *s, const char *fmt, ...)
 
 		/* Deal with a conversion flag */
 		if (conv_type == CONV_STR && allocate) {
-			value.v_pointer = strndup(value.v_string, s - value.v_string);
+			value.v_pointer = GNU_strndup(value.v_string, s - value.v_string);
 			conv_type = CONV_POINTER;
 			allocate = 0;
 		}

@@ -1,3 +1,8 @@
+2008-09-28  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/secsscanf.c: Provide an implementation of strndup named
+	GNU_strndup and adjust the only call.
+
 2008-09-28  Bernhard R. Link <brlink@debian.org>
 
 	* src/file.c (file_assureDirectory): Changed 2nd argument to be const
