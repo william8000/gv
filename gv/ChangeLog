@@ -1,10 +1,18 @@
+2008-09-28  Bernhard R. Link <brlink@debian.org>
+
+	* src/file.c (file_assureDirectory): Changed 2nd argument to be const
+	
+	* src/info.c: Fixed one warning
+	
+	* configure.ac: Cleaner ZIO Detection
+
 2008-09-28  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
-	* Bumped version to 3.6.6.90
+	* configure.ac, src/versionp.h: Bumped version to 3.6.6.90
 
 2008-09-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
-	* Bumped version to 3.6.6
+	* configure.ac, src/versionp.h: Bumped version to 3.6.6
 	
 	* Updated my e-mail address.
 

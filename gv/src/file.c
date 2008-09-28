@@ -135,10 +135,7 @@ file_locateFilename(path)
 /* file_assureDirectory */
 /*############################################################*/
 
-void
-file_assureDirectory(to,from)
-   char *to;
-   char *from;
+static void file_assureDirectory(char *to, const char *from)
 {
    int len;
    BEGINMESSAGE(file_assureDirectory)

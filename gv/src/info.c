@@ -141,7 +141,8 @@ void cb_appendInfoPopup(w, client_data, call_data)
     XtSetValues(infotext,args,n);
     XawTextEnableRedisplay(infotext);
 
-    if (skipErrors = gv_infoSkipErrors)
+    skipErrors = gv_infoSkipErrors;
+    if (gv_infoSkipErrors)
        if (strstr((char*)call_data, "Error:") || strstr((char*)call_data, "ERROR:") || strstr((char*)call_data, "error:"))
           --gv_infoSkipErrors;
 

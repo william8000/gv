@@ -49,10 +49,14 @@ dnl Search for libraries
 AC_CHECK_LIB(m, sqrt)
 AC_CHECK_LIB(fl, yywrap)
 
+AC_ARG_WITH(libzio, AC_HELP_STRING([--without-libzio],[Do not probe for libzio]), opt_zio=$withval, opt_zio=yes)
+
+if test "$opt_zio" != "no" ; then
 #
 # Check for zlib and libbz2 libraries to use this together
-# with SuSE's libzio to open compressed info files.
+# with SuSE's libzio to open compressed files.
 #
+savedLIBS=$LIBS
 AC_CHECK_HEADER(zlib.h,[
   for lib in z gz
   do
@@ -64,8 +68,9 @@ AC_CHECK_HEADER(bzlib.h,[
     AC_CHECK_LIB($lib, BZ2_bzopen, [LIBS="$LIBS -l$lib" ; break])
   done])
 AC_CHECK_HEADER(zio.h,[
-    AC_CHECK_LIB(zio, fzopen, [LIBS="$LIBS -lzio" ; AC_DEFINE(HAVE_ZIO, 1, [Have ZIO Library])])
-  ])
+    AC_CHECK_LIB(zio, fzopen, [LIBS="$LIBS -lzio" ; AC_DEFINE(HAVE_ZIO, 1, [Have ZIO Library])],[LIBS=$savedLIBS])
+  ],[LIBS=$savedLIBS])
+fi
 
 
 AC_PATH_XTRA()
