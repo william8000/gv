@@ -2,6 +2,9 @@
 
 	* src/Vlist.c: Fix a regression from prev. patch: The scroll arrows
 	on the page panel did not work any more.
+	
+	* src/FileSel.c: Changed in order to benefit from the changes in Vlist
+	to support large lists.
 
 2009-01-01  Bernhard R. Link <brlink@debian.org>
 

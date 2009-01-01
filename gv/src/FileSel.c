@@ -979,8 +979,10 @@ static void FS_listAction(w, event, params, nparams)
 #  define DECAY_TIME 200
    static int firstposx,posx[HISTORY_POINTS+1],posix;
    static int firstposy,posy[HISTORY_POINTS+1],posiy;
-   static int childx,childy,childw,childh,clipw,cliph;
+   static int childx,childy,childw,childh,clipw,cliph,childyp;
    static int moving=0,scrolling=0;
+   static int startvisible=0;
+   static Boolean scroll_initialized=False;
    static Time to;
    Widget child;
    Widget clip;
@@ -1063,6 +1065,7 @@ static void FS_listAction(w, event, params, nparams)
     }
   }
   else if (streq(params[0],"scrollon")) {
+    scroll_initialized = True;
     INFMESSAGE(start-move)
     if (event->type != ButtonPress) goto break_scrolling;
     moving = 1;
@@ -1071,8 +1074,10 @@ static void FS_listAction(w, event, params, nparams)
     firstposx = posx[0] = (int) event->xbutton.x_root;
     firstposy = posy[0] = (int) event->xbutton.y_root;
     to = ((XMotionEvent*)event)->time;
+    startvisible = VlistGetFirstVisible(list);
+    childyp = 0;
   }
-  else if (streq(params[0],"scroll")) {
+  else if (streq(params[0],"scroll") && scroll_initialized) {
     if (event->type != MotionNotify) goto break_scrolling;
     childx = (int) child->core.x;
     childy = (int) child->core.y;
@@ -1137,7 +1142,13 @@ static void FS_listAction(w, event, params, nparams)
         if (REVERSE_SCROLLING) { dx = -dx; dy = -dy; }
 	childx = (int) (childx-(dx*absfactor)-(relfactor*childw*dx)/clipw);
 	childy = (int) (childy-(dy*absfactor)-(relfactor*childh*dy)/cliph);
-	ClipWidgetSetCoordinates(clip,childx,childy);
+	ClipWidgetSetCoordinates(clip,childx,0);
+	if (childy != childyp)
+	{
+	   childyp=childy;
+           startvisible = VlistGetFirstVisible(list);
+	   VlistMoveFirstVisible(list, startvisible, childy);
+	}
 	childx = (int) child->core.x;
 	childy = (int) child->core.y;
 	childw = (int) child->core.width;
@@ -1152,6 +1163,7 @@ break_scrolling:
     INFMESSAGE(stop-move)
     moving = 0;
     scrolling = 0;
+    scroll_initialized = False;
   }
   else if (streq(params[0],"page") && !scrolling) {
     int x,y,sx,sy,pw,ph;
@@ -1166,7 +1178,10 @@ break_scrolling:
     XtTranslateCoords(clip,0,((Position)ph/2),&midx,&midy);
     if (y<midy) sy = (int) (sy + abs(ph-20));
     else  sy = (int) (sy - abs(ph-20));
-    ClipWidgetSetCoordinates(clip,sx,sy);
+    ClipWidgetSetCoordinates(clip,sx,0);
+
+    startvisible = VlistGetFirstVisible(list);
+    VlistMoveFirstVisible(list, startvisible, sy);
   }
   ENDMESSAGE(FS_listAction)
 }
@@ -1833,6 +1848,7 @@ static void cb_scroll(w, client_data, call_data)
 {
   Widget p;
   char *s;
+  int startvisible;
 
   BEGINMESSAGE(cb_scroll)
 
@@ -1858,13 +1874,26 @@ SMESSAGE(XtName(p))
     if (style == SCROLL_SCROLLPROC || style == SCROLL_JUMPPROC) {
       int x,y;
       x = (int) aaa->core.x;
-      if (((int)(intptr_t)client_data)==1) y = (int)(intptr_t) aaa->core.y - (int)(intptr_t)call_data;
-      else                               y = (int)(-*((float*)call_data) * aaa->core.height);
-      ClipWidgetSetCoordinates(clip, x, y);
+      ClipWidgetSetCoordinates(clip, x, 0);
+      if (((int)(intptr_t)client_data)==1) 
+      {
+         int dy = (int)(intptr_t)call_data;
+         float h = (float)aaa->core.height;
+
+         VlistMoveFirstVisible(FS_CURLIST, VlistGetFirstVisible(FS_CURLIST), dy);
+         if (h < 1.0) h = 1.0;
+         XawScrollbarSetThumb(scroll,VlistScrollPosition(FS_CURLIST),(float)clip->core.height/h);
+      }
+      else
+      {
+         float *percent = (float *) call_data;
+         VlistSetFirstVisible(FS_CURLIST, (int)(VlistEntries(FS_CURLIST)**percent));
+      }
+
     } else if (style == SCROLL_CLIPREPORT) {
       float h = (float)aaa->core.height;
       if (h < 1.0) h = 1.0;
-      XawScrollbarSetThumb(scroll,-(float)aaa->core.y/h,(float)clip->core.height/h);
+      XawScrollbarSetThumb(scroll,VlistScrollPosition(FS_CURLIST),(float)clip->core.height/h);
     }
   }    
   ENDMESSAGE(cb_scroll)

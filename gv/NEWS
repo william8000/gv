@@ -9,9 +9,12 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.6.90 (??? 2009) %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.6.90 (January 2009) %%%%%%%%%%%%%%%%%%%%%%%%
 
 # TOC can now display more than about 2000 pages (fixes bug #24069)
+
+# File open dialog can now display more than about 2000 files
+  (fixes ubuntu bug #274767)
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.6  (September 2008) %%%%%%%%%%%%%%%%%%%%%%%%
 
