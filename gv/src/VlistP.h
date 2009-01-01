@@ -69,6 +69,7 @@ typedef struct {
   GC mark_background_GC;
   GC selected_background_GC;
   GC highlighted_background_GC;
+  int firstVisible;
   int selected;
   int highlighted;
   int hulx;
@@ -79,6 +80,9 @@ typedef struct {
   int suly;
   int slrx;
   int slry;
+  int ydelta;
+  int yofs;
+  XtCallbackList report_callbacks;
 } VlistPart;
 
 typedef struct _VlistRec {

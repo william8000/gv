@@ -303,41 +303,43 @@ misc_setPageMarker(entry,kind,event,check_toc)
   XEvent *event;
   Boolean check_toc;
 {
-  int x,y,yl,yu,ny=99999;
+  int firstvisible, lastvisible;
   Boolean b = False;
   INFMESSAGE(misc_setPageMarker)
   if (toc_text && (entry >= 0)) {
-    if (kind == 0 && VlistSelected(newtoc) != entry)  
+    if (kind == 0 && VlistSelected(newtoc) != entry)
       VlistChangeSelected(newtoc,entry,XawVlistSet);
-    else if (kind == 1 && VlistHighlighted(newtoc) != entry)  
+    else if (kind == 1 && VlistHighlighted(newtoc) != entry)
       VlistChangeHighlighted(newtoc,entry,XawVlistSet);
     else if (kind == 2) {
       entry=VlistSelected(newtoc);
       if (entry<0) return;
     }
-    VlistPositionOfEntry(newtoc,entry,&yu,&yl);
-    x = newtocControl->core.x;
-    y = newtocControl->core.y;
-    IIMESSAGE(x,y)
-    IIMESSAGE(yu,yl)
-    IIMESSAGE(y,newtoc->core.y)
-    if (yu != yl) {
-      ny = -((int)newtoc->core.y + yu) + 14;
-      if (y<0 && y < ny) b = True;
-      if (!b) {
-	ny = (int)newtocClip->core.height - ((int)newtoc->core.y + yl + 14);
-        if (y>ny) b = True;
+    firstvisible = VlistGetFirstVisible(newtoc);
+    if (firstvisible > entry || (entry > 0 && firstvisible >= entry)) {
+      if (entry > 0)
+	VlistSetFirstVisible(newtoc, entry - 1);
+      else
+	VlistSetFirstVisible(newtoc, entry);
+      b = True;
+    } else {
+      /* sadly newtoc does not know it's height, so it cannot be told
+       * to made an item visible and we need to trick: */
+      lastvisible = VlistEntryOfPosition(newtoc, newtocClip->core.height);
+      if (entry > firstvisible && entry >= lastvisible) {
+	VlistSetFirstVisible(newtoc, entry - (lastvisible - firstvisible - 1));
+	b = True;
       }
-      if (b) {
-	INFIMESSAGE(jumping to,ny)
-	ClipWidgetSetCoordinates(newtocClip,x,ny);
-	if (event)
+    }
+    /* if this happened by mouse, we have the information to get the
+     * highlight up to date again: */
+    if (b) {
+      if (event)
 	{
-	   entry = VlistEntryOfPosition(newtoc,(int)event->xbutton.y+(y-ny));
-	   if (entry != VlistHighlighted(newtoc) && check_toc)
-		VlistChangeHighlighted(newtoc,entry,XawVlistSet);
-        }
-      }
+	  entry = VlistEntryOfPosition(newtoc, (int)event->xbutton.y);
+	  if (entry != VlistHighlighted(newtoc) && check_toc)
+	    VlistChangeHighlighted(newtoc,entry,XawVlistSet);
+	}
     }
   }
 }

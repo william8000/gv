@@ -1128,11 +1128,11 @@ int main(argc, argv)
           cont_child[cont_child_num] = newtocFrame; cont_child_num++;
   									n=0;
           newtocClip = XtCreateManagedWidget("newtocClip", clipWidgetClass,newtocFrame, args, n);
-	     XtAddCallback(newtocClip, XtNreportCallback,cb_newtocClipAdjust, (XtPointer)NULL);
   									n=0;
           newtocControl = XtCreateManagedWidget("newtocControl", aaaWidgetClass,newtocClip, args, n);
          	      							n=0;
           newtoc = XtCreateManagedWidget("newtoc", vlistWidgetClass,newtocControl, args, n);
+	  XtAddCallback(newtoc, XtNreportCallback,cb_newtocVisibleAdjust, (XtPointer)NULL);
 									n=0;
           newtocScroll = XtCreateWidget("newtocScroll", scrollbarWidgetClass,control, args, n);
 	     XtAddCallback(newtocScroll, XtNscrollProc,cb_newtocScrollbar, (XtPointer)1);

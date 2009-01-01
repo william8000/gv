@@ -156,32 +156,36 @@ cb_newtocScrollbar(w, client_data, call_data)
   Widget w;
   XtPointer client_data, call_data;
 {
-  int x,y;
-
   BEGINMESSAGE(cb_newtocScrollbar)
-  x = (int) newtocControl->core.x;
   if (((int)(intptr_t)client_data)==1) {
     int dy = (int)(intptr_t)call_data;
-    y = (int) newtocControl->core.y - dy;
+    VlistMoveFirstVisible(newtoc, VlistGetFirstVisible(newtoc), dy);
   } else {
     float *percent = (float *) call_data;
-    y = (int)(-*percent * newtocControl->core.height);
+    VlistSetFirstVisible(newtoc, (int)(VlistEntries(newtoc)**percent));
   }
-  ClipWidgetSetCoordinates(newtocClip, x, y);
   ENDMESSAGE(cb_newtocScrollbar)
 }
 
 /*##################################################################*/
-/* cb_newtocClipAdjust */
+/* cb_newtocVisibleAdjust */
 /*##################################################################*/
 
-void cb_newtocClipAdjust(w, client_data, call_data)
+void cb_newtocVisibleAdjust(w, client_data, call_data)
   Widget w;
   XtPointer client_data, call_data;
 {
+  int entries;
+
   BEGINMESSAGE(cb_newtocClipAdjust)
-  XawScrollbarSetThumb(newtocScroll,
-		       -(float)newtocControl->core.y/(float)newtocControl->core.height,
+
+  entries = VlistEntries(newtoc);
+
+  if (entries <= 0)
+    XawScrollbarSetThumb(newtocScroll, 0.0, 1.0);
+  else
+    XawScrollbarSetThumb(newtocScroll,
+			 VlistScrollPosition(newtoc),
 		       (float)newtocClip->core.height/(float)newtocControl->core.height);
   ENDMESSAGE(cb_newtocClipAdjust)
 }

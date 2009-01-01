@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 1995, 1996, 1997 Johannes Plass
 ** Copyright (C) 2004 Jose E. Marchesi
+** modified 2008 by Bernhard R. Link
 ** 
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -34,6 +35,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 /*
 #define MESSAGES
 */
@@ -68,6 +70,8 @@ static char defaultTranslations[] = "";
 
 #define offset(field) XtOffsetOf(VlistRec, field)
 static XtResource resources[] = { 
+   {XtNreportCallback, XtCReportCallback, XtRCallback, sizeof(XtPointer),
+	offset(vlist.report_callbacks), XtRCallback, (XtPointer) NULL },
    {XtNselectedShadowWidth, XtCShadowWidth, XtRDimension, sizeof(Dimension),
 	offset(vlist.selected_shadow_width), XtRImmediate, (XtPointer) 1},
    {XtNmarkShadowWidth, XtCShadowWidth, XtRDimension, sizeof(Dimension),
@@ -193,6 +197,7 @@ Cardinal *num_args;		/* unused */
   if (vw->vlist.vlist) s = vw->vlist.vlist;
   vw->vlist.vlist = GV_XtNewString(s);
   c = vw->vlist.vlist;
+  vw->vlist.firstVisible = 0;
   vw->vlist.selected = -1;
   vw->vlist.highlighted = -1;
   vw->vlist.entries = (int)strlen(vw->vlist.vlist);
@@ -213,6 +218,17 @@ Cardinal *num_args;		/* unused */
   values.foreground	= vw->core.background_pixel;
   values.graphics_exposures = False;
   vw->vlist.background_GC = XtGetGC((Widget)vw,(unsigned) GCForeground | GCGraphicsExposures,&values);
+
+  /* TODO: check if this works here in international mode, or if it has
+   * to be moved to Realize... */
+  if( vw->simple.international == True ) {
+    XFontSetExtents *ext = XExtentsOfFontSet(vw->label.fontset);
+    vw->vlist.yofs = (ext->max_ink_extent.y<0)?-ext->max_ink_extent.y:ext->max_ink_extent.y;
+    vw->vlist.ydelta = ext->max_ink_extent.height;
+  } else {
+    vw->vlist.yofs = vw->label.font->max_bounds.ascent;
+    vw->vlist.ydelta = vw->label.font->max_bounds.ascent + vw->label.font->max_bounds.descent;
+  }
 
   ENDMESSAGE(Initialize)
 }
@@ -318,16 +334,9 @@ PaintEntryString(w, entry)
   VlistWidget vw = (VlistWidget)w;
   char * s;
   int i;
-  int yofs, ydelta;
+  int yofs = vw->vlist.yofs, ydelta = vw->vlist.ydelta;
 
-  if( vw->simple.international == True ) {
-    XFontSetExtents *ext = XExtentsOfFontSet(vw->label.fontset);
-    yofs = (ext->max_ink_extent.y<0)?-ext->max_ink_extent.y:ext->max_ink_extent.y;
-    ydelta = ext->max_ink_extent.height;
-  } else {
-    yofs = vw->label.font->max_bounds.ascent;
-    ydelta = vw->label.font->max_bounds.ascent + vw->label.font->max_bounds.descent;
-  }
+  yofs -= ydelta * vw->vlist.firstVisible;
 
   BEGINMESSAGE1(PaintEntryString)
   s = vw->label.label;
@@ -378,6 +387,10 @@ PaintMark(w, region, entry, style,erase)
     ENDMESSAGE(PaintMark)
     return(ret);
   }
+  if (entry < vw->vlist.firstVisible) {
+    ENDMESSAGE(PaintMark)
+    return 0;
+  }
   if (style<0) { /* highlighted */
     INFMESSAGE(highlighted entry)
     ulx = vw->vlist.hulx;
@@ -397,11 +410,10 @@ PaintMark(w, region, entry, style,erase)
   }
   x = (Position) ulx;
   y = (Position) (((int) vw->label.label_y) +
-		  (entry*(vw->label.label_height))/vw->vlist.entries +
+		  ((entry - vw->vlist.firstVisible)*vw->vlist.ydelta) +
 		  uly);
   width = (Dimension)((int) vw->core.width - ulx + lrx);
-  height= (Dimension)(((int) vw->label.label_height)/vw->vlist.entries +
-		      - uly + lry + .5);
+  height= (Dimension)(vw->vlist.ydelta - uly + lry + .5);
   ss = XawSUNKEN;
   if (region == NULL || XRectInRegion(region,x,y,width,height) != RectangleOut) {
     if (erase) {
@@ -487,14 +499,17 @@ PaintMarkMarkOfEntry(w, region, entry, erase)
     char *vlist = vw->vlist.vlist;
     Boolean paint=False;
 
+    if (entry < vw->vlist.firstVisible)
+      return;
+
     if (vlist[entry] == '*') paint = True;
     if (paint || erase) {
       x = (Position) (VLIST_MARK_LEFT_INDENT);
       y = (Position) (((int) vw->label.label_y) +
 		      VLIST_MARK_VERTICAL_INDENT +
-		      (entry*(vw->label.label_height))/vw->vlist.entries);
+		      ((entry-vw->vlist.firstVisible)*vw->vlist.ydelta));
       width = (Dimension) (VLIST_MARK_WIDTH);
-      height= (Dimension)(((int) vw->label.label_height)/vw->vlist.entries + 0.5 - 2*VLIST_MARK_VERTICAL_INDENT);
+      height= (Dimension)(vw->vlist.ydelta + 0.5 - 2*VLIST_MARK_VERTICAL_INDENT);
       ss = XawSUNKEN;
       if (region == NULL || XRectInRegion(region,x,y,width,height) != RectangleOut) {
 	if (paint) {
@@ -530,7 +545,7 @@ Region region;
   BEGINMESSAGE(PaintMarksOfEntries)
   PaintMarkOfEntry(w, region, vw->vlist.highlighted,-1, False);
   if (vw->vlist.allow_marks) {
-    int i=0;
+    int i= vw->vlist.firstVisible;
     while (i < vw->vlist.entries) {
       if (i != vw->vlist.highlighted)
 	PaintMarkMarkOfEntry(w, region, i, False);
@@ -553,14 +568,67 @@ XEvent *event;
 Region region;
 {
   Dimension width;
+  char *s, *o;
+  int i, y;
   VlistWidget vw = (VlistWidget)w;
+  XRectangle rectangle;
+
   BEGINMESSAGE(PaintVlistWidget)
+  /* better not allow the widget to grow that large, but that needs fixing
+   * of the Clip widget */
   shiftLabel(vw);
   PaintMarksOfEntries(w, event, region);
   width = vw->threeD.shadow_width;
+  o = vw->label.label;
+  s = vw->label.label;
+  i = vw->vlist.firstVisible;
+  if (s) while (i > 0 && (s = strchr(s,'\n'))) { s++; i--; }
+  /* This still fails when the list is too long and does not print anything.
+   * Though that is perhaps best fixed by making Clip to enforce a real window
+   * height...
+  vw->label.label = s;
   vw->threeD.shadow_width = 0;
   (*SuperClass->core_class.expose) (w, event, region);
-  vw->threeD.shadow_width =  width; 
+  vw->threeD.shadow_width =  width;
+  vw->label.label = o;
+  until Clip is extended, just manually draw each line:
+  */
+  if (region)
+    XClipBox(region, &rectangle);
+  else {
+    rectangle.x = 0;
+    rectangle.y = 0;
+    rectangle.width = vw->core.width;
+    rectangle.height = vw->core.height;
+    if( rectangle.height >= 0x4000 )
+	    rectangle.height = 0x3fff;
+  }
+  y = vw->label.label_y + vw->vlist.yofs;
+  i = 0;
+
+  while (s != NULL) {
+    char *nl = strchr(s, '\n');
+    int len;
+    if (nl)
+      len = nl - s;
+    else
+      len = strlen(s);
+    if (y - vw->vlist.yofs > rectangle.y + rectangle.height)
+      break;
+    if (y + (vw->vlist.ydelta - vw->vlist.yofs) >= rectangle.y) {
+      if( vw->simple.international == True )
+	XmbDrawString(XtDisplay(w), XtWindow(w), vw->label.fontset,
+		      vw->label.normal_GC, vw->label.label_x, y, s, len);
+      else
+	XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
+		    vw->label.label_x, y, s, len);
+    }
+    if (nl)
+      s = nl + 1;
+    else
+      s = NULL;
+    y += vw->vlist.ydelta;
+  }
   ENDMESSAGE(PaintVlistWidget)
 }
 
@@ -644,12 +712,14 @@ VlistEntryOfPosition(w,y)
 
   BEGINMESSAGE(VlistEntryOfPosition)
   y = y - (int) vw->label.label_y;
-  if (vw->label.label_height > 0) {
+  if (vw->vlist.ydelta > 0) {
     if (y < 0) entry = -1;
-    else       entry = (vw->vlist.entries*y)/(int)vw->label.label_height;
+    else       entry = y/vw->vlist.ydelta;
   }
   if (entry >= vw->vlist.entries)
 	  entry = vw->vlist.entries-1;
+  if (entry >= 0)
+    entry += vw->vlist.firstVisible;
   IMESSAGE(entry)
   ENDMESSAGE(VlistEntryOfPosition)
   return(entry);
@@ -670,8 +740,9 @@ VlistPositionOfEntry(w,e,yuP,ylP)
   float h;
   BEGINMESSAGE(VlistPositionOfEntry)
   *yuP = *ylP = (int) vw->label.label_y;
-  if (e>=0 && vw->vlist.entries > 0) {
-    h = (float)vw->label.label_height/(float)vw->vlist.entries;
+  if (e >= vw->vlist.firstVisible && vw->vlist.entries > 0) {
+    e -= vw->vlist.firstVisible;
+    h = vw->vlist.ydelta;
     *yuP += (int)((float)e*h);
     *ylP += (int)((float)(e+1)*h);
   }
@@ -827,4 +898,79 @@ VlistChangeHighlighted(w,entry,change)
   BEGINMESSAGE(VlistChangeHighlighted)
   vlist_change_mark(w,entry,change,-1);
   ENDMESSAGE(VlistChangeHighlighted)
+}
+
+/*###################################################*/
+/* VlistGetFirstVisible */
+/*###################################################*/
+
+int VlistGetFirstVisible(Widget w)
+{
+  VlistWidget vw = (VlistWidget)w;
+
+  return vw->vlist.firstVisible;
+}
+
+/*###################################################*/
+/* VlistSetFirstVisible */
+/*###################################################*/
+
+void VlistSetFirstVisible(Widget w, int newf)
+{
+  VlistWidget vw = (VlistWidget)w;
+  unsigned int height;
+
+  BEGINMESSAGE(VlistSetFirstVisible)
+  if (newf < 0)
+    newf = 0;
+  else if (newf >= vw->vlist.entries)
+    newf = vw->vlist.entries - 1;
+  if (newf == -1)
+    return;
+  if (newf != vw->vlist.firstVisible) {
+    vw->vlist.firstVisible = newf;
+    /* better not allow the widget to grow that large, but that needs fixing
+     * of the Clip widget */
+    height = vw->core.height;
+    if( height >= 0x8000 )
+	    height = 0x3fff;
+    XFillRectangle(XtDisplayOfObject(w), XtWindowOfObject(w), vw->vlist.background_GC,
+		    vw->core.x, vw->core.y, vw->core.width, height);
+    Redisplay(w, NULL, NULL);
+    if (vw->vlist.report_callbacks)
+      XtCallCallbackList (w, vw->vlist.report_callbacks, (XtPointer)0);
+  }
+  ENDMESSAGE(VlistMoveFirstVisible)
+}
+/*###################################################*/
+/* VlistMoveFirstVisible */
+/*###################################################*/
+
+void VlistMoveFirstVisible(Widget w, int start, int ydiff)
+{
+  VlistWidget vw = (VlistWidget)w;
+  int ly;
+  int newf;
+
+  BEGINMESSAGE(VlistMoveFirstVisible)
+  ly = vw->vlist.ydelta;
+  fprintf(stderr, "move: start=%d ydiff=%d ly=%d\n", start, ydiff, ly);
+  if (ydiff >= 0)
+	  ydiff += ly/2;
+  else
+	  ydiff -= ly/2;
+  newf = start + ydiff/ly;
+  VlistSetFirstVisible(w, newf);
+  ENDMESSAGE(VlistMoveFirstVisible)
+}
+
+/*###################################################*/
+/* VlistScrollPosition */
+/*###################################################*/
+
+float VlistScrollPosition(Widget w)
+{
+  VlistWidget vw = (VlistWidget)w;
+
+  return vw->vlist.firstVisible/(float)vw->vlist.entries;
 }

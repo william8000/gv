@@ -49,7 +49,7 @@ extern void			cb_newtocScrollbar (
 #endif
 );
 
-extern void			cb_newtocClipAdjust (
+extern void			cb_newtocVisibleAdjust (
 #if NeedFunctionPrototypes
    Widget,
    XtPointer,

@@ -35,6 +35,7 @@
 
 #include "paths.h"
 #include INC_XAW(Label.h)
+#include INC_XAW(Reports.h)
 
 #define XawVlistAll     -13
 #define XawVlistEven    -12
@@ -131,5 +132,9 @@ extern void                     VlistChangeHighlighted (
     int
 #endif
 );
+extern int VlistGetFirstVisible(Widget);
+extern void VlistSetFirstVisible(Widget, int);
+extern void VlistMoveFirstVisible(Widget, int, int);
+float VlistScrollPosition(Widget);
 
 #endif /* _Vlist_h_ */

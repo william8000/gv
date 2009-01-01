@@ -379,6 +379,7 @@ action_toc(w, event, params, num_params)
 {
   static int xf,yf,xo,yo,xp,yp,dyo;
   static Boolean scroll_initialized=False;
+  static int startvisible;
   static Boolean scrolling=False;
   static int entryo = -1;
   Boolean toggle_mark=False;
@@ -397,8 +398,7 @@ action_toc(w, event, params, num_params)
     if (!app_res.reverse_scrolling) dy = -dy;
     m  = 1.3*((float)slider->core.height/(float)ph);
     if (m<=1) m = 1;
-    y = yp +(int)(m*dy);
-    if (y<dh) y=dh; if (y>0) y=0;
+    y = yp -(int)(m*dy);
     yo = (int) event->xbutton.y_root;
 
     ph = (int)panner->core.width; if (ph<1) ph = 1;
@@ -411,9 +411,12 @@ action_toc(w, event, params, num_params)
     if (x<dh) x=dh; if (x>0) x=0;
     xo = (int) event->xbutton.x_root;
 
-    if (x!=xp || y!=yp) {
-      ClipWidgetSetCoordinates(panner,x,y);
+    if (x!=xp) {
+      ClipWidgetSetCoordinates(panner,x,0);
       xp = x;
+    }
+    if (y!=yp) {
+      VlistMoveFirstVisible(newtoc, startvisible, y);
       yp = y;
     }
     if (abs(xf-xo) > 6 || abs(yf-yo) > 6) scrolling = True;
@@ -422,7 +425,8 @@ action_toc(w, event, params, num_params)
     scroll_initialized = True;
     scrolling = False;
     xp = (int) slider->core.x; xf = xo = (int) event->xbutton.x_root;
-    yp = (int) slider->core.y; yf = yo = (int) event->xbutton.y_root;
+    yp = 0; yf = yo = (int) event->xbutton.y_root;
+    startvisible = VlistGetFirstVisible(newtoc);
   }
   else if (!strcmp(params[0],"scrolloff")) {
     scroll_initialized = False;
