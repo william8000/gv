@@ -940,11 +940,13 @@ void VlistSetFirstVisible(Widget w, int newf)
     if (vw->vlist.report_callbacks)
       XtCallCallbackList (w, vw->vlist.report_callbacks, (XtPointer)0);
   }
-  ENDMESSAGE(VlistMoveFirstVisible)
+  ENDMESSAGE(VlistSetFirstVisible)
 }
 /*###################################################*/
 /* VlistMoveFirstVisible */
 /*###################################################*/
+
+extern int debug_p;
 
 void VlistMoveFirstVisible(Widget w, int start, int ydiff)
 {
@@ -954,11 +956,16 @@ void VlistMoveFirstVisible(Widget w, int start, int ydiff)
 
   BEGINMESSAGE(VlistMoveFirstVisible)
   ly = vw->vlist.ydelta;
-  fprintf(stderr, "move: start=%d ydiff=%d ly=%d\n", start, ydiff, ly);
+  if (debug_p) fprintf(stderr, "move: start=%d ydiff=%d ly=%d\n", start, ydiff, ly);
+
+  if (ydiff > 0 && ly > ydiff) ydiff=ly;
+  if (ydiff < 0 && ly > -ydiff) ydiff=-ly;
+
   if (ydiff >= 0)
 	  ydiff += ly/2;
   else
 	  ydiff -= ly/2;
+
   newf = start + ydiff/ly;
   VlistSetFirstVisible(w, newf);
   ENDMESSAGE(VlistMoveFirstVisible)
