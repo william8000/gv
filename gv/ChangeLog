@@ -1,3 +1,16 @@
+2009-01-01  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/Vlist.c: Fix a regression from prev. patch: The scroll arrows
+	on the page panel did not work any more.
+
+2009-01-01  Bernhard R. Link <brlink@debian.org>
+
+	* src/Vlist.c, src/Vlist.h, VlistP.h: support large lists (big change!)
+	
+	* src/actions.c, src/callbacks.c, src/main.c, src/misc.c:
+	Changed in order to benefit from the change above.
+
+
 2008-09-28  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/secsscanf.c: Provide an implementation of strndup named
