@@ -1895,10 +1895,9 @@ SMESSAGE(XtName(p))
       else
       {
          float *percent = (float *) call_data;
-      float h = (float)aaa->core.height*2;
-      if (h < 1.0) h = 1.0;
-printf("DEBUG: %f %i %f %f\n", *percent, VlistEntries(list),(VlistEntries(list)**percent), h);
-         VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
+         float h = (float)aaa->core.height*2;
+         if (h < 1.0) h = 1.0;
+            VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
       }
 
     } else if (style == SCROLL_CLIPREPORT) {
