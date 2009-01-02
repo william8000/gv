@@ -1139,7 +1139,7 @@ static void FS_listAction(w, event, params, nparams)
 	if (*nparams>=3) absfactor = atof((char*)(params[2]));
 	absfactor = absfactor >= 0 ? (absfactor<=200 ? absfactor : 200) : 0;
 	IIMESSAGE1(absfactor,relfactor)
-        if (REVERSE_SCROLLING) { dx = -dx; dy = -dy; }
+        if (REVERSE_SCROLLING) { dx = -dx; } else { dy = -dy; }
 	childx = (int) (childx-(dx*absfactor)-(relfactor*childw*dx)/clipw);
 	childy = (int) (childy-(dy*absfactor)-(relfactor*childh*dy)/cliph);
 	ClipWidgetSetCoordinates(clip,childx,0);
@@ -1299,7 +1299,7 @@ static void changeList(w,list,entries)
 {
   int i,e,l;
   USE_Arg(2);
-  char *d,*s;
+  char *d,*s,*p;
 
   BEGINMESSAGE(changeList)
   i=e=l=0;
@@ -1314,12 +1314,17 @@ static void changeList(w,list,entries)
   d = FS_XtMalloc(e*sizeof(char));
   s[0]='\0';
   i=0;
+  p = s;
   while (i<entries) {
-     strcat(s,list[i]);
-     strcat(s,"\n");
+     size_t len = strlen(list[i]);
+
+     memcpy(p, list[i], len);
+     p += len;
+     *(p++) = '\n';
      d[i]=' ';
-     i++;     
+     i++;
   }
+  *p = '\0';
   d[i]='\0';
 
   RESET_Arg;
