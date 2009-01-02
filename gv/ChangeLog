@@ -1,3 +1,8 @@
+2009-01-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/FileSel.c: Changed in order to benefit from the changes in Vlist
+	to support large lists.
+
 2009-01-01  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/Vlist.c: Fix a regression from prev. patch: The scroll arrows

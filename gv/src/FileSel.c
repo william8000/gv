@@ -71,6 +71,7 @@
 #include "FileSelP.h"
 #include "MButton.h"
 #include "Vlist.h"
+#include "VlistP.h"
 
 #include "d_memdebug.h"
 
@@ -982,7 +983,6 @@ static void FS_listAction(w, event, params, nparams)
    static int childx,childy,childw,childh,clipw,cliph,childyp;
    static int moving=0,scrolling=0;
    static int startvisible=0;
-   static Boolean scroll_initialized=False;
    static Time to;
    Widget child;
    Widget clip;
@@ -1065,7 +1065,6 @@ static void FS_listAction(w, event, params, nparams)
     }
   }
   else if (streq(params[0],"scrollon")) {
-    scroll_initialized = True;
     INFMESSAGE(start-move)
     if (event->type != ButtonPress) goto break_scrolling;
     moving = 1;
@@ -1077,7 +1076,7 @@ static void FS_listAction(w, event, params, nparams)
     startvisible = VlistGetFirstVisible(list);
     childyp = 0;
   }
-  else if (streq(params[0],"scroll") && scroll_initialized) {
+  else if (streq(params[0],"scroll")) {
     if (event->type != MotionNotify) goto break_scrolling;
     childx = (int) child->core.x;
     childy = (int) child->core.y;
@@ -1163,7 +1162,6 @@ break_scrolling:
     INFMESSAGE(stop-move)
     moving = 0;
     scrolling = 0;
-    scroll_initialized = False;
   }
   else if (streq(params[0],"page") && !scrolling) {
     int x,y,sx,sy,pw,ph;
@@ -1870,11 +1868,11 @@ SMESSAGE(s)
 SMESSAGE(XtName(p))
 
   {
-    Widget clip=NULL,aaa=NULL,scroll=NULL;
+    Widget clip=NULL,aaa=NULL,scroll=NULL,list=NULL;
     FS_WIDGET p;
     int style = (int)(intptr_t)client_data;
-    if      (s[0] == 'c') { clip = FS_CURCLIP; aaa = FS_CURAAA; scroll = FS_CURSCROLL; }
-    else if (s[0] == 's') { clip = FS_SUBCLIP; aaa = FS_SUBAAA; scroll = FS_SUBSCROLL; }
+    if      (s[0] == 'c') { clip = FS_CURCLIP; aaa = FS_CURAAA; scroll = FS_CURSCROLL; list = FS_CURLIST; }
+    else if (s[0] == 's') { clip = FS_SUBCLIP; aaa = FS_SUBAAA; scroll = FS_SUBSCROLL; list = FS_SUBLIST; }
     else style=0;
     if (style == SCROLL_SCROLLPROC || style == SCROLL_JUMPPROC) {
       int x,y;
@@ -1884,21 +1882,29 @@ SMESSAGE(XtName(p))
       {
          int dy = (int)(intptr_t)call_data;
          float h = (float)aaa->core.height;
+         int ly = ((VlistWidget)list)->vlist.ydelta;
 
-         VlistMoveFirstVisible(FS_CURLIST, VlistGetFirstVisible(FS_CURLIST), dy);
+         /* Just scroll one position less... */
+         if (dy>ly) dy-=ly;
+         if (dy<-ly) dy+=ly;
+	 
+         VlistMoveFirstVisible(list, VlistGetFirstVisible(list), dy);
          if (h < 1.0) h = 1.0;
-         XawScrollbarSetThumb(scroll,VlistScrollPosition(FS_CURLIST),(float)clip->core.height/h);
+         XawScrollbarSetThumb(scroll,VlistScrollPosition(list),(float)clip->core.height/h);
       }
       else
       {
          float *percent = (float *) call_data;
-         VlistSetFirstVisible(FS_CURLIST, (int)(VlistEntries(FS_CURLIST)**percent));
+      float h = (float)aaa->core.height*2;
+      if (h < 1.0) h = 1.0;
+printf("DEBUG: %f %i %f %f\n", *percent, VlistEntries(list),(VlistEntries(list)**percent), h);
+         VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
       }
 
     } else if (style == SCROLL_CLIPREPORT) {
-      float h = (float)aaa->core.height;
+      float h = (float)aaa->core.height*2;
       if (h < 1.0) h = 1.0;
-      XawScrollbarSetThumb(scroll,VlistScrollPosition(FS_CURLIST),(float)clip->core.height/h);
+      XawScrollbarSetThumb(scroll,VlistScrollPosition(list),(float)clip->core.height/h);
     }
   }    
   ENDMESSAGE(cb_scroll)
