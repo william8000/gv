@@ -979,5 +979,35 @@ float VlistScrollPosition(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
+#if 0
+  printf("Scroll position %d/%d=%f\n",
+		  vw->vlist.firstVisible,(int)(vw->vlist.entries),
+		  vw->vlist.firstVisible/(float)(vw->vlist.entries));
+#endif
   return vw->vlist.firstVisible/(float)vw->vlist.entries;
+}
+
+float VlistVisibleLength(Widget w, unsigned int height)
+{
+  VlistWidget vw = (VlistWidget)w;
+  float percent;
+  int entriesvisible = -1;
+
+  if (vw->vlist.ydelta > 0) {
+    if (height < 0) entriesvisible = -1;
+    else            entriesvisible = height/vw->vlist.ydelta;
+  }
+#if 0
+  printf("fitting %d entries of height %d in %d",
+		  entriesvisible, (int)vw->vlist.ydelta, (int)height);
+#endif
+  if (entriesvisible >= vw->vlist.entries)
+	  entriesvisible = vw->vlist.entries;
+#if 0
+  printf(", visible percents %d/%d=%f\n",
+		  entriesvisible,(int)(vw->vlist.entries),
+		  entriesvisible/(float)(vw->vlist.entries));
+#endif
+  percent = entriesvisible/(float)(vw->vlist.entries);
+  return percent;
 }

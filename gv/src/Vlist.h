@@ -136,5 +136,6 @@ extern int VlistGetFirstVisible(Widget);
 extern void VlistSetFirstVisible(Widget, int);
 extern void VlistMoveFirstVisible(Widget, int, int);
 float VlistScrollPosition(Widget);
+float VlistVisibleLength(Widget, unsigned int);
 
 #endif /* _Vlist_h_ */

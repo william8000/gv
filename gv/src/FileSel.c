@@ -1875,13 +1875,12 @@ SMESSAGE(XtName(p))
     else if (s[0] == 's') { clip = FS_SUBCLIP; aaa = FS_SUBAAA; scroll = FS_SUBSCROLL; list = FS_SUBLIST; }
     else style=0;
     if (style == SCROLL_SCROLLPROC || style == SCROLL_JUMPPROC) {
-      int x,y;
+      int x;
       x = (int) aaa->core.x;
       ClipWidgetSetCoordinates(clip, x, 0);
       if (((int)(intptr_t)client_data)==1) 
       {
          int dy = (int)(intptr_t)call_data;
-         float h = (float)aaa->core.height;
          int ly = ((VlistWidget)list)->vlist.ydelta;
 
          /* Just scroll one position less... */
@@ -1889,21 +1888,21 @@ SMESSAGE(XtName(p))
          if (dy<-ly) dy+=ly;
 	 
          VlistMoveFirstVisible(list, VlistGetFirstVisible(list), dy);
-         if (h < 1.0) h = 1.0;
-         XawScrollbarSetThumb(scroll,VlistScrollPosition(list),(float)clip->core.height/h);
+         XawScrollbarSetThumb(scroll,VlistScrollPosition(list),
+		      VlistVisibleLength(list,clip->core.height));
       }
       else
       {
          float *percent = (float *) call_data;
-         float h = (float)aaa->core.height*2;
-         if (h < 1.0) h = 1.0;
-            VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
+#if 0
+	 printf("scrolling to %f\n", *percent);
+#endif
+	 VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
       }
 
     } else if (style == SCROLL_CLIPREPORT) {
-      float h = (float)aaa->core.height*2;
-      if (h < 1.0) h = 1.0;
-      XawScrollbarSetThumb(scroll,VlistScrollPosition(list),(float)clip->core.height/h);
+      XawScrollbarSetThumb(scroll,VlistScrollPosition(list),
+		      VlistVisibleLength(list,clip->core.height));
     }
   }    
   ENDMESSAGE(cb_scroll)
