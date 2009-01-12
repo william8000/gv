@@ -273,7 +273,7 @@ WidgetClass scrollbarWidgetClass = (WidgetClass)&scrollbarClassRec;
 #define  NICE_DIMENSION			5
 
 #define _SCROLL_THICKNESS_		((int)THICKNESS-2*THUMB_TO_BORDER)
-#define _SCROLL_LENGTH_			((int)LENGTH-2*(ARROW_TOP_TO_BORDER+ARROW_HEIGHT+THUMB_TO_ARROW))
+#define _SCROLL_LENGTH_			((int)LENGTH-2*(ARROW_TOP_TO_BORDER+ARROW_HEIGHT+THUMB_TO_ARROW)-1)
 
 #define _RIGHT_END_OF_SCROLL_REGION_	((int)THICKNESS-1-THUMB_TO_BORDER)
 #define _LEFT_START_OF_SCROLL_REGION_	(THUMB_TO_BORDER)
@@ -476,7 +476,7 @@ static void GetRelativeThumbLocation(SBW,newtop,newbot)
    ScrollbarWidget SBW;
    Dimension *newtop, *newbot;
 {
-   Dimension scroll_length = (Dimension) _SCROLL_LENGTH_;
+   Dimension scroll_length = (Dimension) _SCROLL_LENGTH_-MIN_THUMB;
    Dimension end_of_scroll_region = (Dimension) _END_OF_SCROLL_REGION_;
 
    BEGINMESSAGE(GetRelativeThumbLocation)
@@ -1396,7 +1396,7 @@ static void MoveThumb (w, event, params, num_params)
    SCROLLBARWIDGET w;
    Position position;
    static Position old_position;
-   float losr         = (float)(_SCROLL_LENGTH_);
+   float losr         = (float)(_SCROLL_LENGTH_-MIN_THUMB);
    Position tosr = (Position) ARROW_TOP_TO_BORDER+ARROW_HEIGHT+THUMB_TO_ARROW;
    Position bosr = (Position) LENGTH-1-tosr;
    BEGINMESSAGE(MoveThumb)
@@ -1413,16 +1413,8 @@ static void MoveThumb (w, event, params, num_params)
 
    ExtractPosition(event,&position,(IS_VERTICAL));
    position = PUT_IN_RANGE(tosr,position,bosr);
-   if (SCROLLMODE != CONTINUOUS) {
-      if ((position < TOPLOC) || (position >= TOPLOC + SHOWNLENGTH)) {
-         TOP = PUT_IN_RANGE(0.0,((float)(position-tosr-SHOWNLENGTH/2))/losr, 1.0-SHOWN);
-      }
-      SCROLLMODE=CONTINUOUS;
-   } else {
-      TOP = PUT_IN_RANGE(0.0,TOP+((float)(position-old_position))/losr, 1.0-SHOWN);
-   }
-   old_position = position;
-
+   SCROLLMODE=CONTINUOUS;
+   TOP = PUT_IN_RANGE(0.0,(position-tosr)/losr, 1.0);
    PaintThumb(SBW);
    XFlush(XtDisplay (w));
    ENDMESSAGE(MoveThumb)

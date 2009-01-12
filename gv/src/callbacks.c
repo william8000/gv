@@ -91,6 +91,7 @@
 #include "misc_private.h"
 #include "version.h"
 #include "widgets_misc.h"
+#include "VlistP.h"
 
 static char* save_directory = NULL;
 static char* open_directory = NULL;
@@ -159,6 +160,10 @@ cb_newtocScrollbar(w, client_data, call_data)
   BEGINMESSAGE(cb_newtocScrollbar)
   if (((int)(intptr_t)client_data)==1) {
     int dy = (int)(intptr_t)call_data;
+    /* Just scroll one position less... */
+    int ly = ((VlistWidget)newtoc)->vlist.ydelta;
+    if (dy>ly) dy-=ly;
+    if (dy<-ly) dy+=ly;
     VlistMoveFirstVisible(newtoc, VlistGetFirstVisible(newtoc), dy);
   } else {
     float *percent = (float *) call_data;

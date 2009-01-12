@@ -3,6 +3,16 @@
 	* src/callbacks.c(cb_newtocVisibleAdjust): Use VlistVisibleLength to
 	  calculate visible area.
 
+	* src/scrollbar.c(MoveThumb): New calculation of TOP, the actual
+	  relative position of the scrollbar.
+	  
+	* src/scrollbar.c(GetRelativeThumbLocation): Adjusted to fit to
+	  MoveThumb.
+	  
+	* src/callbacks.c(cb_newtocScrollbar): Just scroll one position less
+	  than calculated, but at least one. This should help to ensure that
+	  every page is reachable by this mechanism.
+
 2009-01-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/FileSel.c: Bugfixed
