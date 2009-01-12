@@ -1,3 +1,8 @@
+2009-01-12  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/callbacks.c(cb_newtocVisibleAdjust): Use VlistVisibleLength to
+	  calculate visible area.
+
 2009-01-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/FileSel.c: Bugfixed

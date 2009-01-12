@@ -186,7 +186,8 @@ void cb_newtocVisibleAdjust(w, client_data, call_data)
   else
     XawScrollbarSetThumb(newtocScroll,
 			 VlistScrollPosition(newtoc),
-		       (float)newtocClip->core.height/(float)newtocControl->core.height);
+		         VlistVisibleLength(newtoc,newtocClip->core.height)); 
+
   ENDMESSAGE(cb_newtocClipAdjust)
 }
 
