@@ -167,7 +167,7 @@ cb_newtocScrollbar(w, client_data, call_data)
     VlistMoveFirstVisible(newtoc, VlistGetFirstVisible(newtoc), dy);
   } else {
     float *percent = (float *) call_data;
-    VlistSetFirstVisible(newtoc, (int)(VlistEntries(newtoc)**percent));
+    VlistSetFirstVisible(newtoc, (int)(VlistEntries(newtoc)**percent+0.5));
   }
   ENDMESSAGE(cb_newtocScrollbar)
 }

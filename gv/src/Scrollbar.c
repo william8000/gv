@@ -1400,7 +1400,6 @@ static void MoveThumb (w, event, params, num_params)
    Position tosr = (Position) ARROW_TOP_TO_BORDER+ARROW_HEIGHT+THUMB_TO_ARROW;
    Position bosr = (Position) LENGTH-1-tosr;
    BEGINMESSAGE(MoveThumb)
-
    if (LookAhead (w, event)) {
       INFMESSAGE(aborting due to LookAhead) ENDMESSAGE(MoveThumb)
       return;
@@ -1413,8 +1412,16 @@ static void MoveThumb (w, event, params, num_params)
 
    ExtractPosition(event,&position,(IS_VERTICAL));
    position = PUT_IN_RANGE(tosr,position,bosr);
-   SCROLLMODE=CONTINUOUS;
-   TOP = PUT_IN_RANGE(0.0,(position-tosr)/losr, 1.0);
+
+   if (SCROLLMODE != CONTINUOUS) {
+       if ((position < TOPLOC) || (position >= TOPLOC + SHOWNLENGTH)) {
+         TOP = PUT_IN_RANGE(0.0,((float)(position-tosr))/losr, 1.0-SHOWN);
+        }
+      SCROLLMODE=CONTINUOUS;
+   } else {
+      TOP = PUT_IN_RANGE(0.0,TOP+((float)(position-old_position))/losr, 1.0-SHOWN);
+   }
+   old_position = position;
    PaintThumb(SBW);
    XFlush(XtDisplay (w));
    ENDMESSAGE(MoveThumb)

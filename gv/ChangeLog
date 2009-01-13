@@ -1,3 +1,10 @@
+2009-01-13  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/scrollbar.c(MoveThumb):  Improve usability
+	
+	* src/callbacks.c(cb_newtocScrollbar) src/FileSel.c(cb_scroll): Rouning
+	position to integer instead of using implicitly the floor function.
+
 2009-01-12  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/callbacks.c(cb_newtocVisibleAdjust): Use VlistVisibleLength to

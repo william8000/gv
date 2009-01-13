@@ -1894,10 +1894,7 @@ SMESSAGE(XtName(p))
       else
       {
          float *percent = (float *) call_data;
-#if 0
-	 printf("scrolling to %f\n", *percent);
-#endif
-	 VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent));
+	 VlistSetFirstVisible(list, (int)(VlistEntries(list)**percent+0.5));
       }
 
     } else if (style == SCROLL_CLIPREPORT) {
