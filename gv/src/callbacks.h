@@ -217,6 +217,14 @@ extern void			cb_savepos (
 #endif
 );
 
+extern void			cb_presentation (
+#if NeedFunctionPrototypes
+   Widget,
+   XtPointer,
+   XtPointer
+#endif
+);
+
 extern void			cb_redisplay (
 #if NeedFunctionPrototypes
    Widget,

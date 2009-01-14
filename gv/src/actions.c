@@ -818,6 +818,23 @@ action_savepos(w, event, params, num_params)
 }
 
 /*##################################################################*/
+/* action_presentation */
+/*##################################################################*/
+
+void
+action_presentation(w, event, params, num_params)
+  Widget w;
+  XEvent *event;
+  String *params;
+  Cardinal *num_params;
+{
+  BEGINMESSAGE(action_savepos)
+  if (!XtIsSensitive(presentationEntry)) {INFMESSAGE(insensitive) ENDMESSAGE(action_presentation) return; }
+  cb_presentation((Widget)NULL,(XtPointer)NULL,(XtPointer)NULL);
+  ENDMESSAGE(action_presentation)
+}
+
+/*##################################################################*/
 /* action_save */
 /* Popup the save file dialog box. */
 /*##################################################################*/

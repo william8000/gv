@@ -41,6 +41,8 @@
 #  endif
 #endif
 
+EXTERN char* gv_bin;
+
 EXTERN Bool			show_date;
 EXTERN Bool			show_locator;
 EXTERN Bool			show_title;
@@ -197,6 +199,7 @@ EXTERN Widget               optiongvEntry;
 EXTERN Widget               optiongsEntry;
 EXTERN Widget               optionfsEntry;
 EXTERN Widget               optionsetupEntry;
+EXTERN Widget               presentationEntry;
 EXTERN Widget         pageButton;
 EXTERN Widget            pageMenu;
 EXTERN Widget               nextEntry;

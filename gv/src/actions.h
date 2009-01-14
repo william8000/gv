@@ -159,6 +159,15 @@ extern void 			action_savepos (
 #endif
 );
 
+extern void 			action_presentation (
+#if NeedFunctionPrototypes
+    Widget,
+    XEvent *,
+    String *,
+    Cardinal *
+#endif
+);
+
 extern void 			action_save (
 #if NeedFunctionPrototypes
     Widget,

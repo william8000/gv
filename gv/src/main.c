@@ -257,10 +257,11 @@ static XtActionsRec actions[] = {
  { "GV_Page"		, action_page			},
  { "GV_Panner"		, action_panner			},
  { "GV_Print"		, action_print			},
- { "GV_PrintPos", action_print_pos			},
+ { "GV_PrintPos"	, action_print_pos		},
  { "GV_Quit"		, action_quit			},
  { "GV_Reopen"		, action_reopen			},
- { "GV_SavePos"		, action_savepos			},
+ { "GV_SavePos"		, action_savepos		},
+ { "GV_Presentation"	, action_presentation		},
  { "GV_Resizing"	, action_autoResize		},
  { "GV_Save"		, action_save			},
  { "GV_SetScale"	, action_setScale		},
@@ -347,6 +348,7 @@ int main(argc, argv)
 /*###  initializing global variables ####################################*/
 
     INFMESSAGE(initializing global variables)
+    gv_bin = argv[0];
     gv_scroll_mode = SCROLL_MODE_NONE;
     gv_class = GV_CLASS;
     gv_pending_page_request=NO_CURRENT_PAGE;
@@ -939,6 +941,8 @@ int main(argc, argv)
        { &optiongsEntry,   "optionsgs", NULL, NULL},
        { &optionfsEntry,   "optionsfs", NULL, NULL},
        { &optionsetupEntry,"optionssetup", NULL, NULL},
+       { NULL,             "line", NULL, NULL },
+       { &presentationEntry,     "presentation", cb_presentation, NULL},
        { NULL, NULL, NULL, NULL },
      };
      main_createMenu(m,cont_child,&cont_child_num);

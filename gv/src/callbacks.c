@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <signal.h>
 
 #ifdef HAVE_INTTYPES_H
   #include <inttypes.h>
@@ -939,6 +940,38 @@ cb_savepos(w, client_data, call_data)
     fprintf(posfile, "%i %i\n", last_psx, last_psy);
     fclose(posfile);
     ENDMESSAGE(cb_savepos)
+}
+
+/*##################################################################*/
+/* cb_presentation */
+/*##################################################################*/
+
+void
+cb_presentation(w, client_data, call_data)
+    Widget w;
+    XtPointer client_data, call_data;
+{
+    int pid;
+    typedef void (*sighandler_t)(int);
+    sighandler_t sigold;
+    
+    BEGINMESSAGE(cb_presentation)
+
+    sigold = signal(SIGCLD, SIG_IGN); /* Avoid zombies */
+    if (!(pid = fork()))
+    {
+       /* We have to close all open file descriptors so the child does not
+          inherit them */
+       int i;
+       for (i=3; i<256; i++) 
+          close(i);
+       execl(gv_bin, "gv", "--presentation", gv_filename, 0);
+       printf("Cannot exec %s\n", gv_bin);
+       exit(1);
+    }
+    signal(SIGCLD, sigold); /* restore signal handler */
+    
+    ENDMESSAGE(cb_presentation)
 }
 
 /*##################################################################*/

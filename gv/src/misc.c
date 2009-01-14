@@ -1076,6 +1076,7 @@ setup_ghostview()
 
     XtSetSensitive(reopenEntry,      (gv_psfile   != NULL));
     XtSetSensitive(saveposEntry,      (gv_psfile   != NULL));
+    XtSetSensitive(presentationEntry,      (gv_psfile   != NULL));
     XtSetSensitive(printAllEntry,    (gv_psfile   != NULL));
     XtSetSensitive(printMarkedEntry, (toc_text    != NULL));
     XtSetSensitive(saveAllEntry,     (gv_psfile   != NULL));

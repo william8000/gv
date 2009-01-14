@@ -254,6 +254,8 @@ GV.control.Button*internalWidth:	0
 !##### Labels
 !################################################
 
+GV*presentation.Label:			Presentation Mode
+GV*savepos.Label:			Savepos
 GV*cancel.Label:			Cancel
 GV*dismiss.Label:			Dismiss
 GV*apply.label:				Apply
@@ -400,11 +402,12 @@ GV.control.baseTranslations:#replace		\n\
  ~s ~c <Key>s:		GV_Save(marked)		\n\
  <Key>s:		GV_Save(all)		\n\
  ~s ~c <Key>p:		GV_Print(marked)	\n\
- <Key>p:		GV_Print(all)		\n\
+ ~s ~c <Key>p:		GV_Print(all)		\n\
  ~c ~s <Key>period:	GV_Page(redisplay)	\n\
  <Key>period:		GV_Reopen()		\n\
  <Key>Z:               GV_SavePos()            \n\
  <Key>U:               GV_PrintPos(marked)             \n\
+ s <Key>p:		GV_Presentation()		\n\
  c <Key>L:		GV_Page(redisplay)	\n\
  <Key>M:		GV_SetPageMark(current,mark)\n\
  <Key>N:		GV_SetPageMark(current,unmark)\n\

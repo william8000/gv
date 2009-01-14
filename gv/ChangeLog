@@ -1,3 +1,23 @@
+2009-01-14  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* arc/action.c (action_presentation): Handling the new "z"-key for
+	saving positions.
+	
+	* src/actions.h: likewise for the prototypes
+	
+	* src/callbacks.c (cb_presentation): fork+exec new instance of gv in
+	presentation mode
+	
+        * src/callbacks.h: Likewise for the prototypes.
+	
+	* src/gv_misc_res.dat: Add handling for Shift P key
+	
+	* src/main.c: Add event handlers for GV_Presentation.
+	
+	* src/main_globals.h: Add Widget "presentationEntry". 
+	
+	* src/misc.c: Set Sensitivity of new "saveposEntry".
+
 2009-01-13  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/scrollbar.c(MoveThumb):  Improve usability
