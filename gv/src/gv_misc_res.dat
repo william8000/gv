@@ -402,7 +402,7 @@ GV.control.baseTranslations:#replace		\n\
  ~s ~c <Key>s:		GV_Save(marked)		\n\
  <Key>s:		GV_Save(all)		\n\
  ~s ~c <Key>p:		GV_Print(marked)	\n\
- ~s ~c <Key>p:		GV_Print(all)		\n\
+ ~s c <Key>p:		GV_Print(all)		\n\
  ~c ~s <Key>period:	GV_Page(redisplay)	\n\
  <Key>period:		GV_Reopen()		\n\
  <Key>Z:               GV_SavePos()            \n\
