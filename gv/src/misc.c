@@ -105,6 +105,7 @@
 #include INC_XAW(SmeLine.h)
 #include INC_X11(IntrinsicP.h)
 #include INC_XAW(TextP.h)
+#include INC_XAW(Scrollbar.h)
 #include INC_XMU(StdCmap.h)
 #include "Aaa.h"
 #include "Button.h"
@@ -1052,6 +1053,9 @@ setup_ghostview()
       }
       XtSetValues(newtoc, args, n);
       ClipWidgetSetCoordinates(newtocClip,0,0);
+      XawScrollbarSetThumb(newtocScroll,
+		      VlistScrollPosition(newtoc),
+		      VlistVisibleLength(newtoc,newtocClip->core.height));
       GV_XtFree(s);
     }
 

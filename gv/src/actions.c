@@ -105,6 +105,10 @@ action_shellConfigureNotify(w, event, params, num_params)
        width = new_width;
        height=new_height;
     }
+    XawScrollbarSetThumb(newtocScroll,
+		   VlistScrollPosition(newtoc),
+		   VlistVisibleLength(newtoc,newtocClip->core.height));
+
   }
   ENDMESSAGE(action_shellConfigureNotify)
 }
