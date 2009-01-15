@@ -781,8 +781,10 @@ Save the marked pages
 Save the current file
 @item P
 Print the marked pages
-@item SC-P
+@item C-P
 Print the current file
+@item S-P
+Switches to presentation mode by forking a new GNU gv process.
 @item c-L
 Reload the current page
 @item .
