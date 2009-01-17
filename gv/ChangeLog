@@ -1,3 +1,7 @@
+2009-01-16  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/callbacks.c (cb_presentation): use /usr/bin/env to find executable
+
 2009-01-15  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/actions.c(action_shellConfigureNotify): Set Thumnb size of

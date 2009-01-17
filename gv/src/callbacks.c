@@ -965,7 +965,7 @@ cb_presentation(w, client_data, call_data)
        int i;
        for (i=3; i<256; i++) 
           close(i);
-       execl(gv_bin, "gv", "--presentation", gv_filename, 0);
+       execl("/usr/bin/env", "env", gv_bin, "--presentation", gv_filename, 0);
        printf("Cannot exec %s\n", gv_bin);
        exit(1);
     }
