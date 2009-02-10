@@ -1711,6 +1711,8 @@ TopDirSelectionProc(w, client_data, call_data)
     }
     appendDirEndSeparator(newpath);
     SMESSAGE(newpath)
+    VlistSetFirstVisible(FS_CURLIST, 0);
+    VlistSetFirstVisible(FS_SUBLIST, 0);
     SetDirectoryView((FS_FILE_SELECTION),newpath);
     ClipWidgetSetCoordinates(FS_CURCLIP, 0, 0);
 
@@ -1798,6 +1800,8 @@ SubDirSelectionProc(w, client_data, call_data)
       appendDirEndSeparator(newpath);
     }
     SMESSAGE(newpath)
+    VlistSetFirstVisible(FS_CURLIST, 0);
+    VlistSetFirstVisible(FS_SUBLIST, 0);
     SetDirectoryView(FS_FILE_SELECTION,newpath);
     ClipWidgetSetCoordinates(FS_CURCLIP, 0, 0);
   }
