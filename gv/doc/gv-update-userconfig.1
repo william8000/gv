@@ -3,6 +3,7 @@
 gv\-update\-userconfig \- update ~/.gv config file
 .SH SYNOPSIS
 .B gv\-update\-userconfig
+[\fIfilename\fR]
 .SH DESCRIPTION
 .B gv\-update\-userconfig
 is a simple script to update an
@@ -10,6 +11,10 @@ is a simple script to update an
 config file
 to the current version of
 .BR gv (1).
+
+You can specify a file which is used instead of
+.B .gv
+by using the optional filename argument. This is usefull if the environment variable XUSERSEARCHPATH is used.
 
 This is done by removing all entries known to cause problems with
 the current version of GNU gv (i.e. the one the version of this program

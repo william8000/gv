@@ -38,11 +38,14 @@ for $i (@ARGV)
    $help = 1 if $i eq "-h";
    $help = 1 if $i eq "--help";
    $help = 1 if $i eq "--usage";
+   print "Ignoring further filename $i\n" if $i !~ /^-/ && defined $filename;
+   $filename = $i if $i !~ /^-/ && !defined $filename;
 }
 
 if ($help)
 {
-   print "Syntax: gv-update-userconfig [-r] [-n] [-N] [-s]\n\n";
+   print "Syntax: gv-update-userconfig [-r] [-n] [-N] [-s] [filename]\n\n";
+   print "filename: specifies file to update. Defaults to '~/.gv'\n";
    print "-r : Remove resources that have default value, too\n";
    print "-n : Switch to alternative navigation\n";
    print "-N : Switch to standard navigation\n";
@@ -53,8 +56,9 @@ if ($help)
    exit(0);
 }
 
+$filename = "$ENV{HOME}/.gv" unless defined $filename;
 
-open ($file, "<", "$ENV{HOME}/.gv") or die "Cannot open ~/.gv for reading.\n";
+open ($file, "<", $filename) or die "Cannot open $filename for reading.\n";
 while (<$file>)
 {
    chomp;
@@ -224,6 +228,6 @@ elsif ($altNavigation == 2)
    $newfile .= "$res\n";
 }
 
-open ($file, ">", "$ENV{HOME}/.gv") or die "Cannot open ~/.gv for writing.\n";
+open ($file, ">", $filename) or die "Cannot open $filename for writing.\n";
 print $file $newfile;
 close $file;

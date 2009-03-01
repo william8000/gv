@@ -92,6 +92,8 @@ static String fallback_style_3[] = {
 
 static String resource_system_file = NULL;
 static String resource_user_file   = NULL;
+static String resource_user_file_symb   = NULL;
+static int haveXUSERFILESEARCHPATH;
 static String resource_style_file  = NULL;
 static String resource_ad_file     = NULL;
 static char* resource_mergeFileIntoDatabase(XrmDatabase*,char*);
@@ -126,6 +128,7 @@ resource_buildDatabase (
   XrmDatabase db = NULL;
   String *sP;
   String s,t, rpath;
+  String tildeGv;
   char tmp[GV_MAX_FILENAME_LENGTH];
 
   BEGINMESSAGE(resource_buildDatabase)
@@ -160,15 +163,20 @@ resource_buildDatabase (
   file_translateTildeInPath(tmp);
   if (!file_fileIsNotUseful(tmp)) {
     s = GV_XtNewString(tmp);
+    tildeGv = USER_DEFAULTS;
+    haveXUSERFILESEARCHPATH = 0;
   } else {
     s = getenv("XUSERFILESEARCHPATH");
     if (s) s = XtResolvePathname(display,NULL,NULL,NULL,s,NULL,0,NULL);
+    tildeGv = s;
+    haveXUSERFILESEARCHPATH = 1;
   }
   if (s) {
     INFSMESSAGE(merging user resource file into database,s)
       XrmPutLineResource(&db,"GV.version: gv 0.0.0");
       XrmCombineFileDatabase(s,&db,True);
     resource_user_file = s;
+    resource_user_file_symb = tildeGv;
   } else {
     resource_user_file = GV_XtNewString(tmp);
   }
@@ -546,8 +554,12 @@ int resource_checkResources(app_name,v,vc)
     if (resource_ad_file)     fprintf(stderr,"    %s\n",resource_ad_file);
     fprintf(stderr,"belongs to an older version of gv and cannot be used.\n");
     fprintf(stderr,"Please remove or update the outdated file.\n");
-    if (resource_user_file) fprintf(stderr,"Quite probably your ~/.gv is too old.\n");
-    if (resource_user_file) fprintf(stderr,"Running gv-update-userconfig should help\nby removing all incompatible resources.\n");
+    if (resource_user_file) fprintf(stderr,"Quite probably your %s is too old.\n", resource_user_file_symb);
+    if (resource_user_file)
+       if (haveXUSERFILESEARCHPATH)
+          fprintf(stderr,"Running gv-update-userconfig %s should help\nby removing all incompatible resources.\n", resource_user_file);
+       else
+          fprintf(stderr,"Running gv-update-userconfig should help\nby removing all incompatible resources.\n");
     r=0;
   }
   ENDMESSAGE(resource_checkResources)
