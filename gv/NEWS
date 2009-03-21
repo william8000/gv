@@ -9,7 +9,20 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.6.92 (March 2009) %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.7  (March 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# GV 3.6.6.92 has been released as GV 3.6.7 with no changes
+
+? "Fit to window magnification" and "Fit width to window magnification" with
+  "Automatic resizing" turned on sometime miss rescaling, especially when
+  changing the orientation or resizing the window. You can force
+  rescaling by selecting the active "special" scale in the scales menu.
+
+? Interactive prompting for the password of encrypted PDF files do not work
+  if and only if DSC is turned off. As a workarouund, you can load the file
+  with DSC turned on and then turn DSC off.
+
+%%%%%%%%%%%%%% GV 3.6.6.92 (internal release: March 2009) %%%%%%%%%%%%%%
 
 # Fixed debian bug #516995: Misleading error message when .gv file is not
 present [and XUSERFILESEARCHPATH is used]
