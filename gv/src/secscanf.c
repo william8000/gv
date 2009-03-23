@@ -24,6 +24,7 @@
  */
 
 #define _GNU_SOURCE
+#include <ac_config.h>
 
 #include <sys/param.h>
 #include <stdio.h>
@@ -31,6 +32,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#include "secscanf.h"
 
 static size_t GNU_strnlen(const char *s, size_t len)
 {

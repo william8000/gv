@@ -579,7 +579,7 @@ cb_print_pos(w, client_data, call_data)
        return;
     }
 
-    gv_print_mode = (int)client_data;
+    gv_print_mode = (intptr_t)client_data;
     pagelist=get_pagelist(&gv_print_mode);
     if (pagelist) GV_XtFree(pagelist);
 
@@ -965,7 +965,7 @@ cb_presentation(w, client_data, call_data)
        int i;
        for (i=3; i<256; i++) 
           close(i);
-       execl("/usr/bin/env", "env", gv_bin, "--presentation", gv_filename, 0);
+       execl("/usr/bin/env", "env", gv_bin, "--presentation", gv_filename, (char*)0);
        printf("Cannot exec %s\n", gv_bin);
        exit(1);
     }

@@ -560,8 +560,8 @@ static void Initialize(request, new, argl, num_argl)
    FILTER       = FS_XtNewString("");
    MULTICLICK = DISABLED;
 
-   XtCallActionProc(FS_PATH,"FS_textfieldFocusAction",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
-   XtCallActionProc(FS_FILTER,"FS_textfieldFocusAction",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+   XtCallActionProc(FS_PATH,"FS_textfieldFocusAction",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
+   XtCallActionProc(FS_FILTER,"FS_textfieldFocusAction",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
 
    ENDMESSAGE(Initialize)
 }
@@ -1201,9 +1201,9 @@ static void FS_textfieldBackSpaceAction(w, event, parms, nparms)
 
       XawTextGetSelectionPos(w,&begin_sel,&end_sel);
       if (begin_sel != end_sel) 
-         XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+         XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
       else 
-         XtCallActionProc(w,"delete-previous-character",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+         XtCallActionProc(w,"delete-previous-character",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
    }       
 
    ENDMESSAGE(FS_textfieldBackSpaceAction)
@@ -1226,9 +1226,9 @@ static void FS_textfieldDeleteAction(w, event, parms, nparms)
 
       XawTextGetSelectionPos(w,&begin_sel,&end_sel);
       if (begin_sel != end_sel) 
-         XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+         XtCallActionProc(w,"kill-selection",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
       else 
-         XtCallActionProc(w,"delete-next-character",(XEvent *)NULL,(String *)NULL,(Cardinal)NULL);
+         XtCallActionProc(w,"delete-next-character",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
    }       
 
    ENDMESSAGE(FS_textfieldDeleteAction)
@@ -1855,7 +1855,6 @@ static void cb_scroll(w, client_data, call_data)
 {
   Widget p;
   char *s;
-  int startvisible;
 
   BEGINMESSAGE(cb_scroll)
 

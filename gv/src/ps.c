@@ -106,9 +106,7 @@ extern int gv_infoSkipErrors;
 #define memset(a,b,c) bzero(a,c)
 #endif
 
-extern int sec_sscanf(const char *, const char *, ...);
-
-
+#include "secscanf.h"
 
 /* We use this helper function for providing proper */
 /* case and colon :-) insensitive DSC matching */

@@ -555,11 +555,12 @@ int resource_checkResources(app_name,v,vc)
     fprintf(stderr,"belongs to an older version of gv and cannot be used.\n");
     fprintf(stderr,"Please remove or update the outdated file.\n");
     if (resource_user_file) fprintf(stderr,"Quite probably your %s is too old.\n", resource_user_file_symb);
-    if (resource_user_file)
+    if (resource_user_file) {
        if (haveXUSERFILESEARCHPATH)
           fprintf(stderr,"Running gv-update-userconfig %s should help\nby removing all incompatible resources.\n", resource_user_file);
        else
           fprintf(stderr,"Running gv-update-userconfig should help\nby removing all incompatible resources.\n");
+    }
     r=0;
   }
   ENDMESSAGE(resource_checkResources)
