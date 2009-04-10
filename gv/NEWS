@@ -9,6 +9,11 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.7.90  (???? 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Compilation fix for Mac OS X: Requires --enable-SIGCHLD-fallback during
+  compilation.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.7  (March 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.6.92 has been released as GV 3.6.7 with no changes

@@ -230,11 +230,40 @@ test "$opt_memmove_code" = "yes" && {
 }
 
 
+AC_MSG_CHECKING([for SIGCLD])
+AC_EGREP_CPP(we_have_sigcld,
+[#include <signal.h>
+#ifdef SIGCLD
+we_have_sigcld
+#endif
+], AC_DEFINE([HAVE_SIGCLD], [1], [Define to 1 if you have the sigcld signal.]) haveSIGCLD=yes, haveSIGCLD=no)
+AC_MSG_RESULT([$haveSIGCLD])
 
+AC_MSG_CHECKING([for SIGCHLD])
+AC_EGREP_CPP(we_have_sigchld,
+[#include <signal.h>
+#ifdef SIGCHLD
+we_have_sigchld
+#endif
+], AC_DEFINE([HAVE_SIGCHLD], [1], [Define to 1 if you have the sigchld signal.]) haveSIGCHLD=yes, haveSIGCHLD=no)
+AC_MSG_RESULT([$haveSIGCHLD])
 
+AC_ARG_ENABLE(SIGCHLD-fallback, AC_HELP_STRING([--enable-SIGCHLD-fallback],[Use SIGCHLD as a fallback to SIGCLD. Defaults to 'no']),
+   [case "${enableval}" in
+      yes) opt_sigchld=true ;;
+      no)  opt_sigchld=false ;;
+      *) AC_MSG_ERROR(bad value ${enableval} for --enable-SIGCHLD-fallback) ;;
+esac],[opt_sigchld=false])
 
-
-
+if test "x$haveSIGCLD" = "xno"
+then
+   if test x$opt_sigchld = xfalse
+   then
+      AC_ERROR([SIGCLD is needed. You can try --enable-SIGCHLD-fallback. It's secure on MacOS X, but on FreeBSD the fallback creates zombies.])
+   else
+      AC_DEFINE([SIGCLD], [SIGCHLD], [Use SIGCHLD as fallback for SIGCLD.])
+   fi
+fi
 
 opt_setenv_code=false
 

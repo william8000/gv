@@ -1135,7 +1135,9 @@ int main(argc, argv)
   									n=0;
           newtocControl = XtCreateManagedWidget("newtocControl", aaaWidgetClass,newtocClip, args, n);
          	      							n=0;
+printf("Here the crash has been reported!!!\n");
           newtoc = XtCreateManagedWidget("newtoc", vlistWidgetClass,newtocControl, args, n);
+printf("\n\nDone!\n");
 	  XtAddCallback(newtoc, XtNreportCallback,cb_newtocVisibleAdjust, (XtPointer)NULL);
 									n=0;
           newtocScroll = XtCreateWidget("newtocScroll", scrollbarWidgetClass,control, args, n);

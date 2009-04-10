@@ -1,3 +1,8 @@
+2009-04-10  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac: Check for presence of SIGCLD and SIGOCLD.
+	If --enable-SIGCLD-fallback is given, use SIGCHLD as fallback to SIGCLD.
+
 2009-03-23    Bernhard R. Link <brlink@debian.org>
 
 	* configure.ac: Check if "SimplePart.international" exists in Xaw3D
