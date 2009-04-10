@@ -2,6 +2,9 @@
 
 	* configure.ac: Check for presence of SIGCLD and SIGOCLD.
 	If --enable-SIGCLD-fallback is given, use SIGCHLD as fallback to SIGCLD.
+	
+	* configure.ac: Reverted change from 2009-03-23. It breaks building
+	on Mac OS X.
 
 2009-03-23    Bernhard R. Link <brlink@debian.org>
 
