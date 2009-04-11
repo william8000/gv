@@ -127,6 +127,7 @@ gv_SOURCES = Aaa.c \
              scale.c \
              scale.h \
              secscanf.c \
+             secscanf.h \
              gv_signal.c \
              gv_signal.h \
              version.c \

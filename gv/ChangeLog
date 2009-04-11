@@ -1,3 +1,7 @@
+2009-04-11  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/Makefile.am: Include src/secscanf.h in tar archive.
+
 2009-04-11    Bernhard R. Link <brlink@debian.org>
 
 	* configure.ac: Corrected check if "SimplePart.international" exists 
