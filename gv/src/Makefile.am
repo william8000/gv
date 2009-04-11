@@ -34,10 +34,9 @@ CLEANFILES = ../GV \
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
-              -I$(top_srcdir)/lib -I$(top_builddir)/lib -g
+              -I$(top_srcdir)/lib -I$(top_builddir)/lib -g $(X_CFLAGS)
 
-
-AM_CFLAGS = @X_CFLAGS@
+AM_CFLAGS = 
 
 LDADD = ../lib/libgnu.a
 

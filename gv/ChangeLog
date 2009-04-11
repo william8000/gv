@@ -1,3 +1,8 @@
+2009-04-11    Bernhard R. Link <brlink@debian.org>
+
+	* configure.ac: Corrected check if "SimplePart.international" exists 
+	in Xaw3D
+
 2009-04-10  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac: Check for presence of SIGCLD and SIGOCLD.
