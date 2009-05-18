@@ -1258,6 +1258,20 @@ set_new_scale(void)
        
        ascale = (float)viewClip->core.width / dx / 72.0 * default_xdpi;
     }
+    else if (fabs(ascale+3) <= 0.001)
+    {
+       int dx = current_urx - current_llx + 1;
+       int dy = current_ury - current_lly + 1;
+       
+       if (gv_orientation == 2 || gv_orientation == 3)
+       {
+          int hlp = dx;
+         dx = dy;
+         dy = hlp;
+       }
+       
+       ascale = (float)viewClip->core.height / dy / 72.0 * default_xdpi;
+    }
     else if (fabs(ascale+2) <= 0.001)
     {
        ascale = gv_ascale;

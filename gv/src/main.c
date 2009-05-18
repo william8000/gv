@@ -785,6 +785,20 @@ int main(argc, argv)
           }
        gv_ascale = sqrt(ascale_p);
     }
+    else if (app_res.scale == -1003)
+    {
+       int j;
+
+       gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL) & SCALE_VAL;
+
+       for (j=0; gv_scales[j]; j++)
+          if (fabs(gv_scales[j]->scale+3) <= 0.001)
+	  {
+	     gv_scale = j;
+	     break;
+          }
+       gv_ascale = sqrt(ascale_p);
+    }
     else
     {
        if (app_res.scale < 0) app_res.scale = (-app_res.scale)|SCALE_MIN;
@@ -1135,9 +1149,7 @@ int main(argc, argv)
   									n=0;
           newtocControl = XtCreateManagedWidget("newtocControl", aaaWidgetClass,newtocClip, args, n);
          	      							n=0;
-printf("Here the crash has been reported!!!\n");
           newtoc = XtCreateManagedWidget("newtoc", vlistWidgetClass,newtocControl, args, n);
-printf("\n\nDone!\n");
 	  XtAddCallback(newtoc, XtNreportCallback,cb_newtocVisibleAdjust, (XtPointer)NULL);
 									n=0;
           newtocScroll = XtCreateWidget("newtocScroll", scrollbarWidgetClass,control, args, n);

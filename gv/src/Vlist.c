@@ -201,7 +201,6 @@ Cardinal *num_args;		/* unused */
   vw->vlist.selected = -1;
   vw->vlist.highlighted = -1;
   vw->vlist.entries = (int)strlen(vw->vlist.vlist);
-printf("Crash reported in Vlist.c(204)\n");
   sscanf(vw->vlist.highlighted_geometry,"%d %d %d %d",
         &(vw->vlist.hulx),&(vw->vlist.huly),&(vw->vlist.hlrx),&(vw->vlist.hlry));
   sscanf(vw->vlist.selected_geometry,"%d %d %d %d",

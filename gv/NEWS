@@ -13,6 +13,10 @@ by a '#' or a '*' or a '?'. A
 
 # Compilation fix for Mac OS X: Requires --enable-SIGCHLD-fallback during
   compilation.
+  
+# "Fit height to window magnification"  --
+  currently works best with "Automatic resizing" turned off. 
+  With --scale=-1003, you can access the new scale from the command line.  
 
 %%%%%%%%%%%%%%%%%%% GV 3.6.7  (March 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
