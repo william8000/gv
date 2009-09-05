@@ -1070,7 +1070,7 @@ setup_ghostview()
     misc_setSensitive(w_printAllPages     , show_printAllPages     , (gv_psfile   != NULL));
     misc_setSensitive(w_checkFile         , show_checkFile         , (gv_filename != NULL));
     misc_setSensitive(w_updateFile        , show_updateFile        , (gv_filename != NULL));
-    misc_setSensitive(w_showThisPage      , show_showThisPage      , (gv_psfile   != NULL));
+    misc_setSensitive(w_showThisPage      , show_showThisPage      , (gv_psfile   != NULL || (gv_gs_arguments && *gv_gs_arguments)));
     misc_setSensitive(w_prevPage          , show_prevPage          , (toc_text    != NULL));
     misc_setSensitive(w_nextPage          , show_nextPage          , (gv_filename != NULL));
     misc_setSensitive(w_toggleCurrentPage , show_toggleCurrentPage , (toc_text    != NULL));
@@ -1086,7 +1086,7 @@ setup_ghostview()
     XtSetSensitive(saveAllEntry,     (gv_psfile   != NULL));
     XtSetSensitive(saveMarkedEntry,  (toc_text    != NULL));
     XtSetSensitive(nextEntry,        (gv_filename != NULL));
-    XtSetSensitive(redisplayEntry,   (gv_psfile   != NULL));
+    XtSetSensitive(redisplayEntry,   (gv_psfile   != NULL || (gv_gs_arguments && *gv_gs_arguments)));
     XtSetSensitive(prevEntry,        (toc_text    != NULL));
     XtSetSensitive(currentEntry,     (toc_text    != NULL));
     XtSetSensitive(oddEntry,         (toc_text    != NULL));

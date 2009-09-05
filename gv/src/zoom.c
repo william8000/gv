@@ -106,14 +106,16 @@ zoom_createZoom(w, call_data)
 
     BEGINMESSAGE(zoom_createZoom)
 
-    if (!gv_psfile) {
+    if (!(gv_psfile != NULL || (gv_gs_arguments && *gv_gs_arguments))) {
        INFMESSAGE(no file) ENDMESSAGE(zoom_createZoom)
        return;
     }
-    stat(gv_filename, &sbuf);
 
-    if (mtime != sbuf.st_mtime) {
-       INFMESSAGE1(file has changed) ENDMESSAGE1(zoom_createZoom)return;
+    if (strcmp(gv_filename, "-")) {
+       stat(gv_filename, &sbuf);
+       if (mtime != sbuf.st_mtime) {
+	  INFMESSAGE1(file has changed) ENDMESSAGE1(zoom_createZoom)return;
+       }
     }
 
     filename = (gv_filename_dsc ? gv_filename_dsc : (gv_filename_unc ? gv_filename_unc : gv_filename));
@@ -230,11 +232,17 @@ zoom_createZoom(w, call_data)
     XtPopup(zshell, XtGrabNone);
 
     if (toc_text) {
-	zoomfile = fopen(filename, "r");
-	if (zoomfile == NULL) {
-           ENDMESSAGE(zoom_createZoom)
-	   return;
+	if (!filename) {
+	    zoomfile = NULL;
+	} else if (strcmp(filename, "-")) {
+	    zoomfile = fopen(filename, "r");
+	} else {
+	    zoomfile = stdin;
         }
+	if (zoomfile == NULL) {
+	    ENDMESSAGE(zoom_createZoom)
+	    return;
+	}
 	
         GhostviewEnableInterpreter(zpage);
 	

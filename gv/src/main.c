@@ -342,7 +342,6 @@ int main(argc, argv)
     Dimension    maximum_width,maximum_height;
     unsigned int gwidth=0,gheight=0;
     int          dim_forced;
-    int          opt_counter=0;
     int          c;
 
 /*###  initializing global variables ####################################*/
@@ -444,11 +443,9 @@ int main(argc, argv)
 	 {
 	 case CENTER_ARG:
 	   center_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOCENTER_ARG:
 	   nocenter_p = 1;
-	   opt_counter++;
 	   break;
 	 case SCALE_ARG:
 	   if (strstr(optarg, "."))
@@ -462,29 +459,23 @@ int main(argc, argv)
 	      scale_p = 1;
 	      scale_value = optarg;
 	   }
-	   opt_counter++;
 	   break;
 	 case MAGSTEP_ARG:
 	   magstep_p = 1;
 	   magstep_value = optarg;
-	   opt_counter++;
 	   break;
 	 case SCALEBASE_ARG:
 	   scalebase_p = 1;
 	   scalebase_value = optarg;
-	   opt_counter++;
 	   break;
 	 case RESIZE_ARG:
 	   resize_p = 1;
-	   opt_counter++;
 	   break;
 	 case NORESIZE_ARG:
 	   noresize_p = 1;
-	   opt_counter++;
 	   break;
 	 case FULLSCREEN_ARG:
 	   fullscreen_p = 1;
-	   opt_counter++;
 	   break;
 	 case PRESENTATION_ARG:
 	   fullscreen_p = 1;
@@ -492,86 +483,66 @@ int main(argc, argv)
 	   widgetless_p = 1;
 	   scale_p = 1;
 	   scale_value = "-1000";
-	   opt_counter++;
 	   break;
 	 case SWAP_ARG:
 	   swap_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOSWAP_ARG:
 	   noswap_p = 1;
-	   opt_counter++;
 	   break;
 	 case DSC_ARG:
 	   dsc_p = 1;
-	   opt_counter++;
 	   break;
 	 case NODSC_ARG:
 	   nodsc_p = 1;
-	   opt_counter++;
 	   break;
 	 case EOF_ARG:
 	   eof_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOEOF_ARG:
 	   noeof_p = 1;
-	   opt_counter++;
 	   break;
 	 case WATCH_ARG:
 	   watch_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOWATCH_ARG:
 	   nowatch_p = 1;
-	   opt_counter++;
 	   break;
 	 case AD_ARG:
 	   ad_p = 1;
 	   ad_value = optarg;
-	   opt_counter++;
 	   break;
 	 case STYLE_ARG:
 	   style_p = 1;
 	   style_value = optarg;
-	   opt_counter++;
 	   break;
 	 case ARGUMENTS_ARG:
 	   arguments_p = 1;
 	   arguments_value = optarg;
-	   opt_counter++;
 	   break;
 	 case PIXMAP_ARG:
 	   pixmap_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOPIXMAP_ARG:
 	   nopixmap_p = 1;
-	   opt_counter++;
 	   break;
 	 case SAFER_ARG:
 	   safer_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOSAFER_ARG:
 	   nosafer_p = 1;
-	   opt_counter++;
 	   break;
 	 case ANTIALIAS_ARG:
 	   antialias_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOANTIALIAS_ARG:
 	   noantialias_p = 1;
-	   opt_counter++;
 	   break;
 	 case COLOR_ARG:
 	   color_p = 1;
-	   opt_counter++;
 	   break;
 	 case GRAYSCALE_ARG:
 	   grayscale_p = 1;
-	   opt_counter++;
 	   break;
 	 case HELP_ARG:
 	   /* Show some help and return */
@@ -579,37 +550,29 @@ int main(argc, argv)
 	   exit(0);
 	 case QUIET_ARG:
 	   quiet_p = 1;
-	   opt_counter++;
 	   break;
 	 case INFOSILENT_ARG:
 	   infoverbose_p = 0;
-	   opt_counter++;
 	   break;
 	 case INFOERRORS_ARG:
 	   infoverbose_p = 1;
-	   opt_counter++;
 	   break;
 	 case INFOALL_ARG:
 	   infoverbose_p = 2;
-	   opt_counter++;
 	   break;
 	 case DEBUG_ARG:
 	   debug_p = 1;
-	   opt_counter++;
 	   break;
 	 case MONOCHROME_ARG:
 	   monochrome_p = 1;
-	   opt_counter++;
 	   break;
 	 case NOQUIET_ARG:
 	   noquiet_p = 1;
-	   opt_counter++;
 	   break;
 	 case MEDIA_ARG:
 	   {
 	     media_p = 1;
 	     media_value = optarg;
-	     opt_counter++;
 	     break;
 	   }
 	    
@@ -617,7 +580,6 @@ int main(argc, argv)
 	   {
 	     orientation_p = 1;
 	     orientation_value = optarg;
-	     opt_counter++;
 	     break;
 	   }
 
@@ -625,7 +587,6 @@ int main(argc, argv)
 	   {
 	     page_p = 1;
 	     page_value = optarg;
-	     opt_counter++;
 	     break;
 	   }
 
@@ -636,17 +597,14 @@ int main(argc, argv)
 
 	 case PASSWORD_ARG:
 	   gv_pdf_password = GV_XtNewString(optarg);
-	   opt_counter++;
 	   break;
 
 	 case SPARTAN_ARG:
 	   spartan_p = 1;
-	   opt_counter++;
 	   break;
 
 	 case WIDGETLESS_ARG:
 	   widgetless_p = 1;
-	   opt_counter++;
 	   break;
 
 	 case VERSION_ARG:
@@ -1200,9 +1158,9 @@ int main(argc, argv)
 
    INFMESSAGE(checking gv_filename and opening psfile)
 
-   if (argc == (opt_counter + 2)) 
+   if (argc == optind + 1) 
      {
-       gv_filename=GV_XtNewString(argv[opt_counter + 1]);
+       gv_filename=GV_XtNewString(argv[optind]);
      }
 
    if (gv_filename && strcmp(gv_filename, "-")) {
@@ -1433,21 +1391,39 @@ void main_setGhostscriptResources(db)
   main_setInternResource(db,&gv_gs_cmd_conv_pdf,"gsCmdConvPDF");
   main_setInternResource(db,&gv_gs_x11_device,"gsX11Device");
   main_setInternResource(db,&gv_gs_x11_alpha_device,"gsX11AlphaDevice");
+
   main_setInternResource(db,&gv_gs_arguments,"gsArguments");
+  s = resource_getResource(db,gv_class,gv_name,"arguments","Arguments");
+  if (s) gv_gs_arguments = s;
+
   s = resource_getResource(db,gv_class,gv_name,"gsSafer",NULL);
-  if (!strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;
+  if (s && !strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;
+  s = resource_getResource(db,gv_class,gv_name,"safer","Safer");
+  if (s) {
+    if (!strcasecmp(s,"true"))  gv_gs_safer = 1;
+    else if (!strcasecmp(s,"false"))  gv_gs_safer = 0;
+  }
+
   s = resource_getResource(db,gv_class,gv_name,"gsQuiet",NULL);
-  if (!strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
+  if (s && !strcasecmp(s,"true"))  gv_gs_quiet = 1; else gv_gs_quiet = 0;
+  s = resource_getResource(db,gv_class,gv_name,"quiet","Quiet");
+  if (s) {
+    if (!strcasecmp(s,"true"))  gv_gs_quiet = 1;
+    else if (!strcasecmp(s,"false"))  gv_gs_quiet = 0;
+  }
+
   s = resource_getResource(db,gv_class,gv_name,"infoVerbose",NULL);
   if (!strcasecmp(s, "Silent"))      gv_infoVerbose=0;
   else if (!strcasecmp(s, "Errors")) gv_infoVerbose=1;
   else if (!strcasecmp(s, "All"))    gv_infoVerbose=2;
   else gv_infoVerbose = 1;
+
   s = resource_getResource(db,gv_class,gv_name,"xinerama",NULL);
   if (!strcasecmp(s, "Off"))      gv_xinerama=0;
   else if (!strcasecmp(s, "On")) gv_xinerama=1;
   else if (!strcasecmp(s, "Auto"))    gv_xinerama=-1;
   else gv_xinerama = 0;
+
   ENDMESSAGE(main_setGhostscriptResources)
 }
 

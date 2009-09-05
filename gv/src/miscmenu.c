@@ -257,7 +257,7 @@ void miscmenu_a_miscMenu(w, event, params, num_params)
 	    Boolean b;
 	    if      (e->sensitivity_type==1) b = (toc_text != NULL);
 	    else if (e->sensitivity_type==2) b = (gv_filename != NULL);
-	    else    b = (gv_psfile != NULL);
+	    else    b = (gv_psfile != NULL || (gv_gs_arguments && *gv_gs_arguments));
 	    XtSetSensitive(entry,b);
 	  }
 	} else {

@@ -1423,6 +1423,7 @@ StartInterpreter(w)
 	 }
 	 while (isspace(*dptr)) dptr++;
     }
+    argv[argc++] = "-dNOPROMPT";
     argv[argc++] = "-dNOPAUSE";
     if (gv_pdf_password)
     {
@@ -1465,21 +1466,6 @@ StartInterpreter(w)
 	}
     }
 
-    if (arguments_p == 1) {
-	cptr = arguments = GV_XtNewString(arguments_value);
-	while (isspace(*cptr)) cptr++;
-	while (*cptr) {
-	    argv[argc++] = cptr;
-	    while (*cptr && !isspace(*cptr)) cptr++;
-	    if (*cptr) *cptr++ = '\0';
-	    if (argc + 2 >= NUM_ARGS) {
-		fprintf(stderr, "Too many arguments to interpreter.\n");
-		exit(EXIT_STATUS_ERROR);
-	    }
-	    while (isspace(*cptr)) cptr++;
-	}
-    }
-
 #   ifdef ALLOW_PDF
     if (gvw->ghostview.filename && strcmp(gvw->ghostview.filename,"-")) {
           if ( *(gvw->ghostview.filename) == '-' ) {
@@ -1492,12 +1478,24 @@ StartInterpreter(w)
              argv[argc++] = gvw->ghostview.filename;
           argv[argc++] = "-c";
           argv[argc++] = "quit";
+    } else
+#   endif
+    if (gvw->ghostview.filename && !strcmp(gvw->ghostview.filename,"-")) {
+       /* The ghostscript documentation states that the "-" argument
+	  tells gs that input is coming from a pipe rather than from stdin.
+	  One of the side effects of the "-" argument is that gs does not
+	  flush output at each line of input, but rather accumulates input
+	  and flushes only when the buffer is full.  Since we want gs to
+	  flush output at each line of input, we therefore cannot send "-".
+	  Unfortunately not sending "-" has the side effect that gs no
+	  longer reads correctly through either multiple PostScript files
+	  or PostScript files with multiple pages.  Ah well.
+	  Should gs ever acquire a -DFLUSH argument, then send gs that argument,
+	  and uncomment the following line.  */
+       /* argv[argc++] = "-"; */
     } else {
        argv[argc++] = "-";
     }
-#   else
-       argv[argc++] = "-";
-#   endif
     argv[argc++] = NULL;
 
     if (gvw->ghostview.filename == NULL) {
@@ -1529,8 +1527,21 @@ StartInterpreter(w)
     }
 
     gvw->ghostview.changed = False;
-    gvw->ghostview.busy = True;
-    ChangeCursor(gvw,CURSOR_BUSY);
+    if (!((gvw->ghostview.filename && strcmp(gvw->ghostview.filename, "-") == 0)
+       && (gv_gs_arguments && *gv_gs_arguments))) {
+       gvw->ghostview.busy = True;
+       ChangeCursor(gvw,CURSOR_BUSY);
+    }
+
+/*
+    printf("StartInterpreter:\n");
+    printf("%s", argv[0]);
+    for (argc = 1; argv[argc] != NULL; argc++) {
+        printf(" %s", argv[argc]);
+    }
+    printf("\n");
+*/
+
     gvw->ghostview.interpreter_pid = fork();
 
     if (gvw->ghostview.interpreter_pid == 0) { /* child */
@@ -1622,6 +1633,7 @@ StopInterpreter(w)
       }
     if (gvw->ghostview.interpreter_input >= 0) 
       {
+	INFMESSAGE(removing interpreter input)
 	close(gvw->ghostview.interpreter_input);
 	gvw->ghostview.interpreter_input = -1;
 	if (gvw->ghostview.interpreter_input_id != None) 
@@ -1641,11 +1653,13 @@ StopInterpreter(w)
 	  }
       }
     if (gvw->ghostview.interpreter_output >= 0) {
+        INFMESSAGE(closing interpreter output)
 	close(gvw->ghostview.interpreter_output);
 	gvw->ghostview.interpreter_output = -1;
 	XtRemoveInput(gvw->ghostview.interpreter_output_id);
     }
     if (gvw->ghostview.interpreter_error >= 0) {
+        INFMESSAGE(closing interpreter error)
 	close(gvw->ghostview.interpreter_error);
 	gvw->ghostview.interpreter_error = -1;
 	XtRemoveInput(gvw->ghostview.interpreter_error_id);
@@ -2164,8 +2178,11 @@ GhostviewNextPage(w)
     }
 
     if (!gvw->ghostview.busy) {
-	gvw->ghostview.busy = True;
-        ChangeCursor(gvw,CURSOR_BUSY);
+	if (!((gvw->ghostview.filename && strcmp(gvw->ghostview.filename, "-") == 0)
+	   && (gv_gs_arguments && *gv_gs_arguments))) {
+	    gvw->ghostview.busy = True;
+	    ChangeCursor(gvw,CURSOR_BUSY);
+	}
 	event.xclient.type = ClientMessage;
 	event.xclient.display = XtDisplay(w);
 	event.xclient.window = gvw->ghostview.mwin;
