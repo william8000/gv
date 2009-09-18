@@ -1,3 +1,19 @@
+2009-09-05  Andrew Hamilton <Andrew.Hamilton@colorado.edu>
+
+	* src/main.c: use getopt's built-in option counter
+	
+	* src/Ghostview.c (StartInterpreter): Call ghostscript with an
+	additional option "-dNOPROMPT"
+	  
+	* src/Ghostview.c: (StartInterpreter, GhostviewNextPage): 
+	Handle "-" as filename
+	
+	* src/zoom.c (zoom_createZoom): Fix checking for "no file"
+	
+	* src/zoom.c (zoom_createZoom): Handle "-" as filename
+	
+	* src/resource.c (resource_buildDatabase): Handle resource "arguments"
+
 2009-05-18  Markus Steinborn <gnugv_maintainer@yahoo.de>
             Stefan Uhl <s.uhl@gmx.net>
 
