@@ -108,7 +108,7 @@ Scale *scale_parseScales(s)
     f=-10.0;
     if (*c=='#' || *c=='!') i=0; 
     else i=sscanf(c," %[^,] , %f , %[^,] ",name,&f,kind);
-    if (i>=2 && f>=-2.1) {
+    if (i>=2 && f>=-3.1) {
       scale = scale_mallocScale();
       scale->name = GV_XtNewString(name);
       if (f>0)

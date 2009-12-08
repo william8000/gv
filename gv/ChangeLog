@@ -1,3 +1,7 @@
+2009-12-08  Markus Steinborn <gnugv_maintainer@yahoo.de>
+	* src/scale.c(scale_parseScales): Fixed Scale "Fit to height", it
+	wasn't added o the scale menu
+
 2009-09-05  Andrew Hamilton <Andrew.Hamilton@colorado.edu>
 
 	* src/main.c: use getopt's built-in option counter
