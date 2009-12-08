@@ -18,6 +18,8 @@ by a '#' or a '*' or a '?'. A
   currently works best with "Automatic resizing" turned off. 
   With --scale=-1003, you can access the new scale from the command line.  
 
+# Improved handling of filename "-" (which means read document from stdin)
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.7  (March 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # GV 3.6.6.92 has been released as GV 3.6.7 with no changes
