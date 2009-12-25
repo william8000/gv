@@ -9,6 +9,19 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.8  (December 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# GV 3.6.7.90 has been released as GV 3.6.8 with no changes
+
+? "Fit to window magnification" and "Fit width to window magnification" with
+  "Automatic resizing" turned on sometime miss rescaling, especially when
+  changing the orientation or resizing the window. You can force
+  rescaling by selecting the active "special" scale in the scales menu.
+
+? Interactive prompting for the password of encrypted PDF files do not work
+  if and only if DSC is turned off. As a workarouund, you can load the file
+  with DSC turned on and then turn DSC off.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.7.90  (December 2009) %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Compilation fix for Mac OS X: Requires --enable-SIGCHLD-fallback during
