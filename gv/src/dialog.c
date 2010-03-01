@@ -31,6 +31,7 @@
 #include "ac_config.h"
 
 #include "config.h"
+#include "VlistP.h"
 
 #include <stdio.h>
 
@@ -272,20 +273,27 @@ void DialogPopupSetText(s)
     Arg args[10];
     Cardinal n;
     Widget response;
+    VlistWidget vw;
     Dimension width;
 #   define DIALOG_POPUP_FREE_SPACE 50
 #   define DIALOG_POPUP_TEXT_MIN_WIDTH 100
     String os;
     Dimension lm,rm,bw,nw;
+    XFontSet     fontset;
     XFontStruct *font;
 
     BEGINMESSAGE(DialogPopupSetText)
     if (!s) {INFMESSAGE(no text) ENDMESSAGE(DialogPopupSetText) return;}
     if (!dialogPopupCreated) makeDialogPopup();
     response = XtNameToWidget(DIALOG_POPUP, "*dialog_text");
+    vw = (VlistWidget)response;
 
     						n=0;
-    XtSetArg(args[n], XtNfont, &font);		n++;
+    if( vw->simple.international == True ) {
+      XtSetArg(args[n], XtNfontSet, &fontset);	n++;
+    } else {
+      XtSetArg(args[n], XtNfont, &font);	n++;
+    }
     XtSetArg(args[n], XtNleftMargin, &lm);	n++;
     XtSetArg(args[n], XtNrightMargin, &rm);	n++;
     XtSetArg(args[n], XtNborderWidth, &bw);	n++;
@@ -293,8 +301,12 @@ void DialogPopupSetText(s)
     XtSetArg(args[n], XtNwidth, &width);	n++;
     XtGetValues(response, args, n);
     						n=0;
-    nw= ((font->max_bounds.width+font->min_bounds.width)*((Dimension)strlen(s))+1)/2
-      +lm+rm+DIALOG_POPUP_FREE_SPACE+2*bw;
+    if( vw->simple.international == True )
+      nw=	XmbTextEscapement( fontset, s, strlen(s));
+    else
+      nw= ((font->max_bounds.width+font->min_bounds.width)*((Dimension)strlen(s))+1)/2;
+    nw += lm+rm+DIALOG_POPUP_FREE_SPACE+2*bw;
+
     if (nw<DIALOG_POPUP_TEXT_MIN_WIDTH) nw=DIALOG_POPUP_TEXT_MIN_WIDTH;
     if (nw>width) {
       INFIMESSAGE(new width,nw)

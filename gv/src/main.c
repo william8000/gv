@@ -408,6 +408,33 @@ int main(argc, argv)
 
     /*###  initializing toolkit and the application context ########*/
 
+    /*
+      Make sure that LC_NUMERIC is POSIX.
+      LC_NUMERIC must not use locales like de_DE.UTF-8 or de_DE@euro where
+      the decimal separator is ',' or gv will fail with the
+      message "**** Unable to open the initial device, quitting."
+    */
+
+    if (getenv("LC_ALL")) {
+	    char *locale;
+	    locale = getenv("LC_ALL");
+            gnu_gv_unsetenv("LC_ALL");
+	    gnu_gv_setenv("LC_CTYPE", locale, 1);
+	    gnu_gv_setenv("LC_NUMERIC", locale, 1);
+	    gnu_gv_setenv("LC_TIME", locale, 1);
+	    gnu_gv_setenv("LC_COLLATE", locale, 1);
+	    gnu_gv_setenv("LC_MONETARY", locale, 1);
+	    gnu_gv_setenv("LC_MESSAGES", locale, 1);
+	    gnu_gv_setenv("LC_PAPER", locale, 1);
+	    gnu_gv_setenv("LC_NAME", locale, 1);
+	    gnu_gv_setenv("LC_ADDRESS", locale, 1);
+	    gnu_gv_setenv("LC_TELEPHONE", locale, 1);
+	    gnu_gv_setenv("LC_MEASUREMENT", locale, 1);
+	    gnu_gv_setenv("LC_IDENTIFICATION", locale, 1);
+    }
+    gnu_gv_setenv("LC_NUMERIC", "POSIX", 1);
+    XtSetLanguageProc(NULL, NULL, NULL);
+
     INFMESSAGE(initializing toolkit and the application context)
     XtToolkitInitialize();
     app_con = XtCreateApplicationContext();

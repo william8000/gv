@@ -8,3 +8,5 @@
 
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = lib src doc
+
+EXTRA_DIST = README.I18N

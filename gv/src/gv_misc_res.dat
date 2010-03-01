@@ -220,6 +220,10 @@ GV*optionsetupPopup*scalesFrame.forcedWidth:	230
 GV*optionsetupPopup*mediasFrame.forcedWidth:	240
 GV*optionsetupPopup*mediasFrame.forcedHeight:	400
 
+!##### FileSet Popup
+
+GV*fileSelPopup.title:			Open File
+
 !##### Panner
 
 GV*pannerFrame.frameType:		sunken
@@ -321,6 +325,7 @@ GV*checkFile.label:			Check File
 GV*filters.label:			Filters:
 GV*dirs.label:				Directories
 GV*button1.label:			Cancel
+GV*button2.label:			Open File
 GV*rescan.label:			Rescan Directory
 GV*screenSizeLabel.label:		Screen Size (mm)
 

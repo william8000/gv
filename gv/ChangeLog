@@ -1,3 +1,20 @@
+2010-03-01  Dr. Werner Fink <werner@suse.de>
+	    Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>
+            Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* Makefile.am: Include README.I18N in distribuation
+	
+	* src/main.c(main): Correcting environment, calling XtSetLanguageProc
+	
+	* src/Makefile.am: Handling of new source files
+	
+	* src/info.c, src/misc_private.c, src/dialog.c: Properly handle
+	the case that international is enabled.
+	
+	* src/gv_misc_res.dat: Add resource "GV*fileSelPopup.title"
+	
+	* src/gv_font_res-I18N_mb.dat: New filw with extra resources for I18N.
+
 2010-02-27  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.6.8.90

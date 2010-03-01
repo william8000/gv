@@ -14,7 +14,7 @@ appdefaultsdir = $(pkgdatadir)
 
 appdefaults_DATA = ../GV
 
-EXTRA_DIST=ad2c gv_font_res.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
+EXTRA_DIST=ad2c gv_font_res.dat gv_font_res-I18N_mb.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
            gv_selected.xbm gv_unmark.xbm
 
@@ -217,7 +217,7 @@ gv_class.h : gv_class.ad
 	@echo "creating gv_class.h"
 	@sh $(srcdir)/ad2c gv_class.ad > gv_class.h
 
-gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
+gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_font_res-I18N_mb.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
 	@echo "creating gv_class.ad"
 	cp $(srcdir)/gv_copyright.dat gv_class.ad
 	chmod u+w gv_class.ad
@@ -231,6 +231,7 @@ gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_layout_res.dat gv_make_res.
 	@cat $(srcdir)/gv_user_res.dat >> gv_class.ad
 	@cat gv_intern_res_unix.dat >> gv_class.ad
 	@cat gv_make_res.dat >> gv_class.ad
+	@cat $(srcdir)/gv_font_res-I18N_mb.dat >> gv_class.ad
 	@cat $(srcdir)/gv_font_res.dat >> gv_class.ad
 	@cat $(srcdir)/gv_misc_res.dat >> gv_class.ad
 	@cat $(srcdir)/gv_layout_res.dat >> gv_class.ad

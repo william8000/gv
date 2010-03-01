@@ -48,6 +48,7 @@
 
 #include "types.h"
 #include "misc_private.h"
+#include "VlistP.h"
 
 /*############################################################*/
 /* update_label */
@@ -59,6 +60,7 @@ update_label(widget,text)
    char   *text;
 {
    LabelWidget w = (LabelWidget) widget;
+   VlistWidget vw = (VlistWidget) widget;
    int shadow;
 
    BEGINMESSAGE1(update_label)
@@ -78,26 +80,41 @@ update_label(widget,text)
    if (text) {      /* most of the following comes from X11/Xaw/Label.c */
       Position x,y;
       INFSMESSAGE(update_label,text)
-      y = w->label.label_y + w->label.font->max_bounds.ascent;
+      if( vw->simple.international == True ) {
+	y = w->label.label_y - XExtentsOfFontSet(w->label.fontset)->max_logical_extent.y;
+      } else {
+	y = w->label.label_y + w->label.font->max_bounds.ascent;
+      }
       if (w->label.justify == XtJustifyCenter) {
          unsigned int width;
          int len = (int) strlen(text);
-         XFontStruct *fs = w->label.font;
-         if   (w->label.encoding) width = XTextWidth16 (fs, (XChar2b*)text, (int)(len/2) );
-         else                     width = XTextWidth   (fs, text          , (int)(len)   );
+	 if( vw->simple.international == True ) {
+	   XFontSet     fs = w->label.fontset;
+	   width = XmbTextEscapement(fs, text, (int)len );
+	 } else {
+	   XFontStruct *fs = w->label.font;
+	   if   (w->label.encoding) width = XTextWidth16 (fs, (XChar2b*)text, (int)(len/2) );
+	   else                     width = XTextWidth   (fs, text          , (int)(len)   );
+	 }
          x = (Position) ((w->core.width-width)/2);
       } else {
          x = w->label.internal_width + w->threeD.shadow_width;
       }
 
-      if (w->label.encoding) {
-	 XDrawString16(XtDisplay(widget), XtWindow(widget),
-                       w->label.normal_GC,
-	  	       x, y,(XChar2b*)text, (int)(strlen(text)));
+      if( vw->simple.international == True ) {
+	XmbDrawString(XtDisplay(widget), XtWindow(widget),
+		      w->label.fontset, w->label.normal_GC,
+		      x, y, text, (int)(strlen(text)));
       } else {
-         XDrawString(XtDisplay(widget), XtWindow(widget),
+	if (w->label.encoding) {
+	   XDrawString16(XtDisplay(widget), XtWindow(widget),
+                         w->label.normal_GC,
+	  	         x, y,(XChar2b*)text, (int)(strlen(text)));
+	} else {
+           XDrawString(XtDisplay(widget), XtWindow(widget),
                        w->label.normal_GC,
 	  	       x, y, text, (int)(strlen(text)));
+	}
       }
    }
 

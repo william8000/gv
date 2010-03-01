@@ -36,6 +36,7 @@
 #include "message.h"
 
 #include "config.h"
+#include "VlistP.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,6 +70,20 @@ static Widget   infotext;
 static Bool	infoPopupCreated = False;
 static Bool	infoPopupVisible = False;
 static int	info_length;
+
+static int FontSetWidth( XFontSet fnt ) {
+  XRectangle ink_array_return, logical_array_return;
+  XRectangle overall_ink_return, overall_logical_return;
+  int num_chars_return;
+  XmbTextPerCharExtents( fnt, "A", 1,
+			 &ink_array_return,
+			 &logical_array_return, 1,
+			 &num_chars_return,
+			 &overall_ink_return,
+			 &overall_logical_return );
+   return( overall_logical_return.width );
+}
+#define FontSetHeight(fnt)	(XExtentsOfFontSet(fnt)->max_logical_extent.height)
 
 /*###############################################################################
    cb_popupInfoPopup
@@ -193,7 +208,9 @@ void makeInfoPopup(void)
    Cardinal     n;
    Dimension	bottomMargin, leftMargin, rightMargin, topMargin;
    Dimension	width, height;
+   XFontSet      fontset;
    XFontStruct	*font;
+   VlistWidget  vw;
 
    BEGINMESSAGE(makeInfoPopup)
 
@@ -221,20 +238,30 @@ void makeInfoPopup(void)
             XtSetArg(args[n], XtNleft, XtChainLeft);				n++;
             XtSetArg(args[n], XtNright, XtChainRight);				n++;
     infodismiss = XtCreateManagedWidget("dismiss", buttonWidgetClass,infoform,args,n);
+    vw = (VlistWidget)infodismiss;
             XtAddCallback(infodismiss, XtNcallback, cb_popdownInfoPopup,NULL);
             XtInstallAccelerators(infoform, infodismiss);
             XtInstallAccelerators(infotext, infodismiss);
    
 										n=0;
-            XtSetArg(args[n], XtNfont, &font);					n++;
+	    if( vw->simple.international == True ) {
+	      XtSetArg(args[n], XtNfontSet, &fontset);				n++;
+	    } else {
+              XtSetArg(args[n], XtNfont, &font);				n++;
+	    }
             XtSetArg(args[n], XtNbottomMargin, &bottomMargin);			n++;
             XtSetArg(args[n], XtNleftMargin, &leftMargin);			n++;
             XtSetArg(args[n], XtNrightMargin, &rightMargin);			n++;
             XtSetArg(args[n], XtNtopMargin, &topMargin);			n++;
     XtGetValues(infotext,args,n);
 
-    width = font->max_bounds.width * 80 + leftMargin + rightMargin;
-    height = (font->ascent + font->descent) * 22 + topMargin + bottomMargin;
+    if( vw->simple.international == True ) {
+      width  = FontSetWidth(fontset)  * 80 + leftMargin + rightMargin;
+      height = FontSetHeight(fontset) * 22 + topMargin + bottomMargin;
+    } else {
+      width = font->max_bounds.width * 80 + leftMargin + rightMargin;
+      height = (font->ascent + font->descent) * 22 + topMargin + bottomMargin;
+    }
 
 										n=0;
             XtSetArg(args[0], XtNwidth, width);					n++;

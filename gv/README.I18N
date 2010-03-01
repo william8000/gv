@@ -1,0 +1,13 @@
+GV I18N Fontset Patch
+			Keio University in Japan
+			1998 Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>
+
+This patch make gv to support UTF8.
+
+
+Note that UTF8-Mode is currently turned off by default. To enable it, include
+the resource
+
+      GV*international:		True
+      
+e. g. in ~/.gv
