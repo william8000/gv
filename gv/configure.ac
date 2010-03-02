@@ -92,7 +92,7 @@ AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 
 opt_mkstemp=false
 
-AC_CHECK_FUNCS([mkstemp],[opt_setenv_code=true],[opt_setenv_code=false])
+AC_CHECK_FUNCS([mkstemp],[opt_mkstemp=true],[opt_mkstemp=false])
 AM_CONDITIONAL(HAVE_MKSTEMP, test x$opt_mkstemp = xtrue)
 
 
@@ -232,6 +232,9 @@ test "$opt_memmove_code" = "yes" && {
 
 }
 
+AC_ARG_ENABLE(international, AC_HELP_STRING([--enable-international],[Enable international by default. It defaults to `no']), opt_international=$enableval, opt_international=no)
+AM_CONDITIONAL(ENABLE_INTERNATIONAL, test x$opt_international = xyes)
+
 
 AC_MSG_CHECKING([for SIGCLD])
 AC_EGREP_CPP(we_have_sigcld,
@@ -267,6 +270,8 @@ then
       AC_DEFINE([SIGCLD], [SIGCHLD], [Use SIGCHLD as fallback for SIGCLD.])
    fi
 fi
+
+
 
 opt_setenv_code=false
 

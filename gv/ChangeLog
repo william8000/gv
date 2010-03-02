@@ -1,3 +1,9 @@
+2010-03-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/configure.ac: New option "--enable-international".
+	
+	* src/Makefile.am(target gv_class.ad): Enable international if requested
+
 2010-03-02  Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>
 
 	* src/callbacks.c(setTitle): New function for supporting UTF-8 titles

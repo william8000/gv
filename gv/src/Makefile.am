@@ -231,6 +231,9 @@ gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_font_res-I18N_mb.dat $(srcd
 	@cat $(srcdir)/gv_user_res.dat >> gv_class.ad
 	@cat gv_intern_res_unix.dat >> gv_class.ad
 	@cat gv_make_res.dat >> gv_class.ad
+if ENABLE_INTERNATIONAL
+	echo "GV*international: TRUE" >> gv_class.ad
+endif
 	@cat $(srcdir)/gv_font_res-I18N_mb.dat >> gv_class.ad
 	@cat $(srcdir)/gv_font_res.dat >> gv_class.ad
 	@cat $(srcdir)/gv_misc_res.dat >> gv_class.ad

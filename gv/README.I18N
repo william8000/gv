@@ -5,14 +5,19 @@ GV I18N Fontset Patch
 This patch make gv to support UTF8.
 
 
-Note that UTF8-Mode is currently turned off by default. To enable it, include
-the resource
+Note that UTF8-Mode is currently turned off by default. 
+To enable it, you have two possibilities:
+
+1. include the resource
 
       GV*international:		True
       
-e. g. in ~/.gv
+   e. g. in ~/.gv
 
-      
+2. The configure parameter --enable-international will turn on 
+   international by default.
+
+   
       
 
 NEED:
