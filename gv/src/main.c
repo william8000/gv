@@ -1342,6 +1342,7 @@ int main(argc, argv)
 
     INFMESSAGE(mapping toplevel)
     XtMapWidget(toplevel);
+    cb_showTitle(toplevel, NULL, NULL);
   }
 
   INFMESSAGE(waiting for events now)

@@ -942,7 +942,7 @@ setup_ghostview()
           gv_pagemedia          = m;
        }
     }
-    cb_showTitle(NULL,NULL,NULL);
+    cb_showTitle(toplevel,NULL,NULL);
 
     if (show_date) {
        if (doc && doc->date) {

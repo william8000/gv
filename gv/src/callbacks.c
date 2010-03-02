@@ -67,6 +67,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include <locale.h>
+#include <langinfo.h>
+#include <iconv.h>
+#include INC_X11(Xatom.h)
+
 #include "types.h"
 #include "actions.h"
 #include "callbacks.h"
@@ -104,6 +109,82 @@ static int last_psy;
 /* cb_showTitle */
 /*############################################################*/
 
+void setTitle ( Display* dpy, Window w, char* title, int icon);
+XTextProperty* char_to_xtp ( Display* dpy, char* s );
+
+void setTitle ( Display* dpy, Window w, char* title, int icon) {
+	char* from;
+	iconv_t cd;
+	char* inptr;
+	size_t insize;
+	char utf8title [4096];
+	char* outptr;
+	size_t outsize;
+	Atom net_wm_name;
+	Atom net_wm_icon_name;
+        Atom utf8_string;
+	
+	net_wm_name = XInternAtom (dpy, "_NET_WM_NAME", False);
+	net_wm_icon_name = XInternAtom (dpy, "_NET_WM_ICON_NAME", False);
+	utf8_string = XInternAtom (dpy, "UTF8_STRING" ,False);
+
+	from  = nl_langinfo (CODESET);
+	cd  = iconv_open ("UTF-8",from);
+	inptr = title;
+	outptr = utf8title;
+	insize = strlen(title);
+	outsize = sizeof (utf8title);
+	memset (&utf8title, 0, sizeof(utf8title));
+	iconv (cd, &inptr, &insize, &outptr, &outsize);
+
+	if (icon) {
+		XSetWMIconName (
+			dpy, w, char_to_xtp (dpy,utf8title)
+			);
+		XChangeProperty (
+			dpy, w, net_wm_icon_name, utf8_string, 8,
+			PropModeReplace, (unsigned char *)utf8title,
+			strlen (utf8title)
+			);
+	} else {
+		XSetWMName (
+			dpy, w, char_to_xtp (dpy,utf8title)
+			);
+		XChangeProperty (
+			dpy, w, net_wm_name, utf8_string, 8,
+			PropModeReplace, (unsigned char *)utf8title,
+			strlen (utf8title)
+			);
+	}
+}
+
+XTextProperty* char_to_xtp ( Display* dpy, char* s ) {
+	static XTextProperty tp = { 0, 0, 0, 0 };
+	static int free_prop = True;
+	int errCode = 0;
+	char* tl[2];
+	if ( tp.value ) {
+		if ( free_prop ) {
+			XFree( tp.value );
+		}
+		tp.value = 0;
+		free_prop = True;
+	}
+	tl[0] = s;
+	tl[1] = 0;
+	errCode = XmbTextListToTextProperty (
+		dpy,tl, 1, XStdICCTextStyle, &tp
+	);
+	if ( errCode < 0 ) {
+		tp.value = (unsigned char*)s;
+		tp.encoding = XA_STRING;
+		tp.format = 8;
+		tp.nitems = strlen (s);
+		free_prop = False;
+	}
+    return &tp;
+}
+
 void
 cb_showTitle(w, client_data, call_data)
   Widget w;
@@ -133,6 +214,8 @@ cb_showTitle(w, client_data, call_data)
   } else {
     t = s = GV_XtNewString(versionIdentification[0]);
   }
+  if (w && XtWindow(w)) setTitle(gv_display, XtWindow(w), s, 0);
+  if (w && XtWindow(w)) setTitle(gv_display, XtWindow(w), t, 1);
 					n=0;
   XtSetArg(args[n], XtNtitle, s);	n++;
   XtSetArg(args[n], XtNiconName, t);	n++;
