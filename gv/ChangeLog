@@ -3,8 +3,8 @@
 	* src/configure.ac: if no international support is available in Xaw3d, 
 	do not abort.
 	
-	* src/configure.ac: setenv-test: if --disable-setenv-code is given, continue 
-	without testing for setenv support
+	* src/configure.ac: setenv-test: if --disable-setenv-code is given,
+	continue without testing for setenv support
 
 	* src/dialog.c, src/info.c, src/misc_private.c, src/Vlist.c: Use
 	#ifdef-s to enable compilation on Xaw3d-1.5 by disabling all
