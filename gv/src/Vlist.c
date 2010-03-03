@@ -221,14 +221,18 @@ Cardinal *num_args;		/* unused */
 
   /* TODO: check if this works here in international mode, or if it has
    * to be moved to Realize... */
+#ifdef HAVE_XAW3D_INTERNATIONAL
   if( vw->simple.international == True ) {
     XFontSetExtents *ext = XExtentsOfFontSet(vw->label.fontset);
     vw->vlist.yofs = (ext->max_ink_extent.y<0)?-ext->max_ink_extent.y:ext->max_ink_extent.y;
     vw->vlist.ydelta = ext->max_ink_extent.height;
   } else {
+#endif
     vw->vlist.yofs = vw->label.font->max_bounds.ascent;
     vw->vlist.ydelta = vw->label.font->max_bounds.ascent + vw->label.font->max_bounds.descent;
+#ifdef HAVE_XAW3D_INTERNATIONAL
   }
+#endif
 
   ENDMESSAGE(Initialize)
 }
@@ -349,16 +353,20 @@ PaintEntryString(w, entry)
       len = nl - s;
     else
       len = strlen(s);
+#ifdef HAVE_XAW3D_INTERNATIONAL
     if( vw->simple.international == True )
       XmbDrawString(XtDisplay(w), XtWindow(w), vw->label.fontset,
 		    vw->label.normal_GC,
 		    vw->label.label_x, vw->label.label_y + yofs + entry*ydelta,
 		    s, len);
     else
+#endif
       XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
 		vw->label.label_x, vw->label.label_y + yofs + entry*ydelta,
 		s, len);
+#ifdef HAVE_XAW3D_INTERNATIONAL
   }
+#endif
   ENDMESSAGE1(PaintEntryString)
 }
 
@@ -616,10 +624,12 @@ Region region;
     if (y - vw->vlist.yofs > rectangle.y + rectangle.height)
       break;
     if (y + (vw->vlist.ydelta - vw->vlist.yofs) >= rectangle.y) {
+#ifdef HAVE_XAW3D_INTERNATIONAL
       if( vw->simple.international == True )
 	XmbDrawString(XtDisplay(w), XtWindow(w), vw->label.fontset,
 		      vw->label.normal_GC, vw->label.label_x, y, s, len);
       else
+#endif
 	XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
 		    vw->label.label_x, y, s, len);
     }

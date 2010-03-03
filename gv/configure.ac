@@ -84,10 +84,28 @@ AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
 AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
    AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
    $X_LIBS)
+
+
 myCPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $X_CFLAGS"
-AC_CHECK_MEMBER(SimplePart.international,,[AC_MSG_ERROR([Xaw3d misses internationalisation support])],[#include <X11/Xaw3d/SimpleP.h>])
+## AC_CHECK_MEMBER(SimplePart.international,,[AC_MSG_ERROR([Xaw3d misses internationalisation support])],[#include <X11/Xaw3d/SimpleP.h>])
+AC_CHECK_MEMBER(SimplePart.international,[opt_xaw3d_international=true],[opt_xaw3d_international=false],[#include <X11/Xaw3d/SimpleP.h>])
+test x$opt_xaw3d_international = xtrue && {
+     AC_DEFINE(HAVE_XAW3D_INTERNATIONAL,[],[Define USE_XAW3D_INTERNATIONAL])
+}
+test x$opt_xaw3d_international = xfalse && {
+     echo
+     echo ****************************************************
+     echo WARNING: international support has not been detected 
+     echo          in your version of Xaw3d.  The UTF8-Support
+     echo          of GNU gv has been disabled.
+     echo ****************************************************
+     echo
+}
 CPPFLAGS="$myCPPFLAGS"
+
+
+
 AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 
 opt_mkstemp=false
@@ -273,18 +291,18 @@ fi
 
 
 
-opt_setenv_code=false
+opt_setenv_code=unknown
 
 AC_ARG_ENABLE(setenv-code, AC_HELP_STRING([--enable-setenv-code],[Use extra code for setenv() and getenv(). Defaults to `no']),
 [case "${enableval}" in
    yes) opt_setenv_code=true ;;
    no)  opt_setenv_code=false ;;
    *) AC_MSG_ERROR(bad value ${enableval} for --enable-setenv-code) ;;
- esac],[opt_setenv_code=false])
+ esac],[opt_setenv_code=unknown])
  
-if test x$opt_setenv_code = xfalse
+if test x$opt_setenv_code = xunknown
 then
-   AC_CHECK_FUNCS([setenv unsetenv],[],[AC_MSG_ERROR(The configure option  --enable-setenv-code should help.)])
+   AC_CHECK_FUNCS([setenv unsetenv],[],[AC_MSG_ERROR(The configure option --disable-setenv-code or --enable-setenv-code should help.)])
 fi
 
 AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)

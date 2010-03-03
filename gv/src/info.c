@@ -36,7 +36,9 @@
 #include "message.h"
 
 #include "config.h"
-#include "VlistP.h"
+#ifdef HAVE_XAW3D_INTERNATIONAL
+  #include "VlistP.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -208,9 +210,13 @@ void makeInfoPopup(void)
    Cardinal     n;
    Dimension	bottomMargin, leftMargin, rightMargin, topMargin;
    Dimension	width, height;
+#ifdef HAVE_XAW3D_INTERNATIONAL
    XFontSet      fontset;
+#endif
    XFontStruct	*font;
+#ifdef HAVE_XAW3D_INTERNATIONAL
    VlistWidget  vw;
+#endif
 
    BEGINMESSAGE(makeInfoPopup)
 
@@ -238,31 +244,40 @@ void makeInfoPopup(void)
             XtSetArg(args[n], XtNleft, XtChainLeft);				n++;
             XtSetArg(args[n], XtNright, XtChainRight);				n++;
     infodismiss = XtCreateManagedWidget("dismiss", buttonWidgetClass,infoform,args,n);
+#ifdef HAVE_XAW3D_INTERNATIONAL
     vw = (VlistWidget)infodismiss;
+#endif
             XtAddCallback(infodismiss, XtNcallback, cb_popdownInfoPopup,NULL);
             XtInstallAccelerators(infoform, infodismiss);
             XtInstallAccelerators(infotext, infodismiss);
    
 										n=0;
+#ifdef HAVE_XAW3D_INTERNATIONAL
 	    if( vw->simple.international == True ) {
 	      XtSetArg(args[n], XtNfontSet, &fontset);				n++;
 	    } else {
+#endif
               XtSetArg(args[n], XtNfont, &font);				n++;
+#ifdef HAVE_XAW3D_INTERNATIONAL
 	    }
+#endif
             XtSetArg(args[n], XtNbottomMargin, &bottomMargin);			n++;
             XtSetArg(args[n], XtNleftMargin, &leftMargin);			n++;
             XtSetArg(args[n], XtNrightMargin, &rightMargin);			n++;
             XtSetArg(args[n], XtNtopMargin, &topMargin);			n++;
     XtGetValues(infotext,args,n);
 
+#ifdef HAVE_XAW3D_INTERNATIONAL
     if( vw->simple.international == True ) {
       width  = FontSetWidth(fontset)  * 80 + leftMargin + rightMargin;
       height = FontSetHeight(fontset) * 22 + topMargin + bottomMargin;
     } else {
+#endif
       width = font->max_bounds.width * 80 + leftMargin + rightMargin;
       height = (font->ascent + font->descent) * 22 + topMargin + bottomMargin;
+#ifdef HAVE_XAW3D_INTERNATIONAL
     }
-
+#endif
 										n=0;
             XtSetArg(args[0], XtNwidth, width);					n++;
     XtSetValues(infodismiss, args,n);
