@@ -3,6 +3,8 @@
 	* src/Vlist.c(PaintEntryString): Fixed a typo introducved by my patch
 	from 2010-03-03 preventing compiling with Xaw3d 1.5. (Fixes #28424)
 
+	* configure.ac: Fix several tests on RHEL 4.8.
+
 2010-03-07  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.6.8.91

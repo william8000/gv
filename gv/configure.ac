@@ -46,6 +46,8 @@ gl_INIT
 
 dnl Search for libraries
 
+LIBS="$X_LIBS"
+
 AC_CHECK_LIB(m, sqrt)
 AC_CHECK_LIB(fl, yywrap)
 
@@ -74,6 +76,7 @@ fi
 
 
 AC_PATH_XTRA()
+LDADD=$X_EXTRA_LIBS $X_LIBS
 AC_CHECK_LIB(X11, XOpenDisplay, , , $X_LIBS)
 AC_CHECK_LIB(ICE, main, , , $X_LIBS)
 AC_CHECK_LIB(SM, main, , , $X_LIBS)
@@ -95,15 +98,14 @@ test x$opt_xaw3d_international = xtrue && {
 }
 test x$opt_xaw3d_international = xfalse && {
      echo
-     echo ****************************************************
-     echo WARNING: international support has not been detected 
-     echo          in your version of Xaw3d.  The UTF8-Support
-     echo          of GNU gv has been disabled.
-     echo ****************************************************
+     echo "****************************************************"
+     echo "WARNING: international support has not been detected"
+     echo "         in your version of Xaw3d.  The UTF8-Support"
+     echo "         of GNU gv has been disabled."
+     echo "****************************************************"
      echo
 }
 CPPFLAGS="$myCPPFLAGS"
-
 
 
 AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
