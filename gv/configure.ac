@@ -75,41 +75,6 @@ AC_CHECK_HEADER(zio.h,[
 fi
 
 
-AC_PATH_XTRA()
-LDADD=$X_EXTRA_LIBS $X_LIBS
-AC_CHECK_LIB(X11, XOpenDisplay, , , $X_LIBS)
-AC_CHECK_LIB(ICE, main, , , $X_LIBS)
-AC_CHECK_LIB(SM, main, , , $X_LIBS)
-AC_CHECK_LIB(Xext, main, , , $X_LIBS)
-AC_CHECK_LIB(Xt, XtOpenDisplay, , , $X_LIBS)
-AC_CHECK_LIB(Xmu, main, , , $X_LIBS)
-AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
-AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
-   AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
-   $X_LIBS)
-
-
-myCPPFLAGS="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $X_CFLAGS"
-## AC_CHECK_MEMBER(SimplePart.international,,[AC_MSG_ERROR([Xaw3d misses internationalisation support])],[#include <X11/Xaw3d/SimpleP.h>])
-AC_CHECK_MEMBER(SimplePart.international,[opt_xaw3d_international=true],[opt_xaw3d_international=false],[#include <X11/Xaw3d/SimpleP.h>])
-test x$opt_xaw3d_international = xtrue && {
-     AC_DEFINE(HAVE_XAW3D_INTERNATIONAL,[],[Define USE_XAW3D_INTERNATIONAL])
-}
-test x$opt_xaw3d_international = xfalse && {
-     echo
-     echo "****************************************************"
-     echo "WARNING: international support has not been detected"
-     echo "         in your version of Xaw3d.  The UTF8-Support"
-     echo "         of GNU gv has been disabled."
-     echo "****************************************************"
-     echo
-}
-CPPFLAGS="$myCPPFLAGS"
-
-
-AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
-
 opt_mkstemp=false
 
 AC_CHECK_FUNCS([mkstemp],[opt_mkstemp=true],[opt_mkstemp=false])
@@ -365,6 +330,49 @@ test "$opt_off_t" = "true" && {
 }
 
 AM_CONDITIONAL(USE_OFF_T, test x$opt_off_t = xtrue)
+
+
+#################### X11 related stuff ######################
+
+
+AC_PATH_XTRA()
+AC_CHECK_LIB(X11, XOpenDisplay, , , $X_LIBS)
+AC_CHECK_LIB(ICE, main, , , $X_LIBS)
+AC_CHECK_LIB(SM, main, , , $X_LIBS)
+AC_CHECK_LIB(Xext, main, , , $X_LIBS)
+AC_CHECK_LIB(Xt, XtOpenDisplay, , , $X_LIBS)
+AC_CHECK_LIB(Xmu, main, , , $X_LIBS)
+AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
+AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
+   AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
+   $X_LIBS)
+
+
+myCPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $X_CFLAGS"
+## AC_CHECK_MEMBER(SimplePart.international,,[AC_MSG_ERROR([Xaw3d misses internationalisation support])],[#include <X11/Xaw3d/SimpleP.h>])
+AC_CHECK_MEMBER(SimplePart.international,[opt_xaw3d_international=true],[opt_xaw3d_international=false],[#include <X11/Xaw3d/SimpleP.h>])
+test x$opt_xaw3d_international = xtrue && {
+     AC_DEFINE(HAVE_XAW3D_INTERNATIONAL,[],[Define USE_XAW3D_INTERNATIONAL])
+}
+test x$opt_xaw3d_international = xfalse && {
+     echo
+     echo "****************************************************"
+     echo "WARNING: international support has not been detected"
+     echo "         in your version of Xaw3d.  The UTF8-Support"
+     echo "         of GNU gv has been disabled."
+     echo "****************************************************"
+     echo
+}
+CPPFLAGS="$myCPPFLAGS"
+
+
+AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
+
+
+#################### END: X11 related stuff ######################
+
+
 
 dnl Generate output files
 AC_OUTPUT(Makefile lib/Makefile src/Makefile doc/Makefile)
