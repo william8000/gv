@@ -364,9 +364,7 @@ PaintEntryString(w, entry)
       XDrawString(XtDisplay(w), XtWindow(w), vw->label.normal_GC,
 		vw->label.label_x, vw->label.label_y + yofs + entry*ydelta,
 		s, len);
-#ifdef HAVE_XAW3D_INTERNATIONAL
   }
-#endif
   ENDMESSAGE1(PaintEntryString)
 }
 
