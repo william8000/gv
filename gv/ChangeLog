@@ -1,3 +1,7 @@
+2010-03-10  Bernhard R. Link <brlink@debian.org>
+
+	* doc/gv-update-userconfig.1: Fixed typo
+
 2010-03-09  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/gv-update-userconfig.in: corrected parsing version from ~/.gv
