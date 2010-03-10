@@ -100,7 +100,11 @@ while (<DATA>)
 
 
 $VER = "gv 3.5.8";
-$VER = $res{"GV.version"} if defined $res{"GV.version"};
+if (defined $res{"GV.version"})
+{
+   $res{"GV.version"} =~ m/(gv [\.0-9]+$)/ ;
+   $VER = $1;
+}
 
 %remove = ();
 
