@@ -595,7 +595,7 @@ List entries starting with @code{!} or @code{#} will not appear in the
 @emph{Media} menu but will still be used for automatic paper size 
 detection.
 
-@item pagemedia
+@item pageMedia
 Sets the paper size. 
 Allowd values are as given in the above list of paper-sizes.
 Specifying
