@@ -8,14 +8,14 @@ dnl Please process this file with `autoconf' to get a configure script
 
 
 AC_INIT(src/ps.c)
-AM_INIT_AUTOMAKE(gv,3.6.8.92)
+AM_INIT_AUTOMAKE(gv,3.6.9)
 AM_CONFIG_HEADER(src/ac_config.h)
 dnl AM_CONFIG_HEADER(src/ac_config.h)
 
 AM_MAINTAINER_MODE
 
 dnl gv version
-VERSION=3.6.8.92
+VERSION=3.6.9
 dnl manual edition
 MANUALEDITION=First
 
