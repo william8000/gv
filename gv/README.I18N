@@ -57,3 +57,6 @@ patch will fix it:
      ve->im.xim = NULL;
  
      /*
+
+A collection of Xaw3D 1.5E bug fixing patches can be found on
+git://gitorious.org/xaw3d/xaw3d.git.
