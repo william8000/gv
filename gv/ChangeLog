@@ -1,5 +1,9 @@
 2010-04-24  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* configure.ac, src/versionp.h: Bumped version to 3.6.90
+
+2010-04-24  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* configure.ac, src/versionp.h: Bumped version to 3.6.9
 
 2010-03-10  Bernhard R. Link <brlink@debian.org>
