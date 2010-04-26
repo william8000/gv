@@ -51,6 +51,9 @@ LIBS="$X_LIBS"
 AC_CHECK_LIB(m, sqrt)
 AC_CHECK_LIB(fl, yywrap)
 
+# Needed e. g. on Mac OS
+AC_CHECK_LIB(iconv, iconv_open)
+
 AC_ARG_WITH(libzio, AC_HELP_STRING([--without-libzio],[Do not probe for libzio]), opt_zio=$withval, opt_zio=yes)
 
 if test "$opt_zio" != "no" ; then
