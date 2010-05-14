@@ -1,0 +1,121 @@
+#! /usr/bin/perl
+
+use IO::String;
+
+$REPOS = $ARGV[0];
+$TXN = $ARGV[1];
+
+$files = `svnlook changed -t "$TXN" "$REPOS"`;
+$author = `svnlook author -t "$TXN" "$REPOS"`;
+
+$locale = '^(?:noint:)?[A-Za-z]+(?:_[A-Za-z]+)?(?:\.[-_A-Za-z0-9]+)?(?:@[-_A-Za-z0-9]+)?';
+
+exit(0) if $author eq "m.steinborn";
+
+for $f (split("\n", $files))
+{
+   $f =~ m/^([A-Z_]) *(.*)$/;
+   $file = $2;
+   $action = $1;
+
+   if ($file =~ m!/$!)
+   {
+      print STDERR "You are not allowed to create directories!\n";
+      exit(1);
+   }
+
+   next if $action eq "D";
+   
+   $file =~ m!^(.*)/([^/]+)$!;
+   $path = $1;
+   $filename = $2;
+
+   $path =~ m!^(.*)/([^/]+)$!;
+   $language = $2;
+   
+   if ($filename !~ m/$locale.dat$/ && $filename !~ m/$locale.lnk$/)
+   {
+      print STDERR "The filename $filename does mit match a locale.\n";
+      exit(2);
+   }
+   
+   $contents = `svnlook cat -t "$TXN" "$REPOS" "$file"`;
+   if (length($contents) > 12000)
+   {
+      print STDERR "Your file $filename is too large. If you think this file\n";
+      print STDERR "is valid, contact gnugv_maintainer@yahoo.de\n";
+      exit(2);
+   }
+
+   if ($filename !~ m/^(noint:)?$language/ )
+   {
+      print STDERR "Your file name $filename does not match the language you are registered\n";
+      print STDERR "to translate. You can ask gnugv_maintainer@yahoo.de to get\n";
+      print STDERR "registered for additional languages.\n";
+      exit(2);
+   }
+
+   if ($filename =~ m/$locale.lnk$/)
+   {
+      chomp $contents;
+      if ( $content !~ /$locale$/ )
+      {
+         print STDERR "Your file $filename points to an invalid locale\n";
+	 exit(3);
+      }
+   }
+   else
+   {
+      $s = IO::String->new($contents);
+      
+      while (<$s>)
+      {
+         chomp;
+         $read = $_;
+         $line = $read;
+         while ( $read =~ /\\$/ )
+         {
+            $read = <$s>;
+            chomp $read;
+            $line .= "\n$read";
+         }
+   
+         if ($line =~ /^([^:]+):/ )
+         {
+            # $resDefault{$1} = $line;
+	    $tmp = $1;
+	    $line =~ s/^\s+//;
+	    $line =~ s/\s+$//;
+	    if ( $tmp !~ /GV\*.*\.label$/i && $tmp !~ /GV\.scales$/ && $tmp !~ /GV\.version$/ &&
+	       $tmp !~ /GV\*.*\.title$/i &&  $tmp !~ /GV\*strings\./ )
+	    {
+	          print STDERR "Invalid resource name $tmp in $filename\n";
+		  exit(5);
+	    }
+            if ( $tmp eq "GV.version" )
+	    {
+	       if ( $line !~ /gv ([0-9]+\.)+[0-9]+$/ )
+	       {
+	          print STDERR "Invalid version resource in $filename\n";
+		  exit(6);
+	       }
+	    }
+         }
+	 elsif ($line =~ /^\s*$/)
+	 {}
+	 elsif ($line =~ /^!/)
+	 {
+	 }
+	 else
+	 {
+	    print STDERR "Invalid line if file $filename: $line\n---\n";
+	    exit(4);
+	 }
+      }
+
+   }
+}
+
+print STDERR "\n\nThank you for submitting a translation for GNU gv.\n\n";
+# print STDERR "I would accept, but for this test, I do not...\n";
+exit(0);
