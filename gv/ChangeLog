@@ -1,3 +1,8 @@
+2010-05-14  Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>
+
+	* src/nls/ja_JP.UTF-8.dat, src/nls/ko_KR.UTF-8.dat: Added Japanese and
+	  Korean translation
+
 2010-05-14  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/nls/de.UTF-8.dat, src/nls/noint:de.dat: Added German translation.
