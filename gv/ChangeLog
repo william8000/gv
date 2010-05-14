@@ -1,5 +1,9 @@
 2010-05-14  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* src/nls/de.UTF-8.dat, src/nls/noint:de.dat: Added German translation.
+
+2010-05-14  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* src/Makefile.am: New rule to generate src/gv-i18n.h
 	
 	* src/gv-i18n.pl: Generates src/gv-i18n.h at compile time
