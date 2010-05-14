@@ -9,9 +9,9 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.6.90 (April 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.6.90 (May 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Bugfix in gv-update-userconfig
+# Fix compiling on Mac OS X
 
 # Support for localised user interfaces
 
