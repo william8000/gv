@@ -56,6 +56,7 @@
 #include "main_resources.h"
 #include "main_globals.h"
 #include "popup.h"
+#include "resource.h"
 
 /*### local declarations and application dependencies ##################*/
 
@@ -227,8 +228,20 @@ makeVersionPopup(parent,name)
                      char i = 'a';
                      char widgetName[10];
                      while (*line != NULL)  {
+                        char tmp[1000];
                         sprintf(widgetName,"author%c",i);
-                        XtSetArg(args[n], XtNlabel, *line); 
+			if ( strcmp(copyrightTranslationLabel, "N/A") )
+			{
+			   char tmp2[1000];
+			   strcpy(tmp2, "Translation:         ");
+			   strcat(tmp2, copyrightTranslationLabel);
+			   sprintf(tmp, *line, tmp2);
+			}
+			else
+			{
+			   sprintf(tmp, *line, "");
+			}
+                        XtSetArg(args[n], XtNlabel, tmp); 
                         XtCreateManagedWidget(widgetName,labelWidgetClass,versionControl,args,(n+1));
                         line++; i++;
                      }

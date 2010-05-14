@@ -65,6 +65,8 @@
 #include "main_globals.h"
 #include "misc_private.h"
 
+#include "resource.h"
+
 #define CHECK_PERIOD 500
 #define ADD_TIMEOUT(widget,interval,data)       \
         XtAppAddTimeOut (                       \
@@ -273,7 +275,7 @@ ProcessData process_fork (name,command,notify_proc,data)
 
       {
          char tmp[512];
-         sprintf(tmp, "Exec of %s failed", argv[0]);
+         sprintf(tmp, execOfFailedLabel, argv[0]);
          perror(tmp);
          _exit(EXIT_STATUS_ERROR);
       }
@@ -443,7 +445,7 @@ char *process_disallow_quit()
     ENDMESSAGE(process_disallow_quit)
     return NULL;
   }
-  strcpy(message,"Still in progress:");
+  strcpy(message,stillInProgressLabel);
   l = strlen(message);
   for (pd = gpd; pd ; pd = pd->next) {
       l = l + strlen(pd->name) + 1;

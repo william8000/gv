@@ -28,6 +28,7 @@ $saveUnchanged = 1;
 $help = 0;
 $altNavigation = 0;
 $replaceNavigation = 0;
+$i18n = 0;
 
 for $i (@ARGV)
 {
@@ -35,6 +36,7 @@ for $i (@ARGV)
    $altNavigation = $replaceNavigation = 1 if $i eq "-n";
    $altNavigation = $replaceNavigation = 2 if $i eq "-N";
    $replaceNavigation = 1 if $i eq "-s";
+   $i18n = 1 if $i eq "-i";
    $help = 1 if $i eq "-h";
    $help = 1 if $i eq "--help";
    $help = 1 if $i eq "--usage";
@@ -129,8 +131,6 @@ sub compare
       return 0 if $c1[$i] > $c2[$i];
    }
    return 0;
-   
-   print "$b1\n$b2\n";
 }
 
 $remove{"GV.version"} = 1;
@@ -187,6 +187,21 @@ for $line (@res)
 }
 
 $newfile .= "GV.version:\t\tgv 3.6.7.90\n";
+
+if ($i18n)
+{
+   for $i (keys %resDefault)
+   {
+      $ok = 0;
+      $ok = 1 if $i =~ /\.label$/i ;
+      $ok = 1 if $i =~ /\.title$/i ;
+      $ok = 1 if $i =~ /^GV\*scales/i ;
+      $ok = 1 if $i =~ /^GV\*strings\./i ;
+      next unless $ok;
+      next if defined $res{$i};
+      $newfile .= $resDefault{$i} . "\n";
+  }
+]
 
 if ($altNavigation == 1)
 {

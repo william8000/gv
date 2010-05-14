@@ -76,6 +76,8 @@
 #include "doc_misc.h"
 #include "version.h"
 
+#include "resource.h"
+
 #include <string.h>
 
 static Widget   popup=NULL,optionControl;
@@ -91,12 +93,13 @@ static Widget   forientLabel,forientButton,forientMenu;
 static Widget   scalesLabel,scalesButton,scalesMenu=NULL;
 static Widget   scaleBaseLabel,scaleBaseButton,scaleBaseMenu=NULL;
 
-static String orientations[5] = { "Portrait","Landscape","Upside-Down","Seascape", NULL };
 static int opt_orientation;
 static int opt_pagemedia;
 
-static String popupVerb[5] = { "None", "Errors", "All", NULL };
+String orientations[5] = { 0 };
+String popupVerb[5] = { 0 };
 static String popupVerbExtern[5] = { "Silent", "Errors", "All", NULL };
+static String orientationsExtern[5] = { "Portrait", "Landscape", "Upside-Down", "Seascape", 0 };
 
 static void options_gv_create(void);
 static void options_gv_setOptionsAtEntry(void);
@@ -135,11 +138,12 @@ static void options_gv_setOptionsAtEntry(void)
   widgets_setToggle(watchToggle, (app_res.watch_file ? 1 : 0));
 
   s=NULL;
+
   for (i = 0; orientations[i]; i++) {
-    if (!strcasecmp(app_res.default_orientation,orientations[i]))
+    if (!strcasecmp(app_res.default_orientation,orientationsExtern[i]))
       s = orientations[i];
   }
-  if (!s) s = "Automatic";
+  if (!s) s = automaticLabel;
                                    n=0;
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(orientButton, args, n);
@@ -147,7 +151,7 @@ static void options_gv_setOptionsAtEntry(void)
 
   s=NULL;
   for (i = 0; orientations[i]; i++) {
-    if (!strcasecmp(app_res.fallback_orientation,orientations[i]))
+    if (!strcasecmp(app_res.fallback_orientation,orientationsExtern[i]))
       s = orientations[i];
   }
   if (!s) s = orientations[0];
@@ -293,9 +297,15 @@ static void options_gv_cb_apply(w, client_data, call_data)
 
    if (s_orient) GV_XtFree(app_res.default_orientation);
 							n=0;
-   XtSetArg(args[n], XtNlabel, &app_res.default_orientation);n++;
+   XtSetArg(args[n], XtNlabel, &v);n++;
    XtGetValues(orientButton, args, n);
-   app_res.default_orientation = GV_XtNewString(app_res.default_orientation);
+
+   if (!strcmp(v, automaticLabel))   app_res.default_orientation = GV_XtNewString("Automatic");
+   else if (!strcmp(v, orientations[0]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[0]);
+   else if (!strcmp(v, orientations[1]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[1]);
+   else if (!strcmp(v, orientations[2]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[2]);
+   else if (!strcmp(v, orientations[3]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[3]);
+
    i = doc_convStringToDocOrient(app_res.default_orientation);
    if (i != opt_orientation) {
      INFMESSAGE(orientation changed)
@@ -310,9 +320,14 @@ static void options_gv_cb_apply(w, client_data, call_data)
 
    if (s_forient) GV_XtFree(app_res.fallback_orientation);
 							n=0;
-   XtSetArg(args[n], XtNlabel, &app_res.fallback_orientation);n++;
+   XtSetArg(args[n], XtNlabel, &v);n++;
    XtGetValues(forientButton, args, n);
-   app_res.fallback_orientation = GV_XtNewString(app_res.fallback_orientation);
+
+   if (!strcmp(v, orientations[0]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[0]);
+   else if (!strcmp(v, orientations[1]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[1]);
+   else if (!strcmp(v, orientations[2]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[2]);
+   else if (!strcmp(v, orientations[3]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[3]);
+
    gv_fallback_orientation = doc_convStringToDocOrient(app_res.fallback_orientation);
    s_forient = True;
 
@@ -354,6 +369,16 @@ static void options_gv_cb_apply(w, client_data, call_data)
    } else if (redisplay) show_page(REQUEST_OPTION_CHANGE,NULL);
 
    ENDMESSAGE(options_gv_cb_apply)
+}
+
+static char* orientation2extern(l)
+   String l;
+{
+   int i;
+   for (i=0; orientations[i]; i++)
+      if (!strcmp(l, orientations[i]))
+          return orientationsExtern[i];
+   return l;
 }
 
 /*------------------------------------------------------
@@ -401,10 +426,10 @@ void options_gv_cb_save(w, client_data, call_data)
   options_setArg(&(argi[argn]),&(argv[argn]),s_fallbackPageMedia   ,gv_class       ,l);
        ++argn;
   XtGetValues(orientButton, args, n);
-  options_setArg(&(argi[argn]),&(argv[argn]),s_orientation         ,gv_class       ,l);
+  options_setArg(&(argi[argn]),&(argv[argn]),s_orientation         ,gv_class       ,orientation2extern(l));
        ++argn;
   XtGetValues(forientButton, args, n);
-  options_setArg(&(argi[argn]),&(argv[argn]),s_fallbackOrientation,gv_class        ,l);
+  options_setArg(&(argi[argn]),&(argv[argn]),s_fallbackOrientation,gv_class        ,orientation2extern(l));
        ++argn;
 
   options_gv_getScales(&b,&s);
@@ -518,7 +543,7 @@ void options_gv_createMediaMenus()
   } else {
     options_createLabeledMenu("fmedia",optionControl,&fmediaLabel,&fmediaButton,&fmediaMenu);
   }
-  w = XtCreateManagedWidget("Automatic",smeBSBObjectClass,mediaMenu,NULL,(Cardinal)0);
+  w = XtCreateManagedWidget(automaticLabel,smeBSBObjectClass,mediaMenu,NULL,(Cardinal)0);
   XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL); 
   for (i = 0; gv_medias[i]; i++) {
     if (gv_medias[i]->used) {
@@ -536,7 +561,7 @@ void options_gv_createMediaMenus()
     if (gv_medias[i]->used && !strcasecmp(app_res.default_pagemedia,gv_medias[i]->name))
       s = gv_medias[i]->name;
   }
-  if (!s) s = "Automatic";
+  if (!s) s = automaticLabel;
                                    n=0;
   XtSetArg(args[n], XtNlabel, s);  n++;
   XtSetValues(mediaButton, args, n);
@@ -595,7 +620,7 @@ void options_gv_create(void)
    options_gv_createScaleMenus();
    options_gv_createMediaMenus();
    options_createLabeledMenu("orient",optionControl,&orientLabel,&orientButton,&orientMenu);
-     w = XtCreateManagedWidget("Automatic",smeBSBObjectClass,orientMenu,args,n);
+     w = XtCreateManagedWidget(automaticLabel,smeBSBObjectClass,orientMenu,args,n);
      XtAddCallback(w, XtNcallback,options_cb_changeMenuLabel,NULL); 
    options_createLabeledMenu("forient",optionControl,&forientLabel,&forientButton,&forientMenu);
      for (i = 0; orientations[i]; i++) {

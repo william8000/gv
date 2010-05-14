@@ -64,6 +64,8 @@
 #include "main_globals.h"
 #include "misc.h"
 
+#include "resource.h"
+
 #ifndef XlibSpecificationRelease
 typedef char *XPointer;
 #endif
@@ -1573,7 +1575,7 @@ StartInterpreter(w)
 #          endif
 	}
 	execvp(argv[0], argv);
-	sprintf(buf, "Exec of %s failed", argv[0]);
+	sprintf(buf, execOfFailedLabel, argv[0]);
 	perror(buf);
 	_exit(EXIT_STATUS_ERROR);
     } else {

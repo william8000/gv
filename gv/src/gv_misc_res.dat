@@ -749,3 +749,29 @@ GV*miscMenu.baseTranslations:	#replace	\n\
 				unhighlight()\
 				GV_MiscMenu(reset)
 
+
+GV*gs.errors.none.Label:		None
+GV*gs.errors.errors.Label:		Errors
+GV*gs.errors.all.Label:			All
+
+GV*quitstyle.never.Label:		Never
+GV*quitstyle.whenprocessing.Label:	When processing
+GV*quitstyle.always.Label:		Always
+
+GV*title.notitle.Label:			No Title
+GV*title.documenttitle.Label:		Document Title
+GV*title.filename.Label:		Filename
+
+GV*strings.saveCurrentPage:		Save Current Page
+GV*strings.saveMarkedPages:		Save Marked Pages
+GV*strings.saveDocument:		Save Document
+GV*strings.saveAsPDF:			Save as PDF
+GV*strings.openFile:			Open File
+GV*strings.passwordPrompt:		Password:
+GV*strings.passwordRequired:		Password required
+GV*strings.quitConfirm:			Do you really want to quit ?
+GV*strings.texCommand:			TeX command
+GV*strings.putTexCommand:		Put a TeX command at the current position
+GV*strings.stillInProgress:		Still in progress:
+GV*strings.execOfFailed:		Exec of %s failed
+GV*strings.copyrightTranslation:	N/A

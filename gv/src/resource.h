@@ -86,4 +86,22 @@ void
 #endif
 );
 
+extern String orientations[5];
+extern String popupVerb[5];
+extern String automaticLabel;
+extern String confirm_quit_styles[4];
+extern String title_styles[4];
+extern String saveCurrentPageLabel;
+extern String saveMarkedPagesLabel;
+extern String saveDocumentLabel;
+extern String saveAsPDFLabel;
+extern String openFileLabel;
+extern String passwordPromptLabel;
+extern String passwordRequiredLabel;
+extern String quitConfirmLabel;
+extern String putTexCommandLabel, texCommandLabel;
+extern String stillInProgressLabel;
+extern String execOfFailedLabel;
+extern String copyrightTranslationLabel;
+
 #endif /* _GV_RESOURCE_H_ */

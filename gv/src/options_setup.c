@@ -85,8 +85,8 @@ static Widget   confirmLabel,confirmButton,confirmMenu;
 static Widget	titleLabel,titleButton,titleMenu;
 static Widget   print_command,scales,screenSize,medias,magmenu,miscmenu;
 
-static String confirm_quit_styles[4] = { "Never","When processing","Always", NULL };
-static String title_styles[4] = { "No title","Document title","File name", NULL };
+String confirm_quit_styles[4] = { 0 };
+String title_styles[4] = { 0 };
 
 static void options_setup_setOptionsAtEntry(void);
 static void options_setup_create(void);

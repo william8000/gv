@@ -55,6 +55,10 @@
 #include "main_globals.h"
 #include "resource.h"
 
+#   include <sys/types.h>
+#   include <sys/stat.h>
+#   include <unistd.h>
+
 # ifndef USER_DEFAULTS
 #   define USER_DEFAULTS "~/.gv"
 # endif
@@ -63,6 +67,8 @@ static String class_resources[] = {
 #   include "gv_class.h"
   NULL
 };
+
+#include "gv-i18n.h"
 
 String intern_resources[] = {
 #   include INTERN_RESOURCES_H
@@ -98,6 +104,10 @@ static String resource_style_file  = NULL;
 static String resource_ad_file     = NULL;
 static char* resource_mergeFileIntoDatabase(XrmDatabase*,char*);
 
+
+extern int debug_p;
+
+
 /*#######################################################
   resource_freeData
   #######################################################*/
@@ -129,7 +139,12 @@ resource_buildDatabase (
   String *sP;
   String s,t, rpath;
   String tildeGv;
+  char* locale;
+  int i18n;
   char tmp[GV_MAX_FILENAME_LENGTH];
+  char tmp2[1000];
+  char locale1[100], locale2[100], locale3[100];
+  char loc_lang[100], loc_terr[100], loc_cs[100], loc_mod[100];
 
   BEGINMESSAGE(resource_buildDatabase)
 
@@ -180,6 +195,225 @@ resource_buildDatabase (
   } else {
     resource_user_file = GV_XtNewString(tmp);
   }
+
+  /* ### Loading localisation ### */
+  i18n = 0;
+  locale = 0;
+  locale = getenv("LC_ALL");
+  if ( !locale || !*locale )
+     locale = getenv("LC_MESSAGES");
+  if ( !locale || !*locale )
+     locale = getenv("LANG");
+  if ( !locale || !*locale )
+     locale = "C";
+
+  {
+     char* cL, * cP;
+
+     cP = loc_lang;
+     cL = locale;
+  
+     *loc_terr = 0;
+     *loc_cs = 0;
+     *loc_mod = 0;
+     
+     while (*cL)
+     {
+        if ( *cL == '_' ) { *cP = 0; cP = loc_terr; }
+        if ( *cL == '.' ) { *cP = 0; cP = loc_cs; }
+        if ( *cL == '@' ) { *cP = 0; cP = loc_mod; }
+	*cP++ = *cL++;
+     }
+     *cP = 0;
+  }
+
+  s = resource_getResource(db,app_class,app_name, "international",0);
+  if (!strcasecmp(s, "False"))
+  {
+     sprintf(locale1, "noint:%s%s", loc_lang, loc_terr);
+     sprintf(locale2, "noint:%s", loc_lang);
+     strcpy(locale3, "C");
+  }
+  else
+  {
+     strcpy(locale1, locale);
+     sprintf(locale2, "%s%s%s", loc_lang, loc_terr, loc_cs);
+     sprintf(locale3, "%s%s", loc_lang, loc_cs);
+  }
+
+  if (debug_p)
+  {
+     printf("Locale1=%s\n", locale1);
+     printf("Locale2=%s\n", locale2);
+     printf("Locale3=%s\n", locale3);
+  }
+
+  if (!i18n)
+  {
+     struct stat buf;
+     
+     strcpy(tmp,USER_DEFAULTS "-");
+     strcat(tmp, locale1);
+     file_translateTildeInPath(tmp);
+     if (!stat(tmp, &buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+  
+  if (!i18n)
+  {
+     struct stat* buf;
+     
+     strcpy(tmp,GV_LIBDIR "/nls/");
+     strcat(tmp, locale1);
+     strcat(tmp, ".dat");
+     if (!stat(tmp, buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+
+  if (!i18n)
+  {
+     sP = getI18N(locale1);
+     if (sP)
+     {
+        i18n = 1;
+	while (*sP) XrmPutLineResource(&db,*sP++);
+     }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if (!i18n)
+  {
+     struct stat buf;
+     
+     strcpy(tmp,USER_DEFAULTS "-");
+     strcat(tmp, locale2);
+     file_translateTildeInPath(tmp);
+     if (!stat(tmp, &buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+  
+  if (!i18n)
+  {
+     struct stat* buf;
+     
+     strcpy(tmp,GV_LIBDIR "/nls/");
+     strcat(tmp, locale2);
+     strcat(tmp, ".dat");
+     if (!stat(tmp, buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+
+  if (!i18n)
+  {
+     sP = getI18N(locale2);
+     if (sP)
+     {
+        i18n = 1;
+	while (*sP) XrmPutLineResource(&db,*sP++);
+     }
+  }
+
+
+
+
+
+
+
+
+  if (!i18n)
+  {
+     struct stat buf;
+     
+     strcpy(tmp,USER_DEFAULTS "-");
+     strcat(tmp, locale3);
+     file_translateTildeInPath(tmp);
+     if (!stat(tmp, &buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+  
+  if (!i18n)
+  {
+     struct stat* buf;
+     
+     strcpy(tmp,GV_LIBDIR "/nls/");
+     strcat(tmp, locale3);
+     strcat(tmp, ".dat");
+     if (!stat(tmp, buf))
+     {
+        i18n = 1;
+        XrmCombineFileDatabase(tmp,&db,True);
+     }
+  }
+
+  if (!i18n)
+  {
+     sP = getI18N(locale3);
+     if (sP)
+     {
+        i18n = 1;
+	while (*sP) XrmPutLineResource(&db,*sP++);
+     }
+  }
+
+
+
+
+  orientations[0] = resource_getResource(db,app_class,app_name, "portrait.Label",0);
+  orientations[1] = resource_getResource(db,app_class,app_name, "landscape.Label",0); 
+  orientations[2] = resource_getResource(db,app_class,app_name, "upsidedown.Label",0);
+  orientations[3] = resource_getResource(db,app_class,app_name, "seascape.Label",0);
+
+  popupVerb[0] = resource_getResource(db,app_class,app_name, "gs.errors.none.Label",0);
+  popupVerb[1] = resource_getResource(db,app_class,app_name, "gs.errors.errors.Label",0);
+  popupVerb[2] = resource_getResource(db,app_class,app_name, "gs.errors.all.Label",0);
+
+  confirm_quit_styles[0] = resource_getResource(db,app_class,app_name, "quitstyle.never.Label",0);
+  confirm_quit_styles[1] = resource_getResource(db,app_class,app_name, "quitstyle.whenprocessing.Label",0);
+  confirm_quit_styles[2] = resource_getResource(db,app_class,app_name, "quitstyle.always.Label",0);
+
+  title_styles[0] = resource_getResource(db,app_class,app_name, "title.notitle.Label",0);
+  title_styles[1] = resource_getResource(db,app_class,app_name, "title.documenttitle.Label",0);
+  title_styles[2] = resource_getResource(db,app_class,app_name, "title.filename.Label",0);
+
+  automaticLabel = resource_getResource(db,app_class,app_name, "automatic.Label",0);
+  saveCurrentPageLabel = resource_getResource(db,app_class,app_name, "strings.saveCurrentPage",0);
+  saveMarkedPagesLabel = resource_getResource(db,app_class,app_name, "strings.saveMarkedPages",0);
+  saveDocumentLabel = resource_getResource(db,app_class,app_name, "strings.saveDocument",0);
+  openFileLabel = resource_getResource(db,app_class,app_name, "strings.openFile",0);
+  passwordPromptLabel = resource_getResource(db,app_class,app_name, "strings.passwordPrompt",0);
+  passwordRequiredLabel = resource_getResource(db,app_class,app_name, "strings.passwordRequired",0);
+  quitConfirmLabel = resource_getResource(db,app_class,app_name, "strings.quitConfirm",0);
+  putTexCommandLabel = resource_getResource(db,app_class,app_name, "strings.putTexCommand",0);
+  texCommandLabel = resource_getResource(db,app_class,app_name, "strings.texCommand",0);
+  stillInProgressLabel = resource_getResource(db,app_class,app_name, "strings.stillInProgress",0);
+  execOfFailedLabel = resource_getResource(db,app_class,app_name, "strings.execOfFailed",0);
+  copyrightTranslationLabel = resource_getResource(db,app_class,app_name, "strings.copyrightTranslation",0);
 
   /* ### command line resources ################# */
 
@@ -643,3 +877,17 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
   ENDMESSAGE(resource_mergeFileIntoDatabase)
     return(name);
 }
+
+String automaticLabel;
+String saveCurrentPageLabel;
+String saveMarkedPagesLabel;
+String saveDocumentLabel;
+String saveAsPDFLabel;
+String openFileLabel;
+String passwordPromptLabel;
+String passwordRequiredLabel;
+String quitConfirmLabel;
+String putTexCommandLabel, texCommandLabel;
+String stillInProgressLabel;
+String execOfFailedLabel;
+String copyrightTranslationLabel;

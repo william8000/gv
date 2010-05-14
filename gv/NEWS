@@ -13,6 +13,8 @@ by a '#' or a '*' or a '?'. A
 
 # Bugfix in gv-update-userconfig
 
+# Support for localised user interfaces
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.9  (April 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Bugfix in gv-update-userconfig

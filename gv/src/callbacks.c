@@ -666,8 +666,8 @@ cb_print_pos(w, client_data, call_data)
     pagelist=get_pagelist(&gv_print_mode);
     if (pagelist) GV_XtFree(pagelist);
 
-    DialogPopupSetMessage("Put a TeX command at the current position");
-    DialogPopupSetPrompt("TeX command");
+    DialogPopupSetMessage(putTexCommandLabel);
+    DialogPopupSetPrompt(texCommandLabel);
     DialogPopupSetButton(DIALOG_BUTTON_DONE,"Save",cb_doPrintPos);
     DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPrint);
 
@@ -811,21 +811,21 @@ cb_save(w, client_data, call_data)
 
     if        (gv_save_mode==PAGE_MODE_MARKED) {
        XawFileSelectionRemoveButton(FileSel, 3);
-       buttonlabel="Save Marked Pages";  INFMESSAGE(saving marked pages)
+       buttonlabel=saveMarkedPagesLabel;  INFMESSAGE(saving marked pages)
        strcpy(ext,"_pages");
     } else if (gv_save_mode==PAGE_MODE_CURRENT) {
        XawFileSelectionRemoveButton(FileSel, 3);
-       buttonlabel="Save Current Page";  INFMESSAGE(saving current page)
+       buttonlabel=saveCurrentPageLabel;  INFMESSAGE(saving current page)
        if (0<=current_page && current_page <= 9998) sprintf(ext,"_page_%d",(current_page+1));
        else strcpy(ext,"_page");
     } else {
-       buttonlabel="Save Document";      INFMESSAGE(saving all pages)
+       buttonlabel=saveDocumentLabel;      INFMESSAGE(saving all pages)
        if (gv_filename_dsc) {
           Widget button3;
           XawFileSelectionAddButton(FileSel, 3, cb_doSave, (XtPointer)FILE_TYPE_PDF);
           button3 = XtNameToWidget(FileSel,"button3");
           n=0;
-          XtSetArg(args[n], XtNlabel, "Save as PDF"); ++n;
+          XtSetArg(args[n], XtNlabel, saveAsPDFLabel); ++n;
           XtSetValues(button3,args,n);
        }
     }
@@ -932,10 +932,10 @@ cb_openFile(w, client_data, call_data)
 
     XawFileSelectionRemoveButton(FileSel, 3);
     n=0;
-    XtSetArg(args[n], XtNtitle, "Open File"); ++n;
+    XtSetArg(args[n], XtNtitle, openFileLabel); ++n;
     XtSetValues(FileSel_popup, args, n);
     n=0;
-    XtSetArg(args[n], XtNlabel, "Open File"); ++n;
+    XtSetArg(args[n], XtNlabel, openFileLabel); ++n;
     XtSetValues(button, args, n);
     XtRemoveAllCallbacks(button, XtNcallback);
     XtAddCallback(button, XtNcallback,cb_doOpenFile,NULL);
@@ -1572,7 +1572,7 @@ cb_quitGhostview(w, client_data, call_data)
     message = process_disallow_quit();
     if (message || app_res.confirm_quit>=2) {
       ConfirmPopupSetMessage("2", message);
-      ConfirmPopupSetMessage("3", "Do you really want to quit ?");
+      ConfirmPopupSetMessage("3", quitConfirmLabel);
       ConfirmPopupSetButton(CONFIRM_BUTTON_DONE,cb_doQuit);
       ConfirmPopupSetButton(CONFIRM_BUTTON_CANCEL,cb_cancelQuit);
       ConfirmPopupSetInitialButton(CONFIRM_BUTTON_CANCEL);
@@ -1652,8 +1652,8 @@ cb_cancelPassword(Widget w, XtPointer client_data, XtPointer call_data)
 void
 cb_askPassword(Widget w, XtPointer client_data, XtPointer call_data)
 {
-  DialogPopupSetPrompt("Password:");
-  DialogPopupSetMessage("Password required");
+  DialogPopupSetPrompt(passwordPromptLabel);
+  DialogPopupSetMessage(passwordRequiredLabel);
   DialogPopupSetButton(DIALOG_BUTTON_DONE,NULL,cb_setPassword);
   DialogPopupSetButton(DIALOG_BUTTON_CANCEL,NULL,cb_cancelPassword);
   DialogPopupSetText("");

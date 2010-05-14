@@ -1,3 +1,21 @@
+2010-05-14  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/Makefile.am: New rule to generate src/gv-i18n.h
+	
+	* src/gv-i18n.pl: Generates src/gv-i18n.h at compile time
+	
+	* src/nls/README.txt: Placeholder just to ensure nls directory is not
+	  empty.
+
+        * src/Ghostview.c, src/callbacks.c, src/doc_misc.c,
+	  src/options_gv.c, src/options_setup.c, src/process.c, 
+	  src/resource.c, src/resource.h, src/version.c, src/versionp.h
+	  src/gv_misc_res.dat, : All textual user messages are moved to
+	  resources in src/gv_misc_res.dat.
+	  
+	* src/gv-update-userconfig.in: Support for creating translation files
+	  has been added.
+
 2010-04-24  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.6.90

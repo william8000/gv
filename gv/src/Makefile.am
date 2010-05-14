@@ -14,9 +14,9 @@ appdefaultsdir = $(pkgdatadir)
 
 appdefaults_DATA = ../GV
 
-EXTRA_DIST=ad2c gv_font_res.dat gv_font_res-I18N_mb.dat gv_layout_res.dat gv_misc_res.dat Aaa_bison.yacc \
+EXTRA_DIST=ad2c gv_font_res.dat gv_font_res-I18N_mb.dat gv_layout_res.dat gv-i18n.h gv-i18n.pl gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
-           gv_selected.xbm gv_unmark.xbm
+           gv_selected.xbm gv_unmark.xbm $(srcdir)/nls/*
 
 # Clean files
 CLEANFILES = ../GV \
@@ -30,7 +30,8 @@ CLEANFILES = ../GV \
              gv_class.h \
              gv_make_res.dat \
 	     gv_intern_res_unix.dat \
-             gv-update-userconfig
+             gv-update-userconfig \
+	     gv-i18n.h
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
@@ -153,7 +154,7 @@ gv_SOURCES = Aaa.c \
              types.h \
              gv-update-userconfig.in
 
-BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h
+BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h gv-i18n.h
 
 
 # Additional rules for generating styles
@@ -216,6 +217,9 @@ gv_intern_res_unix.dat :
 gv_class.h : gv_class.ad
 	@echo "creating gv_class.h"
 	@sh $(srcdir)/ad2c gv_class.ad > gv_class.h
+
+gv-i18n.h: $(srcdir)/nls $(srcdir)/nls/*
+	perl $(srcdir)/gv-i18n.pl $(srcdir) > gv-i18n.h
 
 gv_class.ad : $(srcdir)/gv_font_res.dat $(srcdir)/gv_font_res-I18N_mb.dat $(srcdir)/gv_layout_res.dat gv_make_res.dat $(srcdir)/gv_misc_res.dat $(srcdir)/gv_user_res.dat gv_intern_res_unix.dat
 	@echo "creating gv_class.ad"

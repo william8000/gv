@@ -58,7 +58,7 @@ char * copyright = "\
  \n\
  Copyright (C) 1992-1997  Johannes Plass, Timothy O. Theisen  \n\
  Copyright (C) 2004,2005,2006,2007 Jose E. Marchesi \n\
- Copyright (C) 2007,2008,2009 Markus Steinborn \n\
+ Copyright (C) 2007,2008,2009,2010 Markus Steinborn \n\
  \n\
  This program is free software; you can redistribute it and/or modify \n\
  it under the terms of the GNU General Public License as published by \n\
@@ -77,8 +77,9 @@ char * copyright = "\
 char *author[] = {
 "\
    GNU Maintainer:      Markus Steinborn (gnugv_maintainer@yahoo.de)\n\
-\n\
    Original Author:     Johannes Plass\n\
+\n\
+   %s\n\
 \n\
    See the `AUTHORS' file for a complete contributors list\
 ",
