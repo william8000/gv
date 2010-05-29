@@ -228,7 +228,7 @@ resource_buildDatabase (
   }
 
   s = resource_getResource(db,app_class,app_name, "international",0);
-  if (!strcasecmp(s, "False"))
+  if (s == NULL || !strcasecmp(s, "False"))
   {
      sprintf(locale1, "noint:%s%s", loc_lang, loc_terr);
      sprintf(locale2, "noint:%s", loc_lang);

@@ -1,3 +1,7 @@
+2010-05-29  Bernhard R. Link <brlink@debian.org>
+
+	* src/resource.c(resource_buildDatabase): Fixed possible segfault
+
 2010-05-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.6.91
