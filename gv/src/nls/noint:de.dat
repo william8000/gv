@@ -62,7 +62,7 @@ GV*confirmPopup.title:			Bestaetigen
 GV*mediasLabel.label:			Mediengroessen
 GV*optionfsPopup.title:			Dateiauswahloptionen
 GV*optiongvPopup*mediaLabel.label:	\ Papiergroesse \ 
-GV*convLabel.label:	?Convert PDF?
+GV*convLabel.label:	Konvertiere PDF
 GV*zoomPopup.title:			Lupe
 GV*optiongvPopup.title:			gv Einstellungen
 GV*confirmPrint.label:			Drucken bestaetigen
