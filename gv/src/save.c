@@ -238,7 +238,7 @@ save_forkPDFToPSConversion(sd)
    GV_XtFree(quoted_src_fn);
    GV_XtFree(quoted_conv_fn);
    
-   if (strstr(gv_gs_cmd_scan_pdf, "-P"))
+   if (strstr(gv_gs_cmd_scan_pdf, "-P") || !gv_gs_safer)
       strcpy(tmp, gv_gs_cmd_scan_pdf);
    else
    {

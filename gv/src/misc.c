@@ -916,7 +916,7 @@ setup_ghostview()
        char* dest = tmp;
        int spaceFound = 0;
        
-       if (strstr(gv_gs_cmd_scan_pdf, "-P"))
+       if (strstr(gv_gs_cmd_scan_pdf, "-P") || !gv_gs_safer)
           strcpy(tmp, gv_gs_cmd_scan_pdf);
        else
        {
