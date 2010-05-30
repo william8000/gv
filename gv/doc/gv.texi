@@ -216,7 +216,9 @@ usefull for viewing encrypted PDF files.
 @item --presentation
 Is actually a shortcut for @code{--fullscreen --noresize --scale=-1000 --widgetless}.
 @item --safer, --nosafer
-Whether to start ghostscript with the @code{-dSAFER} option.
+Whether to start ghostscript in safer mode
+(that includes he @code{-dSAFER} option or the @code{-dDELAYSAFER}
+mode where appropriate) and the @code{-P-} option.
 @item --spartan
 This is a shortcut for @code{--style=gv_spartan.dat}.
 @item --style=@var{file}

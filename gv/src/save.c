@@ -197,13 +197,16 @@ static String
 save_forkPDFToPSConversion(sd)
    SaveData sd;
 {
-   char command[512];
+   char command[512], tmp[512];
    char proc_name[256];
    char *error=NULL;
    char *pos;
    char *pdfpos;
    char *pspos;
    char *quoted_src_fn, *quoted_conv_fn;
+   char* src = gv_gs_cmd_scan_pdf;
+   char* dest = tmp;
+   int spaceFound = 0;
 
    BEGINMESSAGE(save_forkPDFToPSConversion)
 
@@ -234,9 +237,27 @@ save_forkPDFToPSConversion(sd)
    }
    GV_XtFree(quoted_src_fn);
    GV_XtFree(quoted_conv_fn);
+   
+   if (strstr(gv_gs_cmd_scan_pdf, "-P"))
+      strcpy(tmp, gv_gs_cmd_scan_pdf);
+   else
+   {
+      while (*src)
+      {
+         int isSpace = *src == ' ';
+         *(dest++) = *(src++);
+	 if (!spaceFound && isSpace)
+	 {
+	    strcpy(dest, "-P- ");
+	    dest+=4;
+	    spaceFOund = 1;
+	 }
+      }
+      *dest = 0;
+   }
 
-   INFSMESSAGE(starting conversion:,command)
-   process_fork(proc_name,command,save_forkPDFToPSConversionDone,(XtPointer)sd);
+   INFSMESSAGE(starting conversion:,tmp)
+   process_fork(proc_name,tmp,save_forkPDFToPSConversionDone,(XtPointer)sd);
    ENDMESSAGE(save_forkPDFToPSConversion)
    return(error);
 }

@@ -910,12 +910,39 @@ setup_ghostview()
 
     INFMESSAGE(scanning file for structure information)
     gv_filename_dsc = gv_filename_unc = NULL;
-    doc_scanFile( &gv_psfile,&doc,
+    {
+       char* tmp = GV_malloc(1512	);
+       char* src = gv_gs_cmd_scan_pdf;
+       char* dest = tmp;
+       int spaceFound = 0;
+       
+       if (strstr(gv_gs_cmd_scan_pdf, "-P"))
+          strcpy(tmp, gv_gs_cmd_scan_pdf);
+       else
+       {
+          while (*src)
+          {
+             int isSpace = *src == ' ';
+             *(dest++) = *(src++);
+	     if (!spaceFound && isSpace)
+	     {
+	        strcpy(dest, "-P- ");
+	        dest+=4;
+		spaceFOund = 1;
+	     }
+          }
+	  *dest = 0;
+       }
+
+       doc_scanFile( &gv_psfile,&doc,
 		  gv_filename,
 		  gv_filename_raw,
-		  &gv_filename_dsc,gv_gs_cmd_scan_pdf,
+		  &gv_filename_dsc,tmp,
 		  &gv_filename_unc,gv_uncompress_command,
 		  gv_scanstyle);
+
+       GV_free(tmp);
+    }
     {
       int m;
       m = gv_pagemedia;

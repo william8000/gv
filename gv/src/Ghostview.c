@@ -1444,6 +1444,7 @@ StartInterpreter(w)
     if (gvw->ghostview.quiet) argv[argc++] = "-dQUIET";
     if (gvw->ghostview.safer) 
       {
+	argv[argc++] = "-P-";
 	argv[argc++] = "-dSAFER";
 #   ifdef ALLOW_PDF
 	/* The file created by pdf2dsc opens the original
