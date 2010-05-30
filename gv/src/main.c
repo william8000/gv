@@ -160,6 +160,8 @@ enum
     NOANTIALIAS_ARG,
     SAFER_ARG,
     NOSAFER_ARG,
+    SAFEDIR_ARG,
+    NOSAFEDIR_ARG,
     PIXMAP_ARG,
     NOPIXMAP_ARG,
     COLOR_ARG,
@@ -209,6 +211,8 @@ static struct option const GNU_longOptions[] =
     {"noantialias", no_argument, NULL, NOANTIALIAS_ARG},
     {"safer", no_argument, NULL, SAFER_ARG},
     {"nosafer", no_argument, NULL, NOSAFER_ARG},
+    {"safedir", no_argument, NULL, SAFEDIR_ARG},
+    {"nosafedir", no_argument, NULL, NOSAFEDIR_ARG},
     {"pixmap", no_argument, NULL, PIXMAP_ARG},
     {"nopixmap", no_argument, NULL, NOPIXMAP_ARG},
     {"color", no_argument, NULL, COLOR_ARG},
@@ -371,6 +375,8 @@ int main(argc, argv)
     noantialias_p = 0;
     safer_p = 0;
     nosafer_p = 0;
+    safedir_p = 0;
+    nosafedir_p = 0;
     pixmap_p = 0;
     nopixmap_p = 0;
     color_p = 0;
@@ -558,6 +564,12 @@ int main(argc, argv)
 	   break;
 	 case NOSAFER_ARG:
 	   nosafer_p = 1;
+	   break;
+	 case SAFEDIR_ARG:
+	   safedir_p = 1;
+	   break;
+	 case NOSAFEDIR_ARG:
+	   nosafedir_p = 1;
 	   break;
 	 case ANTIALIAS_ARG:
 	   antialias_p = 1;

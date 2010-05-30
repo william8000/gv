@@ -284,6 +284,8 @@ EXTERN int antialias_p;
 EXTERN int noantialias_p;
 EXTERN int safer_p;
 EXTERN int nosafer_p;
+EXTERN int safedir_p;
+EXTERN int nosafedir_p;
 EXTERN int color_p;
 EXTERN int grayscale_p;
 EXTERN int spartan_p;

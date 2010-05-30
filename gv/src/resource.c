@@ -440,6 +440,14 @@ resource_buildDatabase (
     {
       resource_putResource (&db, app_name, ".gsSafer", "False");
     }
+  if (safedir_p)
+    {
+      resource_putResource (&db, app_name, ".gsSafeDir", "True");
+    }
+  if (nosafedir_p)
+    {
+      resource_putResource (&db, app_name, ".gsSafeDir", "False");
+    }
   if (pixmap_p)
     {
       resource_putResource (&db, app_name, ".useBackingPixmap", "True");

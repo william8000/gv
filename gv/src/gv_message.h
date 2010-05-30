@@ -34,6 +34,8 @@ PostScript and PDF viewer.\n\
   [-]-color                           display document as usual\n\
   [-]-safer                           start ghostscript in safe mode\n\
   [-]-nosafer                         do not start ghostscript in safe mode\n\
+  [-]-safedir                         start ghostscript from a safe diretory\n\
+  [-]-nosafedir                       do not start ghostscript from a safe diretory\n\
   [-]-quiet                           start ghostscript with the -dQUIET option\n\
   [-]-noquiet                         do not start ghostscript with the -dQUIET option\n\
   [-]-infoSilent                      do not show any messages in the info popup window\n\
