@@ -926,8 +926,8 @@ setup_ghostview()
              *(dest++) = *(src++);
 	     if (!spaceFound && isSpace)
 	     {
-	        strcpy(dest, "-P- -dSAFER -dDELAYSAFER");
-	        dest+=24;
+	        strcpy(dest, "-P- -dSAFER -dDELAYSAFER ");
+	        dest+=25;
 		spaceFound = 1;
 	     }
           }
