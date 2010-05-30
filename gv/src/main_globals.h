@@ -148,6 +148,7 @@ EXTERN String			gv_gs_x11_device;
 EXTERN String			gv_gs_x11_alpha_device;
 EXTERN String			gv_gs_cmd_scan_pdf;	/* command used to extract DSC outlines from a pdf file */
 EXTERN String			gv_gs_cmd_conv_pdf;	/* command used to convert a pdf file to ps  */
+EXTERN int			gv_gs_safeDir;
 EXTERN int			gv_gs_safer;
 EXTERN int                      gv_gs_quiet;
 EXTERN int			gv_infoVerbose;

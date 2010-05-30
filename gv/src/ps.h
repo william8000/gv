@@ -114,7 +114,8 @@ Document				psscan (
     char *,
     char **,
     char *,
-    int     /* scanstyle */
+    int,     /* scanstyle */
+    int	     /* gv_gs_scanDir */
 #endif
 );
 

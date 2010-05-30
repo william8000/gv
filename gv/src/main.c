@@ -1163,6 +1163,8 @@ int main(argc, argv)
       Boolean b;
 									n=0;
             XtSetArg(args[n], XtNinterpreter,gv_gs_interpreter);	n++;
+            b = gv_gs_safeDir ? True : False;
+            XtSetArg(args[n], XtNsafeDir,b);                            n++;
             b = gv_gs_safer ? True : False;
             XtSetArg(args[n], XtNsafer,b);                              n++;
             b = gv_gs_quiet ? True : False;
@@ -1423,6 +1425,9 @@ void main_setGhostscriptResources(db)
   main_setInternResource(db,&gv_gs_arguments,"gsArguments");
   s = resource_getResource(db,gv_class,gv_name,"arguments","Arguments");
   if (s) gv_gs_arguments = s;
+
+  s = resource_getResource(db,gv_class,gv_name,"gsSafeDir",NULL);
+  if (!strcasecmp(s,"true"))  gv_gs_safeDir = 1; else gv_gs_safeDir = 0;
 
   s = resource_getResource(db,gv_class,gv_name,"gsSafer",NULL);
   if (s && !strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;

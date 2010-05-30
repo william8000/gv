@@ -66,6 +66,7 @@
  palette	     Palette		Palette		Color
  quiet		     Quiet		Boolean		True
  rightMargin	     Margin		int		0
+ safeDir	     SafeDir		Boolean		True
  safer		     Safer		Boolean		True
  topMargin	     Margin		int		0
  urx		     BoundingBox	Int		612
@@ -103,6 +104,7 @@
 #define XtNtopMargin "topMargin"
 #define XtNpreferredWidth  "preferredWidth"
 #define XtNpreferredHeight "preferredHeight"
+#define XtNsafeDir "safeDir"
 #define XtNsafer "safer"
 #define XtNinterpreter "interpreter"
 
@@ -118,6 +120,7 @@
 #define XtCPreferredWidth  "PreferredWidth"
 #define XtCPreferredHeight "PreferredHeight"
 #define XtCSafer "Safer"
+#define XtCSafeDir "SafeDir"
 #define XtCInterpreter "Interpreter"
 
 #if 0

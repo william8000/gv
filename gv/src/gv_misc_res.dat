@@ -365,6 +365,7 @@ GV*saveDirLabel.label:			Save Directory
 GV*scalesLabel.label:			Scales
 GV*scaleBaseLabel.label:		Scale Base
 
+GV*safeDir.label:	SafeDir
 GV*safer.label:		Safer
 GV*quiet.label:		Quiet
 GV*defaults.label:	System Defaults

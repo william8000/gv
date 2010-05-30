@@ -166,6 +166,8 @@ static XtResource resources[] = {
        offset(pref_width), XtRImmediate, (XtPointer)1},
     {XtNpreferredHeight, XtCPreferredHeight, XtRDimension, sizeof(Dimension),
        offset(pref_height), XtRImmediate, (XtPointer)1},
+    {XtNsafeDir, XtCSafeDir, XtRBoolean, sizeof(Boolean),
+          offset(safeDir), XtRImmediate, (XtPointer)True },
     {XtNsafer, XtCSafer, XtRBoolean, sizeof(Boolean),
           offset(safer), XtRImmediate, (XtPointer)True },
     {XtNinterpreter, XtCInterpreter, XtRString, sizeof(String),
@@ -964,6 +966,7 @@ SetValues(Widget current, Widget request, Widget new, ArgList unused1, Cardinal 
 	   (cgvw->ghostview.quiet != ngvw->ghostview.quiet)			||
 	   (cgvw->ghostview.infoVerbose != ngvw->ghostview.infoVerbose)			||
 	   (cgvw->ghostview.safer != ngvw->ghostview.safer)			||
+	   (cgvw->ghostview.safeDir != ngvw->ghostview.safeDir)			||
 	   strcmp(cfilename, rfilename)						||
            (cgvw->ghostview.orientation != ngvw->ghostview.orientation)		||
 	   (cgvw->ghostview.use_bpixmap != ngvw->ghostview.use_bpixmap)		||  
@@ -1575,6 +1578,14 @@ StartInterpreter(w)
 	      close(std_in[0]);
 #          endif
 	}
+    	if (gvw->ghostview.safeDir) {
+		if (chdir(GV_LIBDIR "/safe-gs-workdir") != 0) {
+			sprintf(buf, "Chdir to %s failed",
+					GV_LIBDIR "/safe-gs-workdir");
+			perror(buf);
+			_exit(EXIT_STATUS_ERROR);
+		}
+    	}
 	execvp(argv[0], argv);
 	sprintf(buf, execOfFailedLabel, argv[0]);
 	perror(buf);

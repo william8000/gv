@@ -175,6 +175,8 @@ zoom_createZoom(w, call_data)
        XtSetArg(args[n], XtNlxdpi, (1000*p->xdpi));            n++;
        XtSetArg(args[n], XtNlydpi, (1000*p->ydpi));            n++;
        XtSetArg(args[n], XtNinterpreter,gv_gs_interpreter);    n++;
+       b = gv_gs_safeDir ? True : False;
+       XtSetArg(args[n], XtNsafeDir,b);                        n++;
        b = gv_gs_safer ? True : False;
        XtSetArg(args[n], XtNsafer,b);                          n++;
        b = gv_gs_quiet ? True : False;

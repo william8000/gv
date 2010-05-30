@@ -398,6 +398,8 @@ GV*optiongsPopup*layout:\
     $bs\
     gsFrame<+[1]-95%*>\
     $ss\
+    safeDir\
+    $ss\
     safer\
     $ss\
     quiet\

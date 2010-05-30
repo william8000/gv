@@ -43,7 +43,8 @@ extern int			doc_scanFile (
    String,
    String*,
    String,
-   int     /* scanstyle */
+   int,     /* scanstyle */
+   int     /* gv_gs_safeDir */
 #endif
 );
 

@@ -291,7 +291,7 @@ save_copyToFile(save_filename,src_filename,pagelist,scanstyle)
 	 String s = GV_XtNewString(src_filename);
 	 s = file_getUsefulName(s);
          INFMESSAGE(scanning document)
-         doc_scanFile(&src_file,&src_doc,src_filename,s,NULL,NULL,NULL,NULL,scanstyle);
+         doc_scanFile(&src_file,&src_doc,src_filename,s,NULL,NULL,NULL,NULL,scanstyle,gv_gs_safeDir);
          if (src_doc) {
             INFMESSAGE(calling pscopydoc)
             pscopydoc(save_file,src_filename,src_doc,pagelist);

@@ -29,6 +29,8 @@
 **           GNU Project
 **
 */
+/* for canonicalize_file_name: */
+#define _GNU_SOURCE 1
 #include "ac_config.h"
 
 /*
@@ -420,14 +422,9 @@ String misc_changeFile(name)
     if (!b && file_fileIsNotUseful(p)) sprintf(p,"%s.ps",name);  else b = True;
     if (!b && file_fileIsNotUseful(p)) sprintf(p,"%s.pdf",name); else b = True;
     if (!b)                            strcpy(p,name);
-    dir=file_getDirOfPath(p);
-    if(strcmp(dir,p)) {
-      chdir(dir);
-      /* Strip off directory from p to satisfy GS 8.00 security change */
-      q=p;
-      while(*dir && *dir == *q) {dir++; q++;}
-      strcpy(p,q);
-    }
+    name = canonicalize_file_name(p);
+    if (name)
+	    p = name;
   }
   name = p;
   INFSMESSAGE(trying to open,name)
@@ -939,7 +936,7 @@ setup_ghostview()
 		  gv_filename_raw,
 		  &gv_filename_dsc,tmp,
 		  &gv_filename_unc,gv_uncompress_command,
-		  gv_scanstyle);
+		  gv_scanstyle, gv_gs_safeDir);
 
        GV_free(tmp);
     }

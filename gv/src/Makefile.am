@@ -205,6 +205,7 @@ gv_intern_res_unix.dat :
 	@echo "GV.gsCmdConvPDF:	gs -dNOPAUSE -dQUIET -dBATCH -sDEVICE=pswrite -sOutputFile=%s -f %s -c save pop quit" >> gv_intern_res_unix.dat
 	@echo "GV.gsX11Device:		-sDEVICE=x11" >> gv_intern_res_unix.dat
 	@echo "GV.gsX11AlphaDevice:	-sDEVICE=x11 -dTextAlphaBits=4 -dGraphicsAlphaBits=2 -dMaxBitmap=10000000 -dNOPLATFONTS" >> gv_intern_res_unix.dat
+	@echo "GV.gsSafeDir:		True" >> $(srcdir)/gv_intern_res_unix.dat
 	@echo "GV.gsSafer:		True" >> gv_intern_res_unix.dat
 	@echo "GV.gsQuiet:		True" >> gv_intern_res_unix.dat
 	@echo "GV.infoVerbose:		Warnings" >> gv_intern_res_unix.dat

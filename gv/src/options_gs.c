@@ -74,7 +74,7 @@
 #include "version.h"
 
 static Widget   popup=NULL,optionControl;
-static Widget   quietToggle,saferToggle;
+static Widget   quietToggle,saferToggle,safeDirToggle;
 static Widget   scan,conv,gs,x11dev,x11alphadev,arguments;
 
 static void options_gs_setOptionsAtEntry(void);
@@ -103,6 +103,7 @@ static void options_gs_setOptionsAtEntry(void)
 {
   BEGINMESSAGE(options_gs_setOptionsAtEntry)
 
+  widgets_setToggle(safeDirToggle, gv_gs_safeDir);
   widgets_setToggle(saferToggle, gv_gs_safer);
   widgets_setToggle(quietToggle, gv_gs_quiet);
 
@@ -149,7 +150,7 @@ static void options_gs_cb_apply(w, client_data, call_data)
    Widget	w;
    XtPointer	client_data, call_data;
 {
-   Arg args[5];
+   Arg args[10];
    Cardinal n;
    int i;
    Boolean reopen=False;
@@ -165,6 +166,10 @@ static void options_gs_cb_apply(w, client_data, call_data)
    gv_gs_safer = SwitchIsSet(saferToggle) ? 1 : 0;
    if (i != gv_gs_safer) reopen=True;
 
+   i = gv_gs_safeDir;
+   gv_gs_safeDir = SwitchIsSet(safeDirToggle) ? 1 : 0;
+   if (i != gv_gs_safeDir) reopen=True;
+
    reopen |= options_gs_change(gs,&gv_gs_interpreter,&(free[0]));
    reopen |= options_gs_change(scan,&gv_gs_cmd_scan_pdf,&(free[1]));
             options_gs_change(conv,&gv_gs_cmd_conv_pdf,&(free[2]));
@@ -176,6 +181,9 @@ static void options_gs_cb_apply(w, client_data, call_data)
      cb_stopInterpreter(page,NULL,NULL);
 								n=0;
      XtSetArg(args[n], XtNinterpreter,gv_gs_interpreter);	n++;
+     if (gv_gs_safeDir)  XtSetArg(args[n], XtNsafeDir,True);
+     else              XtSetArg(args[n], XtNsafeDir,False);
+                                                                n++;
      if (gv_gs_safer)  XtSetArg(args[n], XtNsafer,True);
      else              XtSetArg(args[n], XtNsafer,False);
                                                                 n++;
@@ -217,8 +225,8 @@ void options_gs_cb_save(w, client_data, call_data)
   XtPointer	client_data, call_data;
 {
   int    argn = 0;
-  String argi[10];
-  String argv[10];
+  String argi[20];
+  String argv[20];
   String t = "True";
   String f = "False";
 
@@ -233,6 +241,8 @@ void options_gs_cb_save(w, client_data, call_data)
   options_gs_setArg(x11alphadev,&(argi[argn]),&(argv[argn]),&argn,s_gsX11AlphaDevice ,gv_class);
   options_gs_setArg(arguments  ,&(argi[argn]),&(argv[argn]),&argn,s_gsArguments      ,gv_class);
 
+  options_setArg(&(argi[argn]),&(argv[argn]),s_gsSafeDir        ,gv_class ,SwitchIsSet(safeDirToggle) ? t : f);
+  ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_gsSafer          ,gv_class ,SwitchIsSet(saferToggle) ? t : f);
   ++argn;
   options_setArg(&(argi[argn]),&(argv[argn]),s_gsQuiet          ,gv_class ,SwitchIsSet(quietToggle) ? t : f);
@@ -291,6 +301,7 @@ void options_gs_create(void)
          						n=0;
    optionControl = XtCreateManagedWidget("optionControl",aaaWidgetClass,popup,args,n);
 
+   safeDirToggle      = XtCreateManagedWidget("safeDir",switchWidgetClass,optionControl,NULL,(Cardinal)0);
    saferToggle        = XtCreateManagedWidget("safer",switchWidgetClass,optionControl,NULL,(Cardinal)0);
    quietToggle        = XtCreateManagedWidget("quiet",switchWidgetClass,optionControl,NULL,(Cardinal)0);
  

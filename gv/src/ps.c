@@ -336,7 +336,7 @@ static void ps_dynMemExhaust(void)
 /*###########################################################*/
 
 struct document *
-psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle)
+psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle,gv_gs_safeDir)
     FILE **fileP;
     char *filename;
     char *filename_raw;
@@ -345,6 +345,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
     char **filename_uncP;
     char *cmd_uncompress;
     int scanstyle;
+    int gv_gs_safeDir;
 {
     FILE *file;
     struct document *doc;
@@ -445,7 +446,7 @@ unc_ok:
       if (!tmpfile) goto unc_exec_failed;
       fclose(*fileP);
       *fileP = tmpfile;
-      retval = psscan(fileP,filename_unc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle);
+      retval = psscan(fileP,filename_unc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle, gv_gs_safeDir);
 #if 0
       if (!retval) {
 	sprintf(s,"333 Scanning\n%s\nfailed.",filename_unc);
@@ -559,6 +560,12 @@ unc_ok:
 
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
+      if (gv_gs_safeDir) {
+        if (chdir(GV_LIBDIR "/safe-gs-workdir") != 0) {
+	  strcpy(s, "Chdir to " GV_LIBDIR "/safe-gs-workdir failed");
+	  goto scan_failed;
+	}
+      }
       INFSMESSAGE(scan command,cmd)
       
       tmp_filename=file_getTmpFilename(NULL,filename_raw);
@@ -629,7 +636,7 @@ scan_ok:
       if (!tmpfile) goto scan_exec_failed;
       fclose(*fileP);
       *fileP = tmpfile;
-      retval = psscan(fileP,filename_dsc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle);
+      retval = psscan(fileP,filename_dsc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle,gv_gs_safeDir);
       if (!retval) {
 	sprintf(s,"Scanning\n%s\nfailed.",filename_dsc);
 	goto scan_failed;

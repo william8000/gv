@@ -57,7 +57,7 @@ extern Media* gv_medias;
 /*##################################################################*/
 
 int
-doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle)
+doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle,gv_gs_safeDir)
    FILE ** fPP;
    Document *docP;
    String filename;
@@ -67,6 +67,7 @@ doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_
    String *filename_uncP;
    String cmd_uncompress;
    int scanstyle;
+   int gv_gs_safeDir;
 {
    Document d;
    int i,ret;
@@ -75,7 +76,7 @@ doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_
    d = (Document)NULL;
    ret = 0;
    if (*fPP && filename) 
-     d = psscan(fPP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle);
+     d = psscan(fPP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle,gv_gs_safeDir);
    if (d) {
       d->labels_useful=0;
       d->structured   =0;
