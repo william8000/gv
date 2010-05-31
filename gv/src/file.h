@@ -39,12 +39,6 @@ extern char*			file_getDirOfPath (
 #endif
 );
 
-extern int			file_stripVersionNumber (
-#if NeedFunctionPrototypes
-   char *	/* filename */
-#endif
-);
-
 extern char*			file_locateFilename (
 #if NeedFunctionPrototypes
    char *	/* filename */

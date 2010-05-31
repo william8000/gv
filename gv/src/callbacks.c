@@ -837,7 +837,6 @@ cb_save(w, client_data, call_data)
     pathlen = strlen(path)+strlen(name)+strlen(ext);
     if (pathlen<GV_MAX_FILENAME_LENGTH-1) {
        sprintf(default_path,"%s%s",path,name);
-       file_stripVersionNumber(default_path);
        strcat(default_path,ext);
        XawFileSelectionSetPath(FileSel,default_path);
     }

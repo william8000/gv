@@ -95,22 +95,6 @@ file_getDirOfPath(path)
 }
 
 /*############################################################*/
-/* file_stripVersionNumber */
-/*############################################################*/
-
-int
-file_stripVersionNumber(filename)
-   char *filename;
-{
-   int strippedVersionNumber=0;
-
-   BEGINMESSAGE(file_stripVersionNumber)
-
-   ENDMESSAGE(file_stripVersionNumber)
-   return(strippedVersionNumber);
-}
-
-/*############################################################*/
 /* file_locateFilename */
 /*############################################################*/
 
@@ -175,7 +159,6 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
 
    if (!baseFilename) baseFilename= ".";
    strcpy(tmpNameBuf,baseFilename);
-   file_stripVersionNumber(tmpNameBuf);
    pos = file_locateFilename(tmpNameBuf);
    if (pos) tmpName = pos;
    else     tmpName = tmpNameBuf;
