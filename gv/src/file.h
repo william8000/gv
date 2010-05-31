@@ -53,8 +53,9 @@ extern char*			file_locateFilename (
 
 extern char*			file_getTmpFilename (
 #if NeedFunctionPrototypes
-   char *,
-   char *
+   const char *,
+   const char *,
+   int *
 #endif
 );
 

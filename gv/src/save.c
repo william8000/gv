@@ -343,8 +343,10 @@ save_saveFile(sd)
      s = GV_XtNewString(s);
      s = file_getUsefulName(s);
      s = file_pdfname2psname(s);
-     sd->conv_fn = file_getTmpFilename(NULL,s);
+     sd->conv_fn = file_getTmpFilename(NULL, s, NULL);
      GV_XtFree(s);
+     if (sd->conv_fn == NULL)
+	     return XtNewString("Cannot create temporary file!");
      INFSMESSAGE(converting from file,sd->src_fn)
      INFSMESSAGE(converting to file,sd->conv_fn)
      error = save_forkPDFToPSConversion(sd);
@@ -359,14 +361,18 @@ save_saveFile(sd)
       if (!sd->save_fn) {
 	s = GV_XtNewString(sd->src_fn);
 	s = file_getUsefulName(s);
-	s = file_pdfname2psname(s);      
-	sd->save_fn = file_getTmpFilename(NULL,s);
+	s = file_pdfname2psname(s);
+	sd->save_fn = file_getTmpFilename(NULL, s, NULL);
 	GV_XtFree(s);
       }
-      INFSMESSAGE(saving from file,src_fn)
-      INFSMESSAGE(saving to file,sd->save_fn)
-      error = save_copyToFile(sd->save_fn,src_fn,sd->pagelist,sd->scanstyle);
-      src_fn = sd->save_fn;
+      if (!sd->save_fn) {
+        error = XtNewString("Cannot create temporary file!");
+      } else {
+        INFSMESSAGE(saving from file,src_fn)
+        INFSMESSAGE(saving to file,sd->save_fn)
+        error = save_copyToFile(sd->save_fn,src_fn,sd->pagelist,sd->scanstyle);
+        src_fn = sd->save_fn;
+      }
    }
 
    if (!error && sd->save_to_printer) {

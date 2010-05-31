@@ -411,7 +411,14 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       char cmd[512];
       char s[512];
       mode_t old_umask;
-      filename_unc=file_getTmpFilename(NULL,filename_raw);
+      filename_unc=file_getTmpFilename(NULL, filename_raw, NULL);
+      if (!filename_unc) {
+	NotePopupShowMessage("Cannot create temporary file!");
+	ENDMESSAGE(psscan)
+        return(retval);
+      }
+      old_umask = umask(0077);
+
       quoted_filename = quote_filename(filename);
       quoted_filename_unc = quote_filename(filename_unc);
       if (memcmp(b, "BZh", 3) == 0) {
@@ -422,7 +429,6 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       GV_XtFree(quoted_filename);
       GV_XtFree(quoted_filename_unc);
 
-      old_umask = umask(0077);
 
       INFMESSAGE(is compressed)
       INFSMESSAGE(uncompress command,cmd)
@@ -521,7 +527,14 @@ unc_ok:
       String tmp_filename;
       int tmpfd, tmp_fd;
 
-      filename_dsc=file_getTmpFilename(NULL,filename_raw);
+      filename_dsc=file_getTmpFilename(NULL, filename_raw, NULL);
+      if (!filename_dsc) {
+	NotePopupShowMessage("Cannot create temporary file!");
+	if (tmpfile) fclose(tmpfile);
+        ps_io_exit(fd);
+	ENDMESSAGE(psscan)
+        return(retval);
+      }
       /*      sprintf(cmd,cmd_scan_pdf,filename,filename_dsc); */
       quoted_filename = quote_filename(filename);
       quoted_filename_dsc = quote_filename(filename_dsc);
@@ -567,13 +580,15 @@ unc_ok:
 	}
       }
       INFSMESSAGE(scan command,cmd)
-      
-      tmp_filename=file_getTmpFilename(NULL,filename_raw);
 
-      tmp_fd = open(tmp_filename, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+      tmp_filename=file_getTmpFilename(NULL, filename_raw, &tmp_fd);
+      if (!tmp_filename) {
+	strcpy(s, "Cannot create temporary file!");
+	goto scan_failed;
+      }
       tmpfd = dup(2);
-      close(2); dup2( tmp_fd, 2);
-      
+      close(2); dup2( tmp_fd, 2); close(tmp_fd);
+
 
       if (system(cmd) || file_fileIsNotUseful(filename_dsc)) {
         char line[1000];
@@ -586,8 +601,7 @@ unc_ok:
 	close(2);
 	dup2(tmpfd,2);
 	close(tmpfd);
-	close(tmp_fd);
-	
+
         tmp_file = fopen( tmp_filename, "r" );
 	while ( fgets( line, 999, tmp_file) )
 	{

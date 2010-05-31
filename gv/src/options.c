@@ -395,7 +395,8 @@ void options_save(argn,argi,argv)
   INFSMESSAGE(trying to write to,gv_user_defaults_file)
 
   infile=fopen(gv_user_defaults_file,"r"); 
-  tempfilename=file_getTmpFilename(gv_user_defaults_file,gv_user_defaults_file);
+  tempfilename=file_getTmpFilename(gv_user_defaults_file,
+		  gv_user_defaults_file, NULL);
   INFSMESSAGE(using temporary file,tempfilename)
    
   if (!tempfilename || !(tempfile = fopen(tempfilename,"w"))) {

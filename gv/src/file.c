@@ -48,6 +48,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -152,9 +153,7 @@ static void file_assureDirectory(char *to, const char *from)
 /*############################################################*/
 
 char *
-file_getTmpFilename(baseDirectory,baseFilename)
-   char *baseDirectory;
-   char *baseFilename;
+file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *filed)
 {
    char tempFilename[256];
    char *tempFilenameP;
@@ -192,21 +191,23 @@ file_getTmpFilename(baseDirectory,baseFilename)
       if (strlen(tmpName)+strlen(tmpExt)>23) tmpName[23-strlen(tmpExt)] = '\0';
    }
    {
-#ifndef HAVE_MKSTEMP
-      struct stat s;
-#endif
-      int no_such_file;
+      int done = 0;
       int i=1;
       do {
+         int fd;
 #ifdef HAVE_MKSTEMP
+	 mode_t oldumask;
 #ifdef VMS
          sprintf(tempFilename,"%sgv_%s_%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
 #else
          sprintf(tempFilename,"%sgv_%s.%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
 #endif
          file_translateTildeInPath(tempFilename);
-         no_such_file = 1;
-         close(mkstemp(tempFilename));
+	 oldumask = umask(0077);
+	 fd = mkstemp(tempFilename);
+	 umask(oldumask);
+	 if (fd < 0)
+		 break;
 #else
 #ifdef VMS
          sprintf(tempFilename,"%sgv_%lx_%x_%s_%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
@@ -214,11 +215,22 @@ file_getTmpFilename(baseDirectory,baseFilename)
          sprintf(tempFilename,"%sgv_%lx_%x_%s.%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
 #endif
          file_translateTildeInPath(tempFilename);
-         no_such_file = stat(tempFilename,&s);
+	 fd = open(tempFilename, O_CREAT|O_EXCL|O_WRONLY, 0600);
 #endif
+	 if (fd >= 0) {
+	 	if (filed)
+			 *filed = fd;
+		 else
+			 close(fd);
+         	done = 1;
+	 }
          i++;
-      } while (!no_such_file);
-   } 
+      } while (!done && i <= 10000);
+      if (!done) {
+          ENDMESSAGE(file_getTmpFilename)
+          return NULL;
+      }
+   }
    SMESSAGE(tempFilename)
    tempFilenameP = GV_XtNewString(tempFilename);
    ENDMESSAGE(file_getTmpFilename)
