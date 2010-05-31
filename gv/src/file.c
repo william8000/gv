@@ -117,21 +117,6 @@ file_locateFilename(path)
 }
 
 /*############################################################*/
-/* file_assureDirectory */
-/*############################################################*/
-
-static void file_assureDirectory(char *to, const char *from)
-{
-   int len;
-   BEGINMESSAGE(file_assureDirectory)
-   strcpy(to,from);
-   len = strlen(to);
-   if (to[len-1] != '/') { to[len] = '/'; to[len+1] = '\0'; }
-
-   ENDMESSAGE(file_assureDirectory)
-}
-
-/*############################################################*/
 /* file_getTmpFilename */
 /* provide some temporary file name */
 /*############################################################*/
@@ -142,20 +127,25 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
    char tempFilename[256];
    char *tempFilenameP;
    char tmpNameBuf[256];
-   char tmpDirBuf[256];
    char *tmpName;
    char *tmpExt;
    char *pos;
+   int len;
 
    BEGINMESSAGE(file_getTmpFilename)
 
-   pos = NULL;
-   if (baseDirectory) {
-     strcpy(tmpDirBuf,baseDirectory); 
-     pos = file_locateFilename(tmpDirBuf);
+   if (baseDirectory)
+	pos = strrchr(baseDirectory, '/');
+   else
+	pos = NULL;
+   if (pos) {
+	len = pos - baseDirectory;
+   } else {
+	baseDirectory = app_res.scratch_dir;
+	len = strlen(baseDirectory);
+	if (len > 0 && baseDirectory[len-1] == '/')
+		len--;
    }
-   if (pos) *pos='\0';
-   else file_assureDirectory(tmpDirBuf,app_res.scratch_dir);
 
    if (!baseFilename) baseFilename= ".";
    strcpy(tmpNameBuf,baseFilename);
@@ -177,14 +167,14 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
       int done = 0;
       int i=1;
       do {
-         int fd;
+         int fd, l;
 #ifdef HAVE_MKSTEMP
 	 mode_t oldumask;
-#ifdef VMS
-         sprintf(tempFilename,"%sgv_%s_%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
-#else
-         sprintf(tempFilename,"%sgv_%s.%s.XXXXXX",tmpDirBuf,tmpName,tmpExt);
-#endif
+         l = snprintf(tempFilename, sizeof(tempFilename),
+			 "%.*s/gv_%s_%s.XXXXXX",
+			 len, baseDirectory, tmpName, tmpExt);
+	 if (l < 0 || l >= sizeof(tempFilename) )
+		 break;
          file_translateTildeInPath(tempFilename);
 	 oldumask = umask(0077);
 	 fd = mkstemp(tempFilename);
@@ -192,11 +182,11 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
 	 if (fd < 0)
 		 break;
 #else
-#ifdef VMS
-         sprintf(tempFilename,"%sgv_%lx_%x_%s_%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
-#else
-         sprintf(tempFilename,"%sgv_%lx_%x_%s.%s.tmp",tmpDirBuf,time(NULL),i,tmpName,tmpExt);
-#endif
+         l = snprintf(tempFilename, sizeof(tempFilename),
+			 "%.*s/gv_%lx_%x_%s_%s.tmp",
+			 len, baseDirectory, time(NULL), i, tmpName, tmpExt);
+	 if (l < 0 || l >= sizeof(tempFilename) )
+		 break;
          file_translateTildeInPath(tempFilename);
 	 fd = open(tempFilename, O_CREAT|O_EXCL|O_WRONLY, 0600);
 #endif
