@@ -1,3 +1,38 @@
+2010-05-30  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/gv_message.h: Document new options
+	
+	* rc/main.c: Parsing of new options --safedir and --nosafedir
+	
+	* src/main_globals.h: Global variable for each of the new options
+	
+	* src/resource.c: Modify resource GV.gsSafeDir on new options
+
+2010-05-30  Bernhard R. Link <brlink@debian.org>
+
+	* src/Ghostview.c, src/Ghostview.h, src/GhostviewP.h, src/Makefile.am,
+	src/doc_misc.c, src/doc_misc.h, gv_layout_res.dat, src/gv_misc_res.dat,
+	src/main.c, main_globals.h, main_resources.h, src/misc.c, options_gs.c,
+	process.c, src/ps.c, src/ps.h, src/save.c, src/zoom.c:
+	   New resource GV.gsSafeDir, ability to set it to true resp. false by
+	   user interface, if enabled start ghostscript from a safe directory.
+
+2010-05-30  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/misc.c(setup_ghostview), src/save.c(save_forkPDFToPSConversion):
+	  Add -P- if and only if SAVER is turned on.
+
+2010-05-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* doc/gv.texi: Update: ghostscript is called with -P- (by B. R. Link)
+
+	* src/Ghostview.c(StartInterpreter): Call ghostscript with -P-
+	  (by B. R. Link)
+
+	* src/misc.c(setup_ghostview): Call ghostscript with -P-
+	
+	* src/save.c(save_forkPDFToPSConversion): likewise
+
 2010-05-29  Bernhard R. Link <brlink@debian.org>
 
 	* src/resource.c(resource_buildDatabase): Fixed possible segfault
