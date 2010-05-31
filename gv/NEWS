@@ -9,6 +9,17 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.6.91 (June 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Support starting ghostscript from a safe directory.
+
+# ghostscript is startet with -P- if SAFER is enabled.
+
+# ghostscript is startet with -dSAFER and -dDELAYSAFER for "pdf2dsc"
+  and "pdf2ps" if safer is enabled
+  
+# Minor bugfixes
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.90 (May 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Fix compiling on Mac OS X
