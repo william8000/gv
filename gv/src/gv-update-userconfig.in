@@ -201,7 +201,7 @@ if ($i18n)
       next if defined $res{$i};
       $newfile .= $resDefault{$i} . "\n";
   }
-]
+}
 
 if ($altNavigation == 1)
 {
