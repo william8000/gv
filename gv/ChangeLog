@@ -1,5 +1,9 @@
 2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* src/Makefile.am: Create s"afe-gs-workdir".
+
+2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* configure.ac, src/FileSel.c, src/Scrollbar.c, src/actions.c,
 	src/callbacks.c, src/file.c, src/main.c, src/misc.c, src/options_gv.c:
 	  mkstemo and inttypes.h are always available after gnulib import

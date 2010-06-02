@@ -286,3 +286,7 @@ endif
 if USE_MEMDEBUG_CODE
    gv_SOURCES += d_mem.c d_mem.h d_xtmem.c d_xtmem.h
 endif
+
+install-data-local:
+	-mkdir "$(pkgdatadir)/safe-gs-workdir"
+	chmod 755 "$(pkgdatadir)/safe-gs-workdir"
