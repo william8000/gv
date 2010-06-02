@@ -41,6 +41,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module inttypes:
   # Code from module lstat:
   # Code from module malloca:
+  # Code from module mkdtemp:
   # Code from module mkstemp:
   # Code from module multiarch:
   # Code from module pathmax:
@@ -107,6 +108,9 @@ AC_DEFUN([gl_INIT],
   gl_SYS_STAT_MODULE_INDICATOR([lstat])
   # Code from module malloca:
   gl_MALLOCA
+  # Code from module mkdtemp:
+  gt_FUNC_MKDTEMP
+  gl_STDLIB_MODULE_INDICATOR([mkdtemp])
   # Code from module mkstemp:
   gl_FUNC_MKSTEMP
   gl_STDLIB_MODULE_INDICATOR([mkstemp])
@@ -300,6 +304,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/malloca.c
   lib/malloca.h
   lib/malloca.valgrind
+  lib/mkdtemp.c
   lib/mkstemp.c
   lib/pathmax.h
   lib/readlink.c
@@ -332,6 +337,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/longlong.m4
   m4/lstat.m4
   m4/malloca.m4
+  m4/mkdtemp.m4
   m4/mkstemp.m4
   m4/multiarch.m4
   m4/onceonly.m4

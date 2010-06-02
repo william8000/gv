@@ -1,5 +1,13 @@
 2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* m4/* lib/* imported mkdtemp from gnulib.
+	  Note: I ran "sed -i 's/<config.h>/<ac_config.h>/g' lib/*" after the
+	  import.
+	  I imported from revision 
+	  of gnulib.
+
+2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* src/Ghostview.c, src/process.c, src/ps.c: Use safe-dir from variable
 	  gv_safe_gs_workdir.
 	  
