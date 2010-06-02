@@ -1,3 +1,12 @@
+2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* m4/* lib/* updated gnulib and imported canonicalize-lgpl, inttypes
+	  and mkstemp.
+	  Note: I ran "sed -i 's/<config.h>/<ac_config.h>/g' lib/*" after the
+	  import.
+	  I imported from revision 8ab5996c4a14364411442d93babb343cc2ce0d89
+	  of gnulib.
+
 2010-05-30  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/gv_message.h: Document new options

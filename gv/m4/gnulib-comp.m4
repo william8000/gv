@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2004-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2010 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -25,28 +25,138 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
+  # Code from module alloca-opt:
+  # Code from module arg-nonnull:
+  # Code from module c++defs:
+  # Code from module canonicalize-lgpl:
+  # Code from module errno:
+  # Code from module extensions:
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  # Code from module getopt:
+  # Code from module getopt-gnu:
+  # Code from module getopt-posix:
+  # Code from module gettext-h:
+  # Code from module gettimeofday:
+  # Code from module include_next:
+  # Code from module inttypes:
+  # Code from module lstat:
+  # Code from module malloca:
+  # Code from module mkstemp:
+  # Code from module multiarch:
+  # Code from module pathmax:
+  # Code from module readlink:
+  # Code from module stat:
+  # Code from module stdbool:
+  # Code from module stddef:
+  # Code from module stdint:
+  # Code from module stdlib:
+  # Code from module sys_stat:
+  # Code from module sys_time:
+  # Code from module tempname:
+  # Code from module time:
+  # Code from module unistd:
+  # Code from module warn-on-use:
+  # Code from module wchar:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
 # "Check for header files, types and library functions".
 AC_DEFUN([gl_INIT],
 [
-  m4_pushdef([AC_LIBOBJ], m4_defn([gl_LIBOBJ]))
-  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gl_REPLACE_FUNCS]))
-  m4_pushdef([AC_LIBSOURCES], m4_defn([gl_LIBSOURCES]))
   AM_CONDITIONAL([GL_COND_LIBTOOL], [false])
   gl_cond_libtool=false
   gl_libdeps=
   gl_ltlibdeps=
+  gl_m4_base='m4'
+  m4_pushdef([AC_LIBOBJ], m4_defn([gl_LIBOBJ]))
+  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gl_REPLACE_FUNCS]))
+  m4_pushdef([AC_LIBSOURCES], m4_defn([gl_LIBSOURCES]))
+  m4_pushdef([gl_LIBSOURCES_LIST], [])
+  m4_pushdef([gl_LIBSOURCES_DIR], [])
+  gl_COMMON
   gl_source_base='lib'
-  gl_GETOPT
+  # Code from module alloca-opt:
+  gl_FUNC_ALLOCA
+  # Code from module arg-nonnull:
+  # Code from module c++defs:
+  # Code from module canonicalize-lgpl:
+  gl_CANONICALIZE_LGPL
+  gl_MODULE_INDICATOR([canonicalize-lgpl])
+  gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
+  gl_STDLIB_MODULE_INDICATOR([realpath])
+  # Code from module errno:
+  gl_HEADER_ERRNO_H
+  # Code from module extensions:
+  # Code from module getopt:
+  # Code from module getopt-gnu:
+  gl_FUNC_GETOPT_GNU
+  gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
+  # Code from module getopt-posix:
+  gl_FUNC_GETOPT_POSIX
+  # Code from module gettext-h:
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  # Code from module gettimeofday:
+  gl_FUNC_GETTIMEOFDAY
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
+  # Code from module include_next:
+  # Code from module inttypes:
+  gl_INTTYPES_H
+  # Code from module lstat:
+  gl_FUNC_LSTAT
+  gl_SYS_STAT_MODULE_INDICATOR([lstat])
+  # Code from module malloca:
+  gl_MALLOCA
+  # Code from module mkstemp:
+  gl_FUNC_MKSTEMP
+  gl_STDLIB_MODULE_INDICATOR([mkstemp])
+  # Code from module multiarch:
+  gl_MULTIARCH
+  # Code from module pathmax:
+  gl_PATHMAX
+  # Code from module readlink:
+  gl_FUNC_READLINK
+  gl_UNISTD_MODULE_INDICATOR([readlink])
+  # Code from module stat:
+  gl_FUNC_STAT
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
+  # Code from module stdbool:
+  AM_STDBOOL_H
+  # Code from module stddef:
+  gl_STDDEF_H
+  # Code from module stdint:
+  gl_STDINT_H
+  # Code from module stdlib:
+  gl_STDLIB_H
+  # Code from module sys_stat:
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
+  # Code from module sys_time:
+  gl_HEADER_SYS_TIME_H
+  AC_PROG_MKDIR_P
+  # Code from module tempname:
+  gl_FUNC_GEN_TEMPNAME
+  # Code from module time:
+  gl_HEADER_TIME_H
+  # Code from module unistd:
   gl_UNISTD_H
-  LIBGNU_LIBDEPS="$gl_libdeps"
-  AC_SUBST([LIBGNU_LIBDEPS])
-  LIBGNU_LTLIBDEPS="$gl_ltlibdeps"
-  AC_SUBST([LIBGNU_LTLIBDEPS])
+  # Code from module warn-on-use:
+  # Code from module wchar:
+  gl_WCHAR_H
+  # End of code from modules
+  m4_ifval(gl_LIBSOURCES_LIST, [
+    m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
+      for gl_file in ]gl_LIBSOURCES_LIST[ ; do
+        if test ! -r ]m4_defn([gl_LIBSOURCES_DIR])[/$gl_file ; then
+          echo "missing file ]m4_defn([gl_LIBSOURCES_DIR])[/$gl_file" >&2
+          exit 1
+        fi
+      done])dnl
+      m4_if(m4_sysval, [0], [],
+        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])
+  ])
+  m4_popdef([gl_LIBSOURCES_DIR])
+  m4_popdef([gl_LIBSOURCES_LIST])
   m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
@@ -56,7 +166,7 @@ AC_DEFUN([gl_INIT],
     if test -n "$gl_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $gl_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $gl_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         gl_libobjs="$gl_libobjs $i.$ac_objext"
         gl_ltlibobjs="$gl_ltlibobjs $i.lo"
       done
@@ -64,37 +174,181 @@ AC_DEFUN([gl_INIT],
     AC_SUBST([gl_LIBOBJS], [$gl_libobjs])
     AC_SUBST([gl_LTLIBOBJS], [$gl_ltlibobjs])
   ])
+  gltests_libdeps=
+  gltests_ltlibdeps=
+  m4_pushdef([AC_LIBOBJ], m4_defn([gltests_LIBOBJ]))
+  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gltests_REPLACE_FUNCS]))
+  m4_pushdef([AC_LIBSOURCES], m4_defn([gltests_LIBSOURCES]))
+  m4_pushdef([gltests_LIBSOURCES_LIST], [])
+  m4_pushdef([gltests_LIBSOURCES_DIR], [])
+  gl_COMMON
+  gl_source_base='tests'
+changequote(,)dnl
+  gltests_WITNESS=IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'`_GNULIB_TESTS
+changequote([, ])dnl
+  AC_SUBST([gltests_WITNESS])
+  gl_module_indicator_condition=$gltests_WITNESS
+  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  m4_popdef([gl_MODULE_INDICATOR_CONDITION])
+  m4_ifval(gltests_LIBSOURCES_LIST, [
+    m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
+      for gl_file in ]gltests_LIBSOURCES_LIST[ ; do
+        if test ! -r ]m4_defn([gltests_LIBSOURCES_DIR])[/$gl_file ; then
+          echo "missing file ]m4_defn([gltests_LIBSOURCES_DIR])[/$gl_file" >&2
+          exit 1
+        fi
+      done])dnl
+      m4_if(m4_sysval, [0], [],
+        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])
+  ])
+  m4_popdef([gltests_LIBSOURCES_DIR])
+  m4_popdef([gltests_LIBSOURCES_LIST])
+  m4_popdef([AC_LIBSOURCES])
+  m4_popdef([AC_REPLACE_FUNCS])
+  m4_popdef([AC_LIBOBJ])
+  AC_CONFIG_COMMANDS_PRE([
+    gltests_libobjs=
+    gltests_ltlibobjs=
+    if test -n "$gltests_LIBOBJS"; then
+      # Remove the extension.
+      sed_drop_objext='s/\.o$//;s/\.obj$//'
+      for i in `for i in $gltests_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
+        gltests_libobjs="$gltests_libobjs $i.$ac_objext"
+        gltests_ltlibobjs="$gltests_ltlibobjs $i.lo"
+      done
+    fi
+    AC_SUBST([gltests_LIBOBJS], [$gltests_libobjs])
+    AC_SUBST([gltests_LTLIBOBJS], [$gltests_ltlibobjs])
+  ])
+  LIBGNU_LIBDEPS="$gl_libdeps"
+  AC_SUBST([LIBGNU_LIBDEPS])
+  LIBGNU_LTLIBDEPS="$gl_ltlibdeps"
+  AC_SUBST([LIBGNU_LTLIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
 # into gl_LIBOBJS instead of into LIBOBJS.
-AC_DEFUN([gl_LIBOBJ],
-  [gl_LIBOBJS="$gl_LIBOBJS $1.$ac_objext"])
+AC_DEFUN([gl_LIBOBJ], [
+  AS_LITERAL_IF([$1], [gl_LIBSOURCES([$1.c])])dnl
+  gl_LIBOBJS="$gl_LIBOBJS $1.$ac_objext"
+])
 
 # Like AC_REPLACE_FUNCS, except that the module name goes
 # into gl_LIBOBJS instead of into LIBOBJS.
-AC_DEFUN([gl_REPLACE_FUNCS],
-  [AC_CHECK_FUNCS([$1], , [gl_LIBOBJ($ac_func)])])
+AC_DEFUN([gl_REPLACE_FUNCS], [
+  m4_foreach_w([gl_NAME], [$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl
+  AC_CHECK_FUNCS([$1], , [gl_LIBOBJ($ac_func)])
+])
 
-# Like AC_LIBSOURCES, except that it does nothing.
-# We rely on EXTRA_lib..._SOURCES instead.
-AC_DEFUN([gl_LIBSOURCES],
-  [])
+# Like AC_LIBSOURCES, except the directory where the source file is
+# expected is derived from the gnulib-tool parameterization,
+# and alloca is special cased (for the alloca-opt module).
+# We could also entirely rely on EXTRA_lib..._SOURCES.
+AC_DEFUN([gl_LIBSOURCES], [
+  m4_foreach([_gl_NAME], [$1], [
+    m4_if(_gl_NAME, [alloca.c], [], [
+      m4_define([gl_LIBSOURCES_DIR], [lib])
+      m4_append([gl_LIBSOURCES_LIST], _gl_NAME, [ ])
+    ])
+  ])
+])
+
+# Like AC_LIBOBJ, except that the module name goes
+# into gltests_LIBOBJS instead of into LIBOBJS.
+AC_DEFUN([gltests_LIBOBJ], [
+  AS_LITERAL_IF([$1], [gltests_LIBSOURCES([$1.c])])dnl
+  gltests_LIBOBJS="$gltests_LIBOBJS $1.$ac_objext"
+])
+
+# Like AC_REPLACE_FUNCS, except that the module name goes
+# into gltests_LIBOBJS instead of into LIBOBJS.
+AC_DEFUN([gltests_REPLACE_FUNCS], [
+  m4_foreach_w([gl_NAME], [$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl
+  AC_CHECK_FUNCS([$1], , [gltests_LIBOBJ($ac_func)])
+])
+
+# Like AC_LIBSOURCES, except the directory where the source file is
+# expected is derived from the gnulib-tool parameterization,
+# and alloca is special cased (for the alloca-opt module).
+# We could also entirely rely on EXTRA_lib..._SOURCES.
+AC_DEFUN([gltests_LIBSOURCES], [
+  m4_foreach([_gl_NAME], [$1], [
+    m4_if(_gl_NAME, [alloca.c], [], [
+      m4_define([gltests_LIBSOURCES_DIR], [tests])
+      m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
+    ])
+  ])
+])
 
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
-  build-aux/link-warning.h
-  lib/dummy.c
+  build-aux/arg-nonnull.h
+  build-aux/c++defs.h
+  build-aux/warn-on-use.h
+  lib/alloca.in.h
+  lib/canonicalize-lgpl.c
+  lib/errno.in.h
   lib/getopt.c
+  lib/getopt.in.h
   lib/getopt1.c
-  lib/getopt_.h
   lib/getopt_int.h
   lib/gettext.h
-  lib/unistd_.h
+  lib/gettimeofday.c
+  lib/inttypes.in.h
+  lib/lstat.c
+  lib/malloca.c
+  lib/malloca.h
+  lib/malloca.valgrind
+  lib/mkstemp.c
+  lib/pathmax.h
+  lib/readlink.c
+  lib/stat.c
+  lib/stdbool.in.h
+  lib/stddef.in.h
+  lib/stdint.in.h
+  lib/stdlib.in.h
+  lib/sys_stat.in.h
+  lib/sys_time.in.h
+  lib/tempname.c
+  lib/tempname.h
+  lib/time.in.h
+  lib/unistd.in.h
+  lib/wchar.in.h
+  m4/00gnulib.m4
+  m4/alloca.m4
+  m4/canonicalize.m4
+  m4/dos.m4
+  m4/double-slash-root.m4
+  m4/eealloc.m4
+  m4/errno_h.m4
+  m4/extensions.m4
   m4/getopt.m4
+  m4/gettimeofday.m4
   m4/gnulib-common.m4
   m4/include_next.m4
-  m4/onceonly_2_57.m4
+  m4/inttypes-pri.m4
+  m4/inttypes.m4
+  m4/longlong.m4
+  m4/lstat.m4
+  m4/malloca.m4
+  m4/mkstemp.m4
+  m4/multiarch.m4
+  m4/onceonly.m4
+  m4/pathmax.m4
+  m4/readlink.m4
+  m4/stat.m4
+  m4/stdbool.m4
+  m4/stddef_h.m4
+  m4/stdint.m4
+  m4/stdlib_h.m4
+  m4/sys_stat_h.m4
+  m4/sys_time_h.m4
+  m4/tempname.m4
+  m4/time_h.m4
   m4/unistd_h.m4
+  m4/warn-on-use.m4
+  m4/wchar_h.m4
+  m4/wchar_t.m4
+  m4/wint_t.m4
 ])
