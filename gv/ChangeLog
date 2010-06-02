@@ -1,5 +1,11 @@
 2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* configure.ac, src/FileSel.c, src/Scrollbar.c, src/actions.c,
+	src/callbacks.c, src/file.c, src/main.c, src/misc.c, src/options_gv.c:
+	  mkstemo and inttypes.h are always available after gnulib import
+
+2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* m4/* lib/* updated gnulib and imported canonicalize-lgpl, inttypes
 	  and mkstemp.
 	  Note: I ran "sed -i 's/<config.h>/<ac_config.h>/g' lib/*" after the

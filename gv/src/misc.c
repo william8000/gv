@@ -70,9 +70,7 @@
 #include <ctype.h>
 
 #include "ac_config.h"
-#ifdef HAVE_INTTYPES_H
-  #include <inttypes.h>
-#endif
+#include <inttypes.h>
 
 #ifndef SEEK_SET
 #   define SEEK_SET 0

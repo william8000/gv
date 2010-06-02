@@ -43,9 +43,7 @@
 #include <ctype.h>
 #include <signal.h>
 
-#ifdef HAVE_INTTYPES_H
-  #include <inttypes.h>
-#endif
+#include <inttypes.h>
 
 #ifndef BUFSIZ
 #   define BUFSIZ 1024

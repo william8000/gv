@@ -168,7 +168,6 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
       int i=1;
       do {
          int fd, l;
-#ifdef HAVE_MKSTEMP
 	 mode_t oldumask;
          l = snprintf(tempFilename, sizeof(tempFilename),
 			 "%.*s/gv_%s_%s.XXXXXX",
@@ -181,15 +180,6 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
 	 umask(oldumask);
 	 if (fd < 0)
 		 break;
-#else
-         l = snprintf(tempFilename, sizeof(tempFilename),
-			 "%.*s/gv_%lx_%x_%s_%s.tmp",
-			 len, baseDirectory, time(NULL), i, tmpName, tmpExt);
-	 if (l < 0 || l >= sizeof(tempFilename) )
-		 break;
-         file_translateTildeInPath(tempFilename);
-	 fd = open(tempFilename, O_CREAT|O_EXCL|O_WRONLY, 0600);
-#endif
 	 if (fd >= 0) {
 	 	if (filed)
 			 *filed = fd;

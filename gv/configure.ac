@@ -78,12 +78,6 @@ AC_CHECK_HEADER(zio.h,[
 fi
 
 
-opt_mkstemp=false
-
-AC_CHECK_FUNCS([mkstemp],[opt_mkstemp=true],[opt_mkstemp=false])
-AM_CONDITIONAL(HAVE_MKSTEMP, test x$opt_mkstemp = xtrue)
-
-
 dnl WITH options
 
 AC_ARG_WITH(default-papersize, AC_HELP_STRING([--with-default-papersize=PSIZE],[The default papersize (can be changed at runtime). Defaults to `A4']), opt_default_papersize=$withval, opt_default_papersize=A4)
@@ -277,16 +271,6 @@ fi
 
 AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)
 
-
-
-
-AC_CHECK_HEADER([inttypes.h],,[
-   AC_ARG_WITH(intptr_t, [--with-intptr_t=TYPE], [ 
-     AC_DEFINE_UNQUOTED([intptr_t],[$withval],[Use the given type for intptr_t -- only available if ! HAVE_INTTYPES_H])
-   ], [
-            AC_CHECK_TYPE([intptr_t],, [AC_MSG_ERROR([You must supply --with-intptr_t=TYPE])])
-      ], [])
-])
 
 
 

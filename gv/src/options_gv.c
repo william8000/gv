@@ -43,9 +43,7 @@
 #include <ctype.h>
 #include <math.h>
 
-#ifdef HAVE_INTTYPES_H
-  #include <inttypes.h>
-#endif
+#include <inttypes.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
