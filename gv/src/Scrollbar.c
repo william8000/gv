@@ -1043,6 +1043,7 @@ static void Redisplay(w, event, region)
    } else {
       /* should never come here */
       printf("  Scrollbarwidget: no event forced exit\n");
+      clean_safe_tempdir();
       exit(0);
    }
    TOPLOC = newtop;

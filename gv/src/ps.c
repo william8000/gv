@@ -100,7 +100,9 @@
 #include "d_memdebug.h"
 extern Media *gv_medias;
 extern String gv_pdf_password;
+extern String gv_safe_gs_workdir;
 extern int gv_infoSkipErrors;
+
 
 #ifdef BSD4_2
 #define memset(a,b,c) bzero(a,c)
@@ -327,6 +329,7 @@ static char    *empty_string = "";
 static void ps_dynMemExhaust(void)
 {
    fprintf(stderr,"Fatal Error: Dynamic memory exhausted.\n");
+   clean_safe_tempdir();
    exit(EXIT_STATUS_FATAL);
 }
 #define CHECK_MALLOCED(aaa)  if (!(aaa)) ps_dynMemExhaust()
@@ -574,8 +577,10 @@ unc_ok:
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
       if (gv_gs_safeDir) {
-        if (chdir(GV_LIBDIR "/safe-gs-workdir") != 0) {
-	  strcpy(s, "Chdir to " GV_LIBDIR "/safe-gs-workdir failed");
+        if (chdir(gv_safe_gs_workdir) != 0) {
+	  strcpy(s, "Chdir to ");
+	  strcat(s, gv_safe_gs_workdir);
+	  strcat(s, " failed");
 	  goto scan_failed;
 	}
       }
@@ -1759,6 +1764,7 @@ static char * ps_io_fgetchars(fd,num)
             INFMESSAGE(buffer became to large)
             ENDMESSAGE(ps_io_fgetchars)
 	    fprintf(stderr, "gv: ps_io_fgetchars: Fatal Error: buffer became too large.\n");
+	    clean_safe_tempdir();
 	    exit(-1);
          }
          if (FD_LINE_BEGIN) {

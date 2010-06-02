@@ -332,8 +332,9 @@ int main(argc, argv)
   int  argc;
   char *argv[];
 {
-
   MAINBEGINMESSAGE(main)
+  gv_safe_gs_workdir = GV_LIBDIR "/safe-gs-workdir";
+  gv_safe_gs_tempdir = 0;
 
   {
     Arg          args[20];
@@ -663,6 +664,20 @@ int main(argc, argv)
        exit(EXIT_STATUS_ERROR);
      }
 
+     if (access(gv_safe_gs_workdir, R_OK | X_OK))
+     {
+        char buffer[512];
+	strcpy(buffer, "/tmp/gv-safe-workdir-XXXXXX");
+        gv_safe_gs_workdir = mkdtemp(buffer);
+	gv_safe_gs_tempdir = 1;
+
+	if (!gv_safe_gs_workdir)
+	{
+	   perror("Cannot create safe workdir");
+	   exit(1);
+	}
+     }  
+
    /*### getting resources ############################################*/
    gv_database = resource_buildDatabase (gv_display,
                                          gv_class,
@@ -693,6 +708,7 @@ int main(argc, argv)
     XtGetApplicationResources(toplevel,(XtPointer) &app_res,resources,XtNumber(resources),NULL,ZERO);
     if (!resource_checkResources(gv_name,app_res.version,versionCompatibility)) {
       XtDestroyApplicationContext(app_con);
+      clean_safe_tempdir();
       exit(EXIT_STATUS_ERROR);
     }
 
@@ -1030,6 +1046,7 @@ int main(argc, argv)
 #if 0
        if (!layout) {
           fprintf(stderr,"  %s: Error, layout resource not found\n",versionIdentification[0]);
+	  clean_safe_tempdir();
           exit(EXIT_STATUS_ERROR);
        }
 #endif
@@ -1205,6 +1222,7 @@ int main(argc, argv)
    if (gv_filename && strcmp(gv_filename, "-")) {
       if (misc_changeFile(gv_filename)) {
 	open_fail_error(errno,GV_ERROR_OPEN_FAIL,gv_filename,1);
+	clean_safe_tempdir();
 	exit(EXIT_STATUS_ERROR);
       } else {
         GV_XtFree(gv_filename_old);

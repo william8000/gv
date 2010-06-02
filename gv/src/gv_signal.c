@@ -128,6 +128,7 @@ static SIGVAL signal_sh_terminate(sig)
     signal(sig,signal_sh_terminate);
   } else {
     INFMESSAGE(forcing bogus caller to die)
+    clean_safe_tempdir();
     exit(EXIT_STATUS_ERROR);
   }
   ENDMESSAGE(signal_sh_terminate)
@@ -171,6 +172,7 @@ static SIGVAL signal_sh_updateFile(sig)
     signal(sig,signal_sh_updateFile);
   } else {
     INFMESSAGE(forcing bogus caller to die)
+    clean_safe_tempdir();
     exit(EXIT_STATUS_ERROR);
   }
   ENDMESSAGE(signal_sh_updateFile)

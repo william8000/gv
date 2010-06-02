@@ -272,8 +272,10 @@ ProcessData process_fork (name,command,notify_proc,data)
       if (!freopen("/dev/null", "r", stdin))  perror("/dev/null");
 
       if (gv_gs_safeDir) {
-        if (chdir(GV_LIBDIR "/safe-gs-workdir") != 0) {
-	  perror("Chdir to " GV_LIBDIR "/safe-gs-workdir failed");
+        if (chdir(gv_safe_gs_workdir) != 0) {
+	  char buf[512];
+          sprintf(buf, "Chdir to %s failed", gv_safe_gs_workdir);
+	  perror(buf);
 	  _exit(EXIT_STATUS_ERROR);
 	}
       }

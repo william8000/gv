@@ -63,6 +63,8 @@ EXTERN Bool			show_updateFile;
 EXTERN Bool			show_checkFile;
 EXTERN Bool			show_panner;
 
+EXTERN String                  gv_safe_gs_workdir;
+EXTERN int                     gv_safe_gs_tempdir;
 
 EXTERN float                   default_xdpi;           /* default xdpi from ghostview widget */
 EXTERN float                   default_ydpi;           /* default ydpi from ghostview widget */

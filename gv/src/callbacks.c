@@ -1510,6 +1510,7 @@ cb_shutdown(w, client_data, call_data)
    XtDestroyApplicationContext(app_con);
    ENDMESSAGE(cb_shutdown)
    ENDMESSAGE(exiting gv)
+   clean_safe_tempdir();
    exit(EXIT_STATUS_NORMAL);
 }
 

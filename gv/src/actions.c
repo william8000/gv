@@ -1175,3 +1175,14 @@ action_watchFile(w, event, params, num_params)
   ENDMESSAGE(action_watchFile)
 }
 
+
+
+void
+clean_safe_tempdir()
+{
+   if (gv_safe_gs_tempdir)
+   {
+      chdir("/");
+      rmdir(gv_safe_gs_workdir);
+   }
+}

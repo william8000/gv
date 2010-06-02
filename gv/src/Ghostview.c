@@ -1424,6 +1424,7 @@ StartInterpreter(w)
 	 if (*dptr) *dptr++ = '\0';
 	 if (argc + 2 >= NUM_ARGS) {
 	    fprintf(stderr, "Too many arguments to interpreter.\n");
+	    clean_safe_tempdir();
 	    exit(EXIT_STATUS_ERROR);
 	 }
 	 while (isspace(*dptr)) dptr++;
@@ -1466,6 +1467,7 @@ StartInterpreter(w)
 	    if (*cptr) *cptr++ = '\0';
 	    if (argc + 2 >= NUM_ARGS) {
 		fprintf(stderr, "Too many arguments to interpreter.\n");
+		clean_safe_tempdir();
 		exit(EXIT_STATUS_ERROR);
 	    }
 	    while (isspace(*cptr)) cptr++;
@@ -1508,6 +1510,7 @@ StartInterpreter(w)
 	ret = pipe(std_in);
 	if (ret == -1) {
 	    perror("Could not create pipe");
+	    clean_safe_tempdir();
 	    exit(EXIT_STATUS_ERROR);
 	}
     } else if (strcmp(gvw->ghostview.filename, "-")) {
@@ -1515,6 +1518,7 @@ StartInterpreter(w)
           ret = pipe(std_in);
           if (ret == -1) {
              perror("Could not create pipe");
+	     clean_safe_tempdir();
              exit(EXIT_STATUS_ERROR);
           }
 #      else
@@ -1524,11 +1528,13 @@ StartInterpreter(w)
     ret = pipe(std_out);
     if (ret == -1) {
 	perror("Could not create pipe");
+	clean_safe_tempdir();
 	exit(EXIT_STATUS_ERROR);
     }
     ret = pipe(std_err);
     if (ret == -1) {
 	perror("Could not create pipe");
+	clean_safe_tempdir();
 	exit(EXIT_STATUS_ERROR);
     }
 
@@ -1579,9 +1585,9 @@ StartInterpreter(w)
 #          endif
 	}
     	if (gvw->ghostview.safeDir) {
-		if (chdir(GV_LIBDIR "/safe-gs-workdir") != 0) {
+		if (chdir(gv_safe_gs_workdir) != 0) {
 			sprintf(buf, "Chdir to %s failed",
-					GV_LIBDIR "/safe-gs-workdir");
+					gv_safe_gs_workdir);
 			perror(buf);
 			_exit(EXIT_STATUS_ERROR);
 		}

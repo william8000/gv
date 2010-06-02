@@ -1,5 +1,21 @@
 2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* src/Ghostview.c, src/process.c, src/ps.c: Use safe-dir from variable
+	  gv_safe_gs_workdir.
+	  
+	* src/main.c: Check if global safe-dir is accessible, if not, create
+	  a temporary one.
+	  
+	* src/Ghostview.c, src/Scrollbar.c, src/callbacks.c, src/ps.c:
+	  Call clean_safe_tempdir on each position gv can exit.
+
+	* src/main_globals.h: Two new vaiables gv_safe_gs_workdir and
+	  gv_safe_gs_tempdir (=1 iff gv_safe_gs_workdir is temporary).
+
+	* src/actions.c(clean_safe_tempdir): Delete temporary safe-dir.
+
+2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* src/Makefile.am: Create s"afe-gs-workdir".
 
 2010-06-02  Markus Steinborn <gnugv_maintainer@yahoo.de>
