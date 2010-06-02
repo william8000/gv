@@ -85,6 +85,8 @@ PostScript and PDF viewer.
   [-]-color                           display document as usual
   [-]-safer                           start ghostscript in safe mode
   [-]-nosafer                         do not start ghostscript in safe mode
+  [-]-safedir                         start ghostscript from a safe diretory
+  [-]-nosafedir                       do not start ghostscript from a safe diretory
   [-]-quiet                           start ghostscript with the -dQUIET option
   [-]-noquiet                         do not start ghostscript with the -dQUIET option
   [-]-infoSilent                      do not show any messages in the info popup window
@@ -219,6 +221,8 @@ Is actually a shortcut for @code{--fullscreen --noresize --scale=-1000 --widgetl
 Whether to start ghostscript in safer mode
 (that includes he @code{-dSAFER} option or the @code{-dDELAYSAFER}
 mode where appropriate) and the @code{-P-} option.
+@item --safedir, --nosafedir
+Whether to start ghostscript from a safe direcotry or not.
 @item --spartan
 This is a shortcut for @code{--style=gv_spartan.dat}.
 @item --style=@var{file}
@@ -424,6 +428,11 @@ The ghostscript command line option which activates the
 @emph{X11} device with antialiasing enabled. 
 
 It defaults to @code{-dNOPLATFONTS -sDEVICE=x11alpha}
+@item gsSafeeDir
+Determines whether ghostscript should be started from a safe
+directory.
+
+It defaults to @code{True}.
 @item gsSafer
 Determines whether ghostscript should be started with the
 @code{-dSAFER} command line option.
@@ -612,6 +621,9 @@ detetction fails.  Valid values are as given in the  above
 list of paper-sizes.
 
 It defaults to @code{a4}.
+
+@item strings.*
+Variuos strings for translating GNU gv.
 @end table
 
 @node Mouse and key bindings, Comments about the user interface, Resources, Top
