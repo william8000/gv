@@ -288,5 +288,5 @@ if USE_MEMDEBUG_CODE
 endif
 
 install-data-local:
-	-mkdir "$(pkgdatadir)/safe-gs-workdir"
-	chmod 755 "$(pkgdatadir)/safe-gs-workdir"
+	-mkdir "$(DESTDIR)$(pkgdatadir)/safe-gs-workdir"
+	chmod 755 "$(DESTDIR)$(pkgdatadir)/safe-gs-workdir"
