@@ -30,8 +30,8 @@ CLEANFILES = ../GV \
              gv_class.h \
              gv_make_res.dat \
 	     gv_intern_res_unix.dat \
-             gv-update-userconfig \
-	     gv-i18n.h
+             gv-update-userconfig
+MAINTAINERCLEANFILES = gv-i18n.h
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
@@ -288,5 +288,5 @@ if USE_MEMDEBUG_CODE
 endif
 
 install-data-local:
-	-mkdir "$(DESTDIR)$(pkgdatadir)/safe-gs-workdir"
+	$(MKDIR_P) "$(DESTDIR)$(pkgdatadir)/safe-gs-workdir"
 	chmod 755 "$(DESTDIR)$(pkgdatadir)/safe-gs-workdir"

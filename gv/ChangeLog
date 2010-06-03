@@ -1,5 +1,16 @@
 2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* configure.ac: Added macro AC_PROG_MKDIR_P
+	
+	* src/Makefile.am: Use $(MKDIR_P) instead mkdir
+
+2010-06-03  Bernhard R. Link <brlink@debian.org>
+
+	* src/Makefile.am: Add gv-i18n.h to MAINTAINERCLEANFILES insted of
+	CLEANFILES.
+
+2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* src/main.c(main): Use .scratchDir for path of temporary savedirectory.
 
 2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
