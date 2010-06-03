@@ -664,20 +664,6 @@ int main(argc, argv)
        exit(EXIT_STATUS_ERROR);
      }
 
-     if (access(gv_safe_gs_workdir, R_OK | X_OK))
-     {
-        char buffer[512];
-	strcpy(buffer, "/tmp/gv-safe-workdir-XXXXXX");
-        gv_safe_gs_workdir = mkdtemp(buffer);
-	gv_safe_gs_tempdir = 1;
-
-	if (!gv_safe_gs_workdir)
-	{
-	   perror("Cannot create safe workdir");
-	   exit(1);
-	}
-     }  
-
    /*### getting resources ############################################*/
    gv_database = resource_buildDatabase (gv_display,
                                          gv_class,
@@ -708,11 +694,26 @@ int main(argc, argv)
     XtGetApplicationResources(toplevel,(XtPointer) &app_res,resources,XtNumber(resources),NULL,ZERO);
     if (!resource_checkResources(gv_name,app_res.version,versionCompatibility)) {
       XtDestroyApplicationContext(app_con);
-      clean_safe_tempdir();
       exit(EXIT_STATUS_ERROR);
     }
 
 /*### initialization of global variables based on resource ##################*/
+     if (access(gv_safe_gs_workdir, R_OK | X_OK))
+     {
+        char buffer[512];
+	strcpy(buffer, app_res.scratch_dir);
+strcpy(buffer, "/tmp/");
+	strcat(buffer,"gv-safe-workdir-XXXXXX");
+        gv_safe_gs_workdir = mkdtemp(buffer);
+	gv_safe_gs_tempdir = 1;
+
+	if (!gv_safe_gs_workdir)
+	{
+	   perror("Cannot create safe workdir");
+	   exit(1);
+	}
+     }  
+
 
     main_setGhostscriptResources(gv_database);
     main_setInternResource(gv_database,&gv_print_command,"printCommand");
