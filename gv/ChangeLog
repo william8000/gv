@@ -1,5 +1,9 @@
 2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
+	* configure.ac, src/versionp.h: Bumped version to 3.6.92
+
+2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 	* src/Aaa.c, src/Aaa_bison.c: Include ac_config.h, otherwise compiling
 	  failes in Mac OS X.
 
