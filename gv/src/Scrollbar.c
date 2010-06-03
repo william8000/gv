@@ -48,6 +48,7 @@
 #include INC_XAW(XawInit.h)
 #include INC_XMU(Drawing.h)
 #include "ScrollbarP.h"
+#include "actions.h"
 
 
 /* Private definitions. */

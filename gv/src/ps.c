@@ -97,6 +97,7 @@
 #include "misc.h"
 #include "ps.h"
 #include "note.h"
+#include "actions.h"
 #include "d_memdebug.h"
 extern Media *gv_medias;
 extern String gv_pdf_password;

@@ -409,7 +409,6 @@ String misc_changeFile(name)
   String error=NULL;
   char *p;
   Boolean b = False;
-  char *dir, *q;
 
   BEGINMESSAGE(misc_changeFile)
 

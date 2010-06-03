@@ -63,6 +63,7 @@
 #include "main_resources.h"
 #include "main_globals.h"
 #include "misc.h"
+#include "actions.h"
 
 #include "resource.h"
 

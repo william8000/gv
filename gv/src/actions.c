@@ -36,6 +36,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <math.h>
 
 #include <inttypes.h>
@@ -1178,7 +1179,7 @@ action_watchFile(w, event, params, num_params)
 
 
 void
-clean_safe_tempdir()
+clean_safe_tempdir(void)
 {
    if (gv_safe_gs_tempdir)
    {

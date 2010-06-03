@@ -39,9 +39,10 @@
 #include "message.h"
 
 #include <stdio.h>
-#include <gv_signal.h>
+#include <signal.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
@@ -62,7 +63,8 @@
 #include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
-#include "signal.h"
+#include "gv_signal.h"
+#include "actions.h"
 
 #ifdef SIGNALRETURNSINT
 #   define SIGVAL int

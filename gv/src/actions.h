@@ -294,4 +294,6 @@ extern void 			action_watchFile (
 #endif
 );
 
+extern void			clean_safe_tempdir(void);
+
 #endif	/* _GV_ACTIONS_H_ */

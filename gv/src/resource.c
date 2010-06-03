@@ -142,7 +142,6 @@ resource_buildDatabase (
   char* locale;
   int i18n;
   char tmp[GV_MAX_FILENAME_LENGTH];
-  char tmp2[1000];
   char locale1[100], locale2[100], locale3[100];
   char loc_lang[100], loc_terr[100], loc_cs[100], loc_mod[100];
 
