@@ -2,6 +2,8 @@
 /*  A Bison parser, made from layout_bison.y with Bison version GNU Bison version 1.24
   */
 
+#include "ac_config.h"
+
 #define YYBISON 1  /* Identify Bison output.  */
 
 #define yyparse layout_parse

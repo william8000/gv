@@ -35,6 +35,8 @@
  * Author:  Keith Packard, MIT X Consortium
  */     
 
+#include "ac_config.h"
+
 /*
 #define MESSAGES
 */
