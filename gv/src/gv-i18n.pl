@@ -22,7 +22,7 @@ for $lang (@languages)
    print "0};\n\n";
 }
 
-print "String* getI18N(char* locale)\n{\n";
+print "static String* getI18N(char* locale)\n{\n";
 for $lang (@languages)
 {
    next if $lang !~ m/((\.dat)|(\.lnk))$/;
