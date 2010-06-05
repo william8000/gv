@@ -386,15 +386,9 @@ FileSelectionClassRec file_selectionClassRec = {
     /* resources          */   resources,
     /* resource_count     */   XtNumber(resources),
     /* xrm_class          */   NULLQUARK,
-#if defined(linux) || defined(SYSV) || defined(SVR4)
     /* compress_motion    */   0,
     /* compress_exposure  */   0,
     /* compress_enterleave*/   0,
-#else
-    /* compress_motion    */   NULL,
-    /* compress_exposure  */   NULL,
-    /* compress_enterleave*/   NULL,
-#endif
     /* visible_interest   */   FALSE,
     /* destroy            */   Destroy,
     /* resize             */   XtInheritResize,
