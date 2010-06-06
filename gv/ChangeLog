@@ -1,3 +1,7 @@
+2010-06-06  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.0
+
 2010-06-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac: Added macro AC_PROG_MKDIR_P
