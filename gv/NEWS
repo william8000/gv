@@ -9,6 +9,11 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.0 (June 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+* GV 3.6.91 has been released as GV 3.7.0 with no changes but
+  some minor code cleanups.
+
 %%%%%%%%%%%%%%%%%%% GV 3.6.91 (June 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Support starting ghostscript from a safe directory.
