@@ -18,9 +18,9 @@ by a '#' or a '*' or a '?'. A
 
 # Support starting ghostscript from a safe directory.
 
-# ghostscript is startet with -P- if SAFER is enabled.
+# ghostscript is started with -P- if SAFER is enabled.
 
-# ghostscript is startet with -dSAFER and -dDELAYSAFER for "pdf2dsc"
+# ghostscript is started with -dSAFER and -dDELAYSAFER for "pdf2dsc"
   and "pdf2ps" if safer is enabled
   
 # Minor bugfixes
