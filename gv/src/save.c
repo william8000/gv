@@ -204,7 +204,7 @@ save_forkPDFToPSConversion(sd)
    char *pdfpos;
    char *pspos;
    char *quoted_src_fn, *quoted_conv_fn;
-   char* src = gv_gs_cmd_scan_pdf;
+   char* src = command;
    char* dest = tmp;
    int spaceFound = 0;
 
