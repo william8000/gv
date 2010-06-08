@@ -1,3 +1,10 @@
+2010-06-08  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/save.c(save_forkPDFToPSConversion): src has to be initialized
+	with command, not gv_gs_cmd_scan_pdf.
+	
+	Fix bug [bug #30081] gv 3.7.0: unable to print/save pdf files.
+
 2010-06-06  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.7.1
