@@ -704,7 +704,7 @@ int main(argc, argv)
 	strcpy(buffer, app_res.scratch_dir);
 	strcat(buffer,"gv-safe-workdir-XXXXXX");
 	file_translateTildeInPath(buffer);
-        gv_safe_gs_workdir = mkdtemp(buffer);
+        gv_safe_gs_workdir = strdup(mkdtemp(buffer));
 	gv_safe_gs_tempdir = 1;
 
 	if (!gv_safe_gs_workdir)
