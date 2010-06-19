@@ -1,3 +1,7 @@
+2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.1.90
+
 2010-06-08  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/save.c(save_forkPDFToPSConversion): src has to be initialized
