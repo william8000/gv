@@ -292,9 +292,9 @@ void DialogPopupSetText(s)
     if (!s) {INFMESSAGE(no text) ENDMESSAGE(DialogPopupSetText) return;}
     if (!dialogPopupCreated) makeDialogPopup();
     response = XtNameToWidget(DIALOG_POPUP, "*dialog_text");
+    						n=0;
 #ifdef HAVE_XAW3D_INTERNATIONAL
     vw = (VlistWidget)response;
-    						n=0;
     if( vw->simple.international == True ) {
       XtSetArg(args[n], XtNfontSet, &fontset);	n++;
     } else {

@@ -1,3 +1,7 @@
+2010-06-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* dialog.c(DialogPopupSetText): move "n=0" outside of #ifdef.
+
 2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* main.c(main): In case of a temporary safedir is needed, use
