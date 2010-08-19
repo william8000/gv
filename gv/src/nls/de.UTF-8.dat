@@ -186,7 +186,6 @@ GV*strings.passwordRequired:		Passwort erforderlich
 GV*strings.quitConfirm:			Wollen Sie wirklich GNU gv beenden?
 GV*strings.putTexCommand:		Schreibe eine TeX-Anweisung an die aktülle Position
 GV*strings.texCommand:			TeX -Anweisung
-GV.version:		gv 3.6.7.90
 GV*strings.stillInProgress:		Noch in Bearbeitung:
 GV*strings.execOfFailed:		Ausführung von %s fehlgeschlagen
 GV*strings.copyrightTranslation:	Markus Steinborn <gnugv_maintainer@yahoo.de>
