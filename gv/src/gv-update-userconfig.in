@@ -186,7 +186,7 @@ for $line (@res)
    }
 }
 
-$newfile .= "GV.version:\t\tgv 3.6.7.90\n";
+$newfile .= "GV.version:\t\tgv 3.6.7.90\n" unless $i18n;
 
 if ($i18n)
 {
