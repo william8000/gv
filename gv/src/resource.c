@@ -63,6 +63,8 @@
 #   define USER_DEFAULTS "~/.gv"
 # endif
 
+extern char versionCompatibility[];
+
 static String class_resources[] = {
 #   include "gv_class.h"
   NULL
@@ -798,13 +800,38 @@ int resource_checkResources(app_name,v,vc)
     if (resource_style_file)  fprintf(stderr,"    %s\n",resource_style_file);
     if (resource_ad_file)     fprintf(stderr,"    %s\n",resource_ad_file);
     fprintf(stderr,"belongs to an older version of gv and cannot be used.\n");
-    fprintf(stderr,"Please remove or update the outdated file.\n");
     if (resource_user_file) fprintf(stderr,"Quite probably your %s is too old.\n", resource_user_file_symb);
     if (resource_user_file) {
        if (haveXUSERFILESEARCHPATH)
-          fprintf(stderr,"Running gv-update-userconfig %s should help\nby removing all incompatible resources.\n", resource_user_file);
+       {
+          if (access(resource_user_file, W_OK))
+	  {
+             fprintf(stderr, "For a correct installation the following restrictions must be met:\n\n");
+	     fprintf(stderr, "* Every directory contained in XUSERFILESEARCHPATH where the system also\nsearches for app-defaults does not contain a file 'GV'.\n\n");
+	     
+	     fprintf(stderr, "* GV is contained just in direectories of XUSERFILESEARCHPATH where the system\ndoes not search for app-defaults, and the GV.version resource is contained in\nthis GV file (this file is used instead of ~/.gv if ~/.gv is not present).\n\n");
+	     
+	     fprintf(stderr, "* The systems app-defaults directories which are not comntained in\nXUSERFILESEARCHPATH may contain a GV file.If so, it SHOULD not contain a\n'GV.version' resource.\n\n");
+	     
+	     fprintf(stderr, "If necessary, ask your system administrator for assistence.\n\n");
+	     
+	     fprintf(stderr,"A workaround to make GNU gv working is\nto provide ~/.gv by running 'touch ~/.gv && gv-update-userconfig'.\n");
+
+          }
+	  else
+	  {
+             fprintf(stderr,"Please remove or update the outdated file.\n");
+             fprintf(stderr,"Running gv-update-userconfig %s should help\nby removing all incompatible resources.\n", resource_user_file);
+	     
+             fprintf(stderr,"Another option that non-admins can do to make GNU gv working is\nto provide ~/.gv by running 'touch ~/.gv && gv-update-userconfig'.\n");
+
+          }
+       }
        else
+       {
+          fprintf(stderr,"Please remove or update the outdated file.\n");
           fprintf(stderr,"Running gv-update-userconfig should help\nby removing all incompatible resources.\n");
+       }
     }
     r=0;
   }
