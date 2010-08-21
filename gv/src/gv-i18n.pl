@@ -18,7 +18,7 @@ for $lang (@languages)
    $lang2 = $lang;
    $lang2 =~ s/[^a-zA-Z_0-9]/_/g;
    print "static String gv_nls_${lang2} [] = {\n";
-   system "$src/ad2c nls/$lang";
+   system "$src/ad2c $src/nls/$lang";
    print "0};\n\n";
 }
 
