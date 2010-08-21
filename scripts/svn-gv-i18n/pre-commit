@@ -86,19 +86,11 @@ for $f (split("\n", $files))
 	    $tmp = $1;
 	    $line =~ s/^\s+//;
 	    $line =~ s/\s+$//;
-	    if ( $tmp !~ /GV\*.*\.label$/i && $tmp !~ /GV\.scales$/ && $tmp !~ /GV\.version$/ &&
+	    if ( $tmp !~ /GV\*.*\.label$/i && $tmp !~ /GV\.scales$/ &&
 	       $tmp !~ /GV\*.*\.title$/i &&  $tmp !~ /GV\*strings\./ )
 	    {
 	          print STDERR "Invalid resource name $tmp in $filename\n";
 		  exit(5);
-	    }
-            if ( $tmp eq "GV.version" )
-	    {
-	       if ( $line !~ /gv ([0-9]+\.)+[0-9]+$/ )
-	       {
-	          print STDERR "Invalid version resource in $filename\n";
-		  exit(6);
-	       }
 	    }
          }
 	 elsif ($line =~ /^\s*$/)
