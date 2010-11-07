@@ -1,0 +1,99 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+\usetheme{Warsaw}
+\title{Introduction to subverion}
+\author{Markus Steinborn}
+\date{November 7th, 2010}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\begin{frame}{Why subversion}
+   \begin{itemize}
+      \item All commited versions of the document are available at any time
+      \item Several peaple can contribute
+      \item Documents are stored at a single place
+      \item Subversion provides path based authorization
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Basics}
+   \begin{itemize}
+      \item Changes to the project (as a whole, not per file) are committed under a new version number
+      \item For every version, date and time of the commit and the committer is preserved.
+      \item If different users change the same document, their change can be merge automatically or manually.
+   \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Checkoing out a Working Copy}
+
+A working copy can be checkout out of the repository with\medskip
+
+   \$ svn checkout --username=user --password=pass URL
+
+\end{frame}
+
+
+
+\begin{frame}{Updating}
+  To update the files of your working copy to the latest versions -- possibly commited by other persons:\medskip
+  
+  \$ svn update\bigskip
+  
+  Updating single files is also possible:\medskip
+  
+  \$ svn update file1 file2 ...\bigskip
+  
+  To get old versions use the -r flag:\medskip
+  
+  \$ svn update -r version\_number\medskip
+  
+  This can be combined with naming files.
+\end{frame}
+
+\begin{frame}{Adding and Removing files}
+
+You can add or remove files with:
+
+\begin{itemize}
+   \item \$ svn add filename
+   \item \$ svn delete filename
+\end{itemize}
+
+Note that adding resp. removing the file is done when committing the changes to the repository.
+\end{frame}
+
+
+\begin{frame}{Committing changes}
+   After adding, removing and editing files, these changes are committed with:
+   \medskip
+   
+   \$ svn commit --message='meaningful description of your change'
+   \bigskip
+   
+   If you ommit the --message parameter, subversion will start an editor where
+   you can input the message.
+\end{frame}
+
+
+\begin{frame}{Examing history}
+   \$ svn log\medskip
+   
+   will show you the commit messages,\bigskip
+   
+   \$ svn diff -c versionNo
+   
+   will show you what has been changed in the given version.
+\end{frame}
+
+
+\begin{frame}{And where is the complete manual?}
+    \url{http://svnbook.red-bean.com/ }
+\end{frame}
+
+\end{document}
