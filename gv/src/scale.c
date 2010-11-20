@@ -276,6 +276,23 @@ void scale_getScreenResourceName(display,name)
     }
   }
   if (!*server || !strcmp(server, "unix") || !strcmp(server, "localhost"))
+  {
+    char* ssh;
+    ssh = getenv("SSH_CLIENT");
+    if (ssh)
+    {
+       strcpy(server, ssh);
+       s=strrchr(server,' ');
+       if (s) *s='\0';
+       s = server;
+       while (*s)
+       {
+          if (*s == ".")  *s = "-";
+	  s++;
+       }
+    }
+  }
+  if (!*server || !strcmp(server, "unix") || !strcmp(server, "localhost") || !strcmp(server, "127-0-0-1"))
     XmuGetHostname(server, 255);
   s=strrchr(server,'.');
   if (s) *s='\0';
