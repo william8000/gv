@@ -1,10 +1,15 @@
+2010-11-20  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* srcscale.c(scale_getScreenResourceName): use ssh remote adress
+	instead of hostname for a remote ssh connection
+
 2010-06-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
-	* dialog.c(DialogPopupSetText): move "n=0" outside of #ifdef.
+	* src/dialog.c(DialogPopupSetText): move "n=0" outside of #ifdef.
 
 2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
-	* main.c(main): In case of a temporary safedir is needed, use
+	* src/main.c(main): In case of a temporary safedir is needed, use
 	strdup to copy the temporary buffer to a permanent location.
 
 2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
