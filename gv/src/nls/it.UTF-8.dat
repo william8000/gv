@@ -16,7 +16,6 @@
 ! Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 !
 
-GV.version:				gv 3.6.7.90
 GV*copyright.Label:			Copyright
 GV*miscmenuLabel.label:			Altre voci del menu
 GV*optionsgv.Label:			Opzioni di gv ...
