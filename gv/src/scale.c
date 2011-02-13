@@ -38,6 +38,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
