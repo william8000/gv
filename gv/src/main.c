@@ -923,7 +923,7 @@ int main(argc, argv)
        XtSetArg(args[n], XtNmaximumHeight,maximum_height);n++; 
        XtSetArg(args[n], XtNminimumWidth, (Dimension)app_res.minimum_width); n++;
        XtSetArg(args[n], XtNminimumHeight,(Dimension)app_res.minimum_height);n++; 
-       control = XtCreateWidget("control",aaaWidgetClass,toplevel,args,n);
+       main_control = XtCreateWidget("control",aaaWidgetClass,toplevel,args,n);
     }
 
 /*### Creating the Menus ###############################################################*/
@@ -1020,20 +1020,20 @@ int main(argc, argv)
    {
 							n=0;
      XtSetArg(args[n], XtNresize, True);		n++;
-     pagemediaButton = XtCreateWidget("pagemediaButton",mbuttonWidgetClass,control,args,n);
+     pagemediaButton = XtCreateWidget("pagemediaButton",mbuttonWidgetClass,main_control,args,n);
      cont_child[cont_child_num] = pagemediaButton; cont_child_num++;
    }
 
    {
            					n=0;
      XtSetArg(args[n], XtNresize, False);	n++;
-     processButton = XtCreateWidget("processButton", mbuttonWidgetClass,control,args,n);
+     processButton = XtCreateWidget("processButton", mbuttonWidgetClass,main_control,args,n);
      cont_child[cont_child_num] = processButton; cont_child_num++;
      processMenu=NULL;
    }
 
 							n=0;
-     scaleButton = XtCreateWidget("scaleButton",mbuttonWidgetClass,control,args,n);
+     scaleButton = XtCreateWidget("scaleButton",mbuttonWidgetClass,main_control,args,n);
      cont_child[cont_child_num] =scaleButton; cont_child_num++;
      main_createScaleMenu();
 
@@ -1084,7 +1084,7 @@ int main(argc, argv)
              INFSMESSAGE(creating widget,b[i].name)
              *(b[i].show) = strstr(layout,b[i].name) ? True : False;
              if (*(b[i].show)) {
-                *(b[i].widget) = XtCreateWidget(b[i].name,buttonWidgetClass,control,args,n);
+                *(b[i].widget) = XtCreateWidget(b[i].name,buttonWidgetClass,main_control,args,n);
                 if (b[i].callback) XtAddCallback(*(b[i].widget),XtNcallback,b[i].callback,b[i].client_data);
                 cont_child[cont_child_num] = *(b[i].widget); cont_child_num++;
              }
@@ -1110,7 +1110,7 @@ int main(argc, argv)
          widgetname=name;							\
          show = strstr(layout,widgetname) ? True : False;			\
          if (show) {								\
-            widget = XtCreateWidget(widgetname,mbuttonWidgetClass,control,args,n);\
+            widget = XtCreateWidget(widgetname,mbuttonWidgetClass,main_control,args,n);\
             cont_child[cont_child_num] = widget; cont_child_num++;		\
          }
 
@@ -1125,7 +1125,7 @@ int main(argc, argv)
           char buf[MAX_LOCATOR_LENGTH];
           sprintf(buf,app_res.locator_format,9999,9999);
           XtSetArg(args[n], XtNlabel,buf);		n++;
-          locator = XtCreateWidget(widgetname,labelWidgetClass,control,args,n);
+          locator = XtCreateWidget(widgetname,labelWidgetClass,main_control,args,n);
           cont_child[cont_child_num] =locator; cont_child_num++;
        }
 #      undef _mw_
@@ -1137,7 +1137,7 @@ int main(argc, argv)
        if (show_panner) {
 
   									n=0;
-          pannerFrame = XtCreateWidget("pannerFrame",frameWidgetClass,control,args,n);
+          pannerFrame = XtCreateWidget("pannerFrame",frameWidgetClass,main_control,args,n);
           cont_child[cont_child_num] = pannerFrame; cont_child_num++;
   									n=0;
           panner = XtCreateManagedWidget("panner", compositeWidgetClass,pannerFrame, args, n);
@@ -1155,7 +1155,7 @@ int main(argc, argv)
 
 
   									n=0;
-          newtocFrame = XtCreateWidget("newtocFrame",frameWidgetClass,control,args,n);
+          newtocFrame = XtCreateWidget("newtocFrame",frameWidgetClass,main_control,args,n);
           cont_child[cont_child_num] = newtocFrame; cont_child_num++;
   									n=0;
           newtocClip = XtCreateManagedWidget("newtocClip", clipWidgetClass,newtocFrame, args, n);
@@ -1165,7 +1165,7 @@ int main(argc, argv)
           newtoc = XtCreateManagedWidget("newtoc", vlistWidgetClass,newtocControl, args, n);
 	  XtAddCallback(newtoc, XtNreportCallback,cb_newtocVisibleAdjust, (XtPointer)NULL);
 									n=0;
-          newtocScroll = XtCreateWidget("newtocScroll", scrollbarWidgetClass,control, args, n);
+          newtocScroll = XtCreateWidget("newtocScroll", scrollbarWidgetClass,main_control, args, n);
 	     XtAddCallback(newtocScroll, XtNscrollProc,cb_newtocScrollbar, (XtPointer)1);
              XtAddCallback(newtocScroll, XtNjumpProc,cb_newtocScrollbar, (XtPointer)2);
 
@@ -1176,7 +1176,7 @@ int main(argc, argv)
    INFMESSAGE(viewport)
 
 									n=0;
-   viewFrame = XtCreateWidget("viewFrame", frameWidgetClass,control,args,n);
+   viewFrame = XtCreateWidget("viewFrame", frameWidgetClass,main_control,args,n);
    cont_child[cont_child_num] = viewFrame; cont_child_num++;
 
 									n=0;
@@ -1286,7 +1286,7 @@ int main(argc, argv)
     INFMESSAGE(managing children of control)
     XtManageChildren((WidgetList)cont_child,cont_child_num);
     INFMESSAGE(managing control)
-    XtManageChild(control);
+    XtManageChild(main_control);
     XtSetMappedWhenManaged(toplevel, False);
     INFMESSAGE(realizing toplevel)
     XtRealizeWidget(toplevel);
@@ -1354,7 +1354,7 @@ int main(argc, argv)
     cb_watchFile(watchFileEntry,NULL,NULL);
 
     /* must allow control to resize */
-    AaaWidgetAllowResize((AaaWidget)control,True,True);
+    AaaWidgetAllowResize((AaaWidget)main_control,True,True);
 
     if (fullscreen_p) {
       Atom net_wm_state;
@@ -1400,7 +1400,7 @@ static void main_createMenu(m,list,numP)
   SMESSAGE(m[0].name)
 
 							n=0;
-  *(m[0].widgetP) = XtCreateManagedWidget(m[0].name,mbuttonWidgetClass,control,args,n);
+  *(m[0].widgetP) = XtCreateManagedWidget(m[0].name,mbuttonWidgetClass,main_control,args,n);
     list[*numP] = *(m[0].widgetP); (*numP)++;
 
 							n=0;

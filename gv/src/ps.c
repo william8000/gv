@@ -409,7 +409,7 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
 #ifndef HAVE_ZIO
     if (cmd_uncompress) {
       struct document *retval = NULL;
-      FILE *tmpfile = (FILE*)NULL;
+      FILE *tempfile = (FILE*)NULL;
       char *filename_unc;
       char *quoted_filename, *quoted_filename_unc;
       char cmd[512];
@@ -444,7 +444,7 @@ unc_exec_failed:
 unc_failed:
 #endif
 	NotePopupShowMessage(s);
-	if (tmpfile) fclose(tmpfile);
+	if (tempfile) fclose(tempfile);
 	unlink(filename_unc);
 unc_ok:
 	GV_XtFree(filename_unc);
@@ -452,10 +452,10 @@ unc_ok:
         return(retval);
       }
       umask(old_umask);
-      tmpfile = fopen(filename_unc, "r");
-      if (!tmpfile) goto unc_exec_failed;
+      tempfile = fopen(filename_unc, "r");
+      if (!tempfile) goto unc_exec_failed;
       fclose(*fileP);
-      *fileP = tmpfile;
+      *fileP = tempfile;
       retval = psscan(fileP,filename_unc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle, gv_gs_safeDir);
 #if 0
       if (!retval) {
@@ -520,7 +520,7 @@ unc_ok:
     } else if (iscomment(line,"%PDF-") && cmd_scan_pdf) {
       
       struct document *retval = NULL;
-      FILE *tmpfile = (FILE*)NULL;
+      FILE *tempfile = (FILE*)NULL;
       char *filename_dsc;
       char *quoted_filename, *quoted_filename_dsc;
       char *pdfpos;
@@ -534,7 +534,7 @@ unc_ok:
       filename_dsc=file_getTmpFilename(NULL, filename_raw, NULL);
       if (!filename_dsc) {
 	NotePopupShowMessage("Cannot create temporary file!");
-	if (tmpfile) fclose(tmpfile);
+	if (tempfile) fclose(tempfile);
         ps_io_exit(fd);
 	ENDMESSAGE(psscan)
         return(retval);
@@ -597,7 +597,7 @@ unc_ok:
 
 
       if (system(cmd) || file_fileIsNotUseful(filename_dsc)) {
-        char line[1000];
+        char password_line[1000];
 	int found;
 	FILE* tmp_file;
 	
@@ -609,11 +609,11 @@ unc_ok:
 	close(tmpfd);
 
         tmp_file = fopen( tmp_filename, "r" );
-	while ( fgets( line, 999, tmp_file) )
+	while ( fgets( password_line, 999, tmp_file) )
 	{
-	   if (strstr(line,"This file requires a password for access."))
+	   if (strstr(password_line,"This file requires a password for access."))
 	      found = 1;
-	   if (strstr(line,"Password did not work."))
+	   if (strstr(password_line,"Password did not work."))
 	      found = 1;
         }
 	fclose(tmp_file);	
@@ -634,7 +634,7 @@ scan_exec_failed:
 scan_failed:
 	NotePopupShowMessage(s);
 scan_password_required:
-	if (tmpfile) fclose(tmpfile);
+	if (tempfile) fclose(tempfile);
 	unlink(filename_dsc);
 scan_ok:
 	GV_XtFree(filename_dsc);
@@ -652,10 +652,10 @@ scan_ok:
       GV_XtFree(tmp_filename);
 
       umask (old_umask);
-      tmpfile = fopen(filename_dsc, "r");
-      if (!tmpfile) goto scan_exec_failed;
+      tempfile = fopen(filename_dsc, "r");
+      if (!tempfile) goto scan_exec_failed;
       fclose(*fileP);
-      *fileP = tmpfile;
+      *fileP = tempfile;
       retval = psscan(fileP,filename_dsc,filename_raw,filename_dscP,cmd_scan_pdf,NULL,NULL,scanstyle,gv_gs_safeDir);
       if (!retval) {
 	sprintf(s,"Scanning\n%s\nfailed.",filename_dsc);

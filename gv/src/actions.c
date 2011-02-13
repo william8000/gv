@@ -243,12 +243,12 @@ action_page(w, event, params, num_params)
       a = PAGE_PAGE; e |= PAGE_PAGE;
     }
     else if (!z && !strncmp(s,"highlight",9) && toc_text) {
-      int p,a=0,h,ho;
+      int p,aa=0,h,ho;
       s += 9;
-      if (*s=='=') { s++; a=1; }
+      if (*s=='=') { s++; aa=1; }
       p = atoi(s);
       ho = h = VlistHighlighted(newtoc) + 1;
-      if (!a) {
+      if (!aa) {
 	if (h<=0) h =  VlistSelected(newtoc) + 1;
 	h = h + p - 1;
       } else {
@@ -387,35 +387,35 @@ action_toc(w, event, params, num_params)
   static int entryo = -1;
   Boolean toggle_mark=False;
   int entry,dy;
-  Widget slider = newtocControl;
-  Widget panner = newtocClip;
+  Widget tocslider = newtocControl;
+  Widget tocpanner = newtocClip;
 
   BEGINMESSAGE(action_toc)
 
   if (!strcmp(params[0],"scroll") && scroll_initialized) {
     int x,y,dh,ph;
-    float dy,m;
-    ph = (int)panner->core.height; if (ph<1) ph = 1;
-    dh = ph - (int)slider->core.height;
-    dy = (float)(event->xbutton.y_root - yo);
-    if (!app_res.reverse_scrolling) dy = -dy;
-    m  = 1.3*((float)slider->core.height/(float)ph);
+    float deltay,m;
+    ph = (int)tocpanner->core.height; if (ph<1) ph = 1;
+    dh = ph - (int)tocslider->core.height;
+    deltay = (float)(event->xbutton.y_root - yo);
+    if (!app_res.reverse_scrolling) deltay = -deltay;
+    m  = 1.3*((float)tocslider->core.height/(float)ph);
     if (m<=1) m = 1;
-    y = yp -(int)(m*dy);
+    y = yp -(int)(m*deltay);
     yo = (int) event->xbutton.y_root;
 
-    ph = (int)panner->core.width; if (ph<1) ph = 1;
-    dh = ph - (int)slider->core.width;
-    dy = (float)(event->xbutton.x_root - xo);
-    if (!app_res.reverse_scrolling) dy = -dy;
-    m  = 1.3*((float)slider->core.width/(float)ph);
+    ph = (int)tocpanner->core.width; if (ph<1) ph = 1;
+    dh = ph - (int)tocslider->core.width;
+    deltay = (float)(event->xbutton.x_root - xo);
+    if (!app_res.reverse_scrolling) deltay = -deltay;
+    m  = 1.3*((float)tocslider->core.width/(float)ph);
     if (m<=1) m = 1;
-    x = xp +(int)(m*dy);
+    x = xp +(int)(m*deltay);
     if (x<dh) x=dh; if (x>0) x=0;
     xo = (int) event->xbutton.x_root;
 
     if (x!=xp) {
-      ClipWidgetSetCoordinates(panner,x,0);
+      ClipWidgetSetCoordinates(tocpanner,x,0);
       xp = x;
     }
     if (y!=yp) {
@@ -427,7 +427,7 @@ action_toc(w, event, params, num_params)
   else if (!strcmp(params[0],"scrollon")) {
     scroll_initialized = True;
     scrolling = False;
-    xp = (int) slider->core.x; xf = xo = (int) event->xbutton.x_root;
+    xp = (int) tocslider->core.x; xf = xo = (int) event->xbutton.x_root;
     yp = 0; yf = yo = (int) event->xbutton.y_root;
     startvisible = VlistGetFirstVisible(newtoc);
   }
@@ -677,17 +677,16 @@ action_panner(w, event, params, num_params)
     int x,y,cw,ch;
     static int xo,yo,xp,yp;
     static Bool initialized=False;
-    Widget panner  = w; 
 
     BEGINMESSAGE(action_panner)
 
     if (!strcmp(params[0],"move") && initialized) {
        INFMESSAGE1(move)
        y = yp + (int)event->xbutton.y_root - yo;
-       ch = (int)panner->core.height-(int)slider->core.height;
+       ch = (int)w->core.height-(int)slider->core.height;
        if (y>ch) y=ch; else if (y<0) y=0;
        x = xp + (int)event->xbutton.x_root - xo;
-       cw = (int)panner->core.width-(int)slider->core.width;
+       cw = (int)w->core.width-(int)slider->core.width;
        if (x>cw) x=cw; else if (x<0) x=0;
        if (x!=xp || y!=yp) {
           int pxp,pyp,dw,dh;

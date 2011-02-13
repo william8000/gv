@@ -172,7 +172,7 @@ EXTERN AppResources 		app_res;
 
 /* Widgets */
 EXTERN Widget   toplevel;
-EXTERN Widget      control;
+EXTERN Widget      main_control;
 EXTERN Widget         titlebutton;
 EXTERN Widget            titlemenu;
 EXTERN Widget         datebutton;

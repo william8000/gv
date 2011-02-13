@@ -216,14 +216,14 @@ zoom_createZoom(w, call_data)
     widgets_preferButton(zdismiss,1);
 
     {
-      GhostviewReturnStruct p;
+      GhostviewReturnStruct rs;
       INFMESSAGE(positioning zoom popup)
       IIMESSAGE(llx,lly) IIMESSAGE(urx,ury)
-      GhostviewGetAreaOfBB(page,llx,lly,urx,ury,&p);
+      GhostviewGetAreaOfBB(page,llx,lly,urx,ury,&rs);
       popup_positionPopup(
           zshell,page,POPUP_POSITION_POS_CENTER,
-          ((int)(p.psx)+(int)(p.width/2)),
-          ((int)(p.psy)+(int)(p.height/2))
+          ((int)(rs.psx)+(int)(rs.width/2)),
+          ((int)(rs.psy)+(int)(rs.height/2))
       );
     }
     GhostviewSetup(zpage);

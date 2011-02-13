@@ -204,25 +204,25 @@ misc_drawEyeGuide(w,d,x,y)
     if (egd->timer) XtRemoveTimeOut(egd->timer);
     egd->timer = XtAppAddTimeOut(app_con,t,misc_catchEyeGuideTimer,(XtPointer)egd);
     if (!egd->drawn) {
-      int x1,y1,x2,y2,nx,ny;
+      int x_1,y_1,x_2,y_2,nx,ny;
       Widget clip = XtParent(XtParent(w));
       INFMESSAGE(drawing)
       nx = (int)w->core.x + (int) w->core.border_width;
       ny = (int)w->core.y + (int) w->core.border_width;
-      if (-x>nx) x1 = -x - nx; else x1=0;
-      if (-y>ny) y1 = -y - ny; else y1=0;
-      x2 = x1 + (int)clip->core.width -1; 
-      if (-x<nx) x2 -= nx;
-      if (x2 > w->core.width) x2 = w->core.width;
-      y2 = y1 + (int)clip->core.height - 1;
-      if (-y<ny) y2 -= ny;
-      if (y2 > w->core.height) y2 = w->core.height;
-      if (x1==0) x1 = -1;
-      if (y1==0) y1 = -1;
-      egd->x = x1;
-      egd->y = y1;
-      egd->width = x2-x1;
-      egd->height = y2-y1;
+      if (-x>nx) x_1 = -x - nx; else x_1=0;
+      if (-y>ny) y_1 = -y - ny; else y_1=0;
+      x_2 = x_1 + (int)clip->core.width -1;
+      if (-x<nx) x_2 -= nx;
+      if (x_2 > w->core.width) x_2 = w->core.width;
+      y_2 = y_1 + (int)clip->core.height - 1;
+      if (-y<ny) y_2 -= ny;
+      if (y_2 > w->core.height) y_2 = w->core.height;
+      if (x_1==0) x_1 = -1;
+      if (y_1==0) y_1 = -1;
+      egd->x = x_1;
+      egd->y = y_1;
+      egd->width = x_2-x_1;
+      egd->height = y_2-y_1;
       GhostviewDrawRectangle(w,egd->x,egd->y,egd->width,egd->height);
       egd->drawn=1;
     }
@@ -1120,7 +1120,6 @@ setup_ghostview()
 
 Dimension view_width, view_height, view_border;
 Dimension control_width, control_height;
-Dimension page_width, page_height;
 
 /*------------------------------------------------------------*/
 /* layout_ghostview */

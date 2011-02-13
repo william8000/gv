@@ -1833,11 +1833,11 @@ GhostviewCoordsXtoPS(w,wx,wy,psxP,psyP)
   *psyP = (psly + ((float)y*(float)(psuy-psly))/(float)wly + 0.5);
 #if 1
   {
-    int x,y;
+    int xx,yy;
     IIMESSAGE(wx,wy)
     IIMESSAGE(*psxP,*psyP)
-    GhostviewCoordsPStoX(w,*psxP,*psyP,&x,&y);
-    IIMESSAGE(x,y)
+    GhostviewCoordsPStoX(w,*psxP,*psyP,&xx,&yy);
+    IIMESSAGE(xx,yy)
   }
 #endif
   ENDMESSAGE(GhostviewCoordsXtoPS)
@@ -2131,12 +2131,7 @@ GhostviewIsInterpreterRunning(w)
 /*###################################################################################*/
 
 Boolean
-GhostviewSendPS(w, fp, begin, len, close)
-    Widget w;
-    FILE *fp;
-    gv_off_t begin;
-    gv_off_t len;
-    Bool close;
+GhostviewSendPS(Widget w, FILE *fp, gv_off_t begin, gv_off_t len, Bool doclose)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     struct record_list *ps_new;
@@ -2147,7 +2142,7 @@ GhostviewSendPS(w, fp, begin, len, close)
     ps_new->begin = begin;
     ps_new->len = len;
     ps_new->seek_needed = True;
-    ps_new->close = close;
+    ps_new->close = doclose;
     ps_new->next = NULL;
 
     if (gvw->ghostview.input_buffer == NULL) {

@@ -1032,9 +1032,8 @@ cb_presentation(w, client_data, call_data)
     XtPointer client_data, call_data;
 {
     int pid;
-    typedef void (*sighandler_t)(int);
     sighandler_t sigold;
-    
+
     BEGINMESSAGE(cb_presentation)
 
     sigold = signal(SIGCLD, SIG_IGN); /* Avoid zombies */

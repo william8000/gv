@@ -1048,11 +1048,11 @@ static void FS_listAction(w, event, params, nparams)
   else if (streq(params[0],"notify")) {
     INFMESSAGE(notify)
     if (!scrolling) {
-      int entry = VlistEntryOfPosition(list,(int)event->xbutton.y);
-      if (entry >=0 && entry < VlistEntries(list)) {
-	if      (list == FS_CURLIST) CurDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
-	else if (list == FS_SUBLIST) SubDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
-	else if (list == FS_TOPLIST) TopDirSelectionProc(list,NULL,(XtPointer)(intptr_t)entry);
+      int e = VlistEntryOfPosition(list,(int)event->xbutton.y);
+      if (e >=0 && e < VlistEntries(list)) {
+	if      (list == FS_CURLIST) CurDirSelectionProc(list,NULL,(XtPointer)(intptr_t)e);
+	else if (list == FS_SUBLIST) SubDirSelectionProc(list,NULL,(XtPointer)(intptr_t)e);
+	else if (list == FS_TOPLIST) TopDirSelectionProc(list,NULL,(XtPointer)(intptr_t)e);
       }
     }
   }
@@ -1450,13 +1450,13 @@ static void SetDirectoryView(fs,dir)
    INFSMESSAGE(trying to chdir to,dir)
    error=chdir(dir);
    if (error) {
-     char tmpdir[FS_MAXNAMLEN],tmpfile[FS_MAXNAMLEN];
+     char tmpdir[FS_MAXNAMLEN],tempfile[FS_MAXNAMLEN];
      INFMESSAGE(failed)
-     SplitPath(dir,tmpdir,tmpfile);
+     SplitPath(dir,tmpdir,tempfile);
      appendDirEndSeparator(tmpdir);
      INFSMESSAGE(trying to chdir to,tmpdir)
      error=chdir(tmpdir);
-     if (!error) savestrcpy(CURRENT_FILE,tmpfile);
+     if (!error) savestrcpy(CURRENT_FILE,tempfile);
 #ifdef MESSAGES
      else { INFMESSAGE(failed) }
 #endif
