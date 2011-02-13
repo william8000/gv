@@ -32,6 +32,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#include <inttypes.h>
 #include "secscanf.h"
 
 static size_t GNU_strnlen(const char *s, size_t len)
@@ -377,7 +378,7 @@ process_number(union scan_value *vp, const char **sp, char fmt)
 		vp->v_integer = strtoull(s, (char **) sp, 16);
 		break;
 	case 'p':
-		vp->v_pointer = (void *) strtoull(s, (char **) sp, 0);
+		vp->v_pointer = (void *)(intptr_t) strtoull(s, (char **) sp, 0);
 		break;
 	case 'f':
 	case 'g':
