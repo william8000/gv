@@ -53,7 +53,6 @@
 #include "MButton.h"
 
 #include "types.h"
-#include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
 #include "file.h"
@@ -141,10 +140,10 @@ void options_textApply(w,bP,sP)
   Boolean *bP;
   String *sP;
 {
-  if (!bP || (bP && *bP==True)) GV_XtFree(*sP); 
+  if (!bP || (bP && *bP==True)) XtFree(*sP);
   if (bP) *bP=True;
   *sP = widgets_getText(w);
-  *sP = GV_XtNewString(*sP);
+  *sP = XtNewString(*sP);
 }
 
 /*######################################################
@@ -228,7 +227,7 @@ String  options_squeezeMultiline(s)
 
   BEGINMESSAGE(options_squeezeMultiline)
   if (!s) s = "";
-  md = s = d = GV_XtNewString(s);
+  md = s = d = XtNewString(s);
   while (*d) {
     while (isspace(*d)) d++;
     b=e=d;
@@ -254,7 +253,7 @@ String  options_squeeze(s)
 
   BEGINMESSAGE(options_squeeze)
   if (!s) s = "";
-  md = s = d = GV_XtNewString(s);
+  md = s = d = XtNewString(s);
   while (isspace(*d)) d++;
   while (*d) {
     if (!isspace(*d) || !isspace(*(d+1))) {
@@ -287,7 +286,7 @@ static char* options_readline(infile,lineP)
   BEGINMESSAGE(options_readline)
   while (fgets(tmp,MAX_RECORD_LENGTH,infile)) {
     multi = *lineP ? strlen(*lineP) : 0;
-    *lineP = GV_XtRealloc(*lineP,(multi+strlen(tmp)+1)*sizeof(char));
+    *lineP = XtRealloc(*lineP,(multi+strlen(tmp)+1)*sizeof(char));
     if (!multi) (*lineP)[0] = '\0';
     strcat(*lineP,tmp);
     multi=0; esc = strrchr(tmp,'\\');
@@ -315,7 +314,7 @@ static void options_writeline(outfile,header,value)
   
   BEGINMESSAGE(options_writeline)
   while ((nl=strchr(nl,'\n'))) { nl++; num_nl++; }
-  header = GV_XtNewString(header);
+  header = XtNewString(header);
   s = strrchr(header,':');
   i=0;  
   if (s) {
@@ -328,7 +327,7 @@ static void options_writeline(outfile,header,value)
     }
   }
   if (i==strlen(header)) i=24;
-  line = GV_XtMalloc((strlen(header) + strlen(value) + num_nl*3 + i + 2)*sizeof(char));
+  line = XtMalloc((strlen(header) + strlen(value) + num_nl*3 + i + 2)*sizeof(char));
   line[0]='\0';
   strcpy(line,header);
   while (num_nl>=0) {
@@ -358,8 +357,8 @@ static void options_writeline(outfile,header,value)
     value=nl;
     line[0]='\0';
   }
-  GV_XtFree(line);
-  GV_XtFree(header);
+  XtFree(line);
+  XtFree(header);
   ENDMESSAGE(options_writeline)
 }
 
@@ -404,7 +403,7 @@ void options_save(argn,argi,argv)
     NotePopupShowMessage(errorMessage);
     INFMESSAGE(cannot create temporary file)
     fclose(infile);
-    GV_XtFree(tempfilename);
+    XtFree(tempfilename);
     ENDMESSAGE(options_save)
     return;
   }
@@ -436,7 +435,7 @@ void options_save(argn,argi,argv)
 	else ++i;
       }
       if (!j) fputs(line,tempfile);
-      GV_XtFree(line);
+      XtFree(line);
       line=NULL;
     }
     fclose(infile);
@@ -452,12 +451,12 @@ void options_save(argn,argi,argv)
     sprintf(errorMessage,"Save aborted: \nCannot rename temporary '%s'\n to '%s'",tempfilename,gv_user_defaults_file);
     NotePopupShowMessage(errorMessage);
     unlink(tempfilename);
-    GV_XtFree(tempfilename);
+    XtFree(tempfilename);
     INFMESSAGE(cannot rename temporary file)
     ENDMESSAGE(options_save)
     return;
   }
-  GV_XtFree(tempfilename);
+  XtFree(tempfilename);
 
   ENDMESSAGE(options_save)
 }

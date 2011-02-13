@@ -98,7 +98,6 @@
 #include "ps.h"
 #include "note.h"
 #include "actions.h"
-#include "d_memdebug.h"
 extern Media *gv_medias;
 extern String gv_pdf_password;
 extern String gv_safe_gs_workdir;
@@ -123,14 +122,14 @@ static int dsc_strncmp(s1, s2, n)
  if (strncasecmp(s1, s2, n) == 0)
 	 return 0;
  if (s2[n-1] == ':'){
-	 tmp = (char *) PS_malloc(n*sizeof(char));
+	 tmp = (char *) malloc(n*sizeof(char));
 	 strncpy(tmp, s2, (n-1));
 	 tmp[n-1]=' ';
 	 if (strncasecmp(s1, tmp, n) == 0){
-		 PS_free(tmp);
+		 free(tmp);
 		 return 0;
 	 }
-	 PS_free(tmp);
+	 free(tmp);
  }
  
  return 1;
@@ -430,8 +429,8 @@ psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_
       } else {
         sprintf(cmd, "gzip -dc %s >%s", quoted_filename, quoted_filename_unc);
       }
-      GV_XtFree(quoted_filename);
-      GV_XtFree(quoted_filename_unc);
+      XtFree(quoted_filename);
+      XtFree(quoted_filename_unc);
 
 
       INFMESSAGE(is compressed)
@@ -447,7 +446,7 @@ unc_failed:
 	if (tempfile) fclose(tempfile);
 	unlink(filename_unc);
 unc_ok:
-	GV_XtFree(filename_unc);
+	XtFree(filename_unc);
 	ENDMESSAGE(psscan)
         return(retval);
       }
@@ -463,7 +462,7 @@ unc_ok:
 	goto unc_failed;
       }
 #endif
-      *filename_uncP = (char*)GV_XtNewString(filename_unc);
+      *filename_uncP = (char*)XtNewString(filename_unc);
       goto unc_ok;
     }
 #else
@@ -507,7 +506,7 @@ unc_ok:
     if (line_len>1 && (iscomment(line,"%!PS-Adobe-") || iscomment(line + 1,"%!PS-Adobe-"))) {
       INFMESSAGE(found "PS-Adobe-" comment)
 
-      doc = (struct document *) PS_malloc(sizeof(struct document));
+      doc = (struct document *) malloc(sizeof(struct document));
       CHECK_MALLOCED(doc);
       memset(doc, 0, sizeof(struct document));
       *text=0;
@@ -566,14 +565,14 @@ unc_ok:
 	   strcpy(parameter, " -sPDFPassword=");
 	   password = quote_filename(gv_pdf_password);
 	   strcat(parameter, password);
-	   GV_XtFree(password);
+	   XtFree(password);
 	   sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc, parameter);
 	}
 	else   
 	   sprintf(cmd,cmd_scan_pdf,quoted_filename,quoted_filename_dsc, "");
       }
-      GV_XtFree(quoted_filename);
-      GV_XtFree(quoted_filename_dsc);
+      XtFree(quoted_filename);
+      XtFree(quoted_filename_dsc);
 
       old_umask = umask(0077);
       INFMESSAGE(is PDF)
@@ -627,7 +626,7 @@ unc_ok:
 	   goto scan_password_required;
 	   /* TODO? but wait for password dialog */
 	}
-        GV_XtFree(tmp_filename);
+        XtFree(tmp_filename);
 	
 scan_exec_failed:
 	sprintf(s,"Execution of\n%s\nfailed.",cmd);
@@ -637,7 +636,7 @@ scan_password_required:
 	if (tempfile) fclose(tempfile);
 	unlink(filename_dsc);
 scan_ok:
-	GV_XtFree(filename_dsc);
+	XtFree(filename_dsc);
         ps_io_exit(fd);
 	ENDMESSAGE(psscan)
         return(retval);
@@ -649,7 +648,7 @@ scan_ok:
       close(tmp_fd);
       
       unlink((char*) tmp_filename);
-      GV_XtFree(tmp_filename);
+      XtFree(tmp_filename);
 
       umask (old_umask);
       tempfile = fopen(filename_dsc, "r");
@@ -661,7 +660,7 @@ scan_ok:
 	sprintf(s,"Scanning\n%s\nfailed.",filename_dsc);
 	goto scan_failed;
       }
-      *filename_dscP = (char*)GV_XtNewString(filename_dsc);
+      *filename_dscP = (char*)XtNewString(filename_dsc);
       goto scan_ok;
     } else {
       INFMESSAGE(unable to classify document)
@@ -764,7 +763,7 @@ scan_ok:
 			}
 		    case 1:
 			if (maxpages > 0) {
-			    doc->pages = (struct page *) PS_calloc(maxpages,
+			    doc->pages = (struct page *) calloc(maxpages,
 							   sizeof(struct page));
                             CHECK_MALLOCED(doc->pages);
 			}
@@ -774,7 +773,7 @@ scan_ok:
 		   iscomment(line+2, "DocumentMedia:")) {
 	    float w, h;
 	    doc->media = (Media)
-			 PS_malloc(sizeof (MediaStruct));
+			 malloc(sizeof (MediaStruct));
             CHECK_MALLOCED(doc->media);
 	    doc->media[0].name = ps_gettext(line+length("%%DocumentMedia:"),
 					    &next_char);
@@ -786,14 +785,14 @@ scan_ok:
 		if (doc->media[0].width != 0 && doc->media[0].height != 0)
 		    doc->nummedia = 1;
 		else
-		    PS_free(doc->media[0].name);
+		    free(doc->media[0].name);
 	    }
 	    preread=1;
 	    while (readline(fd, &line, &position, &line_len) &&
 		   DSCcomment(line) && iscomment(line+2, "+")) {
 		section_len += line_len;
 		doc->media = (Media)
-			     PS_realloc(doc->media,
+			     realloc(doc->media,
 				     (doc->nummedia+1)*
 				     sizeof (MediaStruct));
                 CHECK_MALLOCED(doc->media);
@@ -807,7 +806,7 @@ scan_ok:
 		    if (doc->media[doc->nummedia].width != 0 &&
 			doc->media[doc->nummedia].height != 0) doc->nummedia++;
 		    else
-			PS_free(doc->media[doc->nummedia].name);
+			free(doc->media[doc->nummedia].name);
 		}
 	    }
 	    section_len += line_len;
@@ -816,7 +815,7 @@ scan_ok:
 		   iscomment(line+2, "DocumentPaperSizes:")) {
 
 	    doc->media = (Media)
-			 PS_malloc(sizeof (MediaStruct));
+			 malloc(sizeof (MediaStruct));
             CHECK_MALLOCED(doc->media);
 	    doc->media[0].name = ps_gettext(line+length("%%DocumentPaperSizes:"),
 					    &next_char);
@@ -830,8 +829,8 @@ scan_ok:
 		     * PaperSize comments.
 		     */
 		    if (strcasecmp(doc->media[0].name, dmp->name) == 0) {
-			PS_free(doc->media[0].name);
-			doc->media[0].name = (char *)PS_malloc(strlen(dmp->name)+1);
+			free(doc->media[0].name);
+			doc->media[0].name = (char *)malloc(strlen(dmp->name)+1);
                         CHECK_MALLOCED(doc->media[0].name);
 			strcpy(doc->media[0].name, dmp->name);
 			doc->media[0].width = dmp->width;
@@ -842,11 +841,11 @@ scan_ok:
 		if (doc->media[0].width != 0 && doc->media[0].height != 0)
 		    doc->nummedia = 1;
 		else
-		    PS_free(doc->media[0].name);
+		    free(doc->media[0].name);
 	    }
 	    while ((cp = ps_gettext(next_char, &next_char))) {
 		doc->media = (Media)
-			     PS_realloc(doc->media,
+			     realloc(doc->media,
 				     (doc->nummedia+1)*
 				     sizeof (MediaStruct));
                 CHECK_MALLOCED(doc->media);
@@ -861,9 +860,9 @@ scan_ok:
 		     */
 		    if (strcasecmp(doc->media[doc->nummedia].name,
 			       dmp->name) == 0) {
-			PS_free(doc->media[doc->nummedia].name);
+			free(doc->media[doc->nummedia].name);
 			doc->media[doc->nummedia].name =
-				(char *)PS_malloc(strlen(dmp->name)+1);
+				(char *)malloc(strlen(dmp->name)+1);
                         CHECK_MALLOCED(doc->media[doc->nummedia].name);
 			strcpy(doc->media[doc->nummedia].name, dmp->name);
 			doc->media[doc->nummedia].width = dmp->width;
@@ -874,7 +873,7 @@ scan_ok:
 		if (doc->media[doc->nummedia].width != 0 &&
 		    doc->media[doc->nummedia].height != 0) doc->nummedia++;
 		else
-		    PS_free(doc->media[doc->nummedia].name);
+		    free(doc->media[doc->nummedia].name);
 	    }
 	    preread=1;
 	    while (readline(fd, &line, &position, &line_len) &&
@@ -883,7 +882,7 @@ scan_ok:
 		next_char = line + length("%%+");
 		while ((cp = ps_gettext(next_char, &next_char))) {
 		    doc->media = (Media)
-				 PS_realloc(doc->media,
+				 realloc(doc->media,
 					 (doc->nummedia+1)*
 					 sizeof (MediaStruct));
                     CHECK_MALLOCED(doc->media);
@@ -906,7 +905,7 @@ scan_ok:
 		    if (doc->media[doc->nummedia].width != 0 &&
 			doc->media[doc->nummedia].height != 0) doc->nummedia++;
 		    else
-			PS_free(doc->media[doc->nummedia].name);
+			free(doc->media[doc->nummedia].name);
 		}
 	    }
 	    section_len += line_len;
@@ -979,7 +978,7 @@ scan_ok:
 			break;
 		    }
 		}
-		PS_free(cp);
+		free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
 		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
@@ -1105,7 +1104,7 @@ scan_ok:
 			break;
 		    }
 		}
-		PS_free(cp);
+		free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
 		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
@@ -1180,7 +1179,7 @@ newpage:
     while (DSCcomment(line) && iscomment(line+2, "Page:")) {
 	if (maxpages == 0) {
 	    maxpages = 1;
-	    doc->pages = (struct page *) PS_calloc(maxpages, sizeof(struct page));
+	    doc->pages = (struct page *) calloc(maxpages, sizeof(struct page));
             CHECK_MALLOCED(doc->pages);
 	}
 	label = ps_gettext(line+length("%%Page:"), &next_char);
@@ -1189,7 +1188,7 @@ newpage:
 	    ignore = thispage != 1;
 	}
 	if (!ignore && thispage != nextpage) {
-	    PS_free(label);
+	    free(label);
 	    doc->numpages--;
 	    goto continuepage;
 	}
@@ -1197,7 +1196,7 @@ newpage:
 	if (doc->numpages == maxpages) {
 	    maxpages++;
 	    doc->pages = (struct page *)
-			 PS_realloc(doc->pages, maxpages*sizeof (struct page));
+			 realloc(doc->pages, maxpages*sizeof (struct page));
             CHECK_MALLOCED(doc->pages);
 
 	}
@@ -1237,7 +1236,7 @@ continuepage:
 			break;
 		    }
 		}
-		PS_free(cp);
+		free(cp);
 	    } else if (doc->pages[doc->numpages].media == NULL &&
 		       iscomment(line+2, "PaperSize:")) {
 		cp = ps_gettext(line+length("%%PaperSize:"), NULL);
@@ -1251,7 +1250,7 @@ continuepage:
 			break;
 		    }
 		}
-		PS_free(cp);
+		free(cp);
 	    } else if ((page_bb_set == NONE || page_bb_set == ATEND) &&
 		       iscomment(line+2, "PageBoundingBox:")) {
 		sec_sscanf(line+length("%%PageBoundingBox:"), "%256s", text);
@@ -1318,7 +1317,7 @@ continuepage:
 	if (!DSCcomment(line)) {
 	    /* Do nothing */
 	} else if (iscomment(line+2, "Page:")) {
-	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
+	    free(ps_gettext(line+length("%%Page:"), &next_char));
 	    if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
@@ -1411,7 +1410,7 @@ continuepage:
 	if (!preread) section_len += line_len;
 	preread = 0;
 	if (DSCcomment(line) && iscomment(line+2, "Page:")) {
-	    PS_free(ps_gettext(line+length("%%Page:"), &next_char));
+	    free(ps_gettext(line+length("%%Page:"), &next_char));
 	    if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
@@ -1454,16 +1453,16 @@ psfree(doc)
     BEGINMESSAGE(psfree)
     if (doc) {
 	for (i=0; i<doc->numpages; i++) {
-	    if (doc->pages[i].label) PS_free(doc->pages[i].label);
+	    if (doc->pages[i].label) free(doc->pages[i].label);
 	}
 	for (i=0; i<doc->nummedia; i++) {
-	    if (doc->media[i].name) PS_free(doc->media[i].name);
+	    if (doc->media[i].name) free(doc->media[i].name);
 	}
-	if (doc->title) PS_free(doc->title);
-	if (doc->date) PS_free(doc->date);
-	if (doc->pages) PS_free(doc->pages);
-	if (doc->media) PS_free(doc->media);
-	PS_free(doc);
+	if (doc->title) free(doc->title);
+	if (doc->date) free(doc->date);
+	if (doc->pages) free(doc->pages);
+	if (doc->media) free(doc->media);
+	free(doc);
     }
     ENDMESSAGE(psfree)
 }
@@ -1489,7 +1488,7 @@ gettextline(line)
 	return ps_gettext(line, NULL);
     } else {
 	if (strlen(line) == 0) {ENDMESSAGE(gettextline) return NULL;}
-	cp = (char *) PS_malloc(strlen(line));
+	cp = (char *) malloc(strlen(line));
 	CHECK_MALLOCED(cp);
 	strncpy(cp, line, strlen(line)-1);
 	cp[strlen(line)-1] = '\0';
@@ -1592,7 +1591,7 @@ ps_gettext(line, next_char)
     *cp = '\0';
     if (next_char) *next_char = line;
     if (!quoted && strlen(text) == 0) {ENDMESSAGE(ps_gettext) return NULL;}
-    cp = (char *) PS_malloc(strlen(text)+1);
+    cp = (char *) malloc(strlen(text)+1);
     CHECK_MALLOCED(cp);
     strcpy(cp, text);
     ENDMESSAGE(ps_gettext)
@@ -1631,7 +1630,7 @@ static FileData ps_io_init(file)
 
    BEGINMESSAGE(ps_io_init)
 
-   fd = (FileData) PS_XtMalloc(size);
+   fd = (FileData) XtMalloc(size);
    memset((void*) fd ,0,(size_t)size);
 
    rewind(file);
@@ -1639,7 +1638,7 @@ static FileData ps_io_init(file)
    FD_FILE_DESC = fileno(file);
    FD_FILEPOS   = GV_FTELL(file);
    FD_BUF_SIZE  = (2*LINE_CHUNK_SIZE)+1;
-   FD_BUF       = PS_XtMalloc(FD_BUF_SIZE);
+   FD_BUF       = XtMalloc(FD_BUF_SIZE);
    FD_BUF[0]    = '\0';
    ENDMESSAGE(ps_io_init)
    return(fd);
@@ -1654,8 +1653,8 @@ ps_io_exit(fd)
    FileData fd;
 {
    BEGINMESSAGE(ps_io_exit)
-   PS_XtFree(FD_BUF);
-   PS_XtFree(fd);
+   XtFree(FD_BUF);
+   XtFree((XtPointer)fd);
    ENDMESSAGE(ps_io_exit)
 }
 
@@ -1781,7 +1780,7 @@ static char * ps_io_fgetchars(fd,num)
 	    */
             FD_BUF_SIZE    = FD_BUF_SIZE+LINE_CHUNK_SIZE+1;
             IMESSAGE(FD_BUF_SIZE)
-            FD_BUF         = PS_XtRealloc(FD_BUF,FD_BUF_SIZE);
+            FD_BUF         = XtRealloc(FD_BUF,FD_BUF_SIZE);
          }
       }
 
@@ -2017,7 +2016,7 @@ pscopyuntil(fd, to, begin, end, comment)
       line = ps_io_fgetchars(fd,-1);
       if (!line) break;
       if (comment && strncmp(line, comment, comment_length) == 0) {
-         char *cp = (char *) PS_malloc(strlen(line)+1);
+         char *cp = (char *) malloc(strlen(line)+1);
          INFSMESSAGE(encountered specified,comment)
          CHECK_MALLOCED(cp);
          strcpy(cp, line);
@@ -2126,7 +2125,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
        SMESSAGE(comment)
        here = ps_io_ftell(fd);
        if (pages_written || pages_atend) {
-          PS_free(comment);
+          free(comment);
           continue;
        }
        sec_sscanf(comment+length("%%Pages:"), "%256s", text);
@@ -2144,7 +2143,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
           }
           pages_written = True;
        }
-       PS_free(comment);
+       free(comment);
    }
    pscopyuntil(fd, dest_file, d->beginpreview, d->endpreview,NULL);
    pscopyuntil(fd, dest_file, d->begindefaults, d->enddefaults,NULL);
@@ -2157,7 +2156,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
       if (pagelist[j]=='*') {
           comment = pscopyuntil(fd,dest_file,d->pages[i].begin,d->pages[i].end, "%%Page:");
           fprintf(dest_file, "%%%%Page: %s %d\n",d->pages[i].label, page++);
-          PS_free(comment);
+          free(comment);
           pscopyuntil(fd, dest_file, -1, d->pages[i].end,NULL);
       }
    }
@@ -2166,7 +2165,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
    while ((comment = pscopyuntil(fd, dest_file, here, d->endtrailer, "%%Pages:"))) {
       here = ps_io_ftell(fd);
       if (pages_written) {
-         PS_free(comment);
+         free(comment);
          continue;
       }
       switch (sec_sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
@@ -2178,7 +2177,7 @@ pscopydoc(dest_file,src_filename,d,pagelist)
             break;
       }
       pages_written = True;
-      PS_free(comment);
+      free(comment);
    }
    fclose(src_file);
    ps_io_exit(fd);

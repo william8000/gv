@@ -48,7 +48,6 @@
 #include INC_X11(Intrinsic.h)
 
 #include "types.h"
-#include "d_memdebug.h"
 
 char* mprintf(char* fmt,...)
 {
@@ -73,7 +72,7 @@ char* mprintf(char* fmt,...)
     }
   }
   va_end(a);
-  p = GV_XtMalloc(l*sizeof(char));
+  p = XtMalloc(l*sizeof(char));
   va_start(a,fmt);
   vsprintf(p,fmt,a);
   va_end(a);

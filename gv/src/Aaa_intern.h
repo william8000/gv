@@ -62,7 +62,6 @@
 #endif
 
 #include    "message.h"
-#include    "d_memdebug.h"
 
 #ifdef MEMDEBUG
 #   define MEMMESSAGE(sss)      INFMESSAGE(sss)
@@ -142,13 +141,13 @@ extern int			layout_lex (
 /* Macros */
 /*---------------------------------------------------------*/
 
-#define New(ttt)      (ttt *) AAA_XtMalloc(sizeof(ttt))
-#define Dispose(xxx)  AAA_XtFree(xxx)
-#define Some(ttt,nnn) (ttt *) AAA_XtMalloc(sizeof(ttt)*nnn)
+#define New(ttt)      (ttt *) XtMalloc(sizeof(ttt))
+#define Dispose(xxx)  XtFree((XtPointer)xxx)
+#define Some(ttt,nnn) (ttt *) XtMalloc(sizeof(ttt)*nnn)
 #define More(xxx,ttt,nnn)   (			\
  (xxx) ?					\
- (ttt *) AAA_XtRealloc(xxx,sizeof(ttt)*nnn) :	\
- (ttt *) AAA_XtMalloc(sizeof(ttt)*nnn)		\
+ (ttt *) XtRealloc(xxx,sizeof(ttt)*nnn) :	\
+ (ttt *) XtMalloc(sizeof(ttt)*nnn)		\
 )
 
 #define GlueEqual(a,b)			\

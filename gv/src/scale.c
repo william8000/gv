@@ -46,7 +46,6 @@
 #include "types.h"
 #include "config.h"
 #include "types.h"
-#include "d_memdebug.h"
 #include "options.h"
 #include "resource.h"
 #include "scale.h"
@@ -64,11 +63,11 @@ void scale_freeScales(scales)
   int i=0;
   BEGINMESSAGE(scale_freeScales)
   while (scales[i]) {
-    if (scales[i]->name) GV_XtFree(scales[i]->name);
-    GV_XtFree(scales[i]);
+    XtFree(scales[i]->name);
+    XtFree((XtPointer)scales[i]);
     i++;
   }
-  if (scales) GV_XtFree(scales);
+  XtFree((XtPointer)scales);
   ENDMESSAGE(scale_freeScales)
 }
 
@@ -79,7 +78,7 @@ void scale_freeScales(scales)
 static Scale scale_mallocScale(void)
 {
   Scale scale;
-  scale = (Scale) GV_XtMalloc(sizeof(ScaleStruct));
+  scale = (Scale) XtMalloc(sizeof(ScaleStruct));
   memset((void*)scale ,0,sizeof(ScaleStruct));
   return scale;
 }
@@ -99,7 +98,7 @@ Scale *scale_parseScales(s)
   s =options_squeezeMultiline(s);
   for (n=1,c=s; (c = strchr(c,'\n')); n++, c++);
   INFIMESSAGE(number of scales,n)
-  mscales = scales = (Scale*) GV_XtMalloc((n+3)*sizeof(Scale));
+  mscales = scales = (Scale*) XtMalloc((n+3)*sizeof(Scale));
   c=s;
   if (*s) while (n>0) {
     nl = strchr(c,'\n'); 
@@ -110,7 +109,7 @@ Scale *scale_parseScales(s)
     else i=sscanf(c," %[^,] , %f , %[^,] ",name,&f,kind);
     if (i>=2 && f>=-3.1) {
       scale = scale_mallocScale();
-      scale->name = GV_XtNewString(name);
+      scale->name = XtNewString(name);
       if (f>0)
          scale->scale = sqrt(f);
       else
@@ -130,14 +129,14 @@ Scale *scale_parseScales(s)
   }
   if (!have_center) {
     scale = scale_mallocScale();
-    scale->name = GV_XtNewString("1.000");
+    scale->name = XtNewString("1.000");
     scale->scale = 1.0;
     scale->is_center=1;
     *scales++ = scale;
   }
   if (!have_base) {
     scale = scale_mallocScale();
-    scale->name = GV_XtNewString("Natural size");
+    scale->name = XtNewString("Natural size");
     scale->scale = 1.0;
     scale->is_base=SCALE_IS_REAL_BASED;
     *scales++ = scale;
@@ -160,7 +159,7 @@ Scale *scale_parseScales(s)
     }
     else n++;
   }
-  GV_XtFree(s);
+  XtFree(s);
   ENDMESSAGE(scale_parseScales)
   return(mscales);
 }

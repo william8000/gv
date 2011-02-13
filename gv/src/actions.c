@@ -70,7 +70,6 @@
 #include "misc.h"
 #include "options.h"
 #include "version.h"
-#include "d_memdebug.h"
 
 /*##################################################################*/
 /* action_shellConfigureNotify */
@@ -191,9 +190,9 @@ action_page(w, event, params, num_params)
     if (i > 0 && i == old_num_params) {
        INFMESSAGE(freeing old parameters)
        i = 0;
-       while (i<old_num_params) GV_XtFree(old_params[i++]);
+       while (i<old_num_params) XtFree(old_params[i++]);
        i = 0;
-       GV_XtFree(old_params);
+       XtFree((XtPointer)old_params);
        old_num_params=0;
        old_params = NULL;
     }
@@ -335,10 +334,10 @@ save_params:
   if (i<*num_params) {
     old_num_params = *num_params - i;
     INFIMESSAGE(saving,old_num_params)
-    old_params = (String*) GV_XtMalloc(old_num_params*sizeof(String));
+    old_params = (String*) XtMalloc(old_num_params*sizeof(String));
     old=0;
     while (i < *num_params) {
-      old_params[old] = GV_XtNewString(params[i]);
+      old_params[old] = XtNewString(params[i]);
       INFSMESSAGE(saving,old_params[old])
       ++i; old++;
     }

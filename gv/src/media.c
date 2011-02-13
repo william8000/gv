@@ -46,7 +46,6 @@
 #include "types.h"
 #include "config.h"
 #include "types.h"
-#include "d_memdebug.h"
 #include "options.h"
 #include "media.h"
 
@@ -60,11 +59,11 @@ void media_freeMedias(medias)
   int i=0;
   BEGINMESSAGE(media_freeMedias)
   while (medias[i]) {
-    if (medias[i]->name) GV_XtFree(medias[i]->name);
-    GV_XtFree(medias[i]);
+    XtFree(medias[i]->name);
+    XtFree((XtPointer)medias[i]);
     i++;
   }
-  if (medias) GV_XtFree(medias);
+  XtFree((XtPointer)medias);
   ENDMESSAGE(media_freeMedias)
 }
 
@@ -75,7 +74,7 @@ void media_freeMedias(medias)
 static Media media_mallocMedia(void)
 {
   Media media;
-  media = (Media) GV_XtMalloc(sizeof(MediaStruct));
+  media = (Media) XtMalloc(sizeof(MediaStruct));
   memset((void*)media ,0,sizeof(MediaStruct));
   return media;
 }
@@ -93,9 +92,9 @@ Media *media_parseMedias(s)
   s =options_squeezeMultiline(s);
   for (n=1,c=s; (c = strchr(c,'\n')); n++, c++);
   INFIMESSAGE(number of medias,n)
-  mmedias = medias = (Media*) GV_XtMalloc((n+3)*sizeof(Media));
+  mmedias = medias = (Media*) XtMalloc((n+3)*sizeof(Media));
   media = media_mallocMedia();
-  media->name = GV_XtNewString("BBox");
+  media->name = XtNewString("BBox");
   media->width= 0;
   media->height= 0;
   media->used= 1;
@@ -110,7 +109,7 @@ Media *media_parseMedias(s)
     i=sscanf(c," %[^,] , %d %d ",name,&w,&h);
     if (i==3 && w>0 && h>0) {
       media = media_mallocMedia();
-      media->name = GV_XtNewString(name);
+      media->name = XtNewString(name);
       media->width= w;
       media->height= h;
       media->used= used;
@@ -125,7 +124,7 @@ Media *media_parseMedias(s)
   }
   if (!have_media) {
     media = media_mallocMedia();
-    media->name = GV_XtNewString("A4");
+    media->name = XtNewString("A4");
     media->width= 595;
     media->height= 842;
     media->used= 1;
@@ -134,7 +133,7 @@ Media *media_parseMedias(s)
   if (!have_used_media) mmedias[1]->used=1;
   *medias = (Media) NULL;
 
-  GV_XtFree(s);
+  XtFree(s);
   ENDMESSAGE(media_parseMedias)
   return(mmedias);
 }

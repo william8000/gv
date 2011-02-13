@@ -47,7 +47,6 @@
 
 /*  --- INCLUDE BEGIN -------- */
 #   include "vms_dir.h"
-#   include "d_memdebug.h"
 /*  --- INCLUDE END ---------- */
 
 #define	NOWILD		0x00000001
@@ -129,9 +128,9 @@ DIR *opendir( dirname )
       return (retdir);
    }
 
-   retdir = (DIR *) GV_malloc(sizeof(DIR));
+   retdir = (DIR *) malloc(sizeof(DIR));
    if (!retdir) {
-      INFMESSAGE(cannot GV_malloc retdir) ENDMESSAGE(opendir) 
+      INFMESSAGE(cannot malloc retdir) ENDMESSAGE(opendir)
       return (retdir);
    }
 
@@ -141,24 +140,24 @@ DIR *opendir( dirname )
 
    if (!Check_Directory(path)) {
       INFMESSAGE(cannot open) ENDMESSAGE(opendir)
-      GV_free(retdir);
+      free(retdir);
       return ((DIR *)NULL);
    }
 
-   filepathname = (char *) GV_malloc((MAXNAMLEN+1)*sizeof(char));
+   filepathname = (char *) malloc((MAXNAMLEN+1)*sizeof(char));
    if (!filepathname) {
       INFMESSAGE(cannot malloc filepathname) ENDMESSAGE(opendir)
-      GV_free(retdir);
+      free(retdir);
       return ((DIR *)NULL);
    }
    strcpy(filepathname, path);
    strcat(filepathname, "*.*.*");
 
-   retdescrip = (struct dsc$descriptor_s *) GV_malloc(sizeof(struct dsc$descriptor_s));
+   retdescrip = (struct dsc$descriptor_s *) malloc(sizeof(struct dsc$descriptor_s));
    if (!retdescrip) {
       INFMESSAGE(cannot malloc retdescrip) ENDMESSAGE(opendir)
-      GV_free(retdir);
-      GV_free(filepathname);
+      free(retdir);
+      free(filepathname);
       return ((DIR *)NULL);
    }
    retdescrip->dsc$b_dtype	= DSC$K_DTYPE_T;
@@ -168,12 +167,12 @@ DIR *opendir( dirname )
 
    retdir->dd_fd  = (unsigned long) retdescrip;
    retdir->dd_loc = 0;
-   retdir->dd_buf = (struct dirent *) GV_malloc(sizeof(struct dirent));
+   retdir->dd_buf = (struct dirent *) malloc(sizeof(struct dirent));
    if (!(retdir->dd_buf)) {
       INFMESSAGE(cannot malloc dd_buf) ENDMESSAGE(opendir)
-      GV_free(retdir);
-      GV_free(filepathname);
-      GV_free(retdescrip);
+      free(retdir);
+      free(filepathname);
+      free(retdescrip);
       return ((DIR *)NULL);
    }
 
@@ -246,10 +245,10 @@ int closedir(dirp)
 {
    BEGINMESSAGE(closedir)
    lib$find_file_end (&dirp->dd_loc);
-   GV_free (((struct dsc$descriptor_s*)dirp->dd_fd)->dsc$a_pointer);
-   GV_free ((void*)dirp->dd_fd);
-   GV_free ((void*)dirp->dd_buf);
-   GV_free ((void*)dirp);
+   free (((struct dsc$descriptor_s*)dirp->dd_fd)->dsc$a_pointer);
+   free ((void*)dirp->dd_fd);
+   free ((void*)dirp->dd_buf);
+   free ((void*)dirp);
    ENDMESSAGE(closedir)
    return(0);
 }

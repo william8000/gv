@@ -118,7 +118,6 @@
 #include "types.h"
 #include "actions.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "ps.h"
 #include "doc_misc.h"
@@ -195,7 +194,7 @@ misc_drawEyeGuide(w,d,x,y)
     return;
   }
   if (!egd) {
-    egd = (EyeGuideData) GV_XtMalloc(sizeof(EyeGuideDataStruct));
+    egd = (EyeGuideData) XtMalloc(sizeof(EyeGuideDataStruct));
     egd->w = w;
     egd->drawn = 0;
     egd->timer = (XtIntervalId) 0;
@@ -235,7 +234,7 @@ misc_drawEyeGuide(w,d,x,y)
   }
   if (d & (EYEGUIDE_REMOVE|EYEGUIDE_RESET)) {
     if (egd->timer) XtRemoveTimeOut(egd->timer);
-    GV_XtFree((char*)egd);
+    XtFree((char*)egd);
     egd = NULL;
   }
   ENDMESSAGE(misc_drawEyeGuide)
@@ -367,7 +366,7 @@ misc_openFile(name, fpP)
          INFMESSAGE(file is not useful)
          str="Invalid file: %s";
          l = strlen(str) + strlen(name) + 1;
-         error = GV_XtMalloc(l*sizeof(char));
+         error = XtMalloc(l*sizeof(char));
          sprintf(error,str,name);
       }
       else if ((fp = fopen(name, "r")) == NULL) {
@@ -413,7 +412,7 @@ String misc_changeFile(name)
   BEGINMESSAGE(misc_changeFile)
 
   if (!name) name="";
-  p = GV_XtMalloc((strlen(name)+5)*sizeof(char));
+  p = XtMalloc((strlen(name)+5)*sizeof(char));
   strcpy(p,name);
   if (strcmp(name,"-")) {
     if (!b && file_fileIsNotUseful(p)) sprintf(p,"%s.ps",name);  else b = True;
@@ -428,27 +427,27 @@ String misc_changeFile(name)
   error = misc_openFile(name,&fp);
   if (error) {
     ENDMESSAGE(misc_changeFile)
-    GV_XtFree(name);
+    XtFree(name);
     return(error);
   }
 
-  if (gv_filename_old) GV_XtFree(gv_filename_old);
-  if (gv_filename_raw) GV_XtFree(gv_filename_raw);
+  XtFree(gv_filename_old);
+  XtFree(gv_filename_raw);
   gv_filename_old = gv_filename;
   if (gv_filename_dsc) {
     unlink(gv_filename_dsc);
-    GV_XtFree(gv_filename_dsc);
+    XtFree(gv_filename_dsc);
     gv_filename_dsc=NULL;
   }
   if (gv_filename_unc) {
     unlink(gv_filename_unc);
-    GV_XtFree(gv_filename_unc);
+    XtFree(gv_filename_unc);
     gv_filename_unc=NULL;
   }
   if (gv_psfile) fclose(gv_psfile);
   
-  gv_filename = GV_XtNewString(name);
-  gv_filename_raw = GV_XtNewString(name);
+  gv_filename = XtNewString(name);
+  gv_filename_raw = XtNewString(name);
   gv_filename_raw = file_getUsefulName(gv_filename_raw);
   gv_psfile = fp;     
   if (strcmp(name,"-")) {
@@ -457,7 +456,7 @@ String misc_changeFile(name)
     mtime = sbuf.st_mtime;
     INFSMESSAGE(new,gv_filename)
   }
-  GV_XtFree(name);
+  XtFree(name);
   ENDMESSAGE(misc_changeFile)
   return(error);
 }
@@ -477,7 +476,7 @@ String close_file(file,name)
     char *error_close_fail     = "Cannot close file %s\n";
     size_t l;
     l = strlen(error_close_fail) + strlen(name) + 1;
-    error = GV_XtMalloc(l*sizeof(char));
+    error = XtMalloc(l*sizeof(char));
     sprintf(error,error_close_fail,name);
   }
   ENDMESSAGE(close_file)
@@ -542,7 +541,7 @@ int mode;
      }
      NotePopupShowMessage(message);
    }
-   if (gv_filename!=tmpname) GV_XtFree(tmpname);
+   if (gv_filename!=tmpname) XtFree(tmpname);
    ENDMESSAGE(check_file)
    return(r);
 }
@@ -783,7 +782,7 @@ show_page(number,data1)
                 error = misc_changeFile(filename);
                 if (error) {
 		   NotePopupShowMessage(error);
-		   GV_XtFree(error);
+		   XtFree(error);
  		   ENDMESSAGE(show_page)
                    return;
                 }
@@ -898,14 +897,14 @@ setup_ghostview()
     olddoc = doc;
     doc = NULL;
     current_page = NO_CURRENT_PAGE;
-    if (toc_text) GV_XtFree(toc_text);
+    XtFree(toc_text);
     oldtoc_entry_length = toc_entry_length;
     toc_text = NULL;
 
     INFMESSAGE(scanning file for structure information)
     gv_filename_dsc = gv_filename_unc = NULL;
     {
-       char* tmp = GV_malloc(1512	);
+       char* tmp = malloc(1512);
        char* src = gv_gs_cmd_scan_pdf;
        char* dest = tmp;
        int spaceFound = 0;
@@ -935,7 +934,7 @@ setup_ghostview()
 		  &gv_filename_unc,gv_uncompress_command,
 		  gv_scanstyle, gv_gs_safeDir);
 
-       GV_free(tmp);
+       free(tmp);
     }
     {
       int m;
@@ -1020,7 +1019,7 @@ setup_ghostview()
 	}
 	toc_entry_length = maxlen + 1;
 	toc_length = doc->numpages * toc_entry_length - 1;
-	toc_text = GV_XtMalloc(toc_length + 2); /* include final NULL */
+	toc_text = XtMalloc(toc_length + 2); /* include final NULL */
 
 	for (i = 0, tocp = toc_text; i < doc->numpages;
 	     i++, tocp += toc_entry_length) {
@@ -1054,7 +1053,7 @@ setup_ghostview()
       String s;
       int i=0;
       if (toc_text) {
-	s = (char*)GV_XtMalloc((doc->numpages+1)*sizeof(char));
+	s = (char*)XtMalloc((doc->numpages+1)*sizeof(char));
 	while (i < (int)doc->numpages) {
 	  s[i] = 'p';
 	  i++;
@@ -1077,7 +1076,7 @@ setup_ghostview()
       XawScrollbarSetThumb(newtocScroll,
 		      VlistScrollPosition(newtoc),
 		      VlistVisibleLength(newtoc,newtocClip->core.height));
-      GV_XtFree(s);
+      XtFree(s);
     }
 
     misc_setBitmap(w_toggleCurrentPage , show_toggleCurrentPage , app_res.mark_current_bitmap);
@@ -1641,8 +1640,8 @@ void misc_buildPagemediaMenu()
   if (doc) num_doc_media = doc->nummedia;
   
   i = gv_num_std_pagemedia + num_doc_media;
-  if (pagemediaEntry) GV_XtFree(pagemediaEntry);
-  pagemediaEntry = (Widget *) GV_XtMalloc(i * sizeof(Widget));
+  XtFree((XtPointer)pagemediaEntry);
+  pagemediaEntry = (Widget *) XtMalloc(i * sizeof(Widget));
   
   if (doc && doc->nummedia) {
     for (i = 0; i < doc->nummedia; i++) {
@@ -1734,7 +1733,7 @@ quote_filename (string)
 
     BEGINMESSAGE(quote_filename)
 
-    result = (char*) GV_XtMalloc((2 * strlen (string) + 1) * sizeof(char));
+    result = (char*) XtMalloc((2 * strlen (string) + 1) * sizeof(char));
 
     for (r = result, s = string; s && (c = *s); s++)
     {

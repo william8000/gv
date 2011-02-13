@@ -59,7 +59,6 @@
 
 #include "types.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "widgets_misc.h"
 #include "main_resources.h"
@@ -141,7 +140,7 @@ static Boolean options_gs_change (w,sP,fP)
       *fP = *sP;
       *sP = v;
       r = True;
-  } else GV_XtFree(v);
+  } else XtFree(v);
   ENDMESSAGE(options_gs_change)
   return(r);
 }
@@ -194,7 +193,7 @@ static void options_gs_cb_apply(w, client_data, call_data)
      XtSetValues(page, args, n);
      if (gv_filename) show_page(REQUEST_REOPEN,NULL);
    }
-   for (i=0; i<6 ; i++) if (f[i]) GV_XtFree(f[i]);
+   for (i=0; i<6 ; i++) XtFree(f[i]);
 
    ENDMESSAGE(options_gs_cb_apply)
 }
@@ -216,7 +215,7 @@ static void options_gs_setArg(w,argiP,argvP,argnP,format,name)
   s = options_squeeze(s);
   options_setArg(argiP,argvP,format,name,s);
   ++(*argnP);
-  GV_XtFree(s);
+  XtFree(s);
 }
 
 static
@@ -250,8 +249,8 @@ void options_gs_cb_save(w, client_data, call_data)
 
   options_save(argn,argi,argv);
   while (--argn >=0) {
-    GV_XtFree(argi[argn]); 
-    GV_XtFree(argv[argn]);
+    XtFree(argi[argn]);
+    XtFree(argv[argn]);
   }
 
   ENDMESSAGE(options_gv_cb_save)

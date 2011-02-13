@@ -61,7 +61,6 @@
 
 #include "types.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "widgets_misc.h"
 #include "magmenu.h"
 #include "main_resources.h"
@@ -130,19 +129,19 @@ static void options_setup_setOptionsAtEntry(void)
   SMESSAGE(gv_scales_res)
     s = options_squeezeMultiline(gv_scales_res);
     widgets_setText(scales,s);
-    GV_XtFree(s);
+    XtFree(s);
   SMESSAGE(gv_medias_res)
     s = options_squeezeMultiline(gv_medias_res); 
     widgets_setText(medias,s);
-    GV_XtFree(s);
+    XtFree(s);
   SMESSAGE(gv_magmenu_entries_res)
     s = options_squeezeMultiline(gv_magmenu_entries_res);
     widgets_setText(magmenu,s);
-    GV_XtFree(s);
+    XtFree(s);
   SMESSAGE(gv_miscmenu_entries_res)
     s = options_squeezeMultiline(gv_miscmenu_entries_res);
     widgets_setText(miscmenu,s);
-    GV_XtFree(s);
+    XtFree(s);
   sprintf(tmp,"%d x %d",gv_screen_width,gv_screen_height);
   widgets_setText(screenSize,tmp);
 
@@ -232,13 +231,13 @@ static void options_setup_cb_apply(w, client_data, call_data)
      sr = options_squeezeMultiline(gv_scales_res);
      s  = options_squeezeMultiline(l);
      if (strcmp(s,sr)) {
-       GV_XtFree(sr);
-       GV_XtFree(gv_scales_res);
+       XtFree(sr);
+       XtFree(gv_scales_res);
        gv_scales_res=s;
        scale_freeScales(gv_scales);
        gv_scales = scale_parseScales(gv_scales_res);
        XtDestroyWidget(scaleMenu);
-       GV_XtFree(scaleEntry);
+       XtFree((XtPointer)scaleEntry);
        main_createScaleMenu();
        gv_scale = scale_checkScaleNum(gv_scales,app_res.scale|SCALE_REL);
        if (gv_scale < 0) gv_scale = scale_checkScaleNum(gv_scales,0|SCALE_REL);
@@ -252,8 +251,8 @@ static void options_setup_cb_apply(w, client_data, call_data)
        gv_scale_current = gv_scale_base_current = -1;
        redisplay=True;
      } else {
-       GV_XtFree(s);
-       GV_XtFree(sr);
+       XtFree(s);
+       XtFree(sr);
      }
    }
 
@@ -263,8 +262,8 @@ static void options_setup_cb_apply(w, client_data, call_data)
      sr = options_squeezeMultiline(gv_medias_res);
      s  = options_squeezeMultiline(l);
      if (strcmp(s,sr)) {
-       GV_XtFree(sr);
-       GV_XtFree(gv_medias_res);
+       XtFree(sr);
+       XtFree(gv_medias_res);
        gv_medias_res=s;
        media_freeMedias(gv_medias);
        gv_medias = media_parseMedias(gv_medias_res);
@@ -285,8 +284,8 @@ static void options_setup_cb_apply(w, client_data, call_data)
        options_gv_createMediaMenus();
        redisplay=True;
      } else {
-       GV_XtFree(s);
-       GV_XtFree(sr);
+       XtFree(s);
+       XtFree(sr);
      }
    }
 
@@ -373,8 +372,8 @@ void options_setup_cb_save(w, client_data, call_data)
 
   options_save(argn,argi,argv);
   while (--argn >=0) {
-    GV_XtFree(argi[argn]); 
-    GV_XtFree(argv[argn]);
+    XtFree(argi[argn]);
+    XtFree(argv[argn]);
   }
 
   ENDMESSAGE(options_setup_cb_save)

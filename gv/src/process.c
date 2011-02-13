@@ -59,7 +59,6 @@
 #include "types.h"
 #include "config.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "process.h"
 #include "main_resources.h"
 #include "main_globals.h"
@@ -97,7 +96,7 @@ static ProcessData process_get_pd(void)
 #  ifdef MESSAGES
       if (!gpd) { INFMESSAGE(no processes registered yet) }
 #  endif
-   pd = (ProcessData) PROC_XtMalloc(size);
+   pd = (ProcessData) XtMalloc(size);
    memset((void*) pd ,0,(size_t)size);
    if (!gpd) gpd = pd;
    else {
@@ -125,8 +124,8 @@ static void process_remove_pd(pd)
    }
    process_menu(pd,PROCESS_MENU_DEL_ENTRY);
    DESTROY_TIMER(pd->timer)
-   PROC_XtFree(pd->name);
-   PROC_XtFree(pd);
+   XtFree(pd->name);
+   XtFree((XtPointer)pd);
 #  ifdef MESSAGES
       if (!gpd) { INFMESSAGE(no more processes registered) }
 #  endif
@@ -289,7 +288,7 @@ ProcessData process_fork (name,command,notify_proc,data)
       }
    }
    INFMESSAGE(parent process)
-   pd->name        = PROC_XtNewString(name);
+   pd->name        = XtNewString(name);
    pd->notify_proc = notify_proc;
    pd->data        = data;
    pd->pid         = pid;
@@ -357,7 +356,7 @@ void process_menu(pd,action)
                                                 n=0;
          XtSetArg(args[n], XtNlabel,  &label);	n++;
          XtGetValues(processButton,args,n);
-         label=PROC_XtNewString(label);
+         label=XtNewString(label);
          SMESSAGE(label)
 
                                                 n=0;
@@ -371,7 +370,7 @@ void process_menu(pd,action)
    					        n=0;
          XtSetArg(args[n], XtNresize,  False);	n++;
          XtSetValues(processButton,args,n);
-         PROC_XtFree(label);
+         XtFree(label);
 
          process_set_shell_resize(allow_resize);
          visible=1; 
@@ -422,7 +421,7 @@ void process_menu(pd,action)
          XtSetArg(args[n], XtNlabel,  &label);	n++;
          XtGetValues(processButton,args,n);
          len = strlen(label);
-         tmp = (char*) PROC_XtMalloc(len*sizeof(char)+1);
+         tmp = (char*) XtMalloc(len*sizeof(char)+1);
          strcpy(tmp,&(label[progress]));
          if (progress) {
             if (progress>(int)len) progress=(int)len;
@@ -432,7 +431,7 @@ void process_menu(pd,action)
          progress++;
          if (progress==(int)len+1) progress=0;
          update_label(processButton,tmp);
-         PROC_XtFree(tmp);
+         XtFree(tmp);
       }
    }
 }

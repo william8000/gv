@@ -52,7 +52,6 @@
 #include "actions.h"
 #include "magmenu.h"
 #include "options.h"
-#include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
 #include "zoom.h"
@@ -67,11 +66,11 @@ void magmenu_freeMagMenuEntries(entries)
   int i=0;
   BEGINMESSAGE(magmenu_freeMagMenuEntries)
   while (entries[i]) {
-    if (entries[i]->name) GV_XtFree(entries[i]->name);
-    GV_XtFree(entries[i]);
+    XtFree(entries[i]->name);
+    XtFree((XtPointer)entries[i]);
     i++;
   }
-  if (entries) GV_XtFree(entries);
+  XtFree((XtPointer)entries);
   ENDMESSAGE(magmenu_freeMagMenuEntries)
 }
 
@@ -82,7 +81,7 @@ void magmenu_freeMagMenuEntries(entries)
 static MagMenuEntry magmenu_mallocMagMenuEntry(void)
 {
   MagMenuEntry entry;
-  entry = (MagMenuEntry) GV_XtMalloc(sizeof(MagMenuEntryStruct));
+  entry = (MagMenuEntry) XtMalloc(sizeof(MagMenuEntryStruct));
   memset((void*)entry ,0,sizeof(MagMenuEntryStruct));
   return entry;
 }
@@ -101,7 +100,7 @@ MagMenuEntry *magmenu_parseMagMenuEntries(s)
   s =options_squeezeMultiline(s);
   for (n=1,c=s; (c = strchr(c,'\n')); n++, c++);
   INFIMESSAGE(number of medias,n)
-  mentries = entries = (MagMenuEntry*) GV_XtMalloc((n+2)*sizeof(MagMenuEntry));
+  mentries = entries = (MagMenuEntry*) XtMalloc((n+2)*sizeof(MagMenuEntry));
   c=s;
   if (*s) while (n>0) {
     nl = strchr(c,'\n'); 
@@ -111,7 +110,7 @@ MagMenuEntry *magmenu_parseMagMenuEntries(s)
     else i=sscanf(c," %[^,] , %f ",name,&f);
     if (i==2 && f>0) {
       entry = magmenu_mallocMagMenuEntry();
-      entry->name = GV_XtNewString(name);
+      entry->name = XtNewString(name);
       entry->scale= sqrt(f);
       have_entry = 1;
       INFSMESSAGE(found entry,entry->name)
@@ -123,12 +122,12 @@ MagMenuEntry *magmenu_parseMagMenuEntries(s)
   }
   if (!have_entry) {
     entry = magmenu_mallocMagMenuEntry();
-    entry->name = GV_XtNewString("  2  ");
+    entry->name = XtNewString("  2  ");
     entry->scale= sqrt(2.0);
     *entries++ = entry;
   }
   *entries = (MagMenuEntry) NULL;
-  GV_XtFree(s);
+  XtFree(s);
   ENDMESSAGE(magmenu_parseMagMenuEntries)
   return(mentries);
 }
@@ -174,7 +173,7 @@ magmenu_a_magMenu (w, event, params, num_params)
       if (d) {
          INFMESSAGE(resetting)
          if (d->menuwidget) XtDestroyWidget(d->menuwidget);
-         GV_XtFree((char*)d);
+         XtFree((char*)d);
          d = (magMenu_data *)NULL;
       }
       mode = MAG_INIT_0;
@@ -204,7 +203,7 @@ magmenu_a_magMenu (w, event, params, num_params)
     if (mode&MAG_BEGIN) {
        INFMESSAGE(MAG_BEGIN)
        gvw = w;
-       d = (magMenu_data *) GV_XtMalloc(sizeof(magMenu_data));
+       d = (magMenu_data *) XtMalloc(sizeof(magMenu_data));
        d->locx1 = event->xbutton.x;
        d->locy1 = event->xbutton.y;
        d->menuwidget = NULL;

@@ -60,7 +60,6 @@
 
 #include "types.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
 #include "gv_signal.h"
@@ -149,10 +148,10 @@ static void signal_scb_updateFile(client_data,sidP)
   if (gv_filename) {
     String s;
     struct stat sbuf;
-    s = GV_XtNewString(gv_filename);
+    s = XtNewString(gv_filename);
     if (!stat(s, &sbuf) && mtime != sbuf.st_mtime)
        cb_checkFile(NULL,(XtPointer)CHECK_FILE_VERSION,NULL);
-    GV_XtFree(s);
+    XtFree(s);
   }
   block_updateFile = 0;
   ENDMESSAGE(signal_scb_updateFile)

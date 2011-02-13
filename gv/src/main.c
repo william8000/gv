@@ -82,7 +82,6 @@
 #include "actions.h"
 #include "callbacks.h"
 #include "confirm.h"
-#include "d_memdebug.h"
 #include "dialog.h"
 #include "error.h"
 #include "file.h"
@@ -456,11 +455,11 @@ int main(argc, argv)
      */
      const char *xufsp="XUSERFILESEARCHPATH";
      char *xuf;
-     xuf = getenv(xufsp); if (xuf) xuf = GV_XtNewString(xuf);
+     xuf = getenv(xufsp); if (xuf) xuf = XtNewString(xuf);
      gnu_gv_setenv(xufsp,"___",1);
      gv_display = XtOpenDisplay(app_con,NULL,NULL,gv_class,NULL,0,&argc,argv);
 
-     if (xuf) { gnu_gv_setenv(xufsp,xuf,1); GV_XtFree(xuf); } else gnu_gv_unsetenv(xufsp);
+     if (xuf) { gnu_gv_setenv(xufsp,xuf,1); XtFree(xuf); } else gnu_gv_unsetenv(xufsp);
      if (gv_display)
         XtGetApplicationNameAndClass(gv_display,&gv_name,&gv_class);
      SMESSAGE(gv_name) SMESSAGE(gv_class)
@@ -634,7 +633,7 @@ int main(argc, argv)
 	   exit(0);
 
 	 case PASSWORD_ARG:
-	   gv_pdf_password = GV_XtNewString(optarg);
+	   gv_pdf_password = XtNewString(optarg);
 	   break;
 
 	 case SPARTAN_ARG:
@@ -739,20 +738,20 @@ int main(argc, argv)
     app_res.minimum_height = app_res.minimum_height < 300 ? 300 : app_res.minimum_height; 
 
     gv_medias_res = resource_getResource(gv_database,gv_class,gv_name,"medias","Medias");
-    gv_medias_res = GV_XtNewString(gv_medias_res);
+    gv_medias_res = XtNewString(gv_medias_res);
     gv_medias = media_parseMedias(gv_medias_res);
     gv_num_std_pagemedia = media_numMedias(gv_medias);
 
     gv_magmenu_entries_res = resource_getResource(gv_database,gv_class,gv_name,"magMenu","MagMenu");
-    gv_magmenu_entries_res = GV_XtNewString(gv_magmenu_entries_res);
+    gv_magmenu_entries_res = XtNewString(gv_magmenu_entries_res);
     gv_magmenu_entries = magmenu_parseMagMenuEntries(gv_magmenu_entries_res);
 
     gv_miscmenu_entries_res = resource_getResource(gv_database,gv_class,gv_name,"miscMenuEntries","MiscMenuEntries");
-    gv_miscmenu_entries_res = GV_XtNewString(gv_miscmenu_entries_res);
+    gv_miscmenu_entries_res = XtNewString(gv_miscmenu_entries_res);
     gv_miscmenu_entries = miscmenu_parseMiscMenuEntries(gv_miscmenu_entries_res);
     
     gv_scales_res = resource_getResource(gv_database,gv_class,gv_name,"scales","Scales");
-    gv_scales_res = GV_XtNewString(gv_scales_res);
+    gv_scales_res = XtNewString(gv_scales_res);
     gv_scales = scale_parseScales(gv_scales_res);
     gv_scale_current = gv_scale_base_current = -1;
 
@@ -1217,7 +1216,7 @@ int main(argc, argv)
 
    if (argc == optind + 1) 
      {
-       gv_filename=GV_XtNewString(argv[optind]);
+       gv_filename=XtNewString(argv[optind]);
      }
 
    if (gv_filename && strcmp(gv_filename, "-")) {
@@ -1226,7 +1225,7 @@ int main(argc, argv)
 	clean_safe_tempdir();
 	exit(EXIT_STATUS_ERROR);
       } else {
-        GV_XtFree(gv_filename_old);
+        XtFree(gv_filename_old);
         gv_filename_old = NULL;
       }
    }
@@ -1317,9 +1316,9 @@ int main(argc, argv)
     XtSetArg(args[n], XtNdirs,    &gv_dirs);	n++;
     XtSetArg(args[n], XtNfilter,  &gv_filter);	n++;
     XtGetValues(FileSel,args,n);
-    gv_filters = GV_XtNewString(gv_filters);
-    gv_dirs    = GV_XtNewString(gv_dirs);
-    gv_filter  = GV_XtNewString(gv_filter);
+    gv_filters = XtNewString(gv_filters);
+    gv_dirs    = XtNewString(gv_dirs);
+    gv_filter  = XtNewString(gv_filter);
 
 /*### now we become visible ######################################################*/
 
@@ -1431,7 +1430,7 @@ void main_setInternResource(db,sP,name)
   BEGINMESSAGE(main_setInternResource)
   *sP = resource_getResource(db,gv_class,gv_class,name,NULL);
   if (!*sP) *sP="";
-  *sP = GV_XtNewString(*sP);
+  *sP = XtNewString(*sP);
   ENDMESSAGE(main_setInternResource)
 }
 
@@ -1570,7 +1569,7 @@ void main_createScaleMenu(void)
 							n=0;
   scaleMenu = XtCreatePopupShell("menu", simpleMenuWidgetClass,scaleButton,args,n);
   for (i=0; gv_scales[i]; i++);
-  scaleEntry = (Widget*) GV_XtMalloc(i*sizeof(Widget));
+  scaleEntry = (Widget*) XtMalloc(i*sizeof(Widget));
   for (i=0; gv_scales[i]; i++) {
     if (!have_line && !gv_scales[i]->is_base) {
       XtCreateManagedWidget("line", smeLineObjectClass,scaleMenu,NULL,(Cardinal)0);

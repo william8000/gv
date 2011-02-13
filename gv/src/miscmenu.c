@@ -54,7 +54,6 @@
 #include "callbacks.h"
 #include "miscmenu.h"
 #include "options.h"
-#include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
 
@@ -86,10 +85,10 @@ void miscmenu_freeMiscMenuEntries(entries)
   int i=0;
   BEGINMESSAGE(miscmenu_freeMiscMenuEntries)
   while (entries[i]) {
-    GV_XtFree(entries[i]);
+    XtFree((XtPointer)entries[i]);
     i++;
   }
-  if (entries) GV_XtFree(entries);
+  XtFree((XtPointer)entries);
   ENDMESSAGE(miscmenu_freeMiscMenuEntries)
 }
 
@@ -100,7 +99,7 @@ void miscmenu_freeMiscMenuEntries(entries)
 static MiscMenuEntry miscmenu_mallocMiscMenuEntry(void)
 {
   MiscMenuEntry entry;
-  entry = (MiscMenuEntry) GV_XtMalloc(sizeof(MiscMenuEntryStruct));
+  entry = (MiscMenuEntry) XtMalloc(sizeof(MiscMenuEntryStruct));
   memset((void*)entry ,0,sizeof(MiscMenuEntryStruct));
   return entry;
 }
@@ -118,7 +117,7 @@ MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
   s =options_squeezeMultiline(s);
   for (n=1,c=s; (c = strchr(c,'\n')); n++, c++);
   INFIMESSAGE(number of entries,n)
-  mentries = entries = (MiscMenuEntry*) GV_XtMalloc((n+2)*sizeof(MiscMenuEntry));
+  mentries = entries = (MiscMenuEntry*) XtMalloc((n+2)*sizeof(MiscMenuEntry));
   c=s;
   if (*s) while (n>0) {
     nl = strchr(c,'\n'); 
@@ -144,7 +143,7 @@ MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
     *entries++ = entry;
   }
   *entries = (MiscMenuEntry) NULL;
-  GV_XtFree(s);
+  XtFree(s);
   ENDMESSAGE(miscmenu_parseMiscMenuEntries)
   return(mentries);
 }

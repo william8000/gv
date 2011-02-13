@@ -49,7 +49,6 @@
 
 #include "types.h"
 #include "config.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "main_resources.h"
 #include "main_globals.h"
@@ -117,10 +116,10 @@ extern int debug_p;
 void resource_freeData()
 {
   BEGINMESSAGE(resource_freeData)
-    if (resource_system_file) GV_XtFree(resource_system_file);
-  if (resource_user_file)   GV_XtFree(resource_user_file);
-  if (resource_style_file)  GV_XtFree(resource_style_file);
-  if (resource_ad_file)     GV_XtFree(resource_ad_file);
+  XtFree(resource_system_file);
+  XtFree(resource_user_file);
+  XtFree(resource_style_file);
+  XtFree(resource_ad_file);
   ENDMESSAGE(resource_freeData)
     }
 
@@ -157,7 +156,7 @@ resource_buildDatabase (
   /* ### system resources ################# */
   INFMESSAGE(checking for system resources)
 
-  rpath = GV_XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad") + 1);
+  rpath = XtMalloc (strlen (GV_LIBDIR) + strlen ("/gv_system.ad") + 1);
   rpath[0] = '\0';
   strcat (rpath, GV_LIBDIR);
   strcat (rpath, "/gv_system.ad");
@@ -178,7 +177,7 @@ resource_buildDatabase (
   strcpy(tmp,USER_DEFAULTS);
   file_translateTildeInPath(tmp);
   if (!file_fileIsNotUseful(tmp)) {
-    s = GV_XtNewString(tmp);
+    s = XtNewString(tmp);
     tildeGv = USER_DEFAULTS;
     haveXUSERFILESEARCHPATH = 0;
   } else {
@@ -194,7 +193,7 @@ resource_buildDatabase (
     resource_user_file = s;
     resource_user_file_symb = tildeGv;
   } else {
-    resource_user_file = GV_XtNewString(tmp);
+    resource_user_file = XtNewString(tmp);
   }
 
   /* ### Loading localisation ### */
@@ -468,22 +467,22 @@ resource_buildDatabase (
   if (spartan_p)
     {
       char *spartan_filename = (char *)
-	GV_XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_spartan.dat") + 1);
+	XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_spartan.dat") + 1);
       spartan_filename[0] = '\0';
       strcat(spartan_filename, GV_LIBDIR);
       strcat(spartan_filename, "/gv_spartan.dat");
       resource_putResource (&db, app_name, ".style", spartan_filename);
-      GV_XtFree (spartan_filename);
+      XtFree (spartan_filename);
     }
   if (widgetless_p)
     {
       char *widgetless_filename = (char *)
-	GV_XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_widgetless.dat") + 1);
+	XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_widgetless.dat") + 1);
       widgetless_filename[0] = '\0';
       strcat(widgetless_filename, GV_LIBDIR);
       strcat(widgetless_filename, "/gv_widgetless.dat");
       resource_putResource (&db, app_name, ".style", widgetless_filename);
-      GV_XtFree (widgetless_filename);
+      XtFree (widgetless_filename);
     }
   if (quiet_p)
     {
@@ -635,10 +634,10 @@ resource_buildDatabase (
     } else s = t;
 #   endif
     if (s) {
-      s = GV_XtNewString(s);
+      s = XtNewString(s);
       resource_style_file = s;
     }
-    if (t) GV_XtFree(t);
+    XtFree(t);
   }
 
   /* ### ad resources ######################## */
@@ -652,10 +651,10 @@ resource_buildDatabase (
       s=NULL;
     } else s = t;
     if (s) {
-      s = GV_XtNewString(s);
+      s = XtNewString(s);
       resource_ad_file = s;
     }
-    if (t) GV_XtFree(t);
+    XtFree(t);
   }
 
   ENDMESSAGE(resource_buildDatabase)
@@ -851,7 +850,7 @@ char *resource_userDefaultsFile()
     if      (resource_ad_file)   s = resource_ad_file;
     else if (resource_user_file) s = resource_user_file;
     else                         s = USER_DEFAULTS;
-  s = GV_XtNewString(s);
+  s = XtNewString(s);
   return(s);
   ENDMESSAGE(resource_userResourceFile)  
     }
@@ -905,7 +904,7 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
   if (useful==1) {
     INFSMESSAGE(merging,tmp)
       XrmCombineFileDatabase(tmp,dbP,True);
-    name = GV_XtNewString(tmp);
+    name = XtNewString(tmp);
   }
   else name=NULL;
   ENDMESSAGE(resource_mergeFileIntoDatabase)

@@ -50,8 +50,6 @@
 #include "Frame.h"
 #include INC_XMU(Converters.h)
 
-#include "d_memdebug.h"
-
 #define VLIST_MARK_LEFT_INDENT  4
 #define VLIST_MARK_LABEL_INTERNAL_WIDTH 11
 #define VLIST_MARK_LABEL_INDENT 4
@@ -195,7 +193,7 @@ Cardinal *num_args;		/* unused */
 
   BEGINMESSAGE(Initialize)
   if (vw->vlist.vlist) s = vw->vlist.vlist;
-  vw->vlist.vlist = GV_XtNewString(s);
+  vw->vlist.vlist = XtNewString(s);
   c = vw->vlist.vlist;
   vw->vlist.firstVisible = 0;
   vw->vlist.selected = -1;
@@ -295,8 +293,8 @@ Cardinal *num_args;
   BEGINMESSAGE(SetValues)
   if (nvw->vlist.vlist == NULL) nvw->vlist.vlist = "";
   if (cvw->vlist.vlist != nvw->vlist.vlist) {
-    GV_XtFree((char *)cvw->vlist.vlist);
-    nvw->vlist.vlist = GV_XtNewString(nvw->vlist.vlist);
+    XtFree((char *)cvw->vlist.vlist);
+    nvw->vlist.vlist = XtNewString(nvw->vlist.vlist);
     nvw->vlist.entries = (int)strlen(nvw->vlist.vlist);
     if (!nvw->vlist.entries) nvw->vlist.entries =- 1;
     SMESSAGE(nvw->vlist.vlist)
@@ -318,7 +316,7 @@ Widget w;
   VlistWidget vw = (VlistWidget)w;
 
   BEGINMESSAGE(Destroy)
-  GV_XtFree(vw->vlist.vlist);
+  XtFree(vw->vlist.vlist);
   XtReleaseGC(w,vw->vlist.background_GC);
   XtReleaseGC(w,vw->vlist.mark_background_GC);
   XtReleaseGC(w,vw->vlist.selected_background_GC);

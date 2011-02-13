@@ -142,14 +142,6 @@ gv_SOURCES = Aaa.c \
              Aaa_intern.h \
              Aaa.h \
              AaaP.h \
-             d_memdebug.h \
-             d_aaa_xtmem.h \
-             d_fs_xtmem.h \
-             d_gv_mem.h \
-             d_gv_xtmem.h \
-             d_proc_xtmem.h \
-             d_ps_mem.h \
-             d_ps_xtmem.h \
              gv_message.h \
              types.h \
              gv-update-userconfig.in
@@ -281,10 +273,6 @@ endif
 if USE_SETENV_CODE
    gv_SOURCES += setenv.c setenv.h
    AM_CPPFLAGS += -DUSE_SETENV_CODE
-endif
-
-if USE_MEMDEBUG_CODE
-   gv_SOURCES += d_mem.c d_mem.h d_xtmem.c d_xtmem.h
 endif
 
 install-data-local:

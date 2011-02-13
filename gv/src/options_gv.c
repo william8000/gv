@@ -61,7 +61,6 @@
 
 #include "types.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "widgets_misc.h"
 #include "main_resources.h"
@@ -267,11 +266,11 @@ static void options_gv_cb_apply(w, client_data, call_data)
      reopen=True;
    }
 
-   if (s_media) GV_XtFree(app_res.default_pagemedia);
+   if (s_media) XtFree(app_res.default_pagemedia);
 							n=0;
    XtSetArg(args[n], XtNlabel, &app_res.default_pagemedia);n++;
    XtGetValues(mediaButton, args, n);
-   app_res.default_pagemedia = GV_XtNewString(app_res.default_pagemedia);
+   app_res.default_pagemedia = XtNewString(app_res.default_pagemedia);
    i = doc_convStringToPageMedia(NULL,app_res.default_pagemedia);
    if (i != opt_pagemedia) {
      INFMESSAGE(pagemedia changed)
@@ -285,24 +284,24 @@ static void options_gv_cb_apply(w, client_data, call_data)
    }
    s_media = True;
 
-   if (s_fmedia) GV_XtFree(app_res.fallback_pagemedia);
+   if (s_fmedia) XtFree(app_res.fallback_pagemedia);
 							n=0;
    XtSetArg(args[n], XtNlabel, &app_res.fallback_pagemedia);n++;
    XtGetValues(fmediaButton, args, n);
-   app_res.fallback_pagemedia = GV_XtNewString(app_res.fallback_pagemedia);
+   app_res.fallback_pagemedia = XtNewString(app_res.fallback_pagemedia);
    gv_fallback_pagemedia = doc_convStringToPageMedia(NULL,app_res.fallback_pagemedia);
    s_fmedia = True;
 
-   if (s_orient) GV_XtFree(app_res.default_orientation);
+   if (s_orient) XtFree(app_res.default_orientation);
 							n=0;
    XtSetArg(args[n], XtNlabel, &v);n++;
    XtGetValues(orientButton, args, n);
 
-   if (!strcmp(v, automaticLabel))   app_res.default_orientation = GV_XtNewString("Automatic");
-   else if (!strcmp(v, orientations[0]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[0]);
-   else if (!strcmp(v, orientations[1]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[1]);
-   else if (!strcmp(v, orientations[2]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[2]);
-   else if (!strcmp(v, orientations[3]))   app_res.default_orientation = GV_XtNewString(orientationsExtern[3]);
+   if (!strcmp(v, automaticLabel))   app_res.default_orientation = XtNewString("Automatic");
+   else if (!strcmp(v, orientations[0]))   app_res.default_orientation = XtNewString(orientationsExtern[0]);
+   else if (!strcmp(v, orientations[1]))   app_res.default_orientation = XtNewString(orientationsExtern[1]);
+   else if (!strcmp(v, orientations[2]))   app_res.default_orientation = XtNewString(orientationsExtern[2]);
+   else if (!strcmp(v, orientations[3]))   app_res.default_orientation = XtNewString(orientationsExtern[3]);
 
    i = doc_convStringToDocOrient(app_res.default_orientation);
    if (i != opt_orientation) {
@@ -316,15 +315,15 @@ static void options_gv_cb_apply(w, client_data, call_data)
    }
    s_orient = True;
 
-   if (s_forient) GV_XtFree(app_res.fallback_orientation);
+   if (s_forient) XtFree(app_res.fallback_orientation);
 							n=0;
    XtSetArg(args[n], XtNlabel, &v);n++;
    XtGetValues(forientButton, args, n);
 
-   if (!strcmp(v, orientations[0]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[0]);
-   else if (!strcmp(v, orientations[1]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[1]);
-   else if (!strcmp(v, orientations[2]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[2]);
-   else if (!strcmp(v, orientations[3]))   app_res.fallback_orientation = GV_XtNewString(orientationsExtern[3]);
+   if (!strcmp(v, orientations[0]))   app_res.fallback_orientation = XtNewString(orientationsExtern[0]);
+   else if (!strcmp(v, orientations[1]))   app_res.fallback_orientation = XtNewString(orientationsExtern[1]);
+   else if (!strcmp(v, orientations[2]))   app_res.fallback_orientation = XtNewString(orientationsExtern[2]);
+   else if (!strcmp(v, orientations[3]))   app_res.fallback_orientation = XtNewString(orientationsExtern[3]);
 
    gv_fallback_orientation = doc_convStringToDocOrient(app_res.fallback_orientation);
    s_forient = True;
@@ -457,8 +456,8 @@ void options_gv_cb_save(w, client_data, call_data)
 
   options_save(argn,argi,argv);
   while (--argn >=0) {
-    GV_XtFree(argi[argn]); 
-    GV_XtFree(argv[argn]);
+    XtFree(argi[argn]);
+    XtFree(argv[argn]);
   }
 
   ENDMESSAGE(options_gv_cb_save)

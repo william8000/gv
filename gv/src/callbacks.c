@@ -74,7 +74,6 @@
 #include "actions.h"
 #include "callbacks.h"
 #include "confirm.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "ps.h"
 #include "doc_misc.h"
@@ -204,13 +203,13 @@ cb_showTitle(w, client_data, call_data)
       {
 	t = gv_filename;
       }
-    if (!t) t = s = GV_XtNewString(versionIdentification[0]);
+    if (!t) t = s = XtNewString(versionIdentification[0]);
     else {
-      s = GV_XtMalloc((4+strlen(t)+1)*sizeof(char));
+      s = XtMalloc((4+strlen(t)+1)*sizeof(char));
       sprintf(s,"gv: %s",t);
     }
   } else {
-    t = s = GV_XtNewString(versionIdentification[0]);
+    t = s = XtNewString(versionIdentification[0]);
   }
   if (w && XtWindow(w)) setTitle(gv_display, XtWindow(w), s, 0);
   if (w && XtWindow(w)) setTitle(gv_display, XtWindow(w), t, 1);
@@ -226,7 +225,7 @@ cb_showTitle(w, client_data, call_data)
    if (titlemenu) XtDestroyWidget(titlemenu);
    titlemenu = build_label_menu(titlebutton, "title", t, bitmap);
   }
-  GV_XtFree(s);
+  XtFree(s);
   ENDMESSAGE(cb_showTitle)
 }
 
@@ -499,11 +498,11 @@ static void watch_file (client_data, idp)
       struct stat sbuf;
 
       INFMESSAGE(checking file)
-      s = GV_XtNewString(gv_filename);
+      s = XtNewString(gv_filename);
       error = stat(s, &sbuf);
       if (!error && mtime != sbuf.st_mtime && sbuf.st_mtime < time(NULL))
          cb_checkFile(NULL,(XtPointer)(CHECK_FILE_VERSION|CHECK_FILE_DATE),NULL);
-      GV_XtFree(s);
+      XtFree(s);
     }
   }
   if (timer) {
@@ -544,7 +543,7 @@ static char *make_pagelist(mode)
    BEGINMESSAGE(make_pagelist)
    if (toc_text && (mode&(PAGE_MODE_CURRENT|PAGE_MODE_MARKED))) {
       char *tmp;
-      pagelist = GV_XtNewString(VlistVlist(newtoc));
+      pagelist = XtNewString(VlistVlist(newtoc));
       if (mode&PAGE_MODE_MARKED) {
 	tmp = pagelist;
         while (*tmp) if (*tmp++=='*') { mode_valid=True; break; }
@@ -558,7 +557,7 @@ static char *make_pagelist(mode)
       }
    }
    if (!mode_valid) {
-      GV_XtFree(pagelist);
+      XtFree(pagelist);
       pagelist=NULL;
    }
    ENDMESSAGE(make_pagelist)
@@ -612,7 +611,7 @@ cb_print(w, client_data, call_data)
 
     gv_print_mode = (int)(intptr_t)client_data;
     pagelist=get_pagelist(&gv_print_mode);
-    if (pagelist) GV_XtFree(pagelist);
+    XtFree(pagelist);
     if (gv_print_mode==PAGE_MODE_INVALID) {
        INFMESSAGE(invalid print mode)
        ENDMESSAGE(cb_print)
@@ -662,7 +661,7 @@ cb_print_pos(w, client_data, call_data)
 
     gv_print_mode = (intptr_t)client_data;
     pagelist=get_pagelist(&gv_print_mode);
-    if (pagelist) GV_XtFree(pagelist);
+    XtFree(pagelist);
 
     DialogPopupSetMessage(putTexCommandLabel);
     DialogPopupSetPrompt(texCommandLabel);
@@ -728,11 +727,11 @@ cb_doPrint(w, client_data, call_data)
        SaveData sd          = save_allocSaveData();
        sd->save_fn          = NULL;
        sd->src_fn           = gv_filename_unc ?
-	                        GV_XtNewString(gv_filename_unc) :
-	                        GV_XtNewString(gv_filename);
+	                        XtNewString(gv_filename_unc) :
+	                        XtNewString(gv_filename);
        sd->conv_fn          = NULL;
-       sd->pagelist         = pagelist ? GV_XtNewString(pagelist) : NULL;
-       sd->print_cmd        = print_command ? GV_XtNewString(print_command) : NULL;
+       sd->pagelist         = pagelist ? XtNewString(pagelist) : NULL;
+       sd->print_cmd        = print_command ? XtNewString(print_command) : NULL;
        sd->convert          = gv_filename_dsc ? 1 : 0;
        sd->save_to_file     = (gv_print_kills_file || pagelist) ? 1 : 0;
        sd->save_to_printer  = 1;
@@ -742,11 +741,11 @@ cb_doPrint(w, client_data, call_data)
     }
     if (error) {
        NotePopupShowMessage(error);
-       GV_XtFree(error);
+       XtFree(error);
     } else {
        cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
     }
-    if (pagelist) GV_XtFree(pagelist);
+    XtFree(pagelist);
 
     ENDMESSAGE(cb_doPrint)
 }
@@ -791,7 +790,7 @@ cb_save(w, client_data, call_data)
 
     gv_save_mode = (int)(intptr_t)client_data;
     pagelist=get_pagelist(&gv_save_mode);
-    if (pagelist) GV_XtFree(pagelist);
+    XtFree(pagelist);
     if (gv_save_mode==PAGE_MODE_INVALID) {
        INFMESSAGE(invalid save mode)
        ENDMESSAGE(cb_save)
@@ -829,7 +828,7 @@ cb_save(w, client_data, call_data)
     }
 
     /*  We assume the if ext was filled, then we'll definitely write PDF. */
-    name = GV_XtNewString(name);
+    name = XtNewString(name);
     if (gv_filename_dsc && *ext) name=file_pdfname2psname(name);
 
     pathlen = strlen(path)+strlen(name)+strlen(ext);
@@ -838,7 +837,7 @@ cb_save(w, client_data, call_data)
        strcat(default_path,ext);
        XawFileSelectionSetPath(FileSel,default_path);
     }
-    GV_XtFree(name);
+    XtFree(name);
 
     n=0;
     XtSetArg(args[n], XtNtitle,title); ++n;
@@ -882,18 +881,18 @@ cb_doSave(w, client_data, call_data)
       return;
     }
     cb_popdownNotePopup((Widget)NULL,(XtPointer)NULL,NULL);
-    if (save_directory) GV_XtFree(save_directory);
+    XtFree(save_directory);
     save_directory= file_getDirOfPath(name);
     SMESSAGE(name)
     pagelist=get_pagelist(&gv_save_mode);
     if (gv_save_mode != PAGE_MODE_INVALID) {
        SaveData sd          = save_allocSaveData();
-       sd->save_fn          = name ? GV_XtNewString(name) : NULL;
+       sd->save_fn          = name ? XtNewString(name) : NULL;
        sd->src_fn           = gv_filename_unc ?
-	                        GV_XtNewString(gv_filename_unc) :
-	                        GV_XtNewString(gv_filename);
+	                        XtNewString(gv_filename_unc) :
+	                        XtNewString(gv_filename);
        sd->conv_fn          = NULL;
-       sd->pagelist         = pagelist ? GV_XtNewString(pagelist) : NULL;
+       sd->pagelist         = pagelist ? XtNewString(pagelist) : NULL;
        sd->print_cmd        = NULL;
        sd->convert          = (gv_filename_dsc && type==FILE_TYPE_PS) ? 1 : 0;
        sd->save_to_file     = 1;
@@ -904,11 +903,11 @@ cb_doSave(w, client_data, call_data)
     }
     if (error) {
        NotePopupShowMessage(error);
-       GV_XtFree(error);
+       XtFree(error);
     } else {
        XtPopdown(FileSel_popup);
     }    
-    if (pagelist) GV_XtFree(pagelist);
+    XtFree(pagelist);
     ENDMESSAGE(cb_doSave)
 }
 
@@ -963,12 +962,12 @@ cb_doOpenFile(w, client_data, call_data)
     BEGINMESSAGE(cb_doOpenFile)
     name = XawFileSelectionGetPath(FileSel);
     SMESSAGE(name)
-    if (open_directory) GV_XtFree(open_directory);
+    XtFree(open_directory);
     open_directory=file_getDirOfPath(name);
     SMESSAGE(open_directory)
     if ((error = misc_testFile(name))) {
       XawFileSelectionScan(FileSel,XawFileSelectionRescan);
-      GV_XtFree(error);
+      XtFree(error);
     } else {
       cb_popdownNotePopup((Widget)NULL,(XtPointer)NULL,NULL);
       XtPopdown(FileSel_popup);
@@ -992,7 +991,7 @@ cb_reopen(w, client_data, call_data)
 
     if ((error = misc_testFile(gv_filename))) {
        NotePopupShowMessage(error);
-       GV_XtFree(error);
+       XtFree(error);
     } else {
        cb_popdownNotePopup((Widget)NULL,(XtPointer)NULL,NULL);
        show_page(REQUEST_REOPEN,NULL);
@@ -1470,41 +1469,39 @@ cb_shutdown(w, client_data, call_data)
    process_kill_all_processes();
 
 #if defined(DUMP_XTMEM) || defined(DUMP_MEM) 
-   if (gv_filename_dsc)       GV_XtFree(gv_filename_dsc);
-   if (gv_filename_unc)       GV_XtFree(gv_filename_unc);
-   if (gv_filename_old)       GV_XtFree(gv_filename_old);
-   if (gv_filename_raw)       GV_XtFree(gv_filename_raw);
-   if (gv_filename)           GV_XtFree(gv_filename);
-   if (doc)                   psfree(doc);
-   if (olddoc)                psfree(olddoc);
-   if (gv_scales_res)         GV_XtFree(gv_scales_res);
-   if (gv_magmenu_entries)    magmenu_freeMagMenuEntries(gv_magmenu_entries);
-   if (gv_miscmenu_entries)   miscmenu_freeMiscMenuEntries(gv_miscmenu_entries);
-   if (gv_scales)             scale_freeScales(gv_scales);
-   if (gv_medias_res)         GV_XtFree(gv_medias_res);
-   if (gv_medias)             media_freeMedias(gv_medias);
-   if (gv_user_defaults_file) GV_XtFree(gv_user_defaults_file);
-   if (scaleEntry)            GV_XtFree(scaleEntry);
-   if (open_directory)        GV_XtFree(open_directory);
-   if (save_directory)        GV_XtFree(save_directory);
-   if (toc_text)              GV_XtFree(toc_text);
-   if (pagemediaEntry)        GV_XtFree(pagemediaEntry);
-   if (gv_dirs)               GV_XtFree(gv_dirs);
-   if (gv_filters)            GV_XtFree(gv_filters);
-   if (gv_filter)             GV_XtFree(gv_filter);
-   GV_XtFree(gv_magmenu_entries_res);
-   GV_XtFree(gv_miscmenu_entries_res);
-   GV_XtFree(gv_print_command);
-   GV_XtFree(gv_uncompress_command);
-   GV_XtFree(gv_gs_interpreter);
-   GV_XtFree(gv_gs_cmd_scan_pdf);
-   GV_XtFree(gv_gs_cmd_conv_pdf);
-   GV_XtFree(gv_gs_x11_device);
-   GV_XtFree(gv_gs_x11_alpha_device);
-   GV_XtFree(gv_gs_arguments);
+   XtFree(gv_filename_dsc);
+   XtFree(gv_filename_unc);
+   XtFree(gv_filename_old);
+   XtFree(gv_filename_raw);
+   XtFree(gv_filename);
+   psfree(doc);
+   psfree(olddoc);
+   XtFree(gv_scales_res);
+   magmenu_freeMagMenuEntries(gv_magmenu_entries);
+   miscmenu_freeMiscMenuEntries(gv_miscmenu_entries);
+   scale_freeScales(gv_scales);
+   XtFree(gv_medias_res);
+   media_freeMedias(gv_medias);
+   XtFree(gv_user_defaults_file);
+   XtFree(scaleEntry);
+   XtFree(open_directory);
+   XtFree(save_directory);
+   XtFree(toc_text);
+   XtFree(pagemediaEntry);
+   XtFree(gv_dirs);
+   XtFree(gv_filters);
+   XtFree(gv_filter);
+   XtFree(gv_magmenu_entries_res);
+   XtFree(gv_miscmenu_entries_res);
+   XtFree(gv_print_command);
+   XtFree(gv_uncompress_command);
+   XtFree(gv_gs_interpreter);
+   XtFree(gv_gs_cmd_scan_pdf);
+   XtFree(gv_gs_cmd_conv_pdf);
+   XtFree(gv_gs_x11_device);
+   XtFree(gv_gs_x11_alpha_device);
+   XtFree(gv_gs_arguments);
    resource_freeData();
-   GV_MemoryDUMP
-   GV_XtMemoryDUMP
 #endif
    XtDestroyApplicationContext(app_con);
    ENDMESSAGE(cb_shutdown)
@@ -1624,9 +1621,8 @@ cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
     password = DialogPopupGetText();
     if (!password) password="";
 
-    if (gv_pdf_password)
-      GV_XtFree(gv_pdf_password);
-    gv_pdf_password = GV_XtNewString(password);
+    XtFree(gv_pdf_password);
+    gv_pdf_password = XtNewString(password);
 
     cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
     cb_reopen(page,0,0);

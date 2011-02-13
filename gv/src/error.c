@@ -51,7 +51,6 @@
 #include "error.h"
 #include "main_resources.h"
 #include "main_globals.h"
-#include "d_memdebug.h"
 
 char* 
 open_fail_error(errornumber,error_str,file_name,show)
@@ -70,7 +69,7 @@ open_fail_error(errornumber,error_str,file_name,show)
   } else {
     char buf[1024];
     sprintf(buf,"%s %s: %s",error_str,file_name,m);
-    m = GV_XtNewString(buf);
+    m = XtNewString(buf);
   }
   ENDMESSAGE(open_fail_error_message)
   return(m);

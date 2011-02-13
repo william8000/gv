@@ -53,7 +53,6 @@
 
 #include "types.h"
 #include "callbacks.h"
-#include "d_memdebug.h"
 #include "widgets_misc.h"
 #include "main_resources.h"
 #include "main_globals.h"
@@ -96,9 +95,9 @@ static void options_fs_setOptionsAtEntry(void)
   SMESSAGE(app_res.default_save_dir)
   widgets_setText(default_save_dir,  app_res.default_save_dir);
   SMESSAGE(gv_filters)
-  s = options_squeezeMultiline(gv_filters); widgets_setText(filters,s); GV_XtFree(s);
+  s = options_squeezeMultiline(gv_filters); widgets_setText(filters,s); XtFree(s);
   SMESSAGE(gv_dirs)
-  s = options_squeezeMultiline(gv_dirs); widgets_setText(dirs,s); GV_XtFree(s);
+  s = options_squeezeMultiline(gv_dirs); widgets_setText(dirs,s); XtFree(s);
   SMESSAGE(gv_filter)
   widgets_setText(filter,gv_filter);
   ENDMESSAGE(options_fs_setOptionsAtEntry)
@@ -164,8 +163,8 @@ void options_fs_cb_save(w, client_data, call_data)
 
   options_save(argn,argi,argv);
   while (--argn >=0) {
-    GV_XtFree(argi[argn]); 
-    GV_XtFree(argv[argn]);
+    XtFree(argi[argn]);
+    XtFree(argv[argn]);
   }
 
   ENDMESSAGE(options_fs_cb_save)

@@ -58,7 +58,6 @@
 
 #include "types.h"
 #include "config.h"
-#include "d_memdebug.h"
 #include "file.h"
 #include "main_resources.h"
 #include "main_globals.h"
@@ -81,7 +80,7 @@ file_getDirOfPath(path)
    BEGINMESSAGE(file_getDirOfPath)
 
    if (path) {
-      dir=GV_XtNewString(path);
+      dir=XtNewString(path);
       pos = strrchr(dir,'/');
       if (pos) { pos++; *pos='\0'; }
    }
@@ -195,7 +194,7 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
       }
    }
    SMESSAGE(tempFilename)
-   tempFilenameP = GV_XtNewString(tempFilename);
+   tempFilenameP = XtNewString(tempFilename);
    ENDMESSAGE(file_getTmpFilename)
    return(tempFilenameP);
 }
@@ -333,7 +332,7 @@ file_getUsefulName(name)
      ENDMESSAGE(file_getUsefulName)
      return(name);
   }
-  mext = ext = GV_XtNewString(e);
+  mext = ext = XtNewString(e);
   while (*ext) { *ext = tolower(*ext); ext++; }
   if      (!strncmp(mext,".gz",3))  ext = "";
   else if (!strncmp(mext,".bz2",4)) ext = "";
@@ -349,7 +348,7 @@ file_getUsefulName(name)
   ext=mext;
   while (*ext && *e) *ext++=*e++;
   strcpy(c,mext);
-  GV_XtFree(mext);
+  XtFree(mext);
   INFSMESSAGE(out,name)
   ENDMESSAGE(file_getUsefulName)
   return(name);

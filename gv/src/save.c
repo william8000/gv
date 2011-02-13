@@ -45,7 +45,6 @@
 
 #include "types.h"
 #include "config.h"
-#include "d_memdebug.h"
 #include "error.h"
 #include "file.h"
 #include "main_resources.h"
@@ -73,7 +72,7 @@ save_allocSaveData()
    Cardinal size = sizeof(SaveDataStruct);
 
    BEGINMESSAGE(save_alllocSaveData)
-   sd = (SaveData) GV_XtMalloc(size);
+   sd = (SaveData) XtMalloc(size);
    memset((void*) sd ,0,(size_t)size);
    ENDMESSAGE(save_allocSaveData)
    return(sd);
@@ -88,12 +87,12 @@ save_freeSaveData(sd)
    SaveData sd;
 {
    BEGINMESSAGE(save_freeSaveData)
-   if (sd->save_fn)   GV_XtFree(sd->save_fn);
-   if (sd->src_fn)    GV_XtFree(sd->src_fn);
-   if (sd->conv_fn)   GV_XtFree(sd->conv_fn);
-   if (sd->pagelist)  GV_XtFree(sd->pagelist);
-   if (sd->print_cmd) GV_XtFree(sd->print_cmd);
-   if (sd)            GV_XtFree(sd);
+   XtFree(sd->save_fn);
+   XtFree(sd->src_fn);
+   XtFree(sd->conv_fn);
+   XtFree(sd->pagelist);
+   XtFree(sd->print_cmd);
+   XtFree((XtPointer)sd);
    ENDMESSAGE(save_freeSaveData)
 }
 
@@ -120,12 +119,12 @@ print_file(print_command,print_filename)
    BEGINMESSAGE(print_file)
 
    print_quoted_filename = quote_filename(print_filename);
-   p = GV_XtNewString(print_command);
+   p = XtNewString(print_command);
    n=0;
    c=p;
    while ((c=strstr(c,"%s"))) { c+=2; n++; }
    m = (strlen(p)+(n>0?n:1)*strlen(print_quoted_filename)+5)*sizeof(char);
-   c = (char*) GV_XtMalloc(m);
+   c = (char*) XtMalloc(m);
    if (n>0) {
      char *e,*s;
      e=s=p;
@@ -146,12 +145,12 @@ print_file(print_command,print_filename)
    INFSMESSAGE(printing:,c)
    if (SYSTEM_FAILED_ON(c)) {
      m = (strlen(printfail)+strlen(c)+1)*sizeof(char);
-       error = (char*) GV_XtMalloc(m);
+       error = (char*) XtMalloc(m);
      sprintf(error,printfail,c); 
    }
-   GV_XtFree(c);
-   GV_XtFree(p);
-   GV_XtFree(print_quoted_filename);
+   XtFree(c);
+   XtFree(p);
+   XtFree(print_quoted_filename);
    ENDMESSAGE(print_file)
    return(error);
 }
@@ -175,7 +174,7 @@ save_forkPDFToPSConversionDone(client_data,type)
       error = save_saveFile(sd);
       if (error) {
          NotePopupShowMessage(error);
-         GV_XtFree(error);
+         XtFree(error);
       }
    } else if (type==PROCESS_KILL) {
       INFMESSAGE(call is of type PROCESS_KILL)
@@ -235,8 +234,8 @@ save_forkPDFToPSConversion(sd)
    } else {
      sprintf(command,gv_gs_cmd_conv_pdf,quoted_conv_fn,quoted_src_fn);
    }
-   GV_XtFree(quoted_src_fn);
-   GV_XtFree(quoted_conv_fn);
+   XtFree(quoted_src_fn);
+   XtFree(quoted_conv_fn);
    
    if (strstr(gv_gs_cmd_scan_pdf, "-P") || !gv_gs_safer)
       strcpy(tmp, gv_gs_cmd_scan_pdf);
@@ -288,7 +287,7 @@ save_copyToFile(save_filename,src_filename,pagelist,scanstyle)
    if (!error) {
       if (pagelist) {
          Document src_doc=NULL;
-	 String s = GV_XtNewString(src_filename);
+	 String s = XtNewString(src_filename);
 	 s = file_getUsefulName(s);
          INFMESSAGE(scanning document)
          doc_scanFile(&src_file,&src_doc,src_filename,s,NULL,NULL,NULL,NULL,scanstyle,gv_gs_safeDir);
@@ -300,7 +299,7 @@ save_copyToFile(save_filename,src_filename,pagelist,scanstyle)
             char *error_scan_fail = "Failed to scan file %s\n";
             char tmp[512];
             sprintf(tmp,error_scan_fail,src_filename);
-            error=GV_XtNewString(tmp);
+            error=XtNewString(tmp);
          }
       } else {
          char buf[BUFSIZ];
@@ -340,11 +339,11 @@ save_saveFile(sd)
      {
 
      s = sd->save_fn ? sd->save_fn : sd->src_fn;
-     s = GV_XtNewString(s);
+     s = XtNewString(s);
      s = file_getUsefulName(s);
      s = file_pdfname2psname(s);
      sd->conv_fn = file_getTmpFilename(NULL, s, NULL);
-     GV_XtFree(s);
+     XtFree(s);
      if (sd->conv_fn == NULL)
 	     return XtNewString("Cannot create temporary file!");
      INFSMESSAGE(converting from file,sd->src_fn)
@@ -359,11 +358,11 @@ save_saveFile(sd)
 
    if (!error && sd->save_to_file) {
       if (!sd->save_fn) {
-	s = GV_XtNewString(sd->src_fn);
+	s = XtNewString(sd->src_fn);
 	s = file_getUsefulName(s);
 	s = file_pdfname2psname(s);
 	sd->save_fn = file_getTmpFilename(NULL, s, NULL);
-	GV_XtFree(s);
+	XtFree(s);
       }
       if (!sd->save_fn) {
         error = XtNewString("Cannot create temporary file!");

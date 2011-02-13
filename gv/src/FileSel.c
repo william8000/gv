@@ -71,8 +71,6 @@
 #include "Vlist.h"
 #include "VlistP.h"
 
-#include "d_memdebug.h"
-
 /*####################################################################
    OS dependant Definitions
 ####################################################################*/
@@ -302,10 +300,10 @@ Meta<Key>Z: 	no-op()\n\
 #define REALLOC_MORE_IF_NEEDED(list,needed,current) 					\
     if (needed >= current) {								\
        current *= 2;									\
-       list = (String *) FS_XtRealloc((char *) list,(unsigned)(current*sizeof(String)));\
+       list = (String *) XtRealloc((char *) list,(unsigned)(current*sizeof(String)));\
     }
 #define ALLOC_LIST(list,needed) 							\
-    list = (String *) FS_XtMalloc((unsigned)(needed* sizeof(String)))
+    list = (String *) XtMalloc((unsigned)(needed* sizeof(String)))
 
 #define POSITION(pos) ((pos==1)+2*(pos==2)+4*(pos==3)+8*(pos==4)) 
 #define IS_BUTTON(pos) (POSITION(pos) & BUTTONS) 
@@ -463,17 +461,17 @@ static void Initialize(request, new, argl, num_argl)
    { 
        char app_dir[FS_MAXNAMLEN];
        getwd(app_dir);
-       APP_DIR = FS_XtNewString(app_dir);
+       APP_DIR = XtNewString(app_dir);
    }  
 
    FS_RESCANBUTTON  = ADD_Widget("rescan",buttonWidgetClass,new);
                 ADD_Callback(FS_RESCANBUTTON,rescanProc);
 
-   FILTERS=FS_XtNewString(FILTERS);
+   FILTERS=XtNewString(FILTERS);
    FS_FILTERSBUTTON = ADD_Widget("filters",mbuttonWidgetClass,new);
    FS_FILTERSMENU = BuildMenu(FS_FILTERSBUTTON,FILTERS,"None",filtersProc);
 
-   DIRS=FS_XtNewString(DIRS);
+   DIRS=XtNewString(DIRS);
    FS_DIRSBUTTON = ADD_Widget("dirs",mbuttonWidgetClass,new);
    FS_DIRSMENU = BuildMenu(FS_DIRSBUTTON,DIRS,"Home\nTmp",dirsProc);
 
@@ -545,11 +543,11 @@ static void Initialize(request, new, argl, num_argl)
 
    FS_OLD_TEXTFIELD = (Widget)NULL;
 
-   CURRENT_PATH = FS_XtMalloc(FS_MAXNAMLEN*sizeof(char));
-   CURRENT_DIR  = FS_XtMalloc(FS_MAXNAMLEN*sizeof(char));
-   CURRENT_FILE = FS_XtMalloc(FS_MAXNAMLEN*sizeof(char));
-   PATH         = FS_XtNewString("");
-   FILTER       = FS_XtNewString("");
+   CURRENT_PATH = XtMalloc(FS_MAXNAMLEN*sizeof(char));
+   CURRENT_DIR  = XtMalloc(FS_MAXNAMLEN*sizeof(char));
+   CURRENT_FILE = XtMalloc(FS_MAXNAMLEN*sizeof(char));
+   PATH         = XtNewString("");
+   FILTER       = XtNewString("");
    MULTICLICK = DISABLED;
 
    XtCallActionProc(FS_PATH,"FS_textfieldFocusAction",(XEvent *)NULL,(String *)NULL,(Cardinal)0);
@@ -638,21 +636,21 @@ Destroy(w)
    FS_WIDGET w;
 
    BEGINMESSAGE(Destroy)
-   while ((--TOPDIR_ENTRIES) >=0 ) FS_XtFree(TOPDIR_ENTRY(TOPDIR_ENTRIES)); ++TOPDIR_ENTRIES;
-   while ((--CURDIR_ENTRIES) >=0 ) FS_XtFree(CURDIR_ENTRY(CURDIR_ENTRIES)); ++CURDIR_ENTRIES;
-   while ((--SUBDIR_ENTRIES) >=0 ) FS_XtFree(SUBDIR_ENTRY(SUBDIR_ENTRIES)); ++SUBDIR_ENTRIES;
+   while ((--TOPDIR_ENTRIES) >=0 ) XtFree(TOPDIR_ENTRY(TOPDIR_ENTRIES)); ++TOPDIR_ENTRIES;
+   while ((--CURDIR_ENTRIES) >=0 ) XtFree(CURDIR_ENTRY(CURDIR_ENTRIES)); ++CURDIR_ENTRIES;
+   while ((--SUBDIR_ENTRIES) >=0 ) XtFree(SUBDIR_ENTRY(SUBDIR_ENTRIES)); ++SUBDIR_ENTRIES;
 
-   FS_XtFree(TOPDIR_LIST);
-   FS_XtFree(CURDIR_LIST);
-   FS_XtFree(SUBDIR_LIST);
-   FS_XtFree(PATH);
-   FS_XtFree(FILTER);
-   FS_XtFree(CURRENT_PATH);
-   FS_XtFree(CURRENT_DIR);
-   FS_XtFree(CURRENT_FILE);
-   FS_XtFree(APP_DIR);
-   FS_XtFree(FILTERS);
-   FS_XtFree(DIRS);
+   XtFree((XtPointer)TOPDIR_LIST);
+   XtFree((XtPointer)CURDIR_LIST);
+   XtFree((XtPointer)SUBDIR_LIST);
+   XtFree(PATH);
+   XtFree(FILTER);
+   XtFree(CURRENT_PATH);
+   XtFree(CURRENT_DIR);
+   XtFree(CURRENT_FILE);
+   XtFree(APP_DIR);
+   XtFree(FILTERS);
+   XtFree(DIRS);
    DESTROY_MULTICLICK;
 
    ENDMESSAGE(Destroy)
@@ -739,7 +737,7 @@ strreplace(out,find,replace,in)
    findlength = strlen(find);
    if (!(*in) || !(*find)) return;
 
-   intemp = FS_XtMalloc(strlen(in)+1);
+   intemp = XtMalloc(strlen(in)+1);
    strcpy(intemp,in);
 
    temp=intemp;
@@ -751,7 +749,7 @@ strreplace(out,find,replace,in)
       temp = strchr(temp,'\0') + findlength;
    }
    strcat(out,temp);
-   FS_XtFree(intemp);
+   XtFree(intemp);
 }  
 
 /*----------------------------------------------------------------------
@@ -1300,8 +1298,8 @@ static void changeList(w,list,entries)
   }
   l++;
   e++;
-  s = FS_XtMalloc(l*sizeof(char));
-  d = FS_XtMalloc(e*sizeof(char));
+  s = XtMalloc(l*sizeof(char));
+  d = XtMalloc(e*sizeof(char));
   s[0]='\0';
   i=0;
   p = s;
@@ -1321,8 +1319,8 @@ static void changeList(w,list,entries)
   SET_Arg(XtNlabel, s);
   SET_Arg(XtNvlist, d);
   SET_Values(w);
-  FS_XtFree(s);
-  FS_XtFree(d);
+  XtFree(s);
+  XtFree(d);
   ENDMESSAGE(changeList)
 } 
 
@@ -1468,7 +1466,7 @@ static void SetDirectoryView(fs,dir)
    CombineToPath(path,CURRENT_DIR,CURRENT_FILE);
    savestrcpy(CURRENT_PATH,path);
    SMESSAGE(CURRENT_PATH)
-   while ((--CURDIR_ENTRIES) >=0 ) FS_XtFree(CURDIR_ENTRY(CURDIR_ENTRIES)); ++CURDIR_ENTRIES;
+   while ((--CURDIR_ENTRIES) >=0 ) XtFree(CURDIR_ENTRY(CURDIR_ENTRIES)); ++CURDIR_ENTRIES;
    CURDIR_ENTRY(CURDIR_ENTRIES) = (String) NULL;
 
    if (error) error = 1;
@@ -1483,16 +1481,16 @@ static void SetDirectoryView(fs,dir)
      return;
    }
 
-   while ((--TOPDIR_ENTRIES) >=0 ) FS_XtFree(TOPDIR_ENTRY(TOPDIR_ENTRIES)); ++TOPDIR_ENTRIES;
+   while ((--TOPDIR_ENTRIES) >=0 ) XtFree(TOPDIR_ENTRY(TOPDIR_ENTRIES)); ++TOPDIR_ENTRIES;
    TOPDIR_ENTRY(TOPDIR_ENTRIES) = (String) NULL;
-   while ((--SUBDIR_ENTRIES) >=0 ) FS_XtFree(SUBDIR_ENTRY(SUBDIR_ENTRIES)); ++SUBDIR_ENTRIES;
+   while ((--SUBDIR_ENTRIES) >=0 ) XtFree(SUBDIR_ENTRY(SUBDIR_ENTRIES)); ++SUBDIR_ENTRIES;
    SUBDIR_ENTRY(SUBDIR_ENTRIES) = (String) NULL;
    setText(FS_PATH,CURRENT_PATH);
    GET_Value(FS_FILTER,XtNstring,&filter);
    {
      char *tmp,*f;
      f = filter;
-     malloced_filter = tmp = (char*) FS_XtMalloc((strlen(filter)+10)*sizeof(char));
+     malloced_filter = tmp = (char*) XtMalloc((strlen(filter)+10)*sizeof(char));
      if (*f=='n') *tmp++=' ';
      while (*f) {
        if (isspace(*f)) {
@@ -1519,14 +1517,14 @@ static void SetDirectoryView(fs,dir)
          if (strcmp(str,".")) {
             if (!stat(str,&sbuf) && S_ISDIR(sbuf.st_mode) && (strncmp(str, ".", 1) || !strcmp(str, ".."))) {
                REALLOC_MORE_IF_NEEDED(SUBDIR_LIST,SUBDIR_ENTRIES+1,SUBDIR_ALLOC);
-               SUBDIR_ENTRY(SUBDIR_ENTRIES) = FS_XtNewString(str);
+               SUBDIR_ENTRY(SUBDIR_ENTRIES) = XtNewString(str);
                SMESSAGE(SUBDIR_ENTRY(SUBDIR_ENTRIES))
                SUBDIR_ENTRIES++;
             } else {
                if (viewmode==XawFileSelectionFilter) accepted=strwild(str,filter);
                if (accepted) {
                   REALLOC_MORE_IF_NEEDED(CURDIR_LIST,CURDIR_ENTRIES+1,CURDIR_ALLOC);
-                  CURDIR_ENTRY(CURDIR_ENTRIES) = FS_XtNewString(str);
+                  CURDIR_ENTRY(CURDIR_ENTRIES) = XtNewString(str);
                   SMESSAGE(CURDIR_ENTRY(CURDIR_ENTRIES))
                   CURDIR_ENTRIES++;
                }
@@ -1560,7 +1558,7 @@ static void SetDirectoryView(fs,dir)
        char *p=path;
        savestrcpy(path,CURRENT_DIR);
        REALLOC_MORE_IF_NEEDED(TOPDIR_LIST,TOPDIR_ENTRIES+1,TOPDIR_ALLOC);
-	TOPDIR_ENTRY(TOPDIR_ENTRIES) = FS_XtNewString("/");
+	TOPDIR_ENTRY(TOPDIR_ENTRIES) = XtNewString("/");
 	SMESSAGE(TOPDIR_ENTRY(TOPDIR_ENTRIES))
 	TOPDIR_ENTRIES++;
 	SMESSAGE(p)
@@ -1571,7 +1569,7 @@ static void SetDirectoryView(fs,dir)
 	  *p = '\0';
 	  p++;
 	  REALLOC_MORE_IF_NEEDED(TOPDIR_LIST,TOPDIR_ENTRIES+1,TOPDIR_ALLOC);
-	  TOPDIR_ENTRY(TOPDIR_ENTRIES) = FS_XtNewString(temp);
+	  TOPDIR_ENTRY(TOPDIR_ENTRIES) = XtNewString(temp);
 	  SMESSAGE(TOPDIR_ENTRY(TOPDIR_ENTRIES))
 	  TOPDIR_ENTRIES++;
 	  temp=p;
@@ -1585,7 +1583,7 @@ static void SetDirectoryView(fs,dir)
       }
    }
 
-   FS_XtFree(malloced_filter);
+   XtFree(malloced_filter);
    changeLists(FS_FILE_SELECTION);
    chdir(APP_DIR);
 
@@ -1965,7 +1963,7 @@ static Widget BuildMenu(parent,descrip,defaultdescrip,cb)
   char *md,*d,*tmp;
 
   m = XtCreatePopupShell("menu", simpleMenuWidgetClass,parent,NULL,(Cardinal)0);
-  md = d = FS_XtNewString(descrip);
+  md = d = XtNewString(descrip);
   while (*d) {
     while (isspace(*d)) *d++='\r';
     while (*d && *d != '\n') {
@@ -1984,8 +1982,8 @@ static Widget BuildMenu(parent,descrip,defaultdescrip,cb)
   *tmp='\0';
   d = md;
   if (!*d) {
-    FS_XtFree(md);
-    md = d = FS_XtNewString(defaultdescrip);
+    XtFree(md);
+    md = d = XtNewString(defaultdescrip);
   }
   while (d) {
     tmp=strchr(d,'\n');
@@ -1997,7 +1995,7 @@ static Widget BuildMenu(parent,descrip,defaultdescrip,cb)
     if (tmp) d=tmp+1;
     else d=NULL;
   }
-  FS_XtFree(md);
+  XtFree(md);
   return(m);
 }
 
@@ -2028,8 +2026,8 @@ XawFileSelectionGetPath(w)
    if (!path) path ="";
    savestrcpy(tmp,path);
    translateTildeInPath(tmp);
-   if (PATH) FS_XtFree(PATH);
-   PATH = FS_XtNewString(path);
+   XtFree(PATH);
+   PATH = XtNewString(path);
    INFSMESSAGE(returning, PATH)
 
    ENDMESSAGE(XawFileSelectionGetPath)

@@ -59,7 +59,6 @@
 #include <signal.h>
 
 #include "types.h"
-#include "d_memdebug.h"
 #include "main_resources.h"
 #include "main_globals.h"
 #include "misc.h"
@@ -518,7 +517,7 @@ Input(client_data, source, id)
 		struct record_list *ps_old = gvw->ghostview.ps_input;
 		gvw->ghostview.ps_input = ps_old->next;
 		if (ps_old->close) fclose(ps_old->fp);
-		GV_XtFree((char *)ps_old);
+		XtFree((char *)ps_old);
 	    }
 
 	    /* Have to seek at the beginning of each section */
@@ -838,7 +837,7 @@ Destroy(w)
     StopInterpreter(w);
     XtReleaseGC(w, gvw->ghostview.gc);
     XtReleaseGC(w, gvw->ghostview.highlight_gc);
-    if (gvw->ghostview.input_buffer) GV_XtFree(gvw->ghostview.input_buffer);
+    XtFree(gvw->ghostview.input_buffer);
     if (gvw->core.background_pixmap != XtUnspecifiedPixmap)
 	XFreePixmap(XtDisplay(w), gvw->core.background_pixmap);
     ENDMESSAGE(Destroy)
@@ -1416,8 +1415,8 @@ StartInterpreter(w)
     if (gvw->ghostview.disable_start) return;
 
     argv[argc++] = gvw->ghostview.interpreter;
-    if (app_res.antialias) dptr = device = GV_XtNewString(gv_gs_x11_alpha_device);
-    else                   dptr = device = GV_XtNewString(gv_gs_x11_device);
+    if (app_res.antialias) dptr = device = XtNewString(gv_gs_x11_alpha_device);
+    else                   dptr = device = XtNewString(gv_gs_x11_device);
     while (isspace(*dptr)) dptr++;
     while (*dptr) {
 	 argv[argc++] = dptr;
@@ -1441,7 +1440,7 @@ StartInterpreter(w)
        strcpy(parameter, "-sPDFPassword=");
        password = quote_filename(gv_pdf_password);
        strcat(parameter, password);
-       GV_XtFree(password);
+       XtFree(password);
        argv[argc++] = parameter;
     }
     
@@ -1460,7 +1459,7 @@ StartInterpreter(w)
       }
 
     if (gvw->ghostview.arguments) {
-	cptr = arguments = GV_XtNewString(gvw->ghostview.arguments);
+	cptr = arguments = XtNewString(gvw->ghostview.arguments);
 	while (isspace(*cptr)) cptr++;
 	while (*cptr) {
 	    argv[argc++] = cptr;
@@ -1629,8 +1628,8 @@ StartInterpreter(w)
 	    XtAppAddInput(XtWidgetToApplicationContext(w), std_err[0],
 			  (XtPointer)XtInputReadMask, Output, (XtPointer)w);
     }
-    if (arguments) GV_XtFree(arguments);
-    if (device)    GV_XtFree(device);
+    XtFree(arguments);
+    XtFree(device);
     gvw->ghostview.background_cleared=0;
 
     ENDMESSAGE(StartInterpreter)
@@ -1669,7 +1668,7 @@ StopInterpreter(w)
 
 	    if (ps_old->close) fclose(ps_old->fp);
 
-	    GV_XtFree((char *)ps_old);
+	    XtFree((char *)ps_old);
 
 	  }
       }
@@ -2137,7 +2136,7 @@ GhostviewSendPS(Widget w, FILE *fp, gv_off_t begin, gv_off_t len, Bool doclose)
     struct record_list *ps_new;
 
     if (gvw->ghostview.interpreter_input < 0) return False;
-    ps_new = (struct record_list *) GV_XtMalloc(sizeof (struct record_list));
+    ps_new = (struct record_list *) XtMalloc(sizeof (struct record_list));
     ps_new->fp = fp;
     ps_new->begin = begin;
     ps_new->len = len;
@@ -2146,7 +2145,7 @@ GhostviewSendPS(Widget w, FILE *fp, gv_off_t begin, gv_off_t len, Bool doclose)
     ps_new->next = NULL;
 
     if (gvw->ghostview.input_buffer == NULL) {
-	gvw->ghostview.input_buffer = GV_XtMalloc(GV_BUFSIZ);
+	gvw->ghostview.input_buffer = XtMalloc(GV_BUFSIZ);
     }
 
     if (gvw->ghostview.ps_input == NULL) {
