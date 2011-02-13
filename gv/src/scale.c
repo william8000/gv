@@ -287,7 +287,7 @@ void scale_getScreenResourceName(display,name)
        s = server;
        while (*s)
        {
-          if (*s == ".")  *s = "-";
+          if (*s == '.')  *s = '-';
 	  s++;
        }
     }
