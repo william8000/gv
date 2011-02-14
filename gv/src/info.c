@@ -151,12 +151,13 @@ void cb_appendInfoPopup(w, client_data, call_data)
     XtSetArg(args[n], XtNeditType, XawtextAppend);      n++;
     XtSetValues(infotext,args,n);
     XawTextReplace(infotext, info_length, info_length, &message_block);
-    info_length = info_length + message_block.length;
 							n=0;
     XtSetArg(args[0], XtNeditType, XawtextRead);	n++;
     XtSetArg(args[1], XtNinsertPosition, info_length);	n++;
     XtSetValues(infotext,args,n);
     XawTextEnableRedisplay(infotext);
+
+    info_length = info_length + message_block.length;
 
     skipErrors = gv_infoSkipErrors;
     if (gv_infoSkipErrors)
