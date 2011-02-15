@@ -32,31 +32,11 @@
 
 #ifndef _GV_POPUP_H_
 
-extern void cb_popupPopup(
-#if NeedFunctionPrototypes
-    Widget,
-    XtPointer,
-    XtPointer
-#endif
-);
+extern void cb_popupPopup(Widget, XtPointer, XtPointer);
 
-extern void cb_popdownPopup(
-#if NeedFunctionPrototypes
-    Widget,
-    XtPointer,
-    XtPointer
-#endif
-);
+extern void cb_popdownPopup(Widget, XtPointer, XtPointer);
 
-extern void			popup_positionPopup (
-#if NeedFunctionPrototypes
-    Widget,
-    Widget,
-    int,
-    int,
-    int
-#endif
-);
+extern void popup_positionPopup (Widget, Widget, int, int, int);
 
 #define POPUP_POSITION_POS		1
 #define POPUP_POSITION_CENTER		2

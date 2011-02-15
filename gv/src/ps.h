@@ -25,14 +25,6 @@
  *      FAX: (608)262-9777         Madison, WI   53706
 */
 
-#ifndef NeedFunctionPrototypes
-#if defined(FUNCPROTO) || defined(__STDC__) || defined(__cplusplus) || defined(c_plusplus)
-#define NeedFunctionPrototypes 1
-#else
-#define NeedFunctionPrototypes 0
-#endif /* __STDC__ */
-#endif /* NeedFunctionPrototypes */
- 
 /* Constants used to index into the bounding box array. */
 
 #define LLX 0
@@ -106,7 +98,6 @@ struct page {
 #define SCANSTYLE_IGNORE_DSC (1<<1)
 
 Document				psscan (
-#if NeedFunctionPrototypes
     FILE **,
     char *,
     char *,
@@ -116,20 +107,15 @@ Document				psscan (
     char *,
     int,     /* scanstyle */
     int	     /* gv_gs_scanDir */
-#endif
 );
 
 void					psfree (
-#if NeedFunctionPrototypes
     struct document *
-#endif
 );
 
 extern void				pscopydoc (
-#if NeedFunctionPrototypes
     FILE *,
     char *,
     Document,
     char *
-#endif
 );

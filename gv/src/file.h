@@ -33,54 +33,13 @@
 #ifndef	_GV_FILE_H_
 #define	_GV_FILE_H_
 
-extern char*			file_getDirOfPath (
-#if NeedFunctionPrototypes
-   char *	/* path */
-#endif
-);
-
-extern char*			file_locateFilename (
-#if NeedFunctionPrototypes
-   char *	/* filename */
-#endif
-);
-
-extern char*			file_getTmpFilename (
-#if NeedFunctionPrototypes
-   const char *,
-   const char *,
-   int *
-#endif
-);
-
-extern void			file_translateTildeInPath (
-#if NeedFunctionPrototypes
-   char *
-#endif
-);
-
-extern int			file_fileIsDir (
-#if NeedFunctionPrototypes
-   char *
-#endif
-);
-
-extern int			file_fileIsNotUseful (
-#if NeedFunctionPrototypes
-   char *
-#endif
-);
-
-extern char*			file_pdfname2psname (
-#if NeedFunctionPrototypes
-   char *	/* name */
-#endif
-);
-
-extern char*			file_getUsefulName (
-#if NeedFunctionPrototypes
-   char *	/* name */
-#endif
-);
+extern char* file_getDirOfPath (char *);
+extern char* file_locateFilename (char *);
+extern char* file_getTmpFilename (const char *, const char *, int *);
+extern void  file_translateTildeInPath (char *);
+extern int   file_fileIsDir (char *);
+extern int   file_fileIsNotUseful (char *);
+extern char* file_pdfname2psname (char *);
+extern char* file_getUsefulName (char *);
 
 #endif  /* _GV_FILE_H_ */

@@ -33,11 +33,7 @@
 #ifndef	_GV_SIGNAL_H_
 #define	_GV_SIGNAL_H_
 
-extern void 			signal_setSignalHandlers (
-#if NeedFunctionPrototypes
-    int
-#endif
-);
+extern void signal_setSignalHandlers (int);
 
 #endif /* _GV_SIGNAL_H_ */
 

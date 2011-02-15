@@ -33,52 +33,12 @@
 #ifndef _GV_WIDGETS_MISC_H_
 #define _GV_WIDGETS_MISC_H_
 
-extern void			widgets_setSelectedBitmap (
-#if NeedFunctionPrototypes
-    Widget,
-    int
-#endif
-);
-
-extern void			widgets_setToggle (
-#if NeedFunctionPrototypes
-    Widget,
-    int
-#endif
-);
-
-extern Widget			widgets_createLabeledLineTextField (
-#if NeedFunctionPrototypes
-    String,
-    Widget
-#endif
-);
-
-extern Widget			widgets_createLabeledTextField (
-#if NeedFunctionPrototypes
-    String,
-    Widget
-#endif
-);
-
-extern char *			widgets_getText (
-#if NeedFunctionPrototypes
-   Widget
-#endif
-);
-
-extern void			widgets_setText (
-#if NeedFunctionPrototypes
-   Widget,
-   String
-#endif
-);
-
-extern void			widgets_preferButton (
-#if NeedFunctionPrototypes
-   Widget,	/* w      */
-   int		/* prefer */
-#endif
-);
+extern void   widgets_setSelectedBitmap (Widget, int);
+extern void   widgets_setToggle (Widget, int);
+extern Widget widgets_createLabeledLineTextField (String, Widget);
+extern Widget widgets_createLabeledTextField (String, Widget);
+extern char * widgets_getText (Widget);
+extern void   widgets_setText (Widget, String);
+extern void   widgets_preferButton (Widget /* w */, int /* prefer */);
 
 #endif /* _GV_WIDGETS_MISC_H_ */

@@ -57,41 +57,10 @@ extern WidgetClass buttonWidgetClass;
 typedef struct _ButtonClassRec   *ButtonWidgetClass;
 typedef struct _ButtonRec        *ButtonWidget;
 
-extern void 			ButtonSet (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			ButtonUnset (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			ButtonReset (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			ButtonHighlight (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
+extern void ButtonSet       (Widget, XEvent *, String *, Cardinal *);
+extern void ButtonUnset     (Widget, XEvent *, String *, Cardinal *);
+extern void ButtonReset     (Widget, XEvent *, String *, Cardinal *);
+extern void ButtonHighlight (Widget, XEvent *, String *, Cardinal *);
 
 #endif /* _Button_h_ */
 

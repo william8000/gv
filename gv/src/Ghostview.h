@@ -179,13 +179,11 @@ extern WidgetClass ghostviewWidgetClass;
 /*###################################################################################*/
 
 extern void			GhostviewDrawRectangle (
-#if NeedFunctionPrototypes
     Widget,
     int,
     int,
     int,
-    int              
-#endif
+    int
 );
 
 /* The structure returned by the regular callback */
@@ -197,113 +195,85 @@ typedef struct _GhostviewReturnStruct {
 } GhostviewReturnStruct;
 
 extern void			GhostviewCoordsPStoX (
-#if NeedFunctionPrototypes
     Widget,
     int,
     int,
     int*,
-    int*              
-#endif
+    int*
 );
 
 extern void			GhostviewCoordsXtoPS (
-#if NeedFunctionPrototypes
     Widget,
     int,
     int,
     int*,
-    int*              
-#endif
+    int*
 );
 
 extern void			GhostviewGetBBofArea (
-#if NeedFunctionPrototypes
    Widget                 /* w  */ ,
    int                    /* x1 */ ,
    int                    /* y1 */ ,
    int                    /* x2 */ ,
    int                    /* y2 */ ,
    GhostviewReturnStruct* /* p  */
-#endif
 );
 
 extern void			GhostviewGetAreaOfBB (
-#if NeedFunctionPrototypes
    Widget                /* w    */  ,
    int                   /* psx1 */  ,
    int                   /* psy1 */  ,
    int                   /* psx2 */  ,
    int                   /* psy2 */  ,
    GhostviewReturnStruct* p
-#endif
 );
 
 
 extern void			GhostviewEnableInterpreter (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern void			GhostviewDisableInterpreter (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern void			GhostviewState (
-#if NeedFunctionPrototypes
     Widget	/* w */           ,
     Boolean* /* processflag_p */  ,
     Boolean* /* busyflag_p */     ,
     Boolean* /* inputflag_p */
-#endif
 );
 
 extern Boolean			GhostviewIsInterpreterReady (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern Boolean			GhostviewIsBusy (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern Boolean			GhostviewIsInterpreterRunning (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern Boolean			GhostviewSendPS (
-#if NeedFunctionPrototypes
     Widget	/* widget */,
     FILE*	/* fp */,
     gv_off_t	/* begin */,
     gv_off_t	/* len */,
     Bool	/* close */
-#endif
 );
 
 extern Boolean			GhostviewNextPage (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern void			GhostviewClearBackground (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 extern void			GhostviewSetup (
-#if NeedFunctionPrototypes
     Widget	/* w */
-#endif
 );
 
 #endif /* _Ghostview_h */

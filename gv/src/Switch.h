@@ -41,19 +41,7 @@ extern WidgetClass     switchWidgetClass;
 typedef struct _SwitchClassRec   *SwitchWidgetClass;
 typedef struct _SwitchRec        *SwitchWidget;
 
-extern void                     SwitchToggle (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern int                     SwitchIsSet (
-#if NeedFunctionPrototypes
-    Widget
-#endif
-);
+extern void SwitchToggle (Widget, XEvent *, String *, Cardinal *);
+extern int  SwitchIsSet  (Widget);
 
 #endif /* _Switch_h_ */

@@ -115,25 +115,9 @@ typedef struct _LayoutConverterStruct {
    exit(0);						        \
 }
 
-extern int			layout_parse (
-#if NeedFunctionPrototypes
-    void *
-#endif
-);
-
-extern void			layout_scan_error (
-#if NeedFunctionPrototypes
-    char *,
-    void *
-#endif
-);
-
-extern int			layout_lex (
-#if NeedFunctionPrototypes
-    YYSTYPE *,
-    void *
-#endif
-); 
+extern int layout_parse (void *);
+extern void layout_scan_error (char *, void *);
+extern int layout_lex (YYSTYPE *, void *);
 
 #define layout_error(sss)       layout_scan_error(sss,YYLEX_PARAM)
 

@@ -74,18 +74,15 @@ typedef struct _FrameRec      *FrameWidget;
 _XFUNCPROTOBEGIN
 
 extern Boolean                  FrameConvertStringToFrameType (
-#if NeedFunctionPrototypes
     Display*		/* dpy */,
     XrmValue*		/* args */,
     Cardinal*		/* num_args */,
     XrmValuePtr		/* fromVal */,
     XrmValuePtr		/* toVal */,
     XtPointer*		/* converter_data */
-#endif
 );
 
 extern void                     FrameDrawFrame (
-#if NeedFunctionPrototypes
     Widget,        /* widget */
     int,           /* x */
     int,           /* y */
@@ -95,7 +92,6 @@ extern void                     FrameDrawFrame (
     int,           /* shadow width */
     GC,            /* light GC */
     GC             /* dark GC */
-#endif
 );
 
 _XFUNCPROTOEND

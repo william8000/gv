@@ -33,11 +33,6 @@
 #ifndef	_GV_MISC_PRIVATE_H_
 #define	_GV_MISC_PRIVATE_H_
 
-extern void			update_label (
-#if NeedFunctionPrototypes
-    Widget,
-    char*
-#endif
-);
+extern void update_label (Widget, char*);
 
 #endif /* _GV_MISC_PRIVATE_H_ */

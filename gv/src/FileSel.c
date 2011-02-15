@@ -2008,12 +2008,7 @@ static Widget BuildMenu(parent,descrip,defaultdescrip,cb)
 ########################################################################*/
 
 char *
-#if NeedFunctionPrototypes
 XawFileSelectionGetPath(Widget w)
-#else
-XawFileSelectionGetPath(w)
-   Widget 	w;
-#endif
 {
    FS_WIDGET	w;
    String	path=NULL;
@@ -2039,13 +2034,7 @@ XawFileSelectionGetPath(w)
 ########################################################################*/
 
 void
-#if NeedFunctionPrototypes
 XawFileSelectionSetPath(Widget w,String string)
-#else
-XawFileSelectionSetPath(w,string)
-   Widget 	w;
-   String 	string;
-#endif
 {
    FS_WIDGET w;
 
@@ -2059,13 +2048,7 @@ XawFileSelectionSetPath(w,string)
 ########################################################################*/
 
 void
-#if NeedFunctionPrototypes
 XawFileSelectionScan(Widget w,int indicator)
-#else
-XawFileSelectionScan(w,indicator)
-   Widget 	w;
-   int 		indicator;
-#endif
 {
    FS_WIDGET	w;
 
@@ -2079,15 +2062,7 @@ XawFileSelectionScan(w,indicator)
 ########################################################################*/
 
 void
-#if NeedFunctionPrototypes
 XawFileSelectionAddButton(Widget w, int position, XtCallbackProc function, XtPointer param)
-#else
-XawFileSelectionAddButton(w, position, function, param)
-   Widget		w;
-   int 			position;
-   XtCallbackProc	function;
-   XtPointer		param;
-#endif
 {
    FS_WIDGET 		w;
    char			name[10];
@@ -2114,13 +2089,7 @@ XawFileSelectionAddButton(w, position, function, param)
 ########################################################################*/
 
 void
-#if NeedFunctionPrototypes
 XawFileSelectionRemoveButton(Widget w, int position)
-#else
-XawFileSelectionRemoveButton(w, position)
-   Widget		w;
-   int 			position;
-#endif 
 {
    FS_WIDGET 		w;
    char 		name[10];
@@ -2150,13 +2119,7 @@ XawFileSelectionRemoveButton(w, position)
 ########################################################################*/
 
 void
-#if NeedFunctionPrototypes
 XawFileSelectionPreferButton(Widget w, int position)
-#else
-XawFileSelectionPreferButton(w, position)
-   Widget		w;
-   int 			position;
-#endif 
 {
    int i;
 

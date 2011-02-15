@@ -32,23 +32,9 @@
 #ifndef _GV_MEDIA_H_
 #define _GV_MEDIA_H_
 
-extern void			media_freeMedias (
-#if NeedFunctionPrototypes
-   Media*
-#endif
-);
-
-extern Media*			media_parseMedias (
-#if NeedFunctionPrototypes
-   char*
-#endif
-);
-
-extern int			media_numMedias (
-#if NeedFunctionPrototypes
-   Media *
-#endif
-);
+extern void   media_freeMedias (Media*);
+extern Media* media_parseMedias (char*);
+extern int    media_numMedias (Media *);
 
 #endif /* _GV_MEDIA_H_ */ 
 

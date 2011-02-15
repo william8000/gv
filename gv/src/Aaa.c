@@ -1164,17 +1164,11 @@ AaaLayout (l, attemptResize)
                                          /* ###jp### 1/94 */
 
 void
-#if NeedFunctionPrototypes
 AaaWidgetGetNaturalSize(
     AaaWidget    l,
     Dimension       *wp,
     Dimension       *hp
 )
-#else
-AaaWidgetGetNaturalSize(l, wp, hp)
-    AaaWidget    l;
-    Dimension       *wp, *hp;
-#endif
 {
   BEGINMESSAGE(AaaWidgetGetNaturalSize)
 /*
@@ -1187,22 +1181,7 @@ AaaWidgetGetNaturalSize(l, wp, hp)
 }
 
 void
-#if NeedFunctionPrototypes
-AaaWidgetAllowResize(
-    AaaWidget    l,
-#   if NeedWidePrototypes
-       int wflag,
-       int hflag
-#   else
-       Boolean wflag,
-       Boolean hflag
-#   endif
-)
-#else
-AaaWidgetAllowResize(l,wflag,hflag)
-    AaaWidget    l;
-    Boolean wflag,hflag;
-#endif
+AaaWidgetAllowResize(AaaWidget l, Boolean wflag, Boolean hflag)
 {
   BEGINMESSAGE(AaaWidgetAllowResize)
   l->aaa.resize_width  = wflag;
@@ -1220,7 +1199,6 @@ AaaWidgetAllowResize(l,wflag,hflag)
 #if 0 /* ########## NOT USED ########### */
 
 void
-#if NeedFunctionPrototypes
 AaaWidgetSetSizeBounds(
     AaaWidget  l,
     Dimension *minw_p,
@@ -1228,14 +1206,6 @@ AaaWidgetSetSizeBounds(
     Dimension *maxw_p,
     Dimension *maxh_p
 )
-#else
-AaaWidgetSetSizeBounds(l,minw_p,minh_p,maxw_p,maxh_p)
-    AaaWidget  l;
-    Dimension *minw_p;
-    Dimension *minh_p;
-    Dimension *maxw_p;
-    Dimension *maxh_p;
-#endif
 {
   BEGINMESSAGE(AaaWidgetSetSizeBounds)
   if (minw_p) l->aaa.minimum_width  = *minw_p;
@@ -1246,7 +1216,6 @@ AaaWidgetSetSizeBounds(l,minw_p,minh_p,maxw_p,maxh_p)
 }
 
 void
-#if NeedFunctionPrototypes
 AaaWidgetGetSizeBounds(
     AaaWidget  l,
     Dimension *minw_p,
@@ -1254,14 +1223,6 @@ AaaWidgetGetSizeBounds(
     Dimension *maxw_p,
     Dimension *maxh_p
 )
-#else
-AaaWidgetGetSizeBounds(l,minw_p,minh_p,maxw_p,maxh_p)
-    AaaWidget  l;
-    Dimension *minw_p;
-    Dimension *minh_p;
-    Dimension *maxw_p;
-    Dimension *maxh_p;
-#endif
 {
   BEGINMESSAGE(AaaWidgetGetSizeBounds)
   if (minw_p) *minw_p = l->aaa.minimum_width ;

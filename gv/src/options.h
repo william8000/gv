@@ -33,83 +33,15 @@
 #ifndef	_GV_OPTIONS_H_
 #define	_GV_OPTIONS_H_
 
-extern void options_cb_popup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void options_cb_popdown (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void options_cb_changeMenuLabel (
-#if NeedFunctionPrototypes
-  Widget,
-  XtPointer,
-  XtPointer
-#endif
-);
-
-extern void options_textApply (
-#if NeedFunctionPrototypes
-  Widget,
-  Boolean*,
-  String*
-#endif
-);
-
-extern void options_createLabeledMenu (
-#if NeedFunctionPrototypes
-  String,
-  Widget,
-  Widget*,
-  Widget*,
-  Widget*
-#endif
-);
-
-extern void options_realize (
-#if NeedFunctionPrototypes
-  Widget,
-  Widget
-#endif
-);
-
-extern void options_setArg (
-#if NeedFunctionPrototypes
-  String *,
-  String *,
-  String,
-  String,
-  String
-#endif
-);
-
-extern String options_squeezeMultiline (
-#if NeedFunctionPrototypes
-  String
-#endif
-);
-
-extern String options_squeeze (
-#if NeedFunctionPrototypes
-  String
-#endif
-);
-
-extern void options_save (
-#if NeedFunctionPrototypes
-  int,
-  String *,
-  String *
-#endif
-);
+extern void options_cb_popup   (Widget, XtPointer, XtPointer);
+extern void options_cb_popdown (Widget, XtPointer, XtPointer);
+extern void options_cb_changeMenuLabel (Widget, XtPointer, XtPointer);
+extern void options_textApply (Widget, Boolean*, String*);
+extern void options_createLabeledMenu (String, Widget, Widget*, Widget*, Widget*);
+extern void options_realize (Widget, Widget);
+extern void options_setArg (String *, String *, String, String, String);
+extern String options_squeezeMultiline (String);
+extern String options_squeeze (String);
+extern void options_save (int, String *, String *);
 
 #endif	/* _GV_OPTIONS_H_ */

@@ -33,26 +33,9 @@
 #ifndef _GV_MAGMENU_H_
 #define _GV_MAGMENU_H_
 
-extern void                     magmenu_freeMagMenuEntries (
-#if NeedFunctionPrototypes
-  MagMenuEntry*
-#endif
-);
-
-extern MagMenuEntry *           magmenu_parseMagMenuEntries (
-#if NeedFunctionPrototypes
-  char *
-#endif
-);
-
-extern void 			magmenu_a_magMenu (
-#if NeedFunctionPrototypes
-  Widget,
-  XEvent *,
-  String *,
-  Cardinal *
-#endif
-);
+extern MagMenuEntry *magmenu_parseMagMenuEntries (char *);
+extern void magmenu_freeMagMenuEntries (MagMenuEntry*);
+extern void magmenu_a_magMenu (Widget, XEvent *, String *, Cardinal *);
 
 #endif /* _GV_MAGMENU_H_ */
 

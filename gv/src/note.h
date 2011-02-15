@@ -34,32 +34,9 @@
 #ifndef	_GV_NOTE_H_
 #define	_GV_NOTE_H_
 
-extern void cb_popupNotePopup(
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void cb_popdownNotePopup(
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void makeNotePopup(
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void  NotePopupShowMessage(
-#if NeedFunctionPrototypes
-   String 
-#endif
-);
+extern void cb_popupNotePopup(Widget, XtPointer, XtPointer);
+extern void cb_popdownNotePopup(Widget, XtPointer, XtPointer);
+extern void makeNotePopup(void);
+extern void NotePopupShowMessage(String);
 
 #endif	/* _GV_NOTE_H_ */

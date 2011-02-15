@@ -33,42 +33,10 @@
 #ifndef	_GV_INFO_H_
 #define	_GV_INFO_H_
 
-extern void	makeInfoPopup (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void	cb_popupInfoPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void	cb_popdownInfoPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void	cb_appendInfoPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void	cb_resetInfoPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
+extern void makeInfoPopup (void);
+extern void cb_popupInfoPopup (Widget, XtPointer, XtPointer);
+extern void cb_popdownInfoPopup (Widget, XtPointer, XtPointer);
+extern void cb_appendInfoPopup (Widget, XtPointer, XtPointer);
+extern void cb_resetInfoPopup (Widget, XtPointer, XtPointer);
 
 #endif	/* _GV_INFO_H_ */

@@ -46,22 +46,8 @@ typedef struct SaveDataStruct_ {
    int          scanstyle;
 } SaveDataStruct, *SaveData;
 
-extern SaveData			save_allocSaveData (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void			save_freeSaveData (
-#if NeedFunctionPrototypes
-   SaveData	/* sd */
-#endif
-);
-
-extern String			save_saveFile (
-#if NeedFunctionPrototypes
-   SaveData	/* sd */
-#endif
-);
+extern SaveData save_allocSaveData (void);
+extern void     save_freeSaveData  (SaveData);
+extern String   save_saveFile      (SaveData);
 
 #endif  /* _GV_SAVE_H_ */

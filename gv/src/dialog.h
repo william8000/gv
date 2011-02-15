@@ -36,73 +36,16 @@
 #define DIALOG_BUTTON_DONE   (1<<0)
 #define DIALOG_BUTTON_CANCEL (1<<1)
 
-extern void cb_popdownDialogPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void cb_popupDialogPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void action_preferDialogPopupButton (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void makeDialogPopup (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void DialogPopupSetButton (
-#if NeedFunctionPrototypes
-   int,
-   String,
-   XtCallbackProc
-#endif
-);
-
-extern void DialogPopupClearText (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void DialogPopupSetText (
-#if NeedFunctionPrototypes
-    String
-#endif
-);
-
-extern String DialogPopupGetText (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void DialogPopupSetPrompt (
-#if NeedFunctionPrototypes
-    String
-#endif
-);
-
-extern void DialogPopupSetMessage (
-#if NeedFunctionPrototypes
-    String
-#endif
-);
+extern void   cb_popdownDialogPopup (Widget, XtPointer, XtPointer);
+extern void   cb_popupDialogPopup (Widget, XtPointer, XtPointer);
+extern void   action_preferDialogPopupButton (
+		Widget, XEvent *, String *, Cardinal *);
+extern void   makeDialogPopup (void);
+extern void   DialogPopupSetButton (int, String, XtCallbackProc);
+extern void   DialogPopupClearText (void);
+extern void   DialogPopupSetText (String);
+extern String DialogPopupGetText (void);
+extern void   DialogPopupSetPrompt (String);
+extern void   DialogPopupSetMessage (String);
 
 #endif	/* _GV_DIALOG_H_ */

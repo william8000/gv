@@ -33,90 +33,19 @@
 #ifndef _GV_DOC_MISC_H_
 #define _GV_DOC_MISC_H_
 
-extern int			doc_scanFile (
-#if NeedFunctionPrototypes
-   FILE **,
-   Document*,
-   String,
-   String,
-   String*,
-   String,
-   String*,
-   String,
+extern int doc_scanFile (
+   FILE **, Document*, String, String, String*, String, String*, String,
    int,     /* scanstyle */
    int     /* gv_gs_safeDir */
-#endif
 );
-
-extern int			doc_putPageInRange (
-#if NeedFunctionPrototypes
-    Document,
-    int
-#endif
-);
-
-extern int			doc_mediaIsOk (
-#if NeedFunctionPrototypes
-    Document,
-    int,
-    int
-#endif
-);
-
-extern int			doc_boundingBoxOfPage (
-#if NeedFunctionPrototypes
-    Document,
-    int,
-    int*,
-    int*,
-    int*,
-    int*
-#endif
-);
-
-extern int			doc_preferredMediaOfPage (
-#if NeedFunctionPrototypes
-    Document,
-    int,
-    int*,
-    int*,
-    int*,
-    int*
-#endif
-);
-
-extern int			doc_preferredOrientationOfPage (
-#if NeedFunctionPrototypes
-    Document,
-    int
-#endif
-);
-
-extern int			doc_convStringToPage (
-#if NeedFunctionPrototypes
-    Document,
-    String
-#endif
-);
-
-extern XtPageOrientation	doc_convDocOrientToXtOrient (
-#if NeedFunctionPrototypes
-    int,
-    int
-#endif
-);
-
-extern int			doc_convStringToDocOrient (
-#if NeedFunctionPrototypes
-    String
-#endif
-);
-
-extern int			doc_convStringToPageMedia (
-#if NeedFunctionPrototypes
-   Document,
-   String
-#endif
-);
+extern int doc_putPageInRange (Document, int);
+extern int doc_mediaIsOk (Document, int, int);
+extern int doc_boundingBoxOfPage (Document, int, int*, int*, int*, int*);
+extern int doc_preferredMediaOfPage (Document, int, int*, int*, int*, int*);
+extern int doc_preferredOrientationOfPage (Document, int);
+extern int doc_convStringToPage (Document, String);
+extern XtPageOrientation doc_convDocOrientToXtOrient (int, int);
+extern int doc_convStringToDocOrient (String);
+extern int doc_convStringToPageMedia (Document, String);
 
 #endif /* _GV_DOC_MISC_H_ */

@@ -33,22 +33,8 @@
 #ifndef	_GV_VERSION_H_
 #define	_GV_VERSION_H_
 
-extern void cb_popupVersionPopup(
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-); 
-
-extern void cb_popdownVersionPopup(
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
+extern void cb_popupVersionPopup(Widget, XtPointer, XtPointer);
+extern void cb_popdownVersionPopup(Widget, XtPointer, XtPointer);
 extern char *versionIdentification[];
 extern char versionCompatibility[];
 extern char versionResource[];

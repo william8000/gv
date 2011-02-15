@@ -34,45 +34,33 @@
 #define _GV_PROCESS_H_
 
 extern void			cb_processKillProcess (
-#if NeedFunctionPrototypes
    Widget,
    XtPointer,
    XtPointer
-#endif
 );
 
 extern void			process_kill_process (
-#if NeedFunctionPrototypes
    ProcessData        /* pd */
-#endif
 );
 
 extern void			process_kill_all_processes (
-#if NeedFunctionPrototypes
 void
-#endif
 );
 
 extern ProcessData		process_fork	(
-#if NeedFunctionPrototypes
    String,             /* name */
    String,             /* command */
    ProcessNotifyProc,  /* notify_proc */
    XtPointer           /* data */
-#endif
 );
 
 extern void			process_menu	(
-#if NeedFunctionPrototypes
    ProcessData,        /* pd */
    int                 /* action */
-#endif
 );
 
 extern char*  			process_disallow_quit (
-#if NeedFunctionPrototypes
 void
-#endif
 );
 
 #endif /* _GV_PROCESS_H_ */ 

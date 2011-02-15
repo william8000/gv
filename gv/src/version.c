@@ -62,12 +62,7 @@
 
 #include "versionp.h"
 
-void makeVersionPopup(
-#if NeedFunctionPrototypes
-   Widget,
-   String 
-#endif
-);
+static void makeVersionPopup(Widget, String);
 
 static	Bool	versionPanelCreated = False;
 static	Bool	version_up = False;

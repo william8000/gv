@@ -34,19 +34,15 @@
 #define _GV_RESOURCE_H_
 
 extern void          resource_freeData (
-#if NeedFunctionPrototypes
 void
-#endif
 );
 
 extern XrmDatabase resource_buildDatabase (
-#if NeedFunctionPrototypes
   Display *,
   char *,
   char *,
   int *,
   char **
-#endif
 );
 
 extern void resource_putResource (XrmDatabase *,
@@ -55,35 +51,27 @@ extern void resource_putResource (XrmDatabase *,
 				  char *);
 
 extern char *        resource_getResource (
-#if NeedFunctionPrototypes
    XrmDatabase,
    char *,
    char *,
    char *,
    char *
-#endif
 );
 
 extern int           resource_checkGeometryResource (
-#if NeedFunctionPrototypes
   XrmDatabase *,
   char *,
   char *
-#endif
 );
 
 extern int           resource_checkResources (
-#if NeedFunctionPrototypes
   char *,
   char *,
   char *
-#endif
 );
 
 extern char *        resource_userDefaultsFile (
-#if NeedFunctionPrototypes
 void
-#endif
 );
 
 extern String orientations[5];

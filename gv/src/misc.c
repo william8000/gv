@@ -144,16 +144,10 @@
 #define MAP_PAGEVIEW	(1<<4)
 #define MAP_PAGE	(1<<5)
 
-#if NeedFunctionPrototypes
-#   define PT(aaa) aaa
-#else 
-#   define PT(aaa) ()
-#endif
-static Boolean set_new_scale        PT((void));
-static Boolean set_new_orientation  PT((int));
-static Boolean set_new_pagemedia    PT((int));
-static void    layout_ghostview     PT((void));
-#undef PT
+static Boolean set_new_scale        (void);
+static Boolean set_new_orientation  (int);
+static Boolean set_new_pagemedia    (int);
+static void    layout_ghostview     (void);
 
 /*############################################################*/
 /* misc_drawEyeGuide */

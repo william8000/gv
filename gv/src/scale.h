@@ -33,43 +33,12 @@
 #ifndef _GV_SCALE_H_
 #define _GV_SCALE_H_
 
-extern void			scale_freeScales (
-#if NeedFunctionPrototypes
-   Scale*
-#endif
-);
-
-extern Scale*			scale_parseScales (
-#if NeedFunctionPrototypes
-   char*
-#endif
-);
-
-extern int			scale_checkScaleNum (
-#if NeedFunctionPrototypes
-   Scale*,
-   int
-#endif
-);
-
-extern void			scale_getScreenSize (
-#if NeedFunctionPrototypes
-  Display*,
-  Screen*,
-  XrmDatabase,
-  char*,
-  char*,
-  int*,
-  int*
-#endif
-);
-
-extern void			scale_getScreenResourceName (
-#if NeedFunctionPrototypes
-   Display*,
-   char*
-#endif
-);
+extern void   scale_freeScales (Scale*);
+extern Scale* scale_parseScales (char*);
+extern int    scale_checkScaleNum (Scale*, int);
+extern void   scale_getScreenSize (Display*, Screen*, XrmDatabase,
+                                   char*, char*, int*, int*);
+extern void   scale_getScreenResourceName (Display*, char*);
 
 #endif /* _GV_SCALE_H_ */ 
 

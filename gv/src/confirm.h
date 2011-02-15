@@ -37,56 +37,14 @@
 #define CONFIRM_BUTTON_DONE   (1<<0)
 #define CONFIRM_BUTTON_CANCEL (1<<1)
 
-extern void cb_popdownConfirmPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void cb_popupConfirmPopup (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer,
-   XtPointer
-#endif
-);
-
-extern void action_preferConfirmPopupButton (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void makeConfirmPopup (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void ConfirmPopupSetButton (
-#if NeedFunctionPrototypes
-   int,
-   XtCallbackProc
-#endif
-);
-
-extern void ConfirmPopupSetMessage (
-#if NeedFunctionPrototypes
-    String,
-    String
-#endif
-);
-
-extern void ConfirmPopupSetInitialButton (
-#if NeedFunctionPrototypes
-   int
-#endif
-);
+extern void cb_popdownConfirmPopup          (Widget, XtPointer, XtPointer);
+extern void cb_popupConfirmPopup            (Widget, XtPointer, XtPointer);
+extern void action_preferConfirmPopupButton (Widget, XEvent *, String *,
+                                             Cardinal *);
+extern void makeConfirmPopup                (void);
+extern void ConfirmPopupSetButton           (int, XtCallbackProc);
+extern void ConfirmPopupSetMessage          (String, String);
+extern void ConfirmPopupSetInitialButton    (int);
 
 #endif	/* _GV_CONFIRM_H_ */
 

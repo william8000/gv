@@ -32,107 +32,24 @@
 #ifndef	_GV_MISC_H_
 #define	_GV_MISC_H_
 
-extern void			misc_drawEyeGuide (
-#if NeedFunctionPrototypes
-  Widget,
-  int,
-  int,
-  int
-#endif
-);
-
-extern void			misc_savePagePosition (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern int			misc_restorePagePosition (
-#if NeedFunctionPrototypes
-    int *,  /* xP */
-    int *   /* yP */
-#endif
-);
-
-extern void			misc_resetPagePosition (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void			misc_setPageMarker (
-#if NeedFunctionPrototypes
-    int, /* entry */
-    int, /* kind */
-    XEvent*,
-    Boolean
-#endif
-);
-
-extern String			misc_testFile (
-#if NeedFunctionPrototypes
-    String	/* name */
-#endif
-);
-
-extern String			misc_changeFile (
-#if NeedFunctionPrototypes
-    String	/* name */
-#endif
-);
-
-extern String			close_file (
-#if NeedFunctionPrototypes
-    FILE *,	/* file */
-    String	/* name */
-#endif
-);
-
-extern int			check_file (
-#if NeedFunctionPrototypes
-    int
-#endif
-);
-
-extern void			show_page (
-#if NeedFunctionPrototypes
-    int,
-    XtPointer
-#endif
-);
-
-extern Boolean			setup_ghostview (
-#if NeedFunctionPrototypes
-void
-#endif
-); 
-
-extern void			setup_layout_ghostview (
-#if NeedFunctionPrototypes
-void
-#endif
-); 
-
-extern void			misc_buildPagemediaMenu (
-#if NeedFunctionPrototypes
-void
-#endif
-); 
-
-extern int			catch_Xerror (
-#if NeedFunctionPrototypes
-    Display*,
-    XErrorEvent*
-#endif
-);
- 
-extern char *                   quote_filename (
-#if NeedFunctionPrototypes
-    char*
-#endif
-);
-
-Widget  build_label_menu(Widget,String,String,Pixmap);
+extern void    misc_drawEyeGuide (Widget, int, int, int);
+extern void    misc_savePagePosition (void);
+extern int     misc_restorePagePosition (int *, int *);
+extern void    misc_resetPagePosition (void);
+extern void    misc_setPageMarker (int /* entry */,
+                                   int /* kind */,
+                                   XEvent*, Boolean);
+extern String  misc_testFile (String);
+extern String  misc_changeFile (String);
+extern String  close_file (FILE *, String);
+extern int     check_file (int);
+extern void    show_page (int, XtPointer);
+extern Boolean setup_ghostview (void);
+extern void    setup_layout_ghostview (void);
+extern void    misc_buildPagemediaMenu (void);
+extern int     catch_Xerror (Display*, XErrorEvent*);
+extern char *  quote_filename (char*);
+extern Widget  build_label_menu(Widget, String, String, Pixmap);
 
 #endif	/* _GV_MISC_H_ */
 

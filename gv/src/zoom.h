@@ -33,11 +33,6 @@
 #ifndef	_GV_ZOOM_H_
 #define	_GV_ZOOM_H_
 
-extern void			zoom_createZoom (
-#if NeedFunctionPrototypes
-   Widget,
-   XtPointer
-#endif
-);
+extern void zoom_createZoom (Widget, XtPointer);
 
 #endif /* _GV_ZOOM_H_ */

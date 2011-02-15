@@ -41,17 +41,9 @@
   options
 ##############################################*/
 
-typedef void (*OptionPopupCreateProc)(
-#if NeedFunctionPrototypes
-void
-#endif
-);
+typedef void (*OptionPopupCreateProc)(void);
 
-typedef void (*OptionPopupUpdateProc)(
-#if NeedFunctionPrototypes
-void
-#endif
-);
+typedef void (*OptionPopupUpdateProc)(void);
 
 typedef struct OptionPopupStruct_ {
   Widget popup;
@@ -111,12 +103,7 @@ typedef struct ScaleStruct_ {
   process
 ##############################################*/
 
-typedef void (*ProcessNotifyProc)(
-#if NeedFunctionPrototypes
-   XtPointer  /* data */,
-   int        /* type */
-#endif
-);
+typedef void (*ProcessNotifyProc)(XtPointer /* data */, int /* type */);
 
 #define PROCESS_NONE	0
 #define PROCESS_NOTIFY	1

@@ -33,25 +33,8 @@
 #ifndef _GV_MISCMENU_H_
 #define _GV_MISCMENU_H_
 
-extern void                     miscmenu_freeMiscMenuEntries (
-#if NeedFunctionPrototypes
-  MiscMenuEntry*
-#endif
-);
-
-extern MiscMenuEntry *           miscmenu_parseMiscMenuEntries (
-#if NeedFunctionPrototypes 
-  char *
-#endif
-);
-
-extern void 			miscmenu_a_miscMenu (
-#if NeedFunctionPrototypes
-  Widget,
-  XEvent *,
-  String *,
-  Cardinal *
-#endif
-);
+extern void miscmenu_freeMiscMenuEntries (MiscMenuEntry*);
+extern MiscMenuEntry * miscmenu_parseMiscMenuEntries (char *);
+extern void miscmenu_a_miscMenu (Widget, XEvent *, String *, Cardinal *);
 
 #endif /* _GV_MISCMENU_H_ */

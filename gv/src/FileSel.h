@@ -85,46 +85,34 @@ typedef struct _FileSelectionRec	*FileSelectionWidget;
 _XFUNCPROTOBEGIN
 
 extern void			XawFileSelectionSetPath (
-#if NeedFunctionPrototypes
     Widget		/* FileSelectionWidget */,
     String		/* String to set */
-#endif
 );
 
 extern char *			XawFileSelectionGetPath (
-#if NeedFunctionPrototypes
     Widget		/* FileSelectionWidget */
-#endif
 );
 
 extern void			XawFileSelectionScan (
-#if NeedFunctionPrototypes
     Widget		/* FileSelectionWidget */,
     int			/* indicates the scan mode */
-#endif
 );
 
 extern void			XawFileSelectionAddButton (
-#if NeedFunctionPrototypes
    Widget              /* FileSelectionWidget */,
    int                 /* indicates the desired button position */,
    XtCallbackProc      /* callback for the button */,
    XtPointer           /* callback parameter */
-#endif
 );
 
 extern void			XawFileSelectionRemoveButton (
-#if NeedFunctionPrototypes
    Widget               /* FileSelectionWidget */,
    int                  /* indicates the position of the button */
-#endif
 );
 
 extern void			XawFileSelectionPreferButton (
-#if NeedFunctionPrototypes
    Widget               /* FileSelectionWidget */,
    int                  /* indicates the position of the button */
-#endif
 );
 
 _XFUNCPROTOEND

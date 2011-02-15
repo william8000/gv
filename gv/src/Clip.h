@@ -69,21 +69,17 @@ typedef struct _ClipClassRec *ClipWidgetClass;
 typedef struct _ClipRec      *ClipWidget;
 
 extern void ClipWidgetCheckCoordinates (
-#if NeedFunctionPrototypes
     Widget	/* w */,
     int		/* x */,
     int		/* y */,
     int*	/* xP */,
     int*	/* yP */
-#endif
 );
 
 extern void ClipWidgetSetCoordinates (
-#if NeedFunctionPrototypes
     Widget	/* w */,
     int		/* x */,
     int		/* y */
-#endif
 );
 
 #endif /* _XawClip_h */

@@ -169,13 +169,6 @@ struct documentmedia papersizes[] = {
 };
 #endif
 
-
-#if NeedFunctionPrototypes
-#   define PT(aaa) aaa
-#else 
-#   define PT(aaa) ()
-#endif
-
 /*--------------------------------------------------*/
 /* Declarations for ps_io_*() routines. */
 
@@ -195,18 +188,18 @@ typedef struct FileDataStruct_ {
    int   status;         /* 0 = okay, 1 = failed */
 } FileDataStruct;
 
-static FileData ps_io_init PT((FILE *));
-static void     ps_io_exit PT((FileData));
-static char    *ps_io_fgetchars PT((FileData, int));
+static FileData ps_io_init (FILE *);
+static void     ps_io_exit (FileData);
+static char    *ps_io_fgetchars (FileData, int);
 
-static int      ps_io_fseek PT((FileData, gv_off_t));
-static gv_off_t     ps_io_ftell PT((FileData));
-static char    *readline PT((FileData, char **, gv_off_t *, unsigned int *));
+static int      ps_io_fseek (FileData, gv_off_t);
+static gv_off_t ps_io_ftell (FileData);
+static char    *readline (FileData, char **, gv_off_t *, unsigned int *);
 
-static char    *gettextline PT((char *));
-static char    *ps_gettext PT((char *,char **));
-static int      blank PT((char *));
-static char    *pscopyuntil PT((FileData,FILE *,long,long,char *));
+static char    *gettextline (char *);
+static char    *ps_gettext (char *,char **);
+static int      blank (char *);
+static char    *pscopyuntil (FileData,FILE *,long,long,char *);
 
 static char    *skipped_line = "% ps_io_fgetchars: skipped line";
 static char    *empty_string = "";

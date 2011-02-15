@@ -111,46 +111,33 @@ typedef struct _AaaRec		*AaaWidget;
 _XFUNCPROTOBEGIN
 
 extern void			AaaWidgetGetNaturalSize (
-#if NeedFunctionPrototypes
     AaaWidget		/* l */         ,
     Dimension*	        /* widthp */    ,
     Dimension*          /* heightp */
-#endif
 );
 
 extern void			AaaWidgetAllowResize (
-#if NeedFunctionPrototypes
     AaaWidget		/* l */      ,
-#   if NeedWidePrototypes
-       int                 /* wflag */  ,
-       int                 /* hflag */
-#   else
-       Boolean             /* wflag */  ,
-       Boolean             /* hflag */
-#   endif
-#endif
+    Boolean             /* wflag */  ,
+    Boolean             /* hflag */
 );
 
 #if 0 /*######### NOT USED ########*/
 
 extern void			AaaWidgetSetSizeBounds (
-#if NeedFunctionPrototypes
     AaaWidget		/* l */         ,
     Dimension*	        /* minw_p */    ,
     Dimension*          /* minh_p */    ,
     Dimension*	        /* maxw_p */    ,
     Dimension*          /* maxh_p */
-#endif
 );
 
 extern void			AaaWidgetGetSizeBounds (
-#if NeedFunctionPrototypes
     AaaWidget		/* l */         ,
     Dimension*	        /* minw_p */    ,
     Dimension*          /* minh_p */    ,
     Dimension*	        /* maxw_p */    ,
     Dimension*          /* maxh_p */
-#endif
 );
 
 #endif /*######### NOT USED ########*/

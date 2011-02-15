@@ -33,16 +33,7 @@
 #ifndef	_GV_OPTIONS_GV_H_
 #define	_GV_OPTIONS_GV_H_
 
-extern void options_gv_createScaleMenus (
-#if NeedFunctionPrototypes
-void
-#endif
-);
-
-extern void options_gv_createMediaMenus (
-#if NeedFunctionPrototypes
-void
-#endif
-);
+extern void options_gv_createScaleMenus (void);
+extern void options_gv_createMediaMenus (void);
 
 #endif	/* _GV_OPTIONS_GV_H_ */

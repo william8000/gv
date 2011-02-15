@@ -33,20 +33,11 @@
 #ifndef	_GV_ERROR_H_
 #define	_GV_ERROR_H_
 
-
-
 #include <errno.h>
 /* BSD 4.3 errno.h does not declare errno */
 extern int errno;
 
-extern char*			open_fail_error (
-#if NeedFunctionPrototypes
-   int,
-   char *,
-   char *,
-   int
-#endif
-);
+extern char* open_fail_error (int, char *, char *, int);
 
 #endif /*_GV_ERROR_H_*/
 

@@ -69,73 +69,19 @@ extern WidgetClass vlistWidgetClass;
 typedef struct _VlistClassRec   *VlistWidgetClass;
 typedef struct _VlistRec        *VlistWidget;
 
-extern int                     VlistHighlighted (
-#if NeedFunctionPrototypes
-    Widget
-#endif
-);
-
-extern int                     VlistSelected (
-#if NeedFunctionPrototypes
-    Widget
-#endif
-);
-
-extern int                     VlistEntries (
-#if NeedFunctionPrototypes
-    Widget
-#endif
-);
-
-extern char*                   VlistVlist (
-#if NeedFunctionPrototypes
-    Widget
-#endif
-);
-
-extern int                     VlistEntryOfPosition (
-#if NeedFunctionPrototypes
-    Widget,
-    int
-#endif
-);
-
-extern void                    VlistPositionOfEntry (
-#if NeedFunctionPrototypes
-    Widget,
-    int,
-    int*,
-    int*
-#endif
-);
-
-extern void                     VlistChangeMark (
-#if NeedFunctionPrototypes
-    Widget,
-    int,
-    int
-#endif
-);
-
-extern void                     VlistChangeSelected (
-#if NeedFunctionPrototypes
-    Widget,
-    int,
-    int
-#endif
-);
-
-extern void                     VlistChangeHighlighted (
-#if NeedFunctionPrototypes
-    Widget,
-    int,
-    int
-#endif
-);
-extern int VlistGetFirstVisible(Widget);
-extern void VlistSetFirstVisible(Widget, int);
-extern void VlistMoveFirstVisible(Widget, int, int);
-float VlistScrollPosition(Widget);
-float VlistVisibleLength(Widget, unsigned int);
+extern int   VlistHighlighted (Widget);
+extern int   VlistSelected (Widget);
+extern int   VlistEntries (Widget);
+extern char* VlistVlist (Widget);
+extern int   VlistEntryOfPosition (Widget, int);
+extern void  VlistPositionOfEntry (Widget, int, int*, int*);
+extern void  VlistChangeMark (Widget, int, int);
+extern void  VlistChangeSelected (Widget, int, int);
+extern void  VlistChangeHighlighted (Widget, int, int);
+extern int   VlistGetFirstVisible(Widget);
+extern void  VlistSetFirstVisible(Widget, int);
+extern void  VlistMoveFirstVisible(Widget, int, int);
+extern float VlistScrollPosition(Widget);
+extern float VlistVisibleLength(Widget, unsigned int);
 
 #endif /* _Vlist_h_ */

@@ -33,267 +33,35 @@
 #ifndef	_GV_ACTIONS_H_
 #define	_GV_ACTIONS_H_
 
-extern void 			action_shellConfigureNotify (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_page (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_menuPopdown (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_toc (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_otherPage (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_movePage (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_panner (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_antialias (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_quit (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_handleDSC (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_handleEOF (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_open (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_reopen (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_savepos (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_presentation (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_save (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_print (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_print_pos (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_center (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_setPageMark (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_autoResize (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_setScale (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_setOrientation (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_setPagemedia (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_dismissPopup (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_deleteWindow (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_eraseLocator (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_checkFile (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void 			action_watchFile (
-#if NeedFunctionPrototypes
-    Widget,
-    XEvent *,
-    String *,
-    Cardinal *
-#endif
-);
-
-extern void			clean_safe_tempdir(void);
+extern void action_shellConfigureNotify (Widget,XEvent*,String*,Cardinal*);
+extern void action_page           (Widget, XEvent *, String *, Cardinal *);
+extern void action_menuPopdown    (Widget, XEvent *, String *, Cardinal *);
+extern void action_toc            (Widget, XEvent *, String *, Cardinal *);
+extern void action_otherPage      (Widget, XEvent *, String *, Cardinal *);
+extern void action_movePage       (Widget, XEvent *, String *, Cardinal *);
+extern void action_panner         (Widget, XEvent *, String *, Cardinal *);
+extern void action_antialias      (Widget, XEvent *, String *, Cardinal *);
+extern void action_quit           (Widget, XEvent *, String *, Cardinal *);
+extern void action_handleDSC      (Widget, XEvent *, String *, Cardinal *);
+extern void action_handleEOF      (Widget, XEvent *, String *, Cardinal *);
+extern void action_open           (Widget, XEvent *, String *, Cardinal *);
+extern void action_reopen         (Widget, XEvent *, String *, Cardinal *);
+extern void action_savepos        (Widget, XEvent *, String *, Cardinal *);
+extern void action_presentation   (Widget, XEvent *, String *, Cardinal *);
+extern void action_save           (Widget, XEvent *, String *, Cardinal *);
+extern void action_print          (Widget, XEvent *, String *, Cardinal *);
+extern void action_print_pos      (Widget, XEvent *, String *, Cardinal *);
+extern void action_center         (Widget, XEvent *, String *, Cardinal *);
+extern void action_setPageMark    (Widget, XEvent *, String *, Cardinal *);
+extern void action_autoResize     (Widget, XEvent *, String *, Cardinal *);
+extern void action_setScale       (Widget, XEvent *, String *, Cardinal *);
+extern void action_setOrientation (Widget, XEvent *, String *, Cardinal *);
+extern void action_setPagemedia   (Widget, XEvent *, String *, Cardinal *);
+extern void action_dismissPopup   (Widget, XEvent *, String *, Cardinal *);
+extern void action_deleteWindow   (Widget, XEvent *, String *, Cardinal *);
+extern void action_eraseLocator   (Widget, XEvent *, String *, Cardinal *);
+extern void action_checkFile      (Widget, XEvent *, String *, Cardinal *);
+extern void action_watchFile      (Widget, XEvent *, String *, Cardinal *);
+extern void clean_safe_tempdir    (void);
 
 #endif	/* _GV_ACTIONS_H_ */

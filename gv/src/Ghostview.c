@@ -1805,7 +1805,6 @@ static void GhostviewCornersPS(gvw,o,pslxP,psrxP,pslyP,psuyP)
 /*############################################################*/
 
 void
-#if NeedFunctionPrototypes
 GhostviewCoordsXtoPS(
   Widget w,
   int wx,
@@ -1813,14 +1812,6 @@ GhostviewCoordsXtoPS(
   int *psxP,
   int *psyP
 )
-#else
-GhostviewCoordsXtoPS(w,wx,wy,psxP,psyP)
-  Widget w;
-  int wx;
-  int wy;
-  int *psxP;
-  int *psyP;
-#endif
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
   int o,x,y,pslx,psrx,psly,psuy,wrx,wly;
@@ -1847,7 +1838,6 @@ GhostviewCoordsXtoPS(w,wx,wy,psxP,psyP)
 /*############################################################*/
 
 void
-#if NeedFunctionPrototypes
 GhostviewCoordsPStoX(
   Widget w,
   int psx,
@@ -1855,14 +1845,6 @@ GhostviewCoordsPStoX(
   int *wxP,
   int *wyP
 )
-#else
-GhostviewCoordsPStoX(w,psx,psy,wxP,wyP)
-  Widget w;
-  int psx;
-  int psy;
-  int *wxP;
-  int *wyP;
-#endif
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
   int o,pslx,psrx,psly,psuy,wrx,wly,*xP,*yP;
@@ -1883,7 +1865,6 @@ GhostviewCoordsPStoX(w,psx,psy,wxP,wyP)
 /*############################################################*/
 
 void
-#if NeedFunctionPrototypes
 GhostviewGetBBofArea (
   Widget   w,
   int x1,
@@ -1892,15 +1873,6 @@ GhostviewGetBBofArea (
   int y2,
   GhostviewReturnStruct* p
 )
-#else
-GhostviewGetBBofArea (w,x1,y1,x2,y2,p)
-  Widget w;
-  int x1;
-  int y1;
-  int x2;
-  int y2;
-  GhostviewReturnStruct* p;
-#endif
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
   int psx1,psy1,psx2,psy2;
@@ -1924,7 +1896,6 @@ GhostviewGetBBofArea (w,x1,y1,x2,y2,p)
 /*############################################################*/
 
 void
-#if NeedFunctionPrototypes
 GhostviewGetAreaOfBB (
   Widget   w,
   int psx1,
@@ -1932,16 +1903,7 @@ GhostviewGetAreaOfBB (
   int psx2,
   int psy2,
   GhostviewReturnStruct* p
-) 
-#else
-GhostviewGetAreaOfBB (w,psx1,psy1,psx2,psy2,p)
-  Widget w;
-  int psx1;
-  int psy1;
-  int psx2;
-  int psy2;
-  GhostviewReturnStruct* p;
-#endif
+)
 {
   int x1,y1,x2,y2;
 
@@ -2026,20 +1988,12 @@ GhostviewEnableInterpreter(w)
 /*###################################################################################*/
 
 void
-#if NeedFunctionPrototypes
 GhostviewState(
     Widget w,
     Boolean *processflag_p,
     Boolean *busyflag_p,
     Boolean *inputflag_p
 )
-#else
-GhostviewState(w,processflag_p,busyflag_p,inputflag_p)
-    Widget w;
-    Boolean *processflag_p;
-    Boolean *busyflag_p;
-    Boolean *inputflag_p;
-#endif
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewState)
