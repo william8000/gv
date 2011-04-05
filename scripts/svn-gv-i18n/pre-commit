@@ -43,14 +43,14 @@ for $f (split("\n", $files))
    if (length($contents) > 12000)
    {
       print STDERR "Your file $filename is too large. If you think this file\n";
-      print STDERR "is valid, contact gnugv_maintainer@yahoo.de\n";
+      print STDERR "is valid, contact gnugv_maintainer\@yahoo.de\n";
       exit(2);
    }
 
    if ($filename !~ m/^(noint:)?$language/ )
    {
       print STDERR "Your file name $filename does not match the language you are registered\n";
-      print STDERR "to translate. You can ask gnugv_maintainer@yahoo.de to get\n";
+      print STDERR "to translate. You can ask gnugv_maintainer\@yahoo.de to get\n";
       print STDERR "registered for additional languages.\n";
       exit(2);
    }
@@ -80,7 +80,10 @@ for $f (split("\n", $files))
             $line .= "\n$read";
          }
    
-         if ($line =~ /^([^:]+):/ )
+         if ($line =~ /^!/)
+	 {
+	 }
+	 elsif ($line =~ /^([^:]+):/ )
          {
             # $resDefault{$1} = $line;
 	    $tmp = $1;
@@ -94,8 +97,6 @@ for $f (split("\n", $files))
 	    }
          }
 	 elsif ($line =~ /^\s*$/)
-	 {}
-	 elsif ($line =~ /^!/)
 	 {
 	 }
 	 else
