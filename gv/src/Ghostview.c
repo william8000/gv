@@ -1615,6 +1615,8 @@ StartInterpreter(w)
 	    gvw->ghostview.interpreter_input = std_in[1];
 	    gvw->ghostview.interpreter_input_id = None;
 	} else if (strcmp(gvw->ghostview.filename, "-")) {
+	    gvw->ghostview.interpreter_input = std_in[1];
+	    gvw->ghostview.interpreter_input_id = None;
 	    close(std_in[0]);
 	}
 	close(std_out[1]);
