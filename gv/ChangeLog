@@ -1,16 +1,42 @@
+2011-04-17  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/Ghostview.c(StartInterpreter): Save fd of pipe being used 
+	for std_in in the else case
+
+2011-02-13  Bernhard R. Link <brlink@debian.org>
+
+	* src/FileSel.c, src/Ghostview.c, src/actions.c, src/callbacks.c,
+	  src/main.c, src/main_globals.h, src/misc.c, src/options_gs.c,
+	  src/ps.c, src/zoom.c: avoid shadowing identifiers
+
+	* src/*.c, src/*.h: remove ancient memory debugging stuff,
+	  unconditionally use prototypes
+	
+	* src/scale.c: Include <stdlib.h>.
+	
+	* src/scale.c(scale_getScreenResourceName): Fixed typo.
+	
+	* src/secscanf.c(process_number): avoid warning about pointer sizes
+	
+	* src/gv_string.c, src/gv_string.h, src/vms_dir.c: Removed (unused)
+	
+	* src/info.c(cb_appendInfoPopup): show beginning of last error message
+	  instead if the end
+
 2010-11-20  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* srcscale.c(scale_getScreenResourceName): use ssh remote adress
-	instead of hostname for a remote ssh connection
+	  instead of hostname for a remote ssh connection
 
 2010-06-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
 
 	* src/dialog.c(DialogPopupSetText): move "n=0" outside of #ifdef.
 
 2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/main.c(main): In case of a temporary safedir is needed, use
-	strdup to copy the temporary buffer to a permanent location.
+	  strdup to copy the temporary buffer to a permanent location.
 
 2010-06-19  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
