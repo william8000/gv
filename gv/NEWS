@@ -9,7 +9,15 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
-%%%%%%%%%%%%%%%%%%% GV 3.7.1.90 (June 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% GV 3.7.1.90 (April 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Fix Debian bug #594991: unexpected scrolling of the TOC widget
+
+# Fixed file descriptor leak
+
+# Added Dutch and Spanish translation
+
+* Code cleanup
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.1 (June 2010) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
