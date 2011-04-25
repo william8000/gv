@@ -1,3 +1,7 @@
+2011-04-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.1.91
+
 2011-04-17  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* src/Ghostview.c(StartInterpreter): Save fd of pipe being used 
