@@ -30,7 +30,7 @@ GV*strings.stillInProgress:		Encore en travail :
 GV*miscMenu.save_all.label:		Sauvegarder tout
 GV*center.Label:			Centrer
 GV*saveDirLabel.label:			Répertoire de sauvegarde
-GV*printMarkedPages.Label:		Imprimer les pages sélectionnées...
+GV*printMarkedPages.Label:		Imprimer pages marquées...
 GV*update.Label:			Actualiser
 GV*optionsgs.Label:			Options de Ghostscript...
 GV*infoPopup.title:			Messages Ghostscript
@@ -43,7 +43,7 @@ GV*button2.label:			Ouvrir le fichier
 GV*saveAllPages.Label:			Sauvegarder le document...
 GV*optionsetupPopup.title:		Paramètres
 GV*optiongvPopup*respectDSC.label:	Respecter les DSC
-GV*miscMenu.save_marked.label:		Sauvegarder les sélectionnés
+GV*miscMenu.save_marked.label:		Sauvegarder marquées
 GV*strings.putTexCommand:		Insérer une commande TeX à la position actuelle
 GV*strings.execOfFailed:		L'exécution de %s a échoué
 GV*scrolling.label:			Défilement inversé
@@ -56,7 +56,7 @@ GV*confirmLabel.label:			Confirmer la fermeture
 GV*title.filename.Label:		Nom du fichier
 GV*automatic.Label:			Automatique
 GV*unmark.Label:			Déselectionner
-GV*printMarked.label:			Imprimer les marqués
+GV*printMarked.label:			Imprimer marquées
 GV*optiongvPopup*orientLabel.label:	\     Orientation    \ 
 GV*optiongvPopup*fmediaLabel.label:	Format papier Fallback
 GV*confirmPopup*done.label:		Quitter
@@ -66,14 +66,14 @@ GV*uncompressLabel.label:		Décompresser
 GV*reopen.Label:			Recharger
 GV*miscMenu.unmark.label:		Déselectionner tout
 GV*safer.label:				Safer
-GV*saveMarked.label:			Sauvegarder les sélectionnés
+GV*saveMarked.label:			Sauvegarder marquées
 GV*title.notitle.Label:			Pas de titre
 GV*dsc.Label:				Respecter la structure du document
 GV*optiongvPopup*swapLandscape.label:	Passer en paysage
 GV*pixmap.Label:			Sous-couche de pixels
 GV*miscMenu.update.label:		Actualiser le fichier
 GV*strings.passwordPrompt:		Mot de passe:
-GV*miscMenu.print_marked.label:		Imprimer les sélectionnés
+GV*miscMenu.print_marked.label:		Imprimer marquées
 GV*strings.openFile:			Ouvrir un fichier
 GV*scalesLabel.label:			Échelles
 GV*savepos.Label:			Sauvegarde de la position
@@ -81,10 +81,10 @@ GV*pageButton.Label:			Page
 GV*x11alphadevLabel.label:		Périphérique antialias
 GV*saveAll.label:			Sauvegarder tout
 GV*open.Label:				Ouvrir...
-GV*miscMenu.toggle_current.label:	Sélectionner la page courrante
+GV*miscMenu.toggle_current.label:	Marquer page courrante
 GV*fileButton.Label:			Fichier
-GV*miscMenu.toggle_odd.label:		Sélectionner les impaires
-GV*miscMenu.toggle_even.label:		Sélectionner les paires
+GV*miscMenu.toggle_odd.label:		Marquer impaires
+GV*miscMenu.toggle_even.label:		Marquer paires
 GV*printCommandLabel.label:		Commande d'affichage
 GV*antialias.Label:			Antialias
 GV*updateFile.label:			Actualiser le fichier
@@ -101,7 +101,7 @@ GV*optiongvPopup.title:			Options de gv
 GV*stateButton.Label:			État
 GV*strings.passwordRequired:		Mot de passe requis
 GV*confirmPrint.label:			Confirmer l'impression
-GV*pageButton*current.Label:		Inverser la sélection courrante
+GV*pageButton*current.Label:		Inverser marquage courrant
 GV*optionssetup.Label:			Paramètres...
 GV*ascaleLabel.Label:			Taille arbitraire
 GV*next.Label:				Suivant
@@ -114,7 +114,7 @@ GV*filtersLabel.label:			Filtres de sélection de fichiers
 GV*checkFile.label:			Vérifier le fichier
 GV*processButton.Label:			\ calcul
 GV*toggleOdd.label:
-GV*strings.saveMarkedPages:		Sauvegarder les pages sélectionnées
+GV*strings.saveMarkedPages:		Sauvegarder pages marquées
 GV*optiongvPopup*scalesLabel.label:	\   Échelle  \ 
 GV*toggleCurrent.label:
 GV*stop.Label:				Arrêter l'interprêteur
@@ -122,9 +122,9 @@ GV*dialogPopup*cancel.label:		Annuler
 GV*fileSelPopup.title:			Ouvrir un fichier
 GV*eyeGuide.label:			Guide de défilement visuel
 GV*upsidedown.Label:			Portrait renversé
-GV*pageButton*even.Label:		Inverser la sélection paire
+GV*pageButton*even.Label:		Inverser marquage paire
 GV*quit.Label:				Quitter
-GV*magmenuLabel.label:			Menun d'entrée Mag
+GV*magmenuLabel.label:			Menu d'entrée Mag
 GV*gs.errors.none.Label:		Aucun
 GV*nextPage.Label:			>>
 GV*eof.Label:				Ignorer les commentaires de fin de fichier
@@ -155,9 +155,9 @@ GV*prev.Label:				Précédent
 GV*title.documenttitle.Label:		Titre du document
 GV*confirmPopup*cancel.label:		Annuler
 GV*openFile.label:			Ouvrir
-GV*saveMarkedPages.Label:		Sauvegarder les pages sélectionnées...
+GV*saveMarkedPages.Label:		Sauvegarder pages marquées...
 GV*strings.saveDocument:		Sauvegarder le document
-GV*pageButton*odd.Label:		Inverser la sélection impaire
+GV*pageButton*odd.Label:		Inverser marquage impaire
 GV*save.label:				Sauvegarder
 GV*notePopup.title:			Message
 GV*optionsfs.Label:			Options de sélection de fichier...
