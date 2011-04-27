@@ -264,12 +264,12 @@ resource_buildDatabase (
   
   if (!i18n)
   {
-     struct stat* buf;
+     struct stat buf;
      
      strcpy(tmp,GV_LIBDIR "/nls/");
      strcat(tmp, locale1);
      strcat(tmp, ".dat");
-     if (!stat(tmp, buf))
+     if (!stat(tmp, &buf))
      {
         i18n = 1;
         XrmCombineFileDatabase(tmp,&db,True);
@@ -314,12 +314,12 @@ resource_buildDatabase (
   
   if (!i18n)
   {
-     struct stat* buf;
+     struct stat buf;
      
      strcpy(tmp,GV_LIBDIR "/nls/");
      strcat(tmp, locale2);
      strcat(tmp, ".dat");
-     if (!stat(tmp, buf))
+     if (!stat(tmp, &buf))
      {
         i18n = 1;
         XrmCombineFileDatabase(tmp,&db,True);
@@ -359,12 +359,12 @@ resource_buildDatabase (
   
   if (!i18n)
   {
-     struct stat* buf;
+     struct stat buf;
      
      strcpy(tmp,GV_LIBDIR "/nls/");
      strcat(tmp, locale3);
      strcat(tmp, ".dat");
-     if (!stat(tmp, buf))
+     if (!stat(tmp, &buf))
      {
         i18n = 1;
         XrmCombineFileDatabase(tmp,&db,True);
