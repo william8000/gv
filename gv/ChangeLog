@@ -2,6 +2,9 @@
 
 	* configure.ac: remove --enable-memdebug-code from configure,
 	  as the feature itself was already removed.
+	  
+	* src/resource.c(resource_buildDatabase): don't store stat
+	  output in random memory location
 
 2011-04-25  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
