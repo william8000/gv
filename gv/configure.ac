@@ -274,28 +274,6 @@ AM_CONDITIONAL(USE_SETENV_CODE, test x$opt_setenv_code = xtrue)
 
 
 
-
-
-AC_ARG_ENABLE(memdebug-code, AC_HELP_STRING([--enable-memdebug-code],[Use extra code for debug memory operations. It defaults to `no']), 
-[case "${enableval}" in
-   yes) opt_memdebug_code=true ;;
-   no)  opt_memdebug_code=false ;;
-   *) AC_MSG_ERROR(bad value ${enableval} for --enable-memdebug-code) ;;
- esac],[opt_memdebug_code=false])
-
-test "$opt_memdebug_code" = "true" && {
-
-     AC_DEFINE(GV_FS_XTMEM_DEBUG,[],[Define GV_FS_XTMEM_DEBUG])
-     AC_DEFINE(GV_PS_MEM_DEBUG,[],[Define GV_PS_MEM_DEBUG])
-     AC_DEFINE(GV_PS_XTMEM_DEBUG,[],[Define GV_PS_XTMEM_DEBUG])
-     AC_DEFINE(GV_AAA_MEM_DEBUG,[],[Define GV_AAA_MEM_DEBUG])
-     AC_DEFINE(GV_GV_MEM_DEBUG,[],[Define GV_GV_MEM_DEBUG])
-     AC_DEFINE(GV_GV_XTMEM_DEBUG,[],[Define GV_GV_XTMEM_DEBUG])
-     AC_DEFINE(GV_PROC_XTMEM_DEBUG,[],[Define GV_PROC_XTMEM_DEBUG])
-}
-
-AM_CONDITIONAL(USE_MEMDEBUG_CODE, test x$opt_memdebug_code = xtrue)
-
 AC_ARG_ENABLE(off_t, AC_HELP_STRING([--enable-off_t],[Use code with off_t and fopen, ftello, fseeko, stat for potential large file support. It defaults to auto detection. largefile only has effects if this option is turned on.]),
  [case "${enableval}" in
    yes) opt_off_t=true ;;
