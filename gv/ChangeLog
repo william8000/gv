@@ -1,3 +1,7 @@
+2011-04-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.2
+
 2011-04-27  Bernhard R. Link <brlink@debian.org>
 
 	* configure.ac: remove --enable-memdebug-code from configure,
