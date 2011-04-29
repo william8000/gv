@@ -40,7 +40,7 @@
 #define  VERSION_APPLIC_CONTEXT	app_con  			/* the Application Context */
 
 char *versionIdentification[] = {
-        "gv 3.7.2",
+        "gv 3.7.2.90",
         "April 2011",
 	0
 };
