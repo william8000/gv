@@ -3,42 +3,35 @@
 $src = ".";
 $src = $ARGV[0] if @ARGV == 1;
 
-@languages = <$src/nls/*>;
+open(LANGUAGES, '<', "$src/nls/LANGUAGES");
+s!#.*!! for (@languages);
 
-s!^$src/nls/!!g for (@languages);
-
-@languages = reverse sort @languages;
+@languages = <LANGUAGES>;
 %lang2 = ();
-
 
 for $lang (@languages)
 {
-   next if $lang !~ m/((\.dat))$/;
+   chomp($lang);
+   next if $lang =~ m/ -> /;
+   next if $lang =~ m/^$/;
 
    $lang2 = $lang;
    $lang2 =~ s/[^a-zA-Z_0-9]/_/g;
-   print "static String gv_nls_${lang2} [] = {\n";
-   system "$src/ad2c $src/nls/$lang";
+   print "static String gv_nls_${lang2}_dat [] = {\n";
+   (system "$src/ad2c '$src/nls/$lang'.dat") == 0 or die "failed to process $src/nls/${lang}.dat" ;
    print "0};\n\n";
 }
 
 print "static String* getI18N(char* locale)\n{\n";
 for $lang (@languages)
 {
-   next if $lang !~ m/((\.dat)|(\.lnk))$/;
+   next if $lang =~ m/^$/;
 
    $lang2 = $lang;
-   if ($lang =~ /\.lnk$/ )
-   {
-      open($file, "<", "$src/nls/$lang") or die "Cannot read file $lang";
-      $lang2 = <$file>;
-      chomp $lang2;
-      close($lang);
-   }
+   $lang2 =~ s/^.* -> //g;
    $lang2 =~ s/[^a-zA-Z_0-9]/_/g;
    $lang3 = $lang;
-   $lang3 =~ s/\.lnk$//g;
-   $lang3 =~ s/\.dat$//g;
-   print "   if (!strcmp(locale, \"$lang3\")) return gv_nls_$lang2;\n";
+   $lang3 =~ s/ -> .*$//g;
+   print "   if (!strcmp(locale, \"$lang3\")) return gv_nls_${lang2}_dat;\n";
 }
 print "   return 0;\n}\n";

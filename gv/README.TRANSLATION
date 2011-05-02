@@ -64,7 +64,7 @@ used instead of GNU gv's own strings.
 See my job discription on http://sv.gnu.org/projects/gv for details.
 
 I'll check if they are syntactically correct and copy them to "src/nls" in the
-distribution tarball of GNU gv.
+distribution tarball of GNU gv and update the src/nls/LANGUAGES file.
 
 
 
@@ -76,9 +76,10 @@ distribution tarball of GNU gv.
 
 (A) What to do of more locales share the same translation strings?
 
+src/nls/LANGUAGES can contain aliases for languages.
 Assume "de_CH.utf8" uses the same translation strings as "de_AT.utf8".
-"echo de_AT.utf8 > de_CH.utf8.lnk" will create a translation file for
-"de_CH.utf8" that tells GNU gv to use the strings from the locale "de_AT.utf8".
+"echo 'de_AT.utf8 -> de_CH.utf8' >> LANGUAGES" tells GNU gv to use the
+strings from the locale "de_AT.utf8" for the locale "de_CH.utf8".
 
 
 
