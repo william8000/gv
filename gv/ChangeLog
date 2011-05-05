@@ -1,3 +1,32 @@
+2011-05-05  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* m4/* lib/* imported signal from gnulib.
+	  Note: I ran "sed -i 's/<config.h>/<ac_config.h>/g' lib/*" after the
+	  import.
+	  I imported from revision 9dba31e113c15a07103d04980a8f39bcba5f7795
+	  of gnulib.
+
+2011-05-04   Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/callbacks.c(cb_presentation): Drop typedef sighandler_t again,
+	  gnulib update (see 2011-05-05) will do the job.
+
+2011-05-04  Bernhard R. Link <brlink@debian.org>
+
+	* src/Makefile.am: Improved dependencies and minor improvements.
+	
+	* src/gv-i18n.pl: Use src/nls/LANGUAGES for getting list of translations
+	  available.
+
+2011-05-02   Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/callbacks.c(cb_presentation): Renamed typedef sighandler_t to
+	  mysighandler_t (incomplete).
+
+2011-04-29   Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* src/callbacks.c(cb_presentation): Readd typedef sighandler_t.
+
 2011-04-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.7.2.90

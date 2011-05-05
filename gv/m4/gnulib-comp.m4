@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2010 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -12,7 +12,8 @@
 # This file represents the compiled summary of the specification in
 # gnulib-cache.m4. It lists the computed macro invocations that need
 # to be invoked from configure.ac.
-# In projects using CVS, this file can be treated like other built files.
+# In projects that use version control, this file can be treated like
+# other built files.
 
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -29,16 +30,17 @@ AC_DEFUN([gl_EARLY],
   # Code from module arg-nonnull:
   # Code from module c++defs:
   # Code from module canonicalize-lgpl:
+  # Code from module dosname:
   # Code from module errno:
   # Code from module extensions:
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  # Code from module getopt:
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
   # Code from module gettext-h:
   # Code from module gettimeofday:
   # Code from module include_next:
   # Code from module inttypes:
+  # Code from module inttypes-incomplete:
   # Code from module lstat:
   # Code from module malloca:
   # Code from module mkdtemp:
@@ -46,6 +48,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module multiarch:
   # Code from module pathmax:
   # Code from module readlink:
+  # Code from module signal:
   # Code from module stat:
   # Code from module stdbool:
   # Code from module stddef:
@@ -56,8 +59,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module tempname:
   # Code from module time:
   # Code from module unistd:
+  # Code from module verify:
   # Code from module warn-on-use:
-  # Code from module wchar:
 ])
 
 # This macro should be invoked from ./configure.ac, in the section
@@ -76,77 +79,46 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='lib'
-  # Code from module alloca-opt:
-  gl_FUNC_ALLOCA
-  # Code from module arg-nonnull:
-  # Code from module c++defs:
-  # Code from module canonicalize-lgpl:
-  gl_CANONICALIZE_LGPL
-  gl_MODULE_INDICATOR([canonicalize-lgpl])
-  gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
-  gl_STDLIB_MODULE_INDICATOR([realpath])
-  # Code from module errno:
-  gl_HEADER_ERRNO_H
-  # Code from module extensions:
-  # Code from module getopt:
-  # Code from module getopt-gnu:
-  gl_FUNC_GETOPT_GNU
-  gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
-  # Code from module getopt-posix:
-  gl_FUNC_GETOPT_POSIX
-  # Code from module gettext-h:
-  AC_SUBST([LIBINTL])
-  AC_SUBST([LTLIBINTL])
-  # Code from module gettimeofday:
-  gl_FUNC_GETTIMEOFDAY
-  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
-  # Code from module include_next:
-  # Code from module inttypes:
-  gl_INTTYPES_H
-  # Code from module lstat:
-  gl_FUNC_LSTAT
-  gl_SYS_STAT_MODULE_INDICATOR([lstat])
-  # Code from module malloca:
-  gl_MALLOCA
-  # Code from module mkdtemp:
-  gt_FUNC_MKDTEMP
-  gl_STDLIB_MODULE_INDICATOR([mkdtemp])
-  # Code from module mkstemp:
-  gl_FUNC_MKSTEMP
-  gl_STDLIB_MODULE_INDICATOR([mkstemp])
-  # Code from module multiarch:
-  gl_MULTIARCH
-  # Code from module pathmax:
-  gl_PATHMAX
-  # Code from module readlink:
-  gl_FUNC_READLINK
-  gl_UNISTD_MODULE_INDICATOR([readlink])
-  # Code from module stat:
-  gl_FUNC_STAT
-  gl_SYS_STAT_MODULE_INDICATOR([stat])
-  # Code from module stdbool:
-  AM_STDBOOL_H
-  # Code from module stddef:
-  gl_STDDEF_H
-  # Code from module stdint:
-  gl_STDINT_H
-  # Code from module stdlib:
-  gl_STDLIB_H
-  # Code from module sys_stat:
-  gl_HEADER_SYS_STAT_H
-  AC_PROG_MKDIR_P
-  # Code from module sys_time:
-  gl_HEADER_SYS_TIME_H
-  AC_PROG_MKDIR_P
-  # Code from module tempname:
-  gl_FUNC_GEN_TEMPNAME
-  # Code from module time:
-  gl_HEADER_TIME_H
-  # Code from module unistd:
-  gl_UNISTD_H
-  # Code from module warn-on-use:
-  # Code from module wchar:
-  gl_WCHAR_H
+gl_FUNC_ALLOCA
+gl_CANONICALIZE_LGPL
+gl_MODULE_INDICATOR([canonicalize-lgpl])
+gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
+gl_STDLIB_MODULE_INDICATOR([realpath])
+gl_HEADER_ERRNO_H
+gl_FUNC_GETOPT_GNU
+gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
+gl_FUNC_GETOPT_POSIX
+AC_SUBST([LIBINTL])
+AC_SUBST([LTLIBINTL])
+gl_FUNC_GETTIMEOFDAY
+gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
+gl_INTTYPES_H
+gl_INTTYPES_INCOMPLETE
+gl_FUNC_LSTAT
+gl_SYS_STAT_MODULE_INDICATOR([lstat])
+gl_MALLOCA
+gt_FUNC_MKDTEMP
+gl_STDLIB_MODULE_INDICATOR([mkdtemp])
+gl_FUNC_MKSTEMP
+gl_STDLIB_MODULE_INDICATOR([mkstemp])
+gl_MULTIARCH
+gl_PATHMAX
+gl_FUNC_READLINK
+gl_UNISTD_MODULE_INDICATOR([readlink])
+gl_SIGNAL_H
+gl_FUNC_STAT
+gl_SYS_STAT_MODULE_INDICATOR([stat])
+AM_STDBOOL_H
+gl_STDDEF_H
+gl_STDINT_H
+gl_STDLIB_H
+gl_HEADER_SYS_STAT_H
+AC_PROG_MKDIR_P
+gl_HEADER_SYS_TIME_H
+AC_PROG_MKDIR_P
+gl_FUNC_GEN_TEMPNAME
+gl_HEADER_TIME_H
+gl_UNISTD_H
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -292,6 +264,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/warn-on-use.h
   lib/alloca.in.h
   lib/canonicalize-lgpl.c
+  lib/dosname.h
   lib/errno.in.h
   lib/getopt.c
   lib/getopt.in.h
@@ -308,6 +281,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mkstemp.c
   lib/pathmax.h
   lib/readlink.c
+  lib/signal.in.h
   lib/stat.c
   lib/stdbool.in.h
   lib/stddef.in.h
@@ -319,11 +293,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/tempname.h
   lib/time.in.h
   lib/unistd.in.h
-  lib/wchar.in.h
+  lib/verify.h
   m4/00gnulib.m4
   m4/alloca.m4
   m4/canonicalize.m4
-  m4/dos.m4
   m4/double-slash-root.m4
   m4/eealloc.m4
   m4/errno_h.m4
@@ -343,6 +316,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/onceonly.m4
   m4/pathmax.m4
   m4/readlink.m4
+  m4/signal_h.m4
   m4/stat.m4
   m4/stdbool.m4
   m4/stddef_h.m4
@@ -354,7 +328,5 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/time_h.m4
   m4/unistd_h.m4
   m4/warn-on-use.m4
-  m4/wchar_h.m4
   m4/wchar_t.m4
-  m4/wint_t.m4
 ])

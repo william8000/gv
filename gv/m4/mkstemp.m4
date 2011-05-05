@@ -1,6 +1,6 @@
-#serial 18
+#serial 20
 
-# Copyright (C) 2001, 2003-2007, 2009-2010 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -10,6 +10,8 @@
 # Other systems lack mkstemp altogether.
 # On OSF1/Tru64 V4.0F, the system-provided mkstemp function can create
 # only 32 files per process.
+# On some hosts, mkstemp creates files with mode 0666, which is a security
+# problem and a violation of POSIX 2008.
 # On systems like the above, arrange to use the replacement function.
 AC_DEFUN([gl_FUNC_MKSTEMP],
 [
@@ -25,26 +27,39 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
         AC_RUN_IFELSE(
           [AC_LANG_PROGRAM(
             [AC_INCLUDES_DEFAULT],
-            [[int i;
+            [[int result = 0;
+              int i;
               off_t large = (off_t) 4294967295u;
               if (large < 0)
                 large = 2147483647;
+              umask (0);
               for (i = 0; i < 70; i++)
                 {
                   char templ[] = "conftest.mkstemp/coXXXXXX";
                   int (*mkstemp_function) (char *) = mkstemp;
                   int fd = mkstemp_function (templ);
-                  if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
-                    return 1;
-                  close (fd);
+                  if (fd < 0)
+                    result |= 1;
+                  else
+                    {
+                      struct stat st;
+                      if (lseek (fd, large, SEEK_SET) != large)
+                        result |= 2;
+                      if (fstat (fd, &st) < 0)
+                        result |= 4;
+                      else if (st.st_mode & 0077)
+                        result |= 8;
+                      if (close (fd))
+                        result |= 16;
+                    }
                 }
-              return 0;]])],
+              return result;]])],
           [gl_cv_func_working_mkstemp=yes],
           [gl_cv_func_working_mkstemp=no],
-          [gl_cv_func_working_mkstemp=no])
+          [gl_cv_func_working_mkstemp="guessing no"])
         rm -rf conftest.mkstemp
       ])
-    if test $gl_cv_func_working_mkstemp != yes; then
+    if test "$gl_cv_func_working_mkstemp" != yes; then
       REPLACE_MKSTEMP=1
       AC_LIBOBJ([mkstemp])
       gl_PREREQ_MKSTEMP
