@@ -7,8 +7,10 @@
 # File distribution
 bin_PROGRAMS = gv
 bin_SCRIPTS = gv-update-userconfig
-dist_pkgdata_DATA = gv_spartan.dat gv_user_res.dat gv_copyright.dat gv_widgetless.dat
-pkgdata_DATA = gv_system.ad gv_user.ad gv_class.ad
+pkgdata_DATA = gv_system.ad
+if !ENABLE_FALLBACK_STYLES
+pkgdata_DATA += gv_spartan.dat gv_widgetless.dat
+endif
 
 appdefaultsdir = $(pkgdatadir)
 
@@ -16,7 +18,8 @@ appdefaults_DATA = ../GV
 
 EXTRA_DIST=ad2c gv_font_res.dat gv_font_res-I18N_mb.dat gv_layout_res.dat gv-i18n.pl gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
-           gv_selected.xbm gv_unmark.xbm $(srcdir)/nls/*
+           gv_selected.xbm gv_unmark.xbm $(srcdir)/nls/* \
+	   gv_spartan.dat gv_widgetless.dat gv_user_res.dat gv_copyright.dat
 
 # Clean files
 CLEANFILES = ../GV \

@@ -206,6 +206,7 @@ dnl     USE_FALLBACK_STYLES=-DUSE_FALLBACK_STYLES
      AC_DEFINE(USE_FALLBACK_STYLES,[],[Define USE_FALLBACK_STYLES])
 
 }
+AM_CONDITIONAL(ENABLE_FALLBACK_STYLES, test x$opt_fallback_styles = xyes)
 
 AC_ARG_ENABLE(memmove-code, AC_HELP_STRING([--enable-memmove-code],[Use gv's own memmove. It defaults to `yes']), opt_memmove_code=$enableval, opt_memmove_code=yes)
 
