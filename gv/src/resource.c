@@ -865,7 +865,6 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
      char *name;
 {
   char tmp[GV_MAX_FILENAME_LENGTH];
-  int useful=0;
 
   BEGINMESSAGE(resource_mergeFileIntoDatabase)
 
@@ -877,36 +876,18 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
   strcpy(tmp,name);
   file_translateTildeInPath(tmp);
 
-  if (file_fileIsNotUseful(tmp)) {
+  if (tmp[0] != '/') {
+    fprintf(stderr, "Ignoring resource file '%s'='%s' as no absolute path!\n",
+		    name, tmp);
+    name = NULL;
+  } else if (file_fileIsNotUseful(tmp)) {
     INFSMESSAGE(not useful,tmp)
-      if (name != file_locateFilename(name)) useful=-1;
-      else {
-
-	sprintf(tmp,"~/%s",name);
-	file_translateTildeInPath(tmp);
-
-      }
-  } else useful=1;
-
-  if (!useful) {
-
-    if (!useful && file_fileIsNotUseful(tmp)) {
-      INFSMESSAGE(not useful,tmp)
-	sprintf(tmp,"%s%s",GV_LIBDIR,name);
-    } else useful=1;
-
-    if (!useful && file_fileIsNotUseful(tmp)) {
-      INFSMESSAGE(not useful,tmp)
-	INFMESSAGE(giving up)
-	} else useful=1;
-  }
-
-  if (useful==1) {
+    name = NULL;
+  } else {
     INFSMESSAGE(merging,tmp)
       XrmCombineFileDatabase(tmp,dbP,True);
     name = XtNewString(tmp);
   }
-  else name=NULL;
   ENDMESSAGE(resource_mergeFileIntoDatabase)
     return(name);
 }
