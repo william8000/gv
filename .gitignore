@@ -38,6 +38,7 @@ Makefile
 Makefile.in
 gv/config.guess
 gv/config.sub
+gv/lib/signal.h
 gv/lib/alloca.h
 gv/lib/arg-nonnull.h
 gv/lib/c++defs.h
