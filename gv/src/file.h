@@ -36,7 +36,7 @@
 extern char* file_getDirOfPath (char *);
 extern char* file_locateFilename (char *);
 extern char* file_getTmpFilename (const char *, const char *, int *);
-extern void  file_translateTildeInPath (char *);
+extern void  file_translateTildeInPath (char *, size_t);
 extern int   file_fileIsDir (char *);
 extern int   file_fileIsNotUseful (char *);
 extern char* file_pdfname2psname (char *);

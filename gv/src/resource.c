@@ -175,7 +175,7 @@ resource_buildDatabase (
   INFMESSAGE(checking for user resources)
 
   strcpy(tmp,USER_DEFAULTS);
-  file_translateTildeInPath(tmp);
+  file_translateTildeInPath(tmp, sizeof(tmp));
   if (!file_fileIsNotUseful(tmp)) {
     s = XtNewString(tmp);
     tildeGv = USER_DEFAULTS;
@@ -254,7 +254,7 @@ resource_buildDatabase (
      
      strcpy(tmp,USER_DEFAULTS "-");
      strcat(tmp, locale1);
-     file_translateTildeInPath(tmp);
+     file_translateTildeInPath(tmp, sizeof(tmp));
      if (!stat(tmp, &buf))
      {
         i18n = 1;
@@ -304,7 +304,7 @@ resource_buildDatabase (
      
      strcpy(tmp,USER_DEFAULTS "-");
      strcat(tmp, locale2);
-     file_translateTildeInPath(tmp);
+     file_translateTildeInPath(tmp, sizeof(tmp));
      if (!stat(tmp, &buf))
      {
         i18n = 1;
@@ -349,7 +349,7 @@ resource_buildDatabase (
      
      strcpy(tmp,USER_DEFAULTS "-");
      strcat(tmp, locale3);
-     file_translateTildeInPath(tmp);
+     file_translateTildeInPath(tmp, sizeof(tmp));
      if (!stat(tmp, &buf))
      {
         i18n = 1;
@@ -874,7 +874,7 @@ static char* resource_mergeFileIntoDatabase(dbP,name)
     }
 
   strcpy(tmp,name);
-  file_translateTildeInPath(tmp);
+  file_translateTildeInPath(tmp, sizeof(tmp));
 
   if (tmp[0] != '/') {
     fprintf(stderr, "Ignoring resource file '%s'='%s' as no absolute path!\n",

@@ -173,7 +173,7 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
 			 len, baseDirectory, tmpName, tmpExt);
 	 if (l < 0 || l >= sizeof(tempFilename) )
 		 break;
-         file_translateTildeInPath(tempFilename);
+         file_translateTildeInPath(tempFilename, sizeof(tempFilename));
 	 oldumask = umask(0077);
 	 fd = mkstemp(tempFilename);
 	 umask(oldumask);
@@ -204,23 +204,20 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
 /* Replaces tilde in string by user's home directory. */
 /*############################################################*/
 
-void
-file_translateTildeInPath(path)
-   char *path;
+void file_translateTildeInPath(char *path, size_t s)
 {
-   char *pos;
 
    BEGINMESSAGE(file_translateTildeInPath)
-   if ((pos=strchr(path,'~'))) {
-      char *home;
-      char tmp[GV_MAX_FILENAME_LENGTH];
-      home=getenv("HOME");
-      if (strlen(home)+strlen(path)-1 < GV_MAX_FILENAME_LENGTH-1) {
-         *pos='\0'; pos++;
-         strcpy(tmp,path);
-         strcat(tmp,home);
-         strcat(tmp,pos);
-         strcpy(path,tmp);
+   if (path[0] == '~' && (path[1] == '/' || path[1] == '\0')) {
+      char *home = getenv("HOME");
+
+      if (home != NULL) {
+         size_t pl = strlen(path);
+         size_t hl = strlen(home);
+         if (pl + hl - 1 < s - 1) {
+             memmove(path + hl, path + 1, pl - 1 + 1);
+             memcpy(path, home, hl);
+         }
       }
    }
    ENDMESSAGE(file_translateTildeInPath)

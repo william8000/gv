@@ -702,7 +702,7 @@ int main(argc, argv)
         char buffer[512];
 	strcpy(buffer, app_res.scratch_dir);
 	strcat(buffer,"gv-safe-workdir-XXXXXX");
-	file_translateTildeInPath(buffer);
+	file_translateTildeInPath(buffer, sizeof(buffer));
         gv_safe_gs_workdir = strdup(mkdtemp(buffer));
 	gv_safe_gs_tempdir = 1;
 
@@ -721,7 +721,7 @@ int main(argc, argv)
        char* tmp_savepos_filename;
        main_setInternResource(gv_database,&tmp_savepos_filename,"saveposFilename");
        strcpy(gv_savepos_filename, tmp_savepos_filename);
-       file_translateTildeInPath(gv_savepos_filename);
+       file_translateTildeInPath(gv_savepos_filename, sizeof(gv_savepos_filename));
     }
     
     main_setInternResource(gv_database,&gv_uncompress_command,"uncompressCommand");
