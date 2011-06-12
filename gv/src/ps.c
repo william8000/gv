@@ -601,16 +601,19 @@ unc_ok:
 	close(tmpfd);
 
         tmp_file = fopen( tmp_filename, "r" );
-	while ( fgets( password_line, 999, tmp_file) )
+        if (tmp_file)
 	{
-	   if (strstr(password_line,"This file requires a password for access."))
-	      found = 1;
-	   if (strstr(password_line,"Password did not work."))
-	      found = 1;
-        }
-	fclose(tmp_file);	
-	unlink((char*) tmp_file);
-	
+	  while ( fgets( password_line, 999, tmp_file) )
+	  {
+	     if (strstr(password_line,"This file requires a password for access."))
+	        found = 1;
+	     if (strstr(password_line,"Password did not work."))
+	        found = 1;
+          }
+	  fclose(tmp_file);
+	  unlink(tmp_filename);
+	}
+
 	if (found)
 	{
 	   cb_askPassword((Widget)NULL, NULL, NULL);
