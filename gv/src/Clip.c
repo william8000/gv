@@ -154,9 +154,7 @@ WidgetClass clipWidgetClass = (WidgetClass) &clipClassRec;
 /* SendReport */
 /*---------------------------------------------------*/
 
-static void SendReport (cw, changed)
-   ClipWidget cw;
-   unsigned int changed;
+static void SendReport (ClipWidget cw, unsigned int changed)
 {
    Widget child = CW_CHILD;
 
@@ -206,10 +204,7 @@ static void Realize (gw, valueMask, attributes)
 /*---------------------------------------------------*/
 
 static void
-Initialize(request, new, args, num_args)
-   Widget request, new;
-   ArgList args;
-   Cardinal *num_args;
+Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
    ClipWidget cw = (ClipWidget) new;
 
@@ -245,8 +240,7 @@ SetValues(current, request, new)
 /* Resize */
 /*---------------------------------------------------*/
 
-static void Resize (w)
-   Widget w;
+static void Resize (Widget w)
 {
    ClipWidget cw = (ClipWidget) w;
    Widget child  = CW_CHILD;
@@ -283,8 +277,7 @@ static void Resize (w)
 /*---------------------------------------------------*/
 
 static void
-GetDesiredSizeOfChild(child)
-   Widget child;
+GetDesiredSizeOfChild(Widget child)
 {
    ClipWidget cw;
    XtWidgetGeometry desired;
@@ -306,8 +299,7 @@ GetDesiredSizeOfChild(child)
 /*---------------------------------------------------*/
 
 static void
-InsertChild(child)
-   Widget  child;
+InsertChild(Widget child)
 {
    BEGINMESSAGE(InsertChild)
    SMESSAGE(XtName(child))
@@ -321,10 +313,7 @@ InsertChild(child)
 /*---------------------------------------------------*/
 
 static void
-GetNaturalSize(cw,wP,hP)
-   ClipWidget cw;
-   Dimension *wP;
-   Dimension *hP;
+GetNaturalSize(ClipWidget cw, Dimension *wP, Dimension *hP)
 {
    BEGINMESSAGE(GetNaturalSize)
    *wP = CW_CHILD_NAT_WIDTH;
@@ -337,9 +326,7 @@ GetNaturalSize(cw,wP,hP)
 /*---------------------------------------------------*/
 
 static XtGeometryResult
-QueryGeometry(w,request,preferred_return)
-   Widget w;
-   XtWidgetGeometry *request, *preferred_return;
+QueryGeometry(Widget w, XtWidgetGeometry *request, XtWidgetGeometry *preferred_return)
 {
    ClipWidget cw = (ClipWidget)w;
    Dimension nw,nh;
@@ -375,9 +362,7 @@ QueryGeometry(w,request,preferred_return)
 #define IS_REQUEST(fff) (request->request_mode & fff)
 
 static XtGeometryResult
-GeometryManager(child,request,geometry_return)
-   Widget child;
-   XtWidgetGeometry *request, *geometry_return;
+GeometryManager(Widget child, XtWidgetGeometry *request, XtWidgetGeometry *geometry_return _GL_UNUSED)
 {
    ClipWidget cw;
    XtGeometryResult answer;
@@ -443,8 +428,7 @@ GeometryManager(child,request,geometry_return)
 /* ChangeManaged */
 /*---------------------------------------------------*/
 
-static void ChangeManaged(w)
-   Widget w;
+static void ChangeManaged(Widget w)
 {
    ClipWidget cw = (ClipWidget) w;
    Widget child = CW_CHILD;
@@ -480,8 +464,7 @@ static void ChangeManaged(w)
 /*---------------------------------------------------*/
 
 static XtGeometryResult
-LayoutClip(cw)
-   ClipWidget cw;
+LayoutClip(ClipWidget cw)
 {
    XtWidgetGeometry request;
    XtGeometryResult answer;
@@ -540,11 +523,8 @@ LayoutClip(cw)
 /* ClipWidgetCheckCoordinates */
 /*###################################################*/
 
-void 
-ClipWidgetCheckCoordinates(w, x, y, xP, yP)
-   Widget w;
-   int x, y;
-   int *xP,*yP;
+void
+ClipWidgetCheckCoordinates(Widget w, int x, int y, int *xP, int *yP)
 {
   ClipWidget cw = (ClipWidget)w;
   Widget  child = CW_CHILD;
@@ -566,20 +546,18 @@ ClipWidgetCheckCoordinates(w, x, y, xP, yP)
 /* ClipWidgetSetCoordinates */
 /*###################################################*/
 
-void 
-ClipWidgetSetCoordinates(w, x, y)
-   Widget w;
-   int x, y;
+void
+ClipWidgetSetCoordinates(Widget w, int x, int y)
 {
    ClipWidget cw = (ClipWidget)w;
    Widget  child = CW_CHILD;
    int px,py;
- 
+
    BEGINMESSAGE(ClipWidgetSetCoordinates)
    ClipWidgetCheckCoordinates(w, x, y, &px,&py);
    XtMoveWidget(child, (Position)px, (Position)py);
    CW_CHILD_NAT_X = (Position)px;
    CW_CHILD_NAT_Y = (Position)py;
-   SendReport (w, (XawPRSliderX | XawPRSliderY));
+   SendReport (cw, (XawPRSliderX | XawPRSliderY));
    ENDMESSAGE(ClipWidgetSetCoordinates)
 }

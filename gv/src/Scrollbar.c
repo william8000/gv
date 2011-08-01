@@ -317,10 +317,7 @@ WidgetClass scrollbarWidgetClass = (WidgetClass)&scrollbarClassRec;
     EraseThumbRegion
 ###############################################################################*/
 
-static void EraseThumbRegion(SBW,yt,yb,xl,xr)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension xl,xr;
+static void EraseThumbRegion(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr)
 {
    USE_FILL;
 
@@ -334,10 +331,7 @@ static void EraseThumbRegion(SBW,yt,yb,xl,xr)
     PaintThumbCover
 ###############################################################################*/
 
-static void PaintThumbCover(SBW,yt,yb,xl,xr)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension xl,xr;
+static void PaintThumbCover(ScrollbarWidget SBW, Dimension yt, Dimension yb,Dimension xl,Dimension xr)
 {
    USE_FILL;
 
@@ -351,11 +345,7 @@ static void PaintThumbCover(SBW,yt,yb,xl,xr)
     PaintShadowAtSidesOfThumb
 ###############################################################################*/
 
-static void PaintShadowAtSidesOfThumb(SBW,yt,yb,xl,xr,s)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension xl,xr;
-   Dimension s;
+static void PaintShadowAtSidesOfThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr, Dimension s)
 {
    USE_FILL;
 
@@ -372,12 +362,7 @@ static void PaintShadowAtSidesOfThumb(SBW,yt,yb,xl,xr,s)
     PaintShadowAtEndOfThumb
 ###############################################################################*/
 
-static void PaintShadowAtEndOfThumb(SBW,yt,yb,xl,xr,s,part)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension xl,xr;
-   Dimension s;
-   int part;
+static void PaintShadowAtEndOfThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr, Dimension s, int part)
 {
    XPoint shadowPT[4];
    USE_FILL;
@@ -443,12 +428,7 @@ static void PaintMiddleOfThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, 
     PaintEndOfThumb
 ###############################################################################*/
 
-static void PaintEndOfThumb(SBW,yt,yb,xl,xr,s,part)
-   ScrollbarWidget SBW;
-   Dimension yt,yb;
-   Dimension xl,xr;
-   Dimension s;
-   int part;
+static void PaintEndOfThumb(ScrollbarWidget SBW, Dimension yt, Dimension yb, Dimension xl, Dimension xr, Dimension s, int part)
 {
    BEGINMESSAGE(PaintEndOfThumb)
    if (part==UPPER_PART) {
@@ -471,9 +451,7 @@ static void PaintEndOfThumb(SBW,yt,yb,xl,xr,s,part)
     GetRelativeThumbLocation
 ###############################################################################*/
 
-static void GetRelativeThumbLocation(SBW,newtop,newbot)
-   ScrollbarWidget SBW;
-   Dimension *newtop, *newbot;
+static void GetRelativeThumbLocation(ScrollbarWidget SBW, Dimension *newtop, Dimension *newbot)
 {
    Dimension scroll_length = (Dimension) _SCROLL_LENGTH_-MIN_THUMB;
    Dimension end_of_scroll_region = (Dimension) _END_OF_SCROLL_REGION_;
@@ -492,9 +470,7 @@ static void GetRelativeThumbLocation(SBW,newtop,newbot)
     AdjustThumbShadow
 ###############################################################################*/
 
-static Boolean AdjustThumbShadow(SBW,newtop,newbot)
-    ScrollbarWidget SBW;
-    Dimension newtop,newbot;
+static Boolean AdjustThumbShadow(ScrollbarWidget SBW, Dimension newtop, Dimension newbot)
 {
     Dimension xl = (Dimension) _LEFT_START_OF_SCROLL_REGION_;
     Dimension xr = (Dimension) _RIGHT_END_OF_SCROLL_REGION_;
@@ -520,8 +496,7 @@ static Boolean AdjustThumbShadow(SBW,newtop,newbot)
     PaintThumb
 ###############################################################################*/
 
-static void PaintThumb(SBW)
-    ScrollbarWidget SBW;
+static void PaintThumb(ScrollbarWidget SBW)
 {
     Dimension xl = (Dimension) _LEFT_START_OF_SCROLL_REGION_;
     Dimension xr = (Dimension) _RIGHT_END_OF_SCROLL_REGION_;
@@ -583,10 +558,7 @@ static void PaintThumb(SBW)
 
 #define COORD(name,value) short name = (short) (value)
 
-static void PaintArrows(SBW,which,mode)
-   ScrollbarWidget SBW;
-   int which;
-   int mode;
+static void PaintArrows(ScrollbarWidget SBW, int which, int mode)
 {
    BEGINMESSAGE(PaintArrows)
 
@@ -704,8 +676,7 @@ static void PaintArrows(SBW,which,mode)
     CreateGC
 ###############################################################################*/
 
-static void CreateGC(w)
-    Widget w;
+static void CreateGC(Widget w)
 {
     SCROLLBARWIDGET w;
     XGCValues gcValues;
@@ -754,8 +725,7 @@ static void CreateGC(w)
     SetDimensions
 ###############################################################################*/
 
-static void SetDimensions(SBW)
-   ScrollbarWidget SBW;
+static void SetDimensions(ScrollbarWidget SBW)
 {
    Dimension tmp;
 
@@ -853,16 +823,14 @@ static void ClassInitialize(void)
     Initialize
 ###############################################################################*/
 
-static void Initialize( request, new, args, num_args )
-    Widget request;		/* what the client asked for */
-    Widget new;			/* what we're going to give him */
-    ArgList args;
-    Cardinal *num_args;
+static void Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
+/* request: what the client asked for */
+/* new: what we're going to give him */
 {
     SCROLLBARWIDGET new;
 
     BEGINMESSAGE(Initialize)
-    CreateGC(SBW);
+    CreateGC(new);
     if (WIDTH == 0)  WIDTH  = (IS_VERTICAL)   ? THICKNESS : LENGTH;
     if (HEIGHT == 0) HEIGHT = (IS_HORIZONTAL) ? THICKNESS : LENGTH;
     SHADOW_BASE = _SC_INIT_VALUE_;
@@ -885,10 +853,7 @@ static void Initialize( request, new, args, num_args )
     Realize
 ###############################################################################*/
 
-static void Realize (w, valueMask, attributes)
-    Widget w;
-    Mask *valueMask;
-    XSetWindowAttributes *attributes;
+static void Realize(Widget w, Mask *valueMask, XSetWindowAttributes *attributes)
 {
     SCROLLBARWIDGET w;
     BEGINMESSAGE(Realize)
@@ -906,12 +871,7 @@ static void Realize (w, valueMask, attributes)
     SetValues
 ###############################################################################*/
 
-static Boolean SetValues(old, request, new, args, num_args)
-   Widget	old,
-   	 	request,
-	  	new;
-   ArgList 	args;
-   Cardinal 	*num_args;
+static Boolean SetValues(Widget old, Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
    SCROLLBARWIDGET 	new;
    ScrollbarWidget 	old_sbw = (ScrollbarWidget) old;
@@ -939,7 +899,7 @@ static Boolean SetValues(old, request, new, args, num_args)
       THUMB != old_sbw->scrollbar.thumb) {
       INFMESSAGE(GC has changed)
       XtReleaseGC((Widget)SBW, SCROLLBAR_GC); /*###jp### changed 21.10.94*/
-      CreateGC(SBW);
+      CreateGC(new);
       redraw = TRUE;
    }
 
@@ -973,8 +933,7 @@ static Boolean SetValues(old, request, new, args, num_args)
    Resize
 ###############################################################################*/
 
-static void Resize(w)
-   Widget w;
+static void Resize(Widget w)
 {
    SCROLLBARWIDGET w;
    XEvent event;
@@ -994,10 +953,7 @@ static void Resize(w)
    bounding box to minimize visual disturbances.
 ###############################################################################*/
 
-static void Redisplay(w, event, region)
-   Widget 	w;
-   XEvent 	*event;
-   Region 	region;
+static void Redisplay(Widget w, XEvent *event, Region region)
 {
    SCROLLBARWIDGET w;
    ScrollbarWidgetClass swclass = (ScrollbarWidgetClass) XtClass (w);
@@ -1075,8 +1031,7 @@ static void Destroy (w)
 
 #define CHECK(field) if (newEvent->field != oldEvent->field) return False;
 
-static Boolean CompareEvents (oldEvent, newEvent)
-    XEvent *oldEvent, *newEvent;
+static Boolean CompareEvents (XEvent *oldEvent, XEvent *newEvent)
 {
     INFMESSAGE(executing Procedure: CompareEvents)
     CHECK(xany.display);
@@ -1117,10 +1072,7 @@ struct EventData {
    int 		count;
 };
 
-static Bool PeekNotifyEvent (dpy, event, args)
-   Display 	*dpy;
-   XEvent 	*event;
-   char 	*args;
+static Bool PeekNotifyEvent (Display *dpy, XEvent *event, char *args)
 {
    struct EventData *eventData = (struct EventData*)args;
    INFMESSAGE(executing Procedure: PeekNotifyEvent)
@@ -1132,9 +1084,7 @@ static Bool PeekNotifyEvent (dpy, event, args)
     LookAhead
 ###############################################################################*/
 
-static Boolean LookAhead (w, event)
-   Widget 	w;
-   XEvent 	*event;
+static Boolean LookAhead (Widget w, XEvent *event)
 {
    XEvent 	newEvent;
    struct 	EventData eventData;
@@ -1160,10 +1110,7 @@ static Boolean LookAhead (w, event)
 
 #define GET_EVENT_POS(kind) *position = (is_vertical) ? event->kind.y : event->kind.x
 
-static void ExtractPosition (event,position,is_vertical)
-   XEvent 	*event;
-   Position	*position;
-   Boolean      is_vertical;
+static void ExtractPosition(XEvent *event, Position *position, Boolean is_vertical)
 {
    BEGINMESSAGE(ExtractPosition)
    switch( event->type ) {
@@ -1188,12 +1135,7 @@ static void ExtractPosition (event,position,is_vertical)
     HandleThumb
 ###############################################################################*/
 
-/* ARGSUSED */
-static void HandleThumb (w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;		/* unused */
-   Cardinal *num_params;	/* unused */
+static void HandleThumb (Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
    SCROLLBARWIDGET w;
    Position position;
@@ -1220,11 +1162,7 @@ static void HandleThumb (w, event, params, num_params)
     HandleAutoscroll
 ###############################################################################*/
 
-static void HandleAutoscroll(w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;
-   Cardinal *num_params;
+static void HandleAutoscroll(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params)
 {
    SCROLLBARWIDGET w;
    static Position old_position;
@@ -1266,9 +1204,7 @@ static void HandleAutoscroll(w, event, params, num_params)
     RepeatNotify
 ###############################################################################*/
 
-static void RepeatNotify (client_data, idp)
-    XtPointer client_data;
-    XtIntervalId *idp;
+static void RepeatNotify (XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
     SCROLLBARWIDGET client_data;
     int call_data=0;
@@ -1306,11 +1242,7 @@ static void RepeatNotify (client_data, idp)
 ###############################################################################*/
 
 
-static void NotifyScroll(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+static void NotifyScroll(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
     SCROLLBARWIDGET w;
     Position tsoar = (Position) ARROW_TOP_TO_BORDER;
@@ -1365,11 +1297,7 @@ static void NotifyScroll(w, event, params, num_params)
 ###############################################################################*/
 
 /* ARGSUSED */
-static void EndScroll(w, event, params, num_params )
-    Widget w;
-    XEvent *event;		/* unused */
-    String *params;		/* unused */
-    Cardinal *num_params;	/* unused */
+static void EndScroll(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
     SCROLLBARWIDGET w;
 
@@ -1387,11 +1315,7 @@ static void EndScroll(w, event, params, num_params )
     MoveThumb
 ###############################################################################*/
 
-static void MoveThumb (w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;		/* unused */
-   Cardinal *num_params;	/* unused */
+static void MoveThumb(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    SCROLLBARWIDGET w;
    Position position;
@@ -1431,11 +1355,7 @@ static void MoveThumb (w, event, params, num_params)
     NotifyThumb
 ###############################################################################*/
 
-static void NotifyThumb(w, event, params, num_params )
-   Widget w;
-   XEvent *event;
-   String *params;		/* unused */
-   Cardinal *num_params;	/* unused */
+static void NotifyThumb(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    register SCROLLBARWIDGET w;
 

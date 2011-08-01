@@ -180,13 +180,7 @@ WidgetClass frameWidgetClass =	(WidgetClass) (&frameClassRec);
 }
 
 Boolean
-FrameConvertStringToFrameType ( display, args, num_args,  from, to, converter_data)
-   Display *display;
-   XrmValuePtr args;
-   Cardinal *num_args;
-   XrmValuePtr from;
-   XrmValuePtr to;
-   XtPointer *converter_data;
+FrameConvertStringToFrameType(Display *display, XrmValue *args _GL_UNUSED, Cardinal *num_args _GL_UNUSED, XrmValuePtr from, XrmValuePtr to, XtPointer *converter_data _GL_UNUSED)
 {
    String s = (String) from->addr;
 
@@ -219,9 +213,7 @@ ClassInitialize(void)
 /*---------------------------------------------------*/
 
 static GC
-shadow_getGC (w,pixel)
-    Widget w;
-    Pixel  pixel;
+shadow_getGC (Widget w, Pixel pixel)
 {
    Screen    *scn = XtScreen (w);
    XtGCMask  valuemask;
@@ -240,10 +232,7 @@ shadow_getGC (w,pixel)
 }
 
 static void
-Initialize(request, new, args, num_args)
-   Widget request, new;
-   ArgList args;
-   Cardinal *num_args;
+Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
    FrameWidget fw = (FrameWidget) new;
 
@@ -268,8 +257,7 @@ Initialize(request, new, args, num_args)
 /*---------------------------------------------------*/
 
 static void
-Destroy (w)
-   Widget w;
+Destroy (Widget w)
 {
    FrameWidget fw = (FrameWidget) w;
 
@@ -285,9 +273,8 @@ Destroy (w)
 
 #define MIN_CHILD 4
 
-static void 
-Resize(w)
-   Widget w;
+static void
+Resize(Widget w)
 {
    int x,y,cw,ch,hs,vs,bw,sw;
    FrameWidget fw = (FrameWidget) w;
@@ -344,17 +331,8 @@ Resize(w)
   bottom_polygon[i].x = (short) (xx);	\
   bottom_polygon[i].y = (short) (yy)
 
-void 
-FrameDrawFrame (gw, x, y, w, h, frame_type, fw, lightgc, darkgc)
-   Widget  gw;
-   int     x;
-   int     y;
-   int     w; 
-   int     h;
-   XawFrameType frame_type;
-   int     fw;
-   GC      lightgc;
-   GC      darkgc;
+void
+FrameDrawFrame (Widget gw, int x, int y, int w, int h, XawFrameType frame_type, int fw, GC lightgc, GC darkgc)
 {
    XPoint top_polygon[6];
    XPoint bottom_polygon[6];
@@ -431,10 +409,7 @@ FrameDrawFrame (gw, x, y, w, h, frame_type, fw, lightgc, darkgc)
 #undef bottomPolygon
 
 static void
-Redisplay(w, event, region)
-   Widget w;
-   XEvent *event;		/* unused */
-   Region region;		/* unused */
+Redisplay(Widget w, XEvent *event _GL_UNUSED, Region region _GL_UNUSED)
 {
    FrameWidget fw = (FrameWidget) w;
    int wh,ww,sw,bw;
@@ -460,8 +435,7 @@ Redisplay(w, event, region)
 /*---------------------------------------------------*/
 
 static void
-GetDesiredSizeOfChild(child)
-   Widget child;
+GetDesiredSizeOfChild(Widget child)
 {
    FrameWidget fw;
 
@@ -490,8 +464,7 @@ GetDesiredSizeOfChild(child)
 /*---------------------------------------------------*/
 
 static void
-InsertChild(child)
-   Widget  child;
+InsertChild(Widget child)
 {
    BEGINMESSAGE(InsertChild)
    (*SuperClass->composite_class.insert_child) (child);
@@ -504,10 +477,7 @@ InsertChild(child)
 /*---------------------------------------------------*/
 
 static void
-GetNaturalSize(fw,wP,hP)
-   FrameWidget fw;
-   Dimension *wP;
-   Dimension *hP;
+GetNaturalSize(FrameWidget fw, Dimension *wP, Dimension *hP)
 {
    BEGINMESSAGE(GetNaturalSize)
    *wP = FW_CHILD_NAT_WIDTH  + 2*FW_NAT_SHADOW +2*FW_NAT_HSPACE;
@@ -520,8 +490,7 @@ GetNaturalSize(fw,wP,hP)
 /*---------------------------------------------------*/
 
 static void
-ChangeManaged(w)
-   Widget w;
+ChangeManaged(Widget w)
 {
    FrameWidget fw = (FrameWidget) w;
 
@@ -538,9 +507,7 @@ ChangeManaged(w)
 #define IS_REQUEST(fff) (request->request_mode & fff)
 
 static XtGeometryResult
-GeometryManager(child,request,geometry_return)
-   Widget child;
-   XtWidgetGeometry *request, *geometry_return;
+GeometryManager(Widget child, XtWidgetGeometry *request, XtWidgetGeometry *geometry_return _GL_UNUSED)
 {
    FrameWidget fw;
    XtGeometryResult answer;
@@ -596,9 +563,7 @@ GeometryManager(child,request,geometry_return)
 /*---------------------------------------------------*/
 
 static XtGeometryResult
-QueryGeometry(w,request,preferred_return)
-   Widget w;
-   XtWidgetGeometry *request, *preferred_return;
+QueryGeometry(Widget w, XtWidgetGeometry *request, XtWidgetGeometry *preferred_return)
 {
    FrameWidget fw = (FrameWidget)w;
    Dimension nw,nh;
@@ -632,8 +597,7 @@ QueryGeometry(w,request,preferred_return)
 /*---------------------------------------------------*/
 
 static XtGeometryResult
-LayoutFrame(fw)
-   FrameWidget fw;
+LayoutFrame(FrameWidget fw)
 {
    XtWidgetGeometry request;
    XtGeometryResult answer;

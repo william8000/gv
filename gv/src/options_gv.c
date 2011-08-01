@@ -174,9 +174,7 @@ static void options_gv_setOptionsAtEntry(void)
    options_gv_getScales
 ------------------------------------------------------*/
 
-static void options_gv_getScales(bP,sP)
-  int *sP;
-  int *bP;
+static void options_gv_getScales(int *bP,int *sP)
 {
   Arg args[1];
   Cardinal n;
@@ -207,9 +205,7 @@ static void options_gv_getScales(bP,sP)
    options_gv_cb_apply
 ------------------------------------------------------*/
 
-static void options_gv_cb_apply(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+static void options_gv_cb_apply(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    Arg args[5];
    Cardinal n;
@@ -368,8 +364,7 @@ static void options_gv_cb_apply(w, client_data, call_data)
    ENDMESSAGE(options_gv_cb_apply)
 }
 
-static char* orientation2extern(l)
-   String l;
+static char* orientation2extern(String l)
 {
    int i;
    for (i=0; orientations[i]; i++)
@@ -383,9 +378,7 @@ static char* orientation2extern(l)
 ------------------------------------------------------*/
 
 static
-void options_gv_cb_save(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_gv_cb_save(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   int    argn = 0;
   String argi[30];
@@ -467,7 +460,7 @@ void options_gv_cb_save(w, client_data, call_data)
    options_gv_createScaleMenus
 ######################################################*/
 
-void options_gv_createScaleMenus()
+void options_gv_createScaleMenus(void)
 {
   int i,sn=0,bn=0;
   Boolean change;
@@ -514,7 +507,7 @@ void options_gv_createScaleMenus()
    options_gv_createMediaMenus
 ######################################################*/
 
-void options_gv_createMediaMenus()
+void options_gv_createMediaMenus(void)
 {
   int i;
   Widget w;

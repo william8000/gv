@@ -168,11 +168,8 @@ static void ClassInitialize()
 /* Initialize */
 /*---------------------------------------------------*/
 
-static void 
-Initialize(request, new, args, num_args)
-Widget request, new;
-ArgList args;			/* unused */
-Cardinal *num_args;		/* unused */
+static void
+Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
   ButtonWidget bw = (ButtonWidget) new;
 
@@ -314,12 +311,8 @@ Region region;
 /* ACTIONS */
 /*##################################################-*/
 
-void 
-ButtonHighlight(w,event,params,num_params)
-Widget w;
-XEvent *event;
-String *params;		/* unused */
-Cardinal *num_params;	/* unused */
+void
+ButtonHighlight(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   ButtonWidget bw = (ButtonWidget)w;
   Boolean set;
@@ -333,12 +326,8 @@ Cardinal *num_params;	/* unused */
   ENDMESSAGE(ButtonHighlight)
 }
 
-void 
-ButtonSet(w,event,params,num_params)
-Widget w;
-XEvent *event;
-String *params;		/* unused */
-Cardinal *num_params;	/* unused */
+void
+ButtonSet(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   ButtonWidget bw = (ButtonWidget)w;
 
@@ -351,11 +340,7 @@ Cardinal *num_params;	/* unused */
 }
 
 void
-ButtonUnset(w,event,params,num_params)
-Widget w;
-XEvent *event;
-String *params;		/* unused */
-Cardinal *num_params;
+ButtonUnset(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   ButtonWidget bw = (ButtonWidget)w;
 

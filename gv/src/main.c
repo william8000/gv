@@ -287,14 +287,8 @@ static XtActionsRec actions[] = {
 --------------------------------------------------------------*/
 
 static Boolean
-dummyCvtStringToPixmap(dpy, args, num_args, fromVal, toVal,converter_data)
-   Display   *dpy;
-   XrmValue  *args;
-   Cardinal  *num_args;
-   XrmValue  *fromVal;
-   XrmValue  *toVal;
-   XtPointer *converter_data;
-{   
+dummyCvtStringToPixmap(Display *dpy _GL_UNUSED, XrmValue *args _GL_UNUSED, Cardinal *num_args _GL_UNUSED, XrmValue *fromVal _GL_UNUSED, XrmValue *toVal _GL_UNUSED, XtPointer *converter_data _GL_UNUSED)
+{
    BEGINMESSAGE(dummyCvtStringToPixmap)
 #  ifdef MESSAGES
    {
@@ -327,9 +321,7 @@ void main_createScaleMenu(void);
    Main
 #################################################################################*/
 
-int main(argc, argv)
-  int  argc;
-  char *argv[];
+int main(int argc, char *argv[])
 {
   MAINBEGINMESSAGE(main)
   gv_safe_gs_workdir = GV_LIBDIR "/safe-gs-workdir";

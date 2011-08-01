@@ -54,9 +54,7 @@
 /*##################################################################*/
 
 void
-cb_popdownPopup(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_popdownPopup(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_popdownPopup)
     XtPopdown((Widget)client_data);
@@ -69,9 +67,7 @@ cb_popdownPopup(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_popupPopup(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_popupPopup(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_popupPopup)
     XtPopup((Widget)client_data,XtGrabNone);
@@ -88,12 +84,7 @@ static int wmbdecor = 0;
 static int wmsdecor = 0;
 
 void
-popup_positionPopup(popup,ref_widget,mode,refx,refy)
-   Widget popup;
-   Widget ref_widget;
-   int mode;
-   int refx;
-   int refy;
+popup_positionPopup(Widget popup, Widget ref_widget, int mode, int refx, int refy)
 {
    Arg args[5];
    Cardinal n;

@@ -112,10 +112,7 @@ extern int gv_infoSkipErrors;
 
 /* We use this helper function for providing proper */
 /* case and colon :-) insensitive DSC matching */
-static int dsc_strncmp(s1, s2, n)
-  char *s1;
-  char *s2;
-  size_t n;
+static int dsc_strncmp(const char *s1, const char *s2, size_t n)
 {
  char *tmp;	
 
@@ -332,16 +329,7 @@ static void ps_dynMemExhaust(void)
 /*###########################################################*/
 
 struct document *
-psscan(fileP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle,gv_gs_safeDir)
-    FILE **fileP;
-    char *filename;
-    char *filename_raw;
-    char **filename_dscP;
-    char *cmd_scan_pdf;
-    char **filename_uncP;
-    char *cmd_uncompress;
-    int scanstyle;
-    int gv_gs_safeDir;
+psscan(FILE **fileP, char *filename, char *filename_raw, char **filename_dscP, char *cmd_scan_pdf, char **filename_uncP, char *cmd_uncompress, int scanstyle, int gv_gs_safeDir)
 {
     FILE *file;
     struct document *doc;
@@ -1441,8 +1429,7 @@ continuepage:
 /*###########################################################*/
 
 void
-psfree(doc)
-    struct document *doc;
+psfree(struct document *doc)
 {
     int i;
 
@@ -1472,8 +1459,7 @@ psfree(doc)
 /*----------------------------------------------------------*/
 
 static char *
-gettextline(line)
-    char *line;
+gettextline(char *line)
 {
     char *cp;
 
@@ -1501,9 +1487,7 @@ gettextline(line)
 /*----------------------------------------------------------*/
 
 static char *
-ps_gettext(line, next_char)
-    char *line;
-    char **next_char;
+ps_gettext(char *line, char **next_char)
 {
     char text[PSLINELENGTH];	/* Temporary storage for text */
     char *cp;
@@ -1618,8 +1602,7 @@ ps_gettext(line, next_char)
 #define MAX_PS_IO_FGETCHARS_BUF_SIZE 57344
 #define BREAK_PS_IO_FGETCHARS_BUF_SIZE 49152
 
-static FileData ps_io_init(file)
-   FILE *file;
+static FileData ps_io_init(FILE *file)
 {
    FileData fd;
    Cardinal size = sizeof(FileDataStruct);
@@ -1645,8 +1628,7 @@ static FileData ps_io_init(file)
 /*----------------------------------------------------------*/
 
 static void
-ps_io_exit(fd)
-   FileData fd;
+ps_io_exit(FileData fd)
 {
    BEGINMESSAGE(ps_io_exit)
    XtFree(FD_BUF);
@@ -1659,9 +1641,7 @@ ps_io_exit(fd)
 /*----------------------------------------------------------*/
 
 static int
-ps_io_fseek(fd,offset)
-   FileData fd;
-   gv_off_t offset;
+ps_io_fseek(FileData fd, gv_off_t offset)
 {
    int status;
    BEGINMESSAGE(ps_io_fseek)
@@ -1678,8 +1658,7 @@ ps_io_fseek(fd,offset)
 /*----------------------------------------------------------*/
 
 static gv_off_t
-ps_io_ftell(fd)
-   FileData fd;
+ps_io_ftell(FileData fd)
 {
    BEGINMESSAGE(ps_io_ftell)
    IMESSAGE(FD_FILEPOS)
@@ -1692,10 +1671,7 @@ ps_io_ftell(fd)
 /*----------------------------------------------------------*/
 
 #ifdef USE_MEMMOVE_CODE
-static void ps_memmove (d, s, l)
-  char *d;
-  const char *s;
-  unsigned l;
+static void ps_memmove (char *d, const char *s, unsigned l)
 {
   if (s < d) for (s += l, d += l; l; --l) *--d = *--s;
   else if (s != d) for (; l; --l)         *d++ = *s++;
@@ -1704,9 +1680,7 @@ static void ps_memmove (d, s, l)
 #   define ps_memmove memmove
 #endif
 
-static char * ps_io_fgetchars(fd,num)
-   FileData fd;
-   int num;
+static char * ps_io_fgetchars(FileData fd, int num)
 {
    char *eol=NULL,*tmp;
    size_t size_of_char = sizeof(char);
@@ -1833,11 +1807,7 @@ static char * ps_io_fgetchars(fd,num)
 */
 /*----------------------------------------------------------*/
 
-static char * readline (fd, lineP, positionP, line_lenP)
-   FileData fd;
-   char **lineP;
-   gv_off_t *positionP;
-   unsigned int *line_lenP;
+static char * readline(FileData fd, char **lineP, gv_off_t *positionP, unsigned int *line_lenP)
 {
    unsigned int nbytes=0;
    int skipped=0;
@@ -1988,12 +1958,8 @@ static char * readline (fd, lineP, positionP, line_lenP)
 /*###########################################################*/
 
 char *
-pscopyuntil(fd, to, begin, end, comment)
-   FileData fd;
-   FILE *to;
-   long begin;			/* set negative to avoid initial seek */
-   long end;
-   char *comment;
+pscopyuntil(FileData fd, FILE *to, long begin, long end, char *comment)
+   /* begin: set negative to avoid initial seek */
 {
    char *line;
    int comment_length;
@@ -2071,8 +2037,7 @@ pscopyuntil(fd, to, begin, end, comment)
 /* Check whether the line contains nothing but white space. */
 /*----------------------------------------------------------*/
 
-static int blank(line)
-   char *line;
+static int blank(char *line)
 {
    char *cp = line;
 
@@ -2088,11 +2053,7 @@ static int blank(line)
 /*##########################################################*/
 
 void
-pscopydoc(dest_file,src_filename,d,pagelist)
-    FILE *dest_file;
-    char *src_filename;
-    Document d;
-    char *pagelist;
+pscopydoc(FILE *dest_file, char *src_filename, Document d, char *pagelist)
 {
     FILE *src_file;
     char text[PSLINELENGTH];

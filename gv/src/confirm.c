@@ -74,9 +74,7 @@ static int preferedButton=0,initialButton=0;
    cb_popdownConfirmPopup
 #########################################################*/
 
-void cb_popdownConfirmPopup(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;  
+void cb_popdownConfirmPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_popdownConfirmPopup)
   if (confirmPopupVisible) {
@@ -97,9 +95,7 @@ void cb_popdownConfirmPopup(w, client_data, call_data)
    cb_popupConfirmPopup
 #########################################################*/
 
-void cb_popupConfirmPopup(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;  
+void cb_popupConfirmPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_popupConfirmPopup)
   if (!confirmPopupVisible) {
@@ -118,12 +114,8 @@ void cb_popupConfirmPopup(w, client_data, call_data)
    action_preferConfirmPopupButton
 #########################################################*/
 
-void 
-action_preferConfirmPopupButton(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+void
+action_preferConfirmPopupButton(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   Widget pref,pref_old;
 
@@ -147,9 +139,7 @@ action_preferConfirmPopupButton(w, event, params, num_params)
     ConfirmPopupSetButton
 #########################################################*/
 
-void ConfirmPopupSetButton(button,callback)
-  int button;
-  XtCallbackProc callback;
+void ConfirmPopupSetButton(int button, XtCallbackProc callback)
 {
   Widget response=NULL;
 
@@ -169,9 +159,7 @@ void ConfirmPopupSetButton(button,callback)
     ConfirmPopupSetMessage
 #########################################################*/
 
-void ConfirmPopupSetMessage(which,message)
-  String which;
-  String message;
+void ConfirmPopupSetMessage(String which, String message)
 {
   Arg args[3];
   Cardinal n;
@@ -211,8 +199,7 @@ void ConfirmPopupSetMessage(which,message)
     ConfirmPopupSetInitialButton
 #########################################################*/
 
-void ConfirmPopupSetInitialButton(button)
-  int button;
+void ConfirmPopupSetInitialButton(int button)
 {
   BEGINMESSAGE(ConfirmPopupSetInitialButton)
   initialButton=button;

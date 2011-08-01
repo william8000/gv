@@ -183,9 +183,7 @@ XTextProperty* char_to_xtp ( Display* dpy, char* s ) {
 }
 
 void
-cb_showTitle(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_showTitle(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   String t=NULL,s;
   Arg args[2];
@@ -234,9 +232,7 @@ cb_showTitle(w, client_data, call_data)
 /*############################################################*/
 
 void
-cb_newtocScrollbar(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_newtocScrollbar(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data)
 {
   BEGINMESSAGE(cb_newtocScrollbar)
   if (((int)(intptr_t)client_data)==1) {
@@ -257,9 +253,7 @@ cb_newtocScrollbar(w, client_data, call_data)
 /* cb_newtocVisibleAdjust */
 /*##################################################################*/
 
-void cb_newtocVisibleAdjust(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+void cb_newtocVisibleAdjust(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   int entries;
 
@@ -282,9 +276,7 @@ void cb_newtocVisibleAdjust(w, client_data, call_data)
 /*############################################################*/
 
 void
-cb_adjustSlider(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_adjustSlider(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     static Dimension opw=0,oph=0,opvw=0,opvh=0;
     static Position opvx=0,opvy=0;
@@ -337,9 +329,7 @@ cb_adjustSlider(w, client_data, call_data)
 /* cb_antialias */
 /*##################################################################*/
 
-void cb_antialias(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+void cb_antialias(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_antialias)
   if (client_data) {
@@ -357,9 +347,7 @@ void cb_antialias(w, client_data, call_data)
 /* cb_useBackingPixmap */
 /*##################################################################*/
 
-void cb_useBackingPixmap(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+void cb_useBackingPixmap(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   int i = (int)(intptr_t)client_data;
 
@@ -380,9 +368,7 @@ void cb_useBackingPixmap(w, client_data, call_data)
 /* cb_handleDSC */
 /*##################################################################*/
 
-void cb_handleDSC(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+void cb_handleDSC(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_handleDSC)
   if (client_data) {
@@ -402,9 +388,7 @@ void cb_handleDSC(w, client_data, call_data)
 /* cb_handleEOF */
 /*##################################################################*/
 
-void cb_handleEOF(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+void cb_handleEOF(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_handleEOF)
   if (client_data) {
@@ -424,9 +408,7 @@ void cb_handleEOF(w, client_data, call_data)
 /* cb_stopInterpreter */
 /*##################################################################*/
 
-void cb_stopInterpreter(w, client_data, call_data)
-   Widget w;
-   XtPointer client_data, call_data;
+void cb_stopInterpreter(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_stopInterpreter)
    GhostviewDisableInterpreter(page);
@@ -438,9 +420,7 @@ void cb_stopInterpreter(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_pageAdjustNotify(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_pageAdjustNotify(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
   BEGINMESSAGE(cb_pageAdjustNotify)
   if (gv_scroll_mode == SCROLL_MODE_GHOSTVIEW) {
@@ -458,9 +438,7 @@ cb_pageAdjustNotify(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_checkFile(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_checkFile(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     int changed;
 
@@ -482,9 +460,7 @@ cb_checkFile(w, client_data, call_data)
 /* watch_file */
 /*------------------------------------------------------------*/
 
-static void watch_file (client_data, idp)
-  XtPointer client_data;
-  XtIntervalId *idp;
+static void watch_file (XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
   static XtIntervalId timer = (XtIntervalId) 0;
   unsigned long t = (unsigned long) app_res.watch_file_frequency;
@@ -517,9 +493,7 @@ static void watch_file (client_data, idp)
 }
 
 void
-cb_watchFile(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_watchFile(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_watchFile)
   if (client_data) {
@@ -534,8 +508,7 @@ cb_watchFile(w, client_data, call_data)
 /* cb_print */
 /*##################################################################*/
 
-static char *make_pagelist(mode)
-   int mode;
+static char *make_pagelist(int mode)
 {
    Boolean mode_valid=False;
    char *pagelist=NULL;
@@ -564,8 +537,7 @@ static char *make_pagelist(mode)
    return pagelist;
 }
 
-static char *get_pagelist(modep)
-   int *modep;
+static char *get_pagelist(int *modep)
 {
    char *pagelist=NULL;
    int mode= *modep;
@@ -592,9 +564,7 @@ static char *get_pagelist(modep)
 }
 
 void
-cb_print(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_print(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     char *prompt=GV_PRINT_MESSAGE;
     char *buttonlabel=GV_PRINT_BUTTON_LABEL;
@@ -644,9 +614,7 @@ cb_print(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_print_pos(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_print_pos(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     char *pagelist=NULL;
     static char buf[MAX_LOCATOR_LENGTH];
@@ -675,9 +643,7 @@ cb_print_pos(w, client_data, call_data)
 }
 
 void
-cb_doPrintPos(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_doPrintPos(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     String print_command;
     FILE* posfile = fopen(gv_savepos_filename, "a");
@@ -705,9 +671,7 @@ cb_doPrintPos(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_doPrint(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_doPrint(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     String print_command;
     String error=NULL;
@@ -755,9 +719,7 @@ cb_doPrint(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_cancelPrint(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_cancelPrint(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_cancelPrint)
     cb_popdownNotePopup((Widget)NULL,(XtPointer)NULL,NULL);
@@ -770,9 +732,7 @@ cb_cancelPrint(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_save(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_save(Widget w, XtPointer client_data, XtPointer call_data)
 {
     Arg args[10];
     Cardinal n;  
@@ -861,9 +821,7 @@ cb_save(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_doSave(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_doSave(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     String name;
     String error=NULL;
@@ -916,9 +874,7 @@ cb_doSave(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_openFile(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_openFile(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     Arg args[1];
     Cardinal n;
@@ -953,9 +909,7 @@ cb_openFile(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_doOpenFile(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_doOpenFile(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     String name,error;
 
@@ -982,9 +936,7 @@ cb_doOpenFile(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_reopen(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_reopen(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     char *error=NULL;
     BEGINMESSAGE(reopen_file)
@@ -1004,9 +956,7 @@ cb_reopen(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_savepos(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_savepos(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     FILE* posfile = fopen(gv_savepos_filename, "a");
 
@@ -1026,9 +976,7 @@ cb_savepos(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_presentation(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_presentation(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     int pid;
     sighandler_t sigold;
@@ -1057,9 +1005,7 @@ cb_presentation(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_redisplay(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_redisplay(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_redisplay)
     if (w && (XtClass(w) == ghostviewWidgetClass) && (w != page)) {
@@ -1076,9 +1022,7 @@ cb_redisplay(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_page(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_page(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   int np;
   int cp;
@@ -1125,9 +1069,7 @@ cb_page(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_positionPage(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_positionPage(Widget w, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   Widget clip,control,gvw;
   int clw,clh,cow,coh,px=0,py=0,x=0,y=0;
@@ -1188,9 +1130,7 @@ cb_positionPage(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_setPageMark(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_setPageMark(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     int r=(int)(intptr_t)client_data;
     int entry=XawVlistInvalid,change=XawVlistInvalid;
@@ -1216,9 +1156,7 @@ cb_setPageMark(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_autoResize(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_autoResize(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   Arg args[1];
 
@@ -1241,9 +1179,7 @@ cb_autoResize(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_setScale(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_setScale(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   int i=(int)(intptr_t)client_data;
 
@@ -1266,9 +1202,7 @@ cb_setScale(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_setOrientation(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_setOrientation(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data)
 {
     int o = (int)(intptr_t) client_data;
     int changed = 1;
@@ -1315,9 +1249,7 @@ cb_setOrientation(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_setPagemedia(w, client_data, call_data)
-   Widget w;
-   XtPointer client_data, call_data;
+cb_setPagemedia(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data)
 {
    int media = (int)(intptr_t)client_data;
    int media_bbox = doc ? doc->nummedia : 0;
@@ -1349,9 +1281,7 @@ cb_setPagemedia(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_track(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_track(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     GhostviewReturnStruct *p = (GhostviewReturnStruct *)call_data;
 
@@ -1384,9 +1314,7 @@ cb_track(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_message(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_message(Widget w, XtPointer client_data, XtPointer call_data)
 {
     int i;
     char *error;
@@ -1442,9 +1370,7 @@ cb_message(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_destroy(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_destroy(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_destroy)
     XtDestroyWidget((Widget)client_data);
@@ -1456,10 +1382,7 @@ cb_destroy(w, client_data, call_data)
 /*------------------------------------------------------------------*/
 
 static void
-cb_shutdown(w, client_data, call_data)
-   Widget w;
-   XtPointer client_data;
-   XtPointer call_data;
+cb_shutdown(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_shutdown)
 
@@ -1519,9 +1442,7 @@ cb_shutdown(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_destroyGhost(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+cb_destroyGhost(Widget w, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
     BEGINMESSAGE(cb_destroyGhost)
     GhostviewDisableInterpreter((Widget) client_data);
@@ -1555,9 +1476,7 @@ cb_destroyGhost(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_quitGhostview(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_quitGhostview(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   char *message=NULL;
  
@@ -1584,9 +1503,7 @@ cb_quitGhostview(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_cancelQuit(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_cancelQuit(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_cancelQuit)
   cb_popdownConfirmPopup((Widget)NULL,(XtPointer)NULL,NULL);
@@ -1598,9 +1515,7 @@ cb_cancelQuit(w, client_data, call_data)
 /*##################################################################*/
 
 void
-cb_doQuit(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+cb_doQuit(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   BEGINMESSAGE(cb_doQuit)
   cb_popdownConfirmPopup((Widget)NULL,(XtPointer)NULL,NULL);
@@ -1614,7 +1529,7 @@ cb_doQuit(w, client_data, call_data)
 /*##################################################################*/
 
 static void
-cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
+cb_setPassword(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     String password;
 
@@ -1633,7 +1548,7 @@ cb_setPassword(Widget w, XtPointer client_data, XtPointer call_data)
 /*##################################################################*/
 
 static void
-cb_cancelPassword(Widget w, XtPointer client_data, XtPointer call_data)
+cb_cancelPassword(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
     cb_popdownDialogPopup((Widget)NULL,(XtPointer)NULL,NULL);
 }
@@ -1643,7 +1558,7 @@ cb_cancelPassword(Widget w, XtPointer client_data, XtPointer call_data)
 /* Ask for the password needed to view a pdf file */
 /*##################################################################*/
 void
-cb_askPassword(Widget w, XtPointer client_data, XtPointer call_data)
+cb_askPassword(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   DialogPopupSetPrompt(passwordPromptLabel);
   DialogPopupSetMessage(passwordRequiredLabel);

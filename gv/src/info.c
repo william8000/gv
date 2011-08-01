@@ -91,9 +91,7 @@ static int FontSetWidth( XFontSet fnt ) {
    cb_popupInfoPopup
 ###############################################################################*/
 
-void cb_popupInfoPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+void cb_popupInfoPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popupInfoPopup)
    if (!infoPopupCreated) { makeInfoPopup(); }
@@ -113,9 +111,7 @@ void cb_popupInfoPopup(w, client_data, call_data)
    cb_popdownInfoPopup
 ###############################################################################*/
 
-void cb_popdownInfoPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;  
+void cb_popdownInfoPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popdownInfoPopup)
    if (infoPopupCreated && infoPopupVisible) {
@@ -129,9 +125,7 @@ void cb_popdownInfoPopup(w, client_data, call_data)
    cb_appendInfoPopup
 ###############################################################################*/
 
-void cb_appendInfoPopup(w, client_data, call_data)
-    Widget w;
-    XtPointer client_data, call_data;
+void cb_appendInfoPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
     Arg args[5];
     Cardinal n;
@@ -174,9 +168,7 @@ void cb_appendInfoPopup(w, client_data, call_data)
    cb_resetInfoPopup
 ###############################################################################*/
 
-void cb_resetInfoPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;  
+void cb_resetInfoPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    Arg args[5];
    Cardinal n;

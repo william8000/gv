@@ -80,9 +80,7 @@ static char* zoom_redisplay  = "redisplay";
 /*##################################################################*/
 
 void
-zoom_createZoom(w, call_data)
-    Widget w;
-    XtPointer call_data;
+zoom_createZoom(Widget w _GL_UNUSED, XtPointer call_data)
 {
     Arg args[25];
     Cardinal n;

@@ -132,8 +132,8 @@ resource_buildDatabase (
                         Display *display,
                         char *app_class,
                         char *app_name,
-                        int *argcP,
-                        char **argv)
+                        int *argcP _GL_UNUSED,
+                        char **argv _GL_UNUSED)
 {
   XrmDatabase gvdb = XtDatabase(display);
   XrmDatabase db = NULL;

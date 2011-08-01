@@ -449,10 +449,7 @@ ClassInitialize(void)
    Initialize
 -------------------------------------------------------------------------------*/
 
-static void Initialize(request, new, argl, num_argl)
-   Widget 	request, new;
-   ArgList 	argl;
-   Cardinal 	*num_argl;
+static void Initialize(Widget request _GL_UNUSED, Widget new, ArgList argl _GL_UNUSED, Cardinal *num_argl _GL_UNUSED)
 {
    FS_WIDGET 	new;
 
@@ -560,10 +557,7 @@ static void Initialize(request, new, argl, num_argl)
    Realize
 -------------------------------------------------------------------------------*/
 
-static void Realize (w, valueMask, attrs)
-    Widget w;
-    XtValueMask *valueMask;
-    XSetWindowAttributes *attrs;
+static void Realize (Widget w, XtValueMask *valueMask, XSetWindowAttributes *attrs)
 {
    FS_WIDGET w;
    BEGINMESSAGE(Realize)
@@ -577,10 +571,7 @@ static void Realize (w, valueMask, attrs)
    SetValues
 -------------------------------------------------------------------------------*/
 
-static Boolean SetValues(current, request, new, in_args, in_num_args)
-  Widget 	current, request, new;
-  ArgList 	in_args;
-  Cardinal 	*in_num_args;
+static Boolean SetValues(Widget current, Widget request _GL_UNUSED, Widget new, ArgList in_args _GL_UNUSED, Cardinal *in_num_args _GL_UNUSED)
 {
   FS_WIDGET	new;
   FileSelectionWidget cfs = (FileSelectionWidget)current;
@@ -629,9 +620,8 @@ static Boolean SetValues(current, request, new, in_args, in_num_args)
    Destroy
 -------------------------------------------------------------------------------*/
 
-static void 
-Destroy(w)
-   Widget 	w;
+static void
+Destroy(Widget w)
 {
    FS_WIDGET w;
 
@@ -660,8 +650,7 @@ Destroy(w)
    strwild
 -------------------------------------------------------------------------------*/
 
-static Boolean strwild(string,wild)
-   char 	*string, *wild;
+static Boolean strwild(char *string, char *wild)
 {
   char  *cwild;
   int 	 nwild;
@@ -721,11 +710,7 @@ static Boolean strwild(string,wild)
 -------------------------------------------------------------------------------*/
 
 static void
-strreplace(out,find,replace,in)
-   char *out;
-   char *find;
-   char *replace;
-   char *in;
+strreplace(char *out, char *find, char *replace, char *in)
 {
    int locat = 0;
    int findlength;
@@ -757,8 +742,7 @@ strreplace(out,find,replace,in)
 ----------------------------------------------------------------------*/
 
 static void
-appendDirEndSeparator(path)
-   char *path;
+appendDirEndSeparator(char *path)
 {
    size_t l=0;
    BEGINMESSAGE(appendDirEndSeparator)
@@ -774,9 +758,7 @@ appendDirEndSeparator(path)
 ----------------------------------------------------------------------*/
 
 static void
-savestrcpy(dest,source)
-  char *dest;
-  char *source;
+savestrcpy(char *dest, char *source)
 {
   BEGINMESSAGE(savestrcpy)
   strncpy(dest,source,FS_MAXNAMLEN-1);
@@ -789,9 +771,7 @@ savestrcpy(dest,source)
 ----------------------------------------------------------------------*/
 
 static void
-setText(w,line)
-  Widget w;
-  String line;
+setText(Widget w, String line)
 {
   USE_Arg(1);
 
@@ -807,9 +787,7 @@ setText(w,line)
 ----------------------------------------------------------------------*/
 
 static void
-savestrcat(dest,source)
-  char *dest;
-  char *source;
+savestrcat(char *dest, char *source)
 {
   size_t ld,ls;
   char *s;
@@ -827,8 +805,7 @@ savestrcat(dest,source)
    translateTildeInPath
 -------------------------------------------------------------------------------*/
 
-static void translateTildeInPath(path)
-  char *path;
+static void translateTildeInPath(char *path)
 {
   char *pos;
 
@@ -854,9 +831,7 @@ static void translateTildeInPath(path)
    FScompareEntries
 -------------------------------------------------------------------------------*/
 
-static int FScompareEntries(a, b)
-  const void *a;
-  const void *b;
+static int FScompareEntries(const void *a, const void *b)
 {
   String *p = (String*) a;
   String *q = (String*) b;
@@ -869,9 +844,7 @@ static int FScompareEntries(a, b)
    SetPreferredButton
 -------------------------------------------------------------------------------*/
 
-static void preferButton(w,prefer)
-   Widget w;
-   int prefer;
+static void preferButton(Widget w, int prefer)
 {
    BEGINMESSAGE(preferButton)
    if (w) {
@@ -881,10 +854,7 @@ static void preferButton(w,prefer)
    ENDMESSAGE(preferButton)
 }
 
-static void SetPreferredButton(w,position,install)
-   Widget	w;
-   int 		position;
-   int		install;
+static void SetPreferredButton(Widget w, int position, int install)
 {
    FS_WIDGET 	w;
    char 	name[10];
@@ -914,11 +884,7 @@ static void SetPreferredButton(w,position,install)
     FS_preferButtonAction
 -------------------------------------------------------------------------------*/
 
-static void FS_preferButtonAction(w, event, params, nparams)
-   Widget	w;
-   XEvent	*event;
-   String	*params;
-   Cardinal	*nparams;
+static void FS_preferButtonAction(Widget w, XEvent *event _GL_UNUSED, String *params, Cardinal *nparams)
 {
    FileSelectionWidget FS_FILE_SELECTION;
 
@@ -960,11 +926,7 @@ static void FS_preferButtonAction(w, event, params, nparams)
     FS_listAction
 -------------------------------------------------------------------------------*/
 
-static void FS_listAction(w, event, params, nparams)
-  Widget	w;
-  XEvent	*event;
-  String	*params;
-  Cardinal	*nparams;
+static void FS_listAction(Widget w, XEvent *event, String *params, Cardinal *nparams)
 {
 #  define HISTORY_POINTS 10
 #  define DECAY_TIME 200
@@ -1178,11 +1140,7 @@ break_scrolling:
    FS_textfieldBackSpaceAction 
 -------------------------------------------------------------------------------*/
 
-static void FS_textfieldBackSpaceAction(w, event, parms, nparms)
-   Widget	w;
-   XEvent	*event;
-   String	*parms;
-   Cardinal	*nparms;
+static void FS_textfieldBackSpaceAction(Widget w, XEvent *event _GL_UNUSED, String *parms _GL_UNUSED, Cardinal *nparms _GL_UNUSED)
 {
    BEGINMESSAGE(FS_textfieldBackSpaceAction)
 
@@ -1203,11 +1161,7 @@ static void FS_textfieldBackSpaceAction(w, event, parms, nparms)
    FS_textfieldDeleteAction 
 -------------------------------------------------------------------------------*/
 
-static void FS_textfieldDeleteAction(w, event, parms, nparms)
-   Widget	w;
-   XEvent	*event;
-   String	*parms;
-   Cardinal	*nparms;
+static void FS_textfieldDeleteAction(Widget w, XEvent *event _GL_UNUSED, String *parms _GL_UNUSED, Cardinal *nparms _GL_UNUSED)
 {
    BEGINMESSAGE(FS_textfieldDeleteAction)
 
@@ -1228,11 +1182,7 @@ static void FS_textfieldDeleteAction(w, event, parms, nparms)
    FS_textfieldFocusAction 
 -------------------------------------------------------------------------------*/
 
-static void FS_textfieldFocusAction(w, event, parms, nparms)
-   Widget	w;
-   XEvent	*event;
-   String	*parms;
-   Cardinal	*nparms;
+static void FS_textfieldFocusAction(Widget w, XEvent *event _GL_UNUSED, String *parms _GL_UNUSED, Cardinal *nparms _GL_UNUSED)
 {
    USE_Arg(5);
 
@@ -1265,9 +1215,7 @@ static void FS_textfieldFocusAction(w, event, parms, nparms)
     MulticlickNotify
 -------------------------------------------------------------------------------*/
 
-static void MulticlickNotify (client_data, idp)
-    XtPointer client_data;
-    XtIntervalId *idp;
+static void MulticlickNotify(XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
     FS_WIDGET client_data;
    
@@ -1280,10 +1228,7 @@ static void MulticlickNotify (client_data, idp)
    changeList
 -------------------------------------------------------------------------------*/
 
-static void changeList(w,list,entries)
-  Widget w;
-  String *list;
-  int entries;
+static void changeList(Widget w, String *list, int entries)
 {
   int i,e,l;
   USE_Arg(2);
@@ -1328,8 +1273,7 @@ static void changeList(w,list,entries)
    changeLists
 -------------------------------------------------------------------------------*/
 
-static void changeLists(FS_FILE_SELECTION) 
-   FileSelectionWidget FS_FILE_SELECTION;
+static void changeLists(FileSelectionWidget FS_FILE_SELECTION)
 {
    BEGINMESSAGE(changeLists)
    IMESSAGE(TOPDIR_ENTRIES)
@@ -1359,10 +1303,7 @@ SetIncompleteDirectoryView(FileSelectionWidget fs, String *list)
 ----------------------------------------------------------------------*/
 
 static void
-SplitPath(path,dir,file)
-  String path;
-  char *dir;
-  char *file;
+SplitPath(String path, char *dir, char *file)
 {
   char tmp[FS_MAXNAMLEN];
   char *s;
@@ -1391,10 +1332,7 @@ SplitPath(path,dir,file)
 ----------------------------------------------------------------------*/
 
 static void
-CombineToPath(path,dir,file)
-  String path;
-  char *dir;
-  char *file;
+CombineToPath(String path, char *dir, char *file)
 {
   char tmp[FS_MAXNAMLEN];
 
@@ -1412,9 +1350,7 @@ CombineToPath(path,dir,file)
    SetDirectoryView
 ----------------------------------------------------------------------*/
 
-static void SetDirectoryView(fs,dir)
-   FileSelectionWidget	fs;
-   char *dir;
+static void SetDirectoryView(FileSelectionWidget fs, char *dir)
 {
    DIR			*dirp;
    struct dirent	*dp;
@@ -1597,9 +1533,7 @@ static void SetDirectoryView(fs,dir)
 -------------------------------------------------------------------------------*/
 
 static void
-rescanProc(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+rescanProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    FS_WIDGET XtParent(w);
 
@@ -1614,9 +1548,7 @@ rescanProc(w, client_data, call_data)
 -------------------------------------------------------------------------------*/
 
 static void
-filtersProc(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+filtersProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    FS_WIDGET XtParent(XtParent(XtParent(w)));
    Arg args[2];
@@ -1641,9 +1573,7 @@ filtersProc(w, client_data, call_data)
 -------------------------------------------------------------------------------*/
 
 static void
-dirsProc(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+dirsProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   FS_WIDGET XtParent(XtParent(XtParent(w)));
   USE_Arg(2);
@@ -1669,9 +1599,7 @@ dirsProc(w, client_data, call_data)
 ----------------------------------------------------------------------*/
 
 static void
-TopDirSelectionProc(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+TopDirSelectionProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
   FS_WIDGET XtParent(XtParent(XtParent(XtParent(w))));
   int item = (int)(intptr_t)call_data;
@@ -1716,9 +1644,7 @@ TopDirSelectionProc(w, client_data, call_data)
 -------------------------------------------------------------------------------*/
 
 static void
-CurDirSelectionProc(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+CurDirSelectionProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
    FS_WIDGET	XtParent(XtParent(XtParent(XtParent(w))));
    char		name[10];
@@ -1760,9 +1686,7 @@ CurDirSelectionProc(w, client_data, call_data)
 -------------------------------------------------------------------------------*/
 
 static void
-SubDirSelectionProc(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+SubDirSelectionProc(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data)
 {
   int item = (int)(intptr_t) call_data;
   FS_WIDGET XtParent(XtParent(XtParent(XtParent(w))));
@@ -1802,13 +1726,7 @@ SubDirSelectionProc(w, client_data, call_data)
    CreateTextField
 -------------------------------------------------------------------------------*/
 
-static void CreateTextField(frameP,textP,value,text_trans,namebase,parent)
-   Widget *frameP;
-   Widget *textP;
-   char *value;
-   XtTranslations text_trans;
-   String namebase;
-   Widget parent;
+static void CreateTextField(Widget *frameP, Widget *textP, char *value, XtTranslations text_trans, String namebase, Widget parent)
 {
    USE_Arg(10);
    char name[15];
@@ -1839,9 +1757,7 @@ static void CreateTextField(frameP,textP,value,text_trans,namebase,parent)
    CreateList
 -------------------------------------------------------------------------------*/
 
-static void cb_scroll(w, client_data, call_data)
-  Widget w;
-  XtPointer client_data, call_data;
+static void cb_scroll(Widget w, XtPointer client_data, XtPointer call_data)
 {
   Widget p;
   char *s;
@@ -1899,15 +1815,7 @@ SMESSAGE(XtName(p))
 }
 
 static void
-CreateList(scrollP,frameP,clipP,aaaP,listP,list_trans,namebase,parent)
-   Widget *scrollP;
-   Widget *frameP;
-   Widget *clipP;
-   Widget *aaaP;
-   Widget *listP;
-   XtTranslations list_trans;
-   String namebase;
-   Widget parent;
+CreateList(Widget *scrollP, Widget *frameP, Widget *clipP, Widget *aaaP, Widget *listP, XtTranslations list_trans, String namebase, Widget parent)
 {
    USE_Arg(5);
    char name[15];
@@ -1953,11 +1861,7 @@ CreateList(scrollP,frameP,clipP,aaaP,listP,list_trans,namebase,parent)
    BuildMenu
 -------------------------------------------------------------------------------*/
 
-static Widget BuildMenu(parent,descrip,defaultdescrip,cb)
-  Widget parent;
-  String descrip;
-  String defaultdescrip;
-  XtCallbackProc cb;
+static Widget BuildMenu(Widget parent, String descrip, String defaultdescrip, XtCallbackProc cb)
 {
   Widget m,w=NULL;
   char *md,*d,*tmp;
@@ -2048,7 +1952,7 @@ XawFileSelectionSetPath(Widget w,String string)
 ########################################################################*/
 
 void
-XawFileSelectionScan(Widget w,int indicator)
+XawFileSelectionScan(Widget w,int indicator _GL_UNUSED)
 {
    FS_WIDGET	w;
 

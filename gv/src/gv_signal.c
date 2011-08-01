@@ -103,9 +103,7 @@ static int signal_signalIsOk(void)
 /* signal_scb_terminate */
 /*------------------------------------------------------------*/
 
-static void signal_scb_terminate(client_data,sidP)
-  XtPointer client_data;
-  XtSignalId *sidP;
+static void signal_scb_terminate(XtPointer client_data _GL_UNUSED, XtSignalId *sidP _GL_UNUSED)
 {
   BEGINMESSAGE(signal_scb_terminate)
   cb_doQuit(NULL,NULL,NULL);
@@ -116,8 +114,7 @@ static void signal_scb_terminate(client_data,sidP)
 /* signal_sh_terminate */
 /*------------------------------------------------------------*/
 
-static SIGVAL signal_sh_terminate(sig)
-  int sig;
+static SIGVAL signal_sh_terminate(int sig)
 {
   BEGINMESSAGE(signal_fatalSignalHandler)
   if (signal_signalIsOk()) {
@@ -140,9 +137,7 @@ static SIGVAL signal_sh_terminate(sig)
 /* signal_scb_updateFile */
 /*------------------------------------------------------------*/
 
-static void signal_scb_updateFile(client_data,sidP)
-  XtPointer client_data;
-  XtSignalId *sidP;
+static void signal_scb_updateFile(XtPointer client_data _GL_UNUSED, XtSignalId *sidP _GL_UNUSED)
 {
   BEGINMESSAGE(signal_scb_updateFile)
   if (gv_filename) {
@@ -161,8 +156,7 @@ static void signal_scb_updateFile(client_data,sidP)
 /* signal_sh_updateFile */
 /*------------------------------------------------------------*/
 
-static SIGVAL signal_sh_updateFile(sig)
-  int sig;
+static SIGVAL signal_sh_updateFile(int sig)
 {
   BEGINMESSAGE(signal_sh_updateFile)
   if (signal_signalIsOk()) {
@@ -184,10 +178,9 @@ static SIGVAL signal_sh_updateFile(sig)
 /* signal_setSignalHandlers */
 /*############################################################*/
 
-void signal_setSignalHandlers(on)
-  int on;
+void signal_setSignalHandlers(int on)
 {
-  SIGVAL (*sht)(),(*shu)();
+  SIGVAL (*sht)(int),(*shu)(int);
 
   BEGINMESSAGE(signal_setSignalHandlers)
 

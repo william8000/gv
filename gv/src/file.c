@@ -71,8 +71,7 @@
 /*############################################################*/
 
 char *
-file_getDirOfPath(path)
-   char *path;
+file_getDirOfPath(char *path)
 {
    char *dir=NULL;
    char *pos;
@@ -98,8 +97,7 @@ file_getDirOfPath(path)
 /*############################################################*/
 
 char *
-file_locateFilename(path)
-   char *path;
+file_locateFilename(char *path)
 {
    char *tmp=NULL;
    BEGINMESSAGE(file_locateFileName)
@@ -171,7 +169,7 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
          l = snprintf(tempFilename, sizeof(tempFilename),
 			 "%.*s/gv_%s_%s.XXXXXX",
 			 len, baseDirectory, tmpName, tmpExt);
-	 if (l < 0 || l >= sizeof(tempFilename) )
+	 if (l < 0 || l >= (int)sizeof(tempFilename) )
 		 break;
          file_translateTildeInPath(tempFilename, sizeof(tempFilename));
 	 oldumask = umask(0077);
@@ -227,8 +225,7 @@ void file_translateTildeInPath(char *path, size_t s)
 /* file_fileIsDir */
 /*############################################################*/
 
-int file_fileIsDir(fn)
-  char *fn;
+int file_fileIsDir(char *fn)
 {
   struct stat s;
   int r=0;
@@ -250,8 +247,7 @@ int file_fileIsDir(fn)
 /*############################################################*/
 
 int
-file_fileIsNotUseful(fn)
-  char *fn;
+file_fileIsNotUseful(char *fn)
 {
   struct stat s;
   int r=0;
@@ -279,10 +275,9 @@ file_fileIsNotUseful(fn)
 /* If the file ends in .pdf, change this to .ps.*/
 /* Return pointer to temp copy if changed, else to input string. */
 /*############################################################*/
- 
+
 char *
-file_pdfname2psname (name)
-  char *name;
+file_pdfname2psname(char *name)
 {
   char *e;
 
@@ -309,10 +304,9 @@ file_pdfname2psname (name)
 /*############################################################*/
 /* file_getUsefulName */
 /*############################################################*/
- 
+
 char *
-file_getUsefulName(name)
-  char *name;
+file_getUsefulName(char *name)
 {
   char *e,*c;
   String mext,ext;

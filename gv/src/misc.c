@@ -161,10 +161,8 @@ typedef struct
   XtIntervalId timer;
 } EyeGuideDataStruct,*EyeGuideData;
 
-static void 
-misc_catchEyeGuideTimer(client_data, idp)
-  XtPointer client_data;
-  XtIntervalId *idp;
+static void
+misc_catchEyeGuideTimer(XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
   EyeGuideData egd = (EyeGuideData) client_data;
 
@@ -173,11 +171,8 @@ misc_catchEyeGuideTimer(client_data, idp)
   ENDMESSAGE(misc_catchEyeGuideTimer)
 }
 
-void 
-misc_drawEyeGuide(w,d,x,y)
-  Widget w;
-  int d;
-  int x,y;
+void
+misc_drawEyeGuide(Widget w, int d, int x, int y)
 {
   unsigned long t = (unsigned long) 1000;
   static EyeGuideData egd = NULL;
@@ -241,7 +236,7 @@ misc_drawEyeGuide(w,d,x,y)
 static int pagepos_x,pagepos_y,pagepos_saved=0;
 
 void
-misc_savePagePosition()
+misc_savePagePosition(void)
 {
   int x,y,psx,psy;
   BEGINMESSAGE(misc_savePagePosition)
@@ -259,9 +254,7 @@ misc_savePagePosition()
 /*############################################################*/
 
 int
-misc_restorePagePosition(xP,yP)
-  int *xP;
-  int *yP;
+misc_restorePagePosition(int *xP, int *yP)
 {
   BEGINMESSAGE(misc_restorePagePosition)
   if (pagepos_saved) {
@@ -279,7 +272,7 @@ misc_restorePagePosition(xP,yP)
 /*############################################################*/
 
 void
-misc_resetPagePosition()
+misc_resetPagePosition(void)
 {
   BEGINMESSAGE(misc_resetPagePosition)
   pagepos_saved = 0;
@@ -291,11 +284,8 @@ misc_resetPagePosition()
 /*############################################################*/
 
 void
-misc_setPageMarker(entry,kind,event,check_toc)
-  int entry;
-  int kind; /* 0 = selected, 1 = highlighted , 2 = bring selected in sight*/
-  XEvent *event;
-  Boolean check_toc;
+misc_setPageMarker(int entry, int kind, XEvent *event, Boolean check_toc)
+  /* kind: 0 = selected, 1 = highlighted , 2 = bring selected in sight*/
 {
   int firstvisible, lastvisible;
   Boolean b = False;
@@ -343,9 +333,7 @@ misc_setPageMarker(entry,kind,event,check_toc)
 /*------------------------------------------------------------*/
 
 static String
-misc_openFile(name, fpP)
-   String name;
-   FILE **fpP;
+misc_openFile(String name, FILE **fpP)
 {
    char *str,*error=NULL;
    FILE *fp=NULL;
@@ -381,8 +369,7 @@ misc_openFile(name, fpP)
 /*############################################################*/
 
 String
-misc_testFile(name)
-   String name;
+misc_testFile(String name)
 {
    char *error;
    BEGINMESSAGE(misc_testFile)
@@ -395,8 +382,7 @@ misc_testFile(name)
 /* misc_changeFile */
 /*############################################################*/
 
-String misc_changeFile(name)
-  String name;
+String misc_changeFile(String name)
 {
   FILE *fp=NULL;
   String error=NULL;
@@ -459,9 +445,7 @@ String misc_changeFile(name)
 /* close_file */
 /*############################################################*/
 
-String close_file(file,name)
-  FILE *file;
-  String name;
+String close_file(FILE *file, String name)
 {
   char *error=NULL;
 
@@ -486,8 +470,7 @@ String close_file(file,name)
 /*############################################################*/
 
 int
-check_file(mode)
-int mode;
+check_file(int mode)
 {
    int status=0;
    struct stat sbuf;
@@ -546,8 +529,7 @@ int mode;
 /*------------------------------------------------------------*/
 
 static void
-render_page(gvw)
-    Widget gvw;
+render_page(Widget gvw)
 {
     int i;
 
@@ -652,9 +634,7 @@ render_page(gvw)
 /*############################################################*/
 
 void
-show_page(number,data1)
-   int number;
-   XtPointer data1;
+show_page(int number, XtPointer data1)
 {
    Bool need_layout = False;
    Bool need_setup  = False;
@@ -849,10 +829,7 @@ show_page(number,data1)
  */
 /*############################################################*/
 
-static void misc_setSensitive(w,s,b)
-  Widget w;
-  Boolean s;
-  Boolean b;
+static void misc_setSensitive(Widget w, Boolean s, Boolean b)
 {
   if (s) {
     if (!b) ButtonReset(w,NULL,NULL,NULL);
@@ -860,10 +837,7 @@ static void misc_setSensitive(w,s,b)
   }
 }
 
-static void misc_setBitmap(w,s,b)
-  Widget w;
-  Boolean s;
-  Pixmap b;
+static void misc_setBitmap(Widget w, Boolean s, Pixmap b)
 {
   Arg args[1];
   if (s) {
@@ -875,7 +849,7 @@ static void misc_setBitmap(w,s,b)
 }
 
 Boolean
-setup_ghostview()
+setup_ghostview(void)
 {
     Arg args[10];
     Cardinal n;
@@ -1005,7 +979,7 @@ setup_ghostview()
         INFMESSAGE(toc available)
 	if (doc->labels_useful) {
 	    for (i = 0; i < doc->numpages; i++) 
-		maxlen = max(maxlen, strlen(doc->pages[i].label));
+		maxlen = max(maxlen, (int)strlen(doc->pages[i].label));
 	} else {
 	    double x;
 	    x = doc->numpages;
@@ -1188,7 +1162,7 @@ layout_ghostview(void)
 /*############################################################*/
 
 void
-setup_layout_ghostview()
+setup_layout_ghostview(void)
 {
   BEGINMESSAGE(setup_layout_ghostview )
   ENDMESSAGE(setup_layout_ghostview)
@@ -1317,13 +1291,12 @@ set_new_scale(void)
 /*------------------------------------------------------------*/
 
 static void
-set_orientationButton_label(orientation)
-   int orientation;
+set_orientationButton_label(int orientation)
 {
    Arg args[1];
    Widget w = portraitEntry;
    String label;
-    
+
    BEGINMESSAGE(set_orientationButton_label)
    if (orientation == O_LANDSCAPE)       w = landscapeEntry;
    else if (orientation == O_UPSIDEDOWN) w = upsidedownEntry;
@@ -1339,10 +1312,8 @@ set_orientationButton_label(orientation)
 /* set_newBitmapIfChanged */
 /*------------------------------------------------------------*/
 
-static void 
-set_newBitmapIfChanged(w,new_bitmap)
-   Widget w;
-   Pixmap new_bitmap;
+static void
+set_newBitmapIfChanged(Widget w, Pixmap new_bitmap)
 {
    Arg args[1];
    Pixmap old_bitmap;
@@ -1362,8 +1333,7 @@ set_newBitmapIfChanged(w,new_bitmap)
 /*------------------------------------------------------------*/
 
 static Boolean
-set_new_orientation(pagenumber)
-   int pagenumber;
+set_new_orientation(int pagenumber)
 {
    Boolean changed  = False;
    int from_doc = 0;
@@ -1444,8 +1414,7 @@ set_new_orientation(pagenumber)
 /*------------------------------------------------------------*/
 
 static void
-set_pagemediaButton_label(media_id)
-   int media_id;
+set_pagemediaButton_label(int media_id)
 { 
    String s = NULL;
    Arg args[1];
@@ -1473,8 +1442,7 @@ out:
 /*------------------------------------------------------------*/
 
 static Boolean
-set_new_pagemedia(pagenumber)
-   int pagenumber;
+set_new_pagemedia(int pagenumber)
 {
    int new_llx,new_lly,new_urx,new_ury;
    Boolean changed = False;
@@ -1606,7 +1574,7 @@ same_document_media(void)
 /* misc_buildPagemediaMenu */
 /*############################################################*/
 
-void misc_buildPagemediaMenu()
+void misc_buildPagemediaMenu(void)
 {
   Widget w;
   int i,num_doc_media;
@@ -1665,10 +1633,7 @@ void misc_buildPagemediaMenu()
 /*------------------------------------------------------------*/
 
 Widget
-build_label_menu(parent, name, label, bitmap)
-    Widget parent;
-    String name, label;
-    Pixmap bitmap;
+build_label_menu(Widget parent, String name, String label, Pixmap bitmap)
 {
     Arg args[5];
     Cardinal n;
@@ -1695,9 +1660,7 @@ build_label_menu(parent, name, label, bitmap)
 /*############################################################*/
 
 int
-catch_Xerror(dpy, err)
-    Display *dpy;
-    XErrorEvent *err;
+catch_Xerror(Display *dpy, XErrorEvent *err)
 {
     BEGINMESSAGE(catch_Xerror)
     if (err->error_code == BadImplementation) {
@@ -1719,8 +1682,7 @@ catch_Xerror(dpy, err)
 /*############################################################*/
 
 char *
-quote_filename (string) 
-     char *string;
+quote_filename (char *string)
 {
     int c;
     char *result, *r, *s;

@@ -81,9 +81,7 @@ static int preferedButton=0;
    cb_popdownDialogPopup
 ###############################################################################*/
 
-void cb_popdownDialogPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;  
+void cb_popdownDialogPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popdownDialogPopup)
    if (dialogPopupVisible) {
@@ -98,9 +96,7 @@ void cb_popdownDialogPopup(w, client_data, call_data)
    cb_popupDialogPopup
 ###############################################################################*/
 
-void cb_popupDialogPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;  
+void cb_popupDialogPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popupDialogPopup)
    if (!dialogPopupVisible) {
@@ -118,12 +114,8 @@ void cb_popupDialogPopup(w, client_data, call_data)
    action_preferDialogPopupButton
 ###############################################################################*/
 
-void 
-action_preferDialogPopupButton(w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;
-   Cardinal *num_params;
+void
+action_preferDialogPopupButton(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    Widget pref,pref_old;
 
@@ -218,11 +210,8 @@ void makeDialogPopup(void)
     DialogPopupSetButton
 ###############################################################################*/
 
-void DialogPopupSetButton(button,label,callback)
- int button;
- String label;
- XtCallbackProc callback;
- {
+void DialogPopupSetButton(int button, String label, XtCallbackProc callback)
+{
     Arg args[5];
     Cardinal n;
     Widget response=NULL;
@@ -251,7 +240,7 @@ void DialogPopupSetButton(button,label,callback)
 ###############################################################################*/
 
 void DialogPopupClearText(void)
- {
+{
     Arg args[5];
     Cardinal n;
     Widget response;
@@ -269,8 +258,7 @@ void DialogPopupClearText(void)
     DialogPopupSetText
 ###############################################################################*/
 
-void DialogPopupSetText(s)
-    String s;
+void DialogPopupSetText(String s)
 {
     Arg args[10];
     Cardinal n;
@@ -362,8 +350,7 @@ String DialogPopupGetText(void)
     DialogPopupSetPrompt
 ###############################################################################*/
 
-void DialogPopupSetPrompt(newprompt)
-    String newprompt;
+void DialogPopupSetPrompt(String newprompt)
 {
     Arg args[5];
     Cardinal n;
@@ -382,8 +369,7 @@ void DialogPopupSetPrompt(newprompt)
     DialogPopupSetMessage
 ###############################################################################*/
 
-void DialogPopupSetMessage(message)
-    String message;
+void DialogPopupSetMessage(String message)
 {
     Arg args[5];
     Cardinal n;

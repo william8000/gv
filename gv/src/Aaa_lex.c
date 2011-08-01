@@ -136,8 +136,7 @@ layout_scan_error(s,layoutConverterStructP)
 
 
 static void
-maxlen_exceeded(layoutConverterStructP)
-   void *layoutConverterStructP;
+maxlen_exceeded(void *layoutConverterStructP)
 {
    layout_scan_error("Expression too long.",layoutConverterStructP);
 }

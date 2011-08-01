@@ -66,7 +66,7 @@
 /*############################################################*/
 
 SaveData
-save_allocSaveData()
+save_allocSaveData(void)
 {
    SaveData sd;
    Cardinal size = sizeof(SaveDataStruct);
@@ -83,8 +83,7 @@ save_allocSaveData()
 /*############################################################*/
 
 void
-save_freeSaveData(sd)
-   SaveData sd;
+save_freeSaveData(SaveData sd)
 {
    BEGINMESSAGE(save_freeSaveData)
    XtFree(sd->save_fn);
@@ -106,9 +105,7 @@ save_freeSaveData(sd)
 
 
 static String
-print_file(print_command,print_filename)
-   String print_command;
-   String print_filename;
+print_file(String print_command, String print_filename)
 {
    String error=NULL;
    char *print_quoted_filename;
@@ -160,9 +157,7 @@ print_file(print_command,print_filename)
 /*------------------------------------------------------------*/
 
 static void
-save_forkPDFToPSConversionDone(client_data,type)
-   XtPointer client_data;
-   int type;
+save_forkPDFToPSConversionDone(XtPointer client_data, int type)
 {
    char *error=NULL;
    SaveData sd = (SaveData) client_data;
@@ -193,8 +188,7 @@ save_forkPDFToPSConversionDone(client_data,type)
 /*------------------------------------------------------------*/
 
 static String
-save_forkPDFToPSConversion(sd)
-   SaveData sd;
+save_forkPDFToPSConversion(SaveData sd)
 {
    char command[512], tmp[512];
    char proc_name[256];
@@ -266,11 +260,7 @@ save_forkPDFToPSConversion(sd)
 /*------------------------------------------------------------*/
 
 static String
-save_copyToFile(save_filename,src_filename,pagelist,scanstyle)
-   String save_filename;
-   String src_filename;
-   char *pagelist;
-   int scanstyle;
+save_copyToFile(String save_filename, String src_filename, char *pagelist, int scanstyle)
 {
    FILE *save_file=NULL;
    FILE *src_file=NULL;

@@ -76,11 +76,7 @@
 /*##################################################################*/
 
 void
-action_shellConfigureNotify(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_shellConfigureNotify(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   static int width=0,height=0;
   int new_width=0,new_height=0;
@@ -128,10 +124,8 @@ static int scroll_success(Widget clip, int e, int x, int y, int nx, int ny)
   }
 }
 
-static void 
-catch_timer(client_data, idp)
-  XtPointer client_data;
-  XtIntervalId *idp;
+static void
+catch_timer(XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
   Widget w = (Widget) client_data;
   Cardinal n = 0;
@@ -141,11 +135,7 @@ catch_timer(client_data, idp)
 }
 
 void
-action_page(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_page(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
   int a,e,x,y,nx,ny,cw,ch,d;
   float f;
@@ -331,12 +321,12 @@ action_page(w, event, params, num_params)
 save_params:
   INFMESSAGE(saving params)
   ++i;
-  if (i<*num_params) {
+  if (i<(int)*num_params) {
     old_num_params = *num_params - i;
     INFIMESSAGE(saving,old_num_params)
     old_params = (String*) XtMalloc(old_num_params*sizeof(String));
     old=0;
-    while (i < *num_params) {
+    while (i < (int)*num_params) {
       old_params[old] = XtNewString(params[i]);
       INFSMESSAGE(saving,old_params[old])
       ++i; old++;
@@ -351,11 +341,7 @@ save_params:
 /*##################################################################*/
 
 void
-action_menuPopdown(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_menuPopdown(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
   BEGINMESSAGE(action_menuPopdown)
   while (w) {
@@ -373,11 +359,7 @@ action_menuPopdown(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_toc(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_toc(Widget w _GL_UNUSED, XEvent *event, String *params, Cardinal *num_params)
 {
   static int xf,yf,xo,yo,xp,yp,dyo;
   static Boolean scroll_initialized=False;
@@ -484,11 +466,7 @@ action_toc(w, event, params, num_params)
 /*############################################################*/
 
 void
-action_otherPage(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_otherPage(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   static int xo=0,yo=0;
   static Time to = 0;
@@ -537,11 +515,7 @@ action_otherPage(w, event, params, num_params)
 /*############################################################*/
 
 void
-action_movePage(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_movePage(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
 #   define HISTORY_POINTS 10
 #   define DECAY_TIME 200
@@ -667,11 +641,7 @@ break_movePage:
 /*##################################################################*/
 
 void
-action_panner(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_panner(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
     int x,y,cw,ch;
     static int xo,yo,xp,yp;
@@ -722,11 +692,7 @@ action_panner(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_handleDSC(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_handleDSC(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_handleDSC)
   cb_handleDSC(w, (XtPointer)1, NULL);
@@ -739,11 +705,7 @@ action_handleDSC(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_antialias(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_antialias(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_antialias)
   cb_antialias(w, (XtPointer)1, NULL);
@@ -756,11 +718,7 @@ action_antialias(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_quit(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_quit(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_quit)
   cb_quitGhostview(w, NULL, NULL);
@@ -773,11 +731,7 @@ action_quit(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_open(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_open(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_open)
   cb_openFile((Widget)NULL,(XtPointer)NULL, NULL);
@@ -789,11 +743,7 @@ action_open(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_reopen(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_reopen(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_reopen)
   if (!XtIsSensitive(reopenEntry)) {INFMESSAGE(insensitive) ENDMESSAGE(action_reopen) return; }
@@ -806,11 +756,7 @@ action_reopen(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_savepos(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_savepos(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_savepos)
   if (!XtIsSensitive(saveposEntry)) {INFMESSAGE(insensitive) ENDMESSAGE(action_savepos) return; }
@@ -823,11 +769,7 @@ action_savepos(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_presentation(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_presentation(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_savepos)
   if (!XtIsSensitive(presentationEntry)) {INFMESSAGE(insensitive) ENDMESSAGE(action_presentation) return; }
@@ -841,11 +783,7 @@ action_presentation(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_save(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_save(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     BEGINMESSAGE(action_save)
     if (*num_params<1)  {
@@ -879,11 +817,7 @@ action_save(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_print(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_print(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
 
     BEGINMESSAGE(action_print)
@@ -911,11 +845,7 @@ action_print(w, event, params, num_params)
 }
 
 void
-action_print_pos(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_print_pos(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
 
     BEGINMESSAGE(action_print_pos)
@@ -929,11 +859,7 @@ action_print_pos(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_setPageMark(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_setPageMark(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     char *current   = "current";
     char *even      = "even";
@@ -964,11 +890,7 @@ action_setPageMark(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_autoResize(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_autoResize(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
     BEGINMESSAGE(action_autoResize)
     cb_autoResize(w, (XtPointer)1, NULL);
@@ -980,11 +902,7 @@ action_autoResize(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_setScale(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_setScale(Widget w, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     int i;
 
@@ -1012,11 +930,7 @@ action_setScale(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_setOrientation(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_setOrientation(Widget w, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     int o;
 
@@ -1039,11 +953,7 @@ action_setOrientation(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_setPagemedia(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_setPagemedia(Widget w, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     int m;
 
@@ -1067,11 +977,7 @@ action_setPagemedia(w, event, params, num_params)
 
 #define IS_ZOOM(sss) (!strcmp(XtName(sss),"zoomPopup"))
 void
-action_dismissPopup(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_dismissPopup(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    Widget s;
    BEGINMESSAGE(action_dismissPopup)
@@ -1099,16 +1005,12 @@ action_dismissPopup(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_deleteWindow(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_deleteWindow(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    BEGINMESSAGE(action_deleteWindow)
    if (w) {
       INFSMESSAGE(widget:,XtName(w))
-      if (event->type == ClientMessage && event->xclient.data.l[0] == wm_delete_window) {
+      if (event->type == ClientMessage && (Atom)event->xclient.data.l[0] == wm_delete_window) {
          if (w==toplevel)     { INFMESSAGE(toplevel) cb_quitGhostview((Widget)NULL,NULL,NULL); }
          else                 { action_dismissPopup(w,NULL,NULL,NULL); }
       }
@@ -1122,11 +1024,7 @@ action_deleteWindow(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_eraseLocator(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_eraseLocator(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
     Arg args[1];
 
@@ -1143,11 +1041,7 @@ action_eraseLocator(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_checkFile(w, event, params, num_params)
-    Widget w;
-    XEvent *event;
-    String *params;
-    Cardinal *num_params;
+action_checkFile(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
     BEGINMESSAGE(action_checkFile)
     if (*num_params != 1) {INFMESSAGE(no parameters) ENDMESSAGE(action_checkFile) return;}
@@ -1163,11 +1057,7 @@ action_checkFile(w, event, params, num_params)
 /*##################################################################*/
 
 void
-action_watchFile(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+action_watchFile(Widget w _GL_UNUSED, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   BEGINMESSAGE(action_watchFile)
   cb_watchFile(NULL,(XtPointer)1,NULL);

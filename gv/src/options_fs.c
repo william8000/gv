@@ -107,9 +107,7 @@ static void options_fs_setOptionsAtEntry(void)
    options_fs_cb_apply
 ------------------------------------------------------*/
 
-static void options_fs_cb_apply(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+static void options_fs_cb_apply(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    Arg args[5];
    Cardinal n;
@@ -138,9 +136,7 @@ static void options_fs_cb_apply(w, client_data, call_data)
 ------------------------------------------------------*/
 
 static
-void options_fs_cb_save(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_fs_cb_save(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   int    argn = 0;
   String argi[30];

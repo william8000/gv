@@ -138,11 +138,7 @@ static void ClassInitialize(void)
 }
 
 void
-PopupMenu(w, event, params, num_params)
-Widget w;
-XEvent * event;
-String * params;
-Cardinal * num_params;
+PopupMenu(Widget w, XEvent *event _GL_UNUSED, String *params _GL_UNUSED, Cardinal *num_params)
 {
   MButtonWidget mbw = (MButtonWidget) w;
   Widget temp;

@@ -112,8 +112,7 @@ static ProcessData process_get_pd(void)
 /* process_remove_pd */
 /*------------------------------------------------------------*/
 
-static void process_remove_pd(pd)
-   ProcessData pd;
+static void process_remove_pd(ProcessData pd)
 {
    BEGINMESSAGE(process_remove_pd)
    if (gpd == pd) gpd = pd->next;
@@ -141,8 +140,7 @@ static void process_remove_pd(pd)
 #define CHILD_OKAY            0
 #define CHILD_EXITED          1
 
-static int process_child_status(pd)
-   ProcessData pd;
+static int process_child_status(ProcessData pd)
 {
    int status;
    pid_t child_pid;
@@ -164,9 +162,7 @@ static int process_child_status(pd)
 /*##############################################################*/
 
 void
-cb_processKillProcess(w, client_data, call_data)
-   Widget w;
-   XtPointer client_data, call_data;
+cb_processKillProcess(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
    ProcessData pd;
    BEGINMESSAGE(cb_processKillProcess)
@@ -179,8 +175,7 @@ cb_processKillProcess(w, client_data, call_data)
 /* process_kill_process */
 /*##############################################################*/
 
-void process_kill_process(pd)
-   ProcessData pd;
+void process_kill_process(ProcessData pd)
 {
    int status;
    BEGINMESSAGE(process_kill_process)
@@ -199,7 +194,7 @@ void process_kill_process(pd)
 /* process_kill_all_processes */
 /*##############################################################*/
 
-void process_kill_all_processes()
+void process_kill_all_processes(void)
 {
    BEGINMESSAGE(process_kill_all_processes)
    while (gpd) process_kill_process(gpd);
@@ -210,9 +205,7 @@ void process_kill_all_processes()
 /* process_notify */
 /*------------------------------------------------------------*/
 
-static void process_notify (client_data, idp)
-   XtPointer client_data;
-   XtIntervalId *idp;
+static void process_notify(XtPointer client_data, XtIntervalId *idp _GL_UNUSED)
 {
    pid_t child_pid;
    ProcessData pd = (ProcessData) client_data;
@@ -235,11 +228,7 @@ static void process_notify (client_data, idp)
 /* process_fork */
 /*##############################################################*/
 
-ProcessData process_fork (name,command,notify_proc,data)
-   String name;
-   String command;
-   ProcessNotifyProc notify_proc;
-   XtPointer data;
+ProcessData process_fork(String name, String command, ProcessNotifyProc notify_proc, XtPointer data)
 {
    ProcessData pd;
    pid_t       pid;
@@ -304,8 +293,7 @@ ProcessData process_fork (name,command,notify_proc,data)
 /* process_set_shell_resize */
 /*------------------------------------------------------------*/
 
-static Boolean process_set_shell_resize(allow_resize)
-   Boolean allow_resize;
+static Boolean process_set_shell_resize(Boolean allow_resize)
 {
    Boolean old_allow_resize;
    ShellWidget sw = (ShellWidget)toplevel;
@@ -318,9 +306,7 @@ static Boolean process_set_shell_resize(allow_resize)
 /* process_menu */
 /*##############################################################*/
 
-void process_menu(pd,action)
-   ProcessData pd;
-   int action;
+void process_menu(ProcessData pd, int action)
 {
 
    Arg args[5];
@@ -440,7 +426,7 @@ void process_menu(pd,action)
 /* process_disallow_quit */
 /*##############################################################*/
 
-char *process_disallow_quit()
+char *process_disallow_quit(void)
 {
 # define MAX_DISALLOW_QUIT_MESSAGE 512
   static char message[MAX_DISALLOW_QUIT_MESSAGE];

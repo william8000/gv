@@ -73,9 +73,7 @@ static Widget doneButton=NULL;
    cb_popupNotePopup
 ###############################################################################*/
 
-void cb_popupNotePopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+void cb_popupNotePopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popupNotePopup)
    if (!notePopupVisible) {
@@ -92,9 +90,7 @@ void cb_popupNotePopup(w, client_data, call_data)
    cb_popdownNotePopup
 ###############################################################################*/
 
-void cb_popdownNotePopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+void cb_popdownNotePopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popdownNotePopup)
    if (notePopupVisible) {
@@ -108,7 +104,7 @@ void cb_popdownNotePopup(w, client_data, call_data)
    makeNotePopup
 ###############################################################################*/
 
-void makeNotePopup()
+void makeNotePopup(void)
 {
    Arg          args[10];
    Cardinal     n;
@@ -154,8 +150,7 @@ void makeNotePopup()
 ###############################################################################*/
 
 void
-NotePopupShowMessage(message)
-    String message;
+NotePopupShowMessage(String message)
 {
     Arg args[5];
     Cardinal n;

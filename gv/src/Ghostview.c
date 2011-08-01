@@ -271,8 +271,7 @@ WidgetClass ghostviewWidgetClass = (WidgetClass)&ghostviewClassRec;
 
 static Pixmap pix = 0;
 
-static void Copy_pixmap(w)
-    Widget w;
+static void Copy_pixmap(Widget w)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
 
@@ -292,8 +291,8 @@ static void Copy_pixmap(w)
   }      
 
 }
-static void Realize_pixmap(w)
-    Widget w;
+
+static void Realize_pixmap(Widget w)
 {
     if(!pix) {
         Display *dpy = XtDisplay(w);
@@ -309,11 +308,8 @@ static void Realize_pixmap(w)
     } 
 }
 
-static void 
-Redisplay(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+static void
+Redisplay(Widget w, XEvent *event _GL_UNUSED, Region region _GL_UNUSED)
 {
 
   BEGINMESSAGE(Redisplay)
@@ -331,11 +327,7 @@ Region region;
 /*###################################################################################*/
 
 static void
-Message(w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;		/* unused */
-   Cardinal *num_params;	/* unused */
+Message(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
    GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
@@ -367,11 +359,7 @@ Message(w, event, params, num_params)
 }
 
 static void
-action_changeCursor(w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;
-   Cardinal *num_params;
+action_changeCursor(Widget w, XEvent *event _GL_UNUSED, String *params, Cardinal *num_params)
 {
    int which=0;
 
@@ -389,9 +377,7 @@ action_changeCursor(w, event, params, num_params)
 /*----------------------------------------------------------*/
 
 static void
-ChangeCursor(gvw, which)
-   GhostviewWidget gvw;
-   int which;
+ChangeCursor(GhostviewWidget gvw, int which)
 {
    Widget w = (Widget) gvw;
    Cursor cursor;
@@ -435,11 +421,7 @@ ChangeCursor(gvw, which)
 /*###################################################################################*/
 
 static void
-Notify(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+Notify(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params _GL_UNUSED)
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
   GhostviewReturnStruct ret_val;
@@ -471,8 +453,7 @@ Notify(w, event, params, num_params)
 static Boolean broken_pipe = False;
 
 static SIGVAL
-CatchPipe(i)
-    int i;
+CatchPipe(int i _GL_UNUSED)
 {
     broken_pipe = True;
 #ifdef SIGNALRETURNSINT
@@ -492,15 +473,12 @@ CatchPipe(i)
 /*###################################################################################*/
 
 static void
-Input(client_data, source, id)
-    XtPointer client_data;
-    int *source;
-    XtInputId *id;
+Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 {
     Widget w = (Widget) client_data;
     GhostviewWidget gvw = (GhostviewWidget) w;
     int bytes_written;
-    SIGVAL (*oldsig)();
+    SIGVAL (*oldsig)(int);
 
     BEGINMESSAGE(Input)
 
@@ -641,10 +619,7 @@ Input(client_data, source, id)
 /*###################################################################################*/
 
 static void
-Output(client_data, source, id)
-    XtPointer client_data;
-    int *source;
-    XtInputId *id;
+Output(XtPointer client_data, int *source, XtInputId *id _GL_UNUSED)
 {
     Widget w = (Widget) client_data;
     GhostviewWidget gvw = (GhostviewWidget) w;
@@ -737,10 +712,7 @@ ClassPartInitialize(class)
 /*###################################################################################*/
 
 static void
-Initialize(request, new, args, num_args)
-    Widget request, new;
-    ArgList args;	/* unused */
-    Cardinal *num_args;	/* unused */
+Initialize(Widget request, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
     XGCValues	values;
     XtGCMask	mask;
@@ -803,10 +775,7 @@ Initialize(request, new, args, num_args)
 /*###################################################################################*/
 
 static void
-Realize(w, valueMask, attributes)
-    Widget w;
-    Mask *valueMask;
-    XSetWindowAttributes *attributes;
+Realize(Widget w, Mask *valueMask, XSetWindowAttributes *attributes)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
 
@@ -828,8 +797,7 @@ Realize(w, valueMask, attributes)
 /*###################################################################################*/
 
 static void
-Destroy(w)
-    Widget w;
+Destroy(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
 
@@ -848,9 +816,7 @@ Destroy(w)
 /*###################################################################################*/
 
 static void
-SetBackground(w,clear)
-    Widget w;
-    Bool clear;
+SetBackground(Widget w, Bool clear)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
 
@@ -889,8 +855,7 @@ SetBackground(w,clear)
 /*###################################################################################*/
 
 static void
-Resize(w)
-  Widget w;
+Resize(Widget w _GL_UNUSED)
 {
   BEGINMESSAGE(Resize)
   ENDMESSAGE(Resize)
@@ -903,7 +868,7 @@ Resize(w)
 /*###################################################################################*/
 
 static Boolean
-SetValues(Widget current, Widget request, Widget new, ArgList unused1, Cardinal *unused2)
+SetValues(Widget current, Widget request, Widget new, ArgList unused1 _GL_UNUSED, Cardinal *unused2 _GL_UNUSED)
 {
     GhostviewWidget cgvw = (GhostviewWidget) current;
     GhostviewWidget rgvw = (GhostviewWidget) request;
@@ -1007,9 +972,7 @@ SetValues(Widget current, Widget request, Widget new, ArgList unused1, Cardinal 
 /*###################################################################################*/
 
 static XtGeometryResult 
-QueryGeometry(w, intended, requested)
-Widget w;
-XtWidgetGeometry *intended, *requested;
+QueryGeometry(Widget w, XtWidgetGeometry *intended, XtWidgetGeometry *requested)
 {
     Dimension new_width, new_height;
     Boolean change, width_req, height_req;
@@ -1049,9 +1012,7 @@ XtWidgetGeometry *intended, *requested;
 /*###################################################################################*/
 
 static void
-Layout(w, xfree, yfree)
-    Widget w;
-    Boolean xfree, yfree;
+Layout(Widget w, Boolean xfree, Boolean yfree)
 {
     Dimension width = w->core.width;
     Dimension height = w->core.height;
@@ -1113,10 +1074,8 @@ Layout(w, xfree, yfree)
 static Boolean SetProperty(Widget w, Pixmap bpixmap);
 
 static Boolean
-ComputeSize(w, xfree, yfree, width, height)
-  Widget w;
-  Boolean xfree, yfree;	/* Am I allowed to change width or height */
-  Dimension *width, *height;
+ComputeSize(Widget w, Boolean xfree, Boolean yfree, Dimension *width, Dimension *height)
+  /* xfree, yfree: Am I allowed to change width or height */
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
   Dimension new_width = *width;
@@ -1203,9 +1162,7 @@ static Boolean alloc_error;
 static XErrorHandler oldhandler;
 
 static int
-catch_alloc (dpy, err)
-Display *dpy;
-XErrorEvent *err;
+catch_alloc (Display *dpy, XErrorEvent *err)
 {
     if (err->error_code == BadAlloc) alloc_error = True;
     if (alloc_error) return 0;
@@ -1219,10 +1176,9 @@ XErrorEvent *err;
  * Returns True if a new interpreter was started, False otherwise.
  */
 /*###################################################################################*/
- 
+
 static Boolean
-Setup(w)
-   Widget w;
+Setup(Widget w)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
    Pixmap bpixmap;
@@ -1298,8 +1254,7 @@ Setup(w)
 
  
 static Boolean
-SetProperty(w, bpixmap)
-   Widget w; Pixmap bpixmap;
+SetProperty(Widget w, Pixmap bpixmap)
 {
    GhostviewWidget gvw = (GhostviewWidget) w;
    GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
@@ -1378,8 +1333,7 @@ SetProperty(w, bpixmap)
  */
 
 static void
-StartInterpreter(w)
-    Widget w;
+StartInterpreter(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     int	std_in[2];
@@ -1642,8 +1596,7 @@ StartInterpreter(w)
 int restarted = 0;
 
 static void
-StopInterpreter(w)
-    Widget w;
+StopInterpreter(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(StopInterpreter)
@@ -1698,8 +1651,7 @@ StopInterpreter(w)
 /*###################################################################################*/
 
 static void
-InterpreterFailed(w)
-    Widget w;
+InterpreterFailed(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(InterpreterFailed)
@@ -1741,15 +1693,7 @@ GhostviewDrawRectangle(w,x,y,width,height)
 #define GV_O_H ((GV_O_L) | (GV_O_S))
 #define GV_O_V ((GV_O_P) | (GV_O_U))
 
-static void GhostviewOrientCoords(gvw,x,y,xP,yP,widthP,heightP,orientP)
-  GhostviewWidget gvw;
-  int x;
-  int y;
-  int *xP;
-  int *yP;
-  int *widthP;
-  int *heightP;
-  int *orientP;
+static void GhostviewOrientCoords(GhostviewWidget gvw, int x, int y, int *xP, int *yP, int *widthP, int *heightP, int *orientP)
 {
   BEGINMESSAGE(GhostviewOrientCoords)
   switch (gvw->ghostview.orientation) {
@@ -1779,13 +1723,7 @@ static void GhostviewOrientCoords(gvw,x,y,xP,yP,widthP,heightP,orientP)
 /* GhostviewCornersPS */
 /*------------------------------------------------------------*/
 
-static void GhostviewCornersPS(gvw,o,pslxP,psrxP,pslyP,psuyP)
-  GhostviewWidget gvw;
-  int o;
-  int *pslxP;
-  int *psrxP;
-  int *pslyP;
-  int *psuyP;
+static void GhostviewCornersPS(GhostviewWidget gvw, int o, int *pslxP, int *psrxP, int *pslyP, int *psuyP)
 {
   if (o & GV_O_P) {
     *pslxP=gvw->ghostview.llx; *psrxP=gvw->ghostview.urx;
@@ -1927,8 +1865,7 @@ GhostviewGetAreaOfBB (
 /*###################################################################################*/
 
 void
-GhostviewClearBackground(w)
-    Widget w;
+GhostviewClearBackground(Widget w)
 {
     BEGINMESSAGE(GhostviewClearBackground)
       if (XtIsRealized(w)) { if(!pix || w != page) SetBackground(w,True); }
@@ -1940,8 +1877,7 @@ GhostviewClearBackground(w)
 /*###################################################################################*/
 
 void
-GhostviewSetup(w)
-    Widget w;
+GhostviewSetup(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewSetup)
@@ -1956,8 +1892,7 @@ GhostviewSetup(w)
  */
 /*###################################################################################*/
 void
-GhostviewDisableInterpreter(w)
-    Widget w;
+GhostviewDisableInterpreter(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewDisableInterpreter)
@@ -1974,8 +1909,7 @@ GhostviewDisableInterpreter(w)
 /*###################################################################################*/
 
 void
-GhostviewEnableInterpreter(w)
-    Widget w;
+GhostviewEnableInterpreter(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewEnableInterpreter)
@@ -2020,8 +1954,7 @@ GhostviewState(
 /*###################################################################################*/
 
 Boolean
-GhostviewIsInterpreterReady(w)
-    Widget w;
+GhostviewIsInterpreterReady(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewIsInterpreterReady)
@@ -2043,8 +1976,7 @@ GhostviewIsInterpreterReady(w)
 /*###################################################################################*/
 
 Boolean
-GhostviewIsBusy(w)
-    Widget w;
+GhostviewIsBusy(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewIsBusy)
@@ -2059,8 +1991,7 @@ GhostviewIsBusy(w)
 /*###################################################################################*/
 
 Boolean
-GhostviewIsInterpreterRunning(w)
-    Widget w;
+GhostviewIsInterpreterRunning(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(GhostviewIsInterpreterRunning)
@@ -2133,8 +2064,7 @@ GhostviewSendPS(Widget w, FILE *fp, gv_off_t begin, gv_off_t len, Bool doclose)
 /*###################################################################################*/
 
 Boolean
-GhostviewNextPage(w)
-    Widget w;
+GhostviewNextPage(Widget w)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     GhostviewWidgetClass gvc = (GhostviewWidgetClass) XtClass(w);
@@ -2192,13 +2122,7 @@ GhostviewNextPage(w)
 	}
 
 Boolean
-XmuCvtStringToPalette(dpy, args, num_args, fromVal, toVal, data)
-    Display	*dpy;
-    XrmValue	*args;		/* unused */
-    Cardinal	*num_args;	/* unused */
-    XrmValue	*fromVal;
-    XrmValue	*toVal;
-    XtPointer	*data;		/* unused */
+XmuCvtStringToPalette(Display *dpy, XrmValue *args _GL_UNUSED, Cardinal *num_args _GL_UNUSED, XrmValue *fromVal, XrmValue *toVal, XtPointer *data _GL_UNUSED)
 {
     static XrmQuark		XrmQEmonochrome;
     static XrmQuark		XrmQEgrayscale;

@@ -282,7 +282,7 @@ sec_sscanf(const char *s, const char *fmt, ...)
 					goto stop;
 				buf = va_arg(ap, char *);
 				size = va_arg(ap, size_t) - nul_terminated;
-				if (size > s - string)
+				if (size > (size_t)(s - string))
 					size = s - string;
 				strncpy(buf, string, size);
 				if (nul_terminated)

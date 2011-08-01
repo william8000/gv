@@ -73,9 +73,7 @@ static	Bool	version_up = False;
 ###############################################################################*/
 
 void
-cb_popdownVersionPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+cb_popdownVersionPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popdownVersionPopup)
    if (version_up) {
@@ -97,9 +95,7 @@ cb_popdownVersionPopup(w, client_data, call_data)
 ###############################################################################*/
 
 void
-cb_popupVersionPopup(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+cb_popupVersionPopup(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    BEGINMESSAGE(cb_popupVersionPopup)
    if (!version_up) {
@@ -121,8 +117,7 @@ cb_popupVersionPopup(w, client_data, call_data)
 
 static char *VersionPopup_layout = etc. etc.
 
-static void SetVersionPopupLayout(l)
-   Widget 		l;
+static void SetVersionPopupLayout(Widget l)
 {
    static XrmValue  	from,to;
    static Bool 		success=False;
@@ -164,9 +159,7 @@ static void SetVersionPopupLayout(l)
 ###############################################################################*/
 
 void
-makeVersionPopup(parent,name)
-   Widget parent;
-   String name;
+makeVersionPopup(Widget parent, String name)
 {
    char		**line;
    Arg		args[10];

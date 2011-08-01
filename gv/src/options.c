@@ -71,9 +71,7 @@
    options_cb_popup
 #######################################################*/
 
-void options_cb_popup(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_cb_popup(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   OptionPopup op = (OptionPopup) client_data;
 
@@ -92,9 +90,7 @@ void options_cb_popup(w, client_data, call_data)
    options_cb_popdown
 #######################################################*/
 
-void options_cb_popdown(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_cb_popdown(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_data _GL_UNUSED)
 {
   OptionPopup op = (OptionPopup) client_data;
 
@@ -111,9 +107,7 @@ void options_cb_popdown(w, client_data, call_data)
    options_cb_changeMenuLabel
 #######################################################*/
 
-void options_cb_changeMenuLabel(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_cb_changeMenuLabel(Widget w, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   Arg      args[1];
   Cardinal n;
@@ -135,10 +129,7 @@ void options_cb_changeMenuLabel(w, client_data, call_data)
    options_textApply
 #######################################################*/
 
-void options_textApply(w,bP,sP)
-  Widget w;
-  Boolean *bP;
-  String *sP;
+void options_textApply(Widget w, Boolean *bP, String *sP)
 {
   if (!bP || (bP && *bP==True)) XtFree(*sP);
   if (bP) *bP=True;
@@ -150,12 +141,7 @@ void options_textApply(w,bP,sP)
    options_createLabeledMenu
 #######################################################*/
 
-void options_createLabeledMenu(name,parent,lP,mbP,mP)
-  String name;
-  Widget parent;
-  Widget *lP;
-  Widget *mbP;
-  Widget *mP;
+void options_createLabeledMenu(String name, Widget parent, Widget *lP, Widget *mbP, Widget *mP)
 {
   char s[50];
   Arg args[1];
@@ -175,9 +161,7 @@ void options_createLabeledMenu(name,parent,lP,mbP,mP)
    options_realize
 #######################################################*/
 
-void options_realize(popup,aaa)
-  Widget popup;
-  Widget aaa;
+void options_realize(Widget popup, Widget aaa)
 {
   Dimension	minw,minh;
   Arg args[3];
@@ -200,12 +184,7 @@ void options_realize(popup,aaa)
    options_setArg
 #######################################################*/
 
-void options_setArg(argiP,argvP,format,name,value)
-  String *argiP;
-  String *argvP;
-  String format;
-  String name;
-  String value;
+void options_setArg(String *argiP, String *argvP, String format, String name, String value)
 {
   *argiP = XtMalloc((strlen(format)+strlen(name)+3)*sizeof(char));
   strcpy(*argiP,name);
@@ -220,8 +199,7 @@ void options_setArg(argiP,argvP,format,name,value)
    options_squeezeMultiline
 #######################################################*/
 
-String  options_squeezeMultiline(s)
-  String s;
+String  options_squeezeMultiline(String s)
 {
   char *b,*e,*d,*md;
 
@@ -246,8 +224,7 @@ String  options_squeezeMultiline(s)
    options_squeeze
 #######################################################*/
 
-String  options_squeeze(s)
-  String s;
+String  options_squeeze(String s)
 {
   String d,md;
 
@@ -275,9 +252,7 @@ String  options_squeeze(s)
 
 #   define END_OF_RECORD "\n"
 
-static char* options_readline(infile,lineP)
-  FILE *infile;
-  String *lineP;
+static char* options_readline(FILE *infile, String *lineP)
 {
   char tmp[MAX_RECORD_LENGTH];
   char *esc;
@@ -301,10 +276,7 @@ static char* options_readline(infile,lineP)
    options_writeline
 ------------------------------------------------------*/
 
-static void options_writeline(outfile,header,value)
-  FILE *outfile;
-  String header;
-  String value;
+static void options_writeline(FILE *outfile, String header, String value)
 {
   int num_nl=0;
   char *line;
@@ -326,7 +298,7 @@ static void options_writeline(outfile,header,value)
       *s++='\0';
     }
   }
-  if (i==strlen(header)) i=24;
+  if (i==(int)strlen(header)) i=24;
   line = XtMalloc((strlen(header) + strlen(value) + num_nl*3 + i + 2)*sizeof(char));
   line[0]='\0';
   strcpy(line,header);
@@ -366,10 +338,7 @@ static void options_writeline(outfile,header,value)
    options_save
 #######################################################*/
 
-void options_save(argn,argi,argv)
-  int  argn;
-  String *argi;
-  String *argv;
+void options_save(int argn, String *argi, String *argv)
 {
   FILE *tempfile;
   FILE *infile;

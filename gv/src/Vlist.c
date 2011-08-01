@@ -180,11 +180,8 @@ static void ClassInitialize(void)
 /* Initialize */
 /*---------------------------------------------------*/
 
-static void 
-Initialize(request, new, args, num_args)
-Widget request, new;
-ArgList args;			/* unused */
-Cardinal *num_args;		/* unused */
+static void
+Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
   VlistWidget vw = (VlistWidget) new;
   String s="";
@@ -239,11 +236,8 @@ Cardinal *num_args;		/* unused */
 /* Redisplay */
 /*---------------------------------------------------*/
 
-static void 
-Redisplay(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+static void
+Redisplay(Widget w, XEvent *event, Region region)
 {
   BEGINMESSAGE(Redisplay)
   PaintVlistWidget(w, event, region);
@@ -254,8 +248,7 @@ Region region;
 /* Resize */
 /*---------------------------------------------------*/
 
-static void shiftLabel(vw)
-  VlistWidget vw;
+static void shiftLabel(VlistWidget vw)
 {
   BEGINMESSAGE(shiftLabel)
   if (vw->vlist.allow_marks) {
@@ -266,8 +259,7 @@ static void shiftLabel(vw)
   ENDMESSAGE(shiftLabel)
 }
 
-static void Resize(w)
-  Widget w;
+static void Resize(Widget w)
 {
   VlistWidget vw = (VlistWidget) w;
   BEGINMESSAGE(Resize)
@@ -280,11 +272,8 @@ static void Resize(w)
 /* SetValues */
 /*---------------------------------------------------*/
 
-static Boolean 
-SetValues (current, request, new, args, num_args)
-Widget current, request, new;
-ArgList args;
-Cardinal *num_args;
+static Boolean
+SetValues (Widget current, Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
   VlistWidget cvw = (VlistWidget) current;
   VlistWidget nvw = (VlistWidget) new;
@@ -309,9 +298,8 @@ Cardinal *num_args;
 /* Destroy */
 /*---------------------------------------------------*/
 
-static void 
-Destroy(w)
-Widget w;
+static void
+Destroy(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -329,9 +317,7 @@ Widget w;
 /*---------------------------------------------------*/
 
 static void
-PaintEntryString(w, entry)
-  Widget w;
-  int entry;
+PaintEntryString(Widget w, int entry)
 {
   VlistWidget vw = (VlistWidget)w;
   char * s;
@@ -371,12 +357,7 @@ PaintEntryString(w, entry)
 /*---------------------------------------------------*/
 
 static int
-PaintMark(w, region, entry, style,erase)
-  Widget w;
-  Region region;
-  int entry;
-  int style;
-  Boolean erase;
+PaintMark(Widget w, Region region, int entry, int style, Boolean erase)
 {
   VlistWidget vw = (VlistWidget)w;
   int ss,ulx,uly,lrx,lry,ret=0;
@@ -437,12 +418,7 @@ PaintMark(w, region, entry, style,erase)
 }
 
 static void
-PaintMarkOfEntry(w, region, entry, style,erase)
-  Widget w;
-  Region region;
-  int entry;
-  int style;
-  Boolean erase;
+PaintMarkOfEntry(Widget w, Region region, int entry, int style, Boolean erase)
 {
   VlistWidget vw = (VlistWidget)w;
   int pstyle,dstyle,d,p;
@@ -486,12 +462,8 @@ PaintMarkOfEntry(w, region, entry, style,erase)
 /* PaintMarkMarkOfEntry */
 /*---------------------------------------------------*/
 
-static void 
-PaintMarkMarkOfEntry(w, region, entry, erase)
-  Widget w;
-  Region region;
-  int entry;
-  Boolean erase;
+static void
+PaintMarkMarkOfEntry(Widget w, Region region, int entry, Boolean erase)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -538,11 +510,8 @@ PaintMarkMarkOfEntry(w, region, entry, erase)
 /* PaintMarksOfEntries */
 /*---------------------------------------------------*/
 
-static void 
-PaintMarksOfEntries(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+static void
+PaintMarksOfEntries(Widget w, XEvent *event _GL_UNUSED, Region region)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -565,11 +534,8 @@ Region region;
 /* PaintVlistWidget */
 /*---------------------------------------------------*/
 
-static void 
-PaintVlistWidget(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+static void
+PaintVlistWidget(Widget w, XEvent *event, Region region)
 {
   Dimension width;
   char *s, *o;
@@ -649,8 +615,7 @@ Region region;
 /*###################################################*/
 
 int
-VlistSelected(w)
-  Widget w;
+VlistSelected(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -664,8 +629,7 @@ VlistSelected(w)
 /*###################################################*/
 
 int
-VlistHighlighted(w)
-  Widget w;
+VlistHighlighted(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -679,8 +643,7 @@ VlistHighlighted(w)
 /*###################################################*/
 
 int
-VlistEntries(w)
-  Widget w;
+VlistEntries(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -694,8 +657,7 @@ VlistEntries(w)
 /*###################################################*/
 
 char*
-VlistVlist(w)
-  Widget w;
+VlistVlist(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
 
@@ -709,9 +671,7 @@ VlistVlist(w)
 /*###################################################*/
 
 int
-VlistEntryOfPosition(w,y)
-  Widget w;
-  int y;
+VlistEntryOfPosition(Widget w, int y)
 {
   VlistWidget vw = (VlistWidget)w;
   int entry = -1;
@@ -736,11 +696,7 @@ VlistEntryOfPosition(w,y)
 /*###################################################*/
 
 void
-VlistPositionOfEntry(w,e,yuP,ylP)
-  Widget w;
-  int e;
-  int *yuP;
-  int *ylP;
+VlistPositionOfEntry(Widget w, int e, int *yuP, int *ylP)
 {
   VlistWidget vw = (VlistWidget)w;
   float h;
@@ -760,10 +716,7 @@ VlistPositionOfEntry(w,e,yuP,ylP)
 /*###################################################*/
 
 void
-VlistChangeMark(w,entry,change)
-  Widget w;
-  int entry;
-  int change;
+VlistChangeMark(Widget w, int entry,int change)
 {
   VlistWidget vw = (VlistWidget)w;
   char *vlist=vw->vlist.vlist;
@@ -843,12 +796,8 @@ VlistChangeMark(w,entry,change)
 /* vlist_change_mark */
 /*---------------------------------------------------*/
 
-static void 
-vlist_change_mark(w,e,change,kind)
-  Widget w;
-  int e;
-  int change;
-  int kind;
+static void
+vlist_change_mark(Widget w, int e, int change, int kind)
 {
   VlistWidget vw = (VlistWidget)w;
   int *eP;
@@ -880,11 +829,8 @@ vlist_change_mark(w,e,change,kind)
 /* VlistChangeSelected */
 /*###################################################*/
 
-void 
-VlistChangeSelected(w,entry,change)
-  Widget w;
-  int entry;
-  int change;
+void
+VlistChangeSelected(Widget w, int entry, int change)
 {
   BEGINMESSAGE(VlistChangeSelected)
   vlist_change_mark(w,entry,change,1);
@@ -895,11 +841,8 @@ VlistChangeSelected(w,entry,change)
 /* VlistChangeHighlighted */
 /*###################################################*/
 
-void 
-VlistChangeHighlighted(w,entry,change)
-  Widget w;
-  int entry;
-  int change;
+void
+VlistChangeHighlighted(Widget w, int entry, int change)
 {
   BEGINMESSAGE(VlistChangeHighlighted)
   vlist_change_mark(w,entry,change,-1);
@@ -1000,8 +943,7 @@ float VlistVisibleLength(Widget w, unsigned int height)
   int entriesvisible = -1;
 
   if (vw->vlist.ydelta > 0) {
-    if (height < 0) entriesvisible = -1;
-    else            entriesvisible = height/vw->vlist.ydelta;
+    entriesvisible = height/vw->vlist.ydelta;
   }
 #if 0
   printf("fitting %d entries of height %d in %d",

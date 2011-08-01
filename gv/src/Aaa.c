@@ -277,14 +277,8 @@ PrintBox (box, level)
  *      Returns: none.
  */
 
-/*ARGSUSED*/
 static Boolean
-CvtStringToLayout (dpy, args, num_args, from, to, converter_data)
-    Display     *dpy;
-    XrmValue    *args;
-    Cardinal    *num_args;
-    XrmValue    *from, *to;
-    XtPointer   *converter_data;
+CvtStringToLayout (Display *dpy _GL_UNUSED, XrmValue *args _GL_UNUSED, Cardinal *num_args _GL_UNUSED, XrmValue *from, XrmValue *to, XtPointer *converter_data _GL_UNUSED)
 {
     LayoutConverterStruct layoutConverterStruct;
 
@@ -325,10 +319,7 @@ ClassInitialize(void)
     ENDMESSAGE(ClassInitialize)
 }
 
-/*ARGSUSED*/
-static XtGeometryResult GeometryManager(child, request, reply)
-  Widget              child;
-  XtWidgetGeometry    *request, *reply;
+static XtGeometryResult GeometryManager(Widget child, XtWidgetGeometry *request, XtWidgetGeometry *reply _GL_UNUSED)
 {
   AaaWidget    w = (AaaWidget) XtParent(child);
   SubInfoPtr   p = SubInfo(child);
@@ -387,11 +378,7 @@ static XtGeometryResult GeometryManager(child, request, reply)
   }
 }
 
-/* ARGSUSED */
-static void Initialize(request, new, args, num_args)
-Widget request, new;
-ArgList args;
-Cardinal *num_args;
+static void Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
    AaaWidget l= (AaaWidget) new;
    Dimension prefwidth,prefheight;
@@ -410,8 +397,7 @@ Cardinal *num_args;
   ENDMESSAGE(Initialize)
 }
 
-static void ChangeManaged(gw)
-   Widget gw;
+static void ChangeManaged(Widget gw)
 {
     AaaWidget        w = (AaaWidget) gw;
     Widget              *children;
@@ -423,8 +409,7 @@ static void ChangeManaged(gw)
 }
 
 static void
-GetDesiredSize (child)
-    Widget  child;
+GetDesiredSize (Widget child)
 {
     XtWidgetGeometry    desired;
     SubInfoPtr          p;
@@ -443,16 +428,14 @@ GetDesiredSize (child)
     INFSMESSAGE1(GetDesiredSize for:,XtName(child))
 }
 
-static void InsertChild (child)
-    Widget  child;
+static void InsertChild (Widget child)
 {
     (*SuperClass->composite_class.insert_child) (child);
     GetDesiredSize (child);
 }
 
 static void
-Resize(gw)
-    Widget gw;
+Resize(Widget gw)
 {
     BEGINMESSAGE(Resize)
     IIMESSAGE(gw->core.width,gw->core.height)
@@ -464,11 +447,8 @@ Resize(gw)
 }
 
 /* ARGSUSED */
-static Boolean 
-SetValues(gold, greq, gnew, args, num_args)
-    Widget gold, greq, gnew;
-    ArgList args;
-    Cardinal *num_args;
+static Boolean
+SetValues(Widget gold, Widget greq _GL_UNUSED, Widget gnew, ArgList args _GL_UNUSED, Cardinal *num_args _GL_UNUSED)
 {
     AaaWidget    old = (AaaWidget) gold,
                     new = (AaaWidget) gnew;
@@ -483,9 +463,7 @@ SetValues(gold, greq, gnew, args, num_args)
 } /* SetValues */
 
 static XtGeometryResult
-QueryGeometry (gw, request, preferred_return)
-    Widget              gw;
-    XtWidgetGeometry    *request, *preferred_return;
+QueryGeometry (Widget gw, XtWidgetGeometry *request, XtWidgetGeometry *preferred_return)
 {
     AaaWidget        w = (AaaWidget) gw;
     XtGeometryResult    result;
@@ -547,9 +525,7 @@ QueryGeometry (gw, request, preferred_return)
  */
 
 static ExprPtr
-LookupVariable (child, quark)
-    BoxPtr      child;
-    XrmQuark    quark;
+LookupVariable (BoxPtr child, XrmQuark quark)
 {
     BoxPtr      parent, box;
 
@@ -565,13 +541,8 @@ LookupVariable (child, quark)
     return((ExprPtr)NULL);
 }
 
-                
 static double
-Evaluate (l, box, expr, natural)
-    AaaWidget    l;
-    BoxPtr          box;
-    ExprPtr         expr;
-    double          natural;
+Evaluate (AaaWidget l, BoxPtr box, ExprPtr expr, double natural)
 {
     double      left, right, down;
     Widget      widget;
@@ -639,8 +610,7 @@ Evaluate (l, box, expr, natural)
 }
 
 static void
-DisposeExpr (expr)
-    ExprPtr expr;
+DisposeExpr (ExprPtr expr)
 {
     MEMBEGINMESSAGE(DisposeExpr)
     if (!expr) {
@@ -694,10 +664,7 @@ DisposeExpr (expr)
 
 /* compute the natural sizes of a box */
 static void
-ComputeNaturalSizes (l, box, dir)
-    AaaWidget    l;
-    BoxPtr          box;
-    LayoutDirection dir;
+ComputeNaturalSizes (AaaWidget l, BoxPtr box, LayoutDirection dir)
 {
     BoxPtr      child;
     Widget      w;
@@ -809,8 +776,7 @@ ComputeNaturalSizes (l, box, dir)
   ((dist >= 0) ? 0.5 : -0.5))) : 0)
 
 static Bool
-ComputeSizes (box)
-    BoxPtr          box;
+ComputeSizes (BoxPtr box)
 {
     LayoutDirection dir;
     BoxPtr          child;
@@ -914,9 +880,7 @@ ComputeSizes (box)
 }
 
 static void
-SetSizes (box, x, y)
-    BoxPtr      box;
-    Position    x, y;
+SetSizes (BoxPtr box, Position x, Position y)
 {
     BoxPtr      child;
     int         width, height;
@@ -970,8 +934,7 @@ SetSizes (box, x, y)
 }
 
 static void
-AaaFreeLayout (box)
-    BoxPtr  box;
+AaaFreeLayout (BoxPtr box)
 {
     BoxPtr  child, next;
     
@@ -1024,9 +987,7 @@ AaaFreeLayout (box)
 
 
 static void
-AaaGetNaturalSize (l, widthp, heightp)
-    AaaWidget    l;
-    Dimension       *widthp, *heightp;   
+AaaGetNaturalSize (AaaWidget l, Dimension *widthp, Dimension *heightp)
 {
     BoxPtr              box;
 
@@ -1054,10 +1015,8 @@ AaaGetNaturalSize (l, widthp, heightp)
 }
 
 static void
-AaaLayout (l, attemptResize)
-    AaaWidget    l;
-    Bool            attemptResize;
-{                                   
+AaaLayout(AaaWidget l, Bool attemptResize)
+{
     BoxPtr              box = l->aaa.layout;
     Dimension           width, height;
     Dimension           pwidth, pheight;

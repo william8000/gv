@@ -126,10 +126,7 @@ static void options_gs_setOptionsAtEntry(void)
    options_gs_apply
 ------------------------------------------------------*/
 
-static Boolean options_gs_change (w,sP,fP)
-  Widget w;
-  String *sP;
-  String *fP;
+static Boolean options_gs_change (Widget w, String *sP, String *fP)
 {
   String v;
   Boolean r=False;
@@ -145,9 +142,7 @@ static Boolean options_gs_change (w,sP,fP)
   return(r);
 }
 
-static void options_gs_cb_apply(w, client_data, call_data)
-   Widget	w;
-   XtPointer	client_data, call_data;
+static void options_gs_cb_apply(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
    Arg args[10];
    Cardinal n;
@@ -202,13 +197,7 @@ static void options_gs_cb_apply(w, client_data, call_data)
    options_gs_cb_save
 ------------------------------------------------------*/
 
-static void options_gs_setArg(w,argiP,argvP,argnP,format,name)
-  Widget w;
-  String *argiP;
-  String *argvP;
-  int    *argnP;
-  String format;
-  String name;
+static void options_gs_setArg(Widget w, String *argiP, String *argvP, int *argnP, String format, String name)
 {
   String s;
   s = widgets_getText(w);
@@ -219,9 +208,7 @@ static void options_gs_setArg(w,argiP,argvP,argnP,format,name)
 }
 
 static
-void options_gs_cb_save(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+void options_gs_cb_save(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   int    argn = 0;
   String argi[20];
@@ -260,9 +247,7 @@ void options_gs_cb_save(w, client_data, call_data)
    options_gs_cb_defaults
 ------------------------------------------------------*/
 
-static void options_gs_cb_defaults(w, client_data, call_data)
-  Widget	w;
-  XtPointer	client_data, call_data;
+static void options_gs_cb_defaults(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_data _GL_UNUSED)
 {
   XrmDatabase db = NULL;
   String *sP = intern_resources;
