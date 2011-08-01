@@ -112,7 +112,7 @@ doc_putPageInRange(d,pagenumber)
 {
    BEGINMESSAGE(doc_putPageInRange)
    if (d && d->structured) {
-      if (pagenumber >= (int)(d->numpages)) pagenumber = ((int)d->numpages)-1;
+      if (pagenumber >= d->numpages) pagenumber = d->numpages-1;
       if (pagenumber < 0) pagenumber = 0;
    } else pagenumber = 0;
    ENDMESSAGE(doc_putPageInRange)
@@ -164,7 +164,7 @@ doc_boundingBoxOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
 
   retry=1;
 # define BB_VALID (dbb[URX]>dbb[LLX] && dbb[URY]>dbb[LLY])
-  if (d->structured && 0<=pagenumber && pagenumber<(int)d->numpages)
+  if (d->structured && 0<=pagenumber && pagenumber<d->numpages)
     { dbb = d->pages[pagenumber].boundingbox;  if BB_VALID retry=0; }
   if (retry && d->structured)
     { dbb = d->default_page_boundingbox; if BB_VALID retry=0; }
@@ -206,11 +206,11 @@ doc_preferredMediaOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
   }
 
   found=0;
-  if (!found && d->structured && 0<=pagenumber && pagenumber<(int)d->numpages)
+  if (!found && d->structured && 0<=pagenumber && pagenumber<d->numpages)
     { media = (Media) d->pages[pagenumber].media;  if (media) found=1; }
   if (!found)
     { media = (Media) d->default_page_media; if (media) found=1; }
-  if (d->structured && 0<=pagenumber && pagenumber<(int)d->numpages)
+  if (d->structured && 0<=pagenumber && pagenumber<d->numpages)
     { dbb = d->pages[pagenumber].boundingbox;  if BB_VALID found=-1; }
   if (!found && d->structured)
     { dbb = d->default_page_boundingbox; if BB_VALID found=-1; }
@@ -264,7 +264,7 @@ doc_preferredOrientationOfPage(d,page)
    BEGINMESSAGE(doc_preferredOrientationOfPage)
    o  = O_UNSPECIFIED;
    if (d) {
-      if (d->structured && 0<=page && page<(int)d->numpages && d->pages[page].orientation != O_UNSPECIFIED)
+      if (d->structured && 0<=page && page<d->numpages && d->pages[page].orientation != O_UNSPECIFIED)
          o = d->pages[page].orientation;
       else if (d->default_page_orientation != O_UNSPECIFIED)
          o = d->default_page_orientation;
@@ -290,7 +290,7 @@ doc_convStringToPage(d,pageLabel)
    BEGINMESSAGE(doc_convStringToPage)
    page=-1;
    if (pageLabel && d && d->labels_useful) for (i=0; i<d->numpages; i++) {
-      if (d->pageorder == DESCEND) j = (int)d->numpages-1-i;
+      if (d->pageorder == DESCEND) j = d->numpages-1-i;
       else                         j = i;
       if (!strcmp(pageLabel,d->pages[j].label)) { page=i; break; }
    }

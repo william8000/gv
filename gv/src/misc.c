@@ -605,11 +605,11 @@ render_page(Widget gvw)
 	   XtSetSensitive(w_prevPage, current_page != 0);
 	 }
 	 if (show_nextPage) {
-	   if (current_page == (int)doc->numpages-1) ButtonReset(w_nextPage,NULL,NULL,NULL);
-	   XtSetSensitive(w_nextPage, current_page != (int)doc->numpages-1);
+	   if (current_page == doc->numpages-1) ButtonReset(w_nextPage,NULL,NULL,NULL);
+	   XtSetSensitive(w_nextPage, current_page != doc->numpages-1);
 	 }
 	 XtSetSensitive(prevEntry, current_page != 0);
-	 XtSetSensitive(nextEntry, current_page != (int)doc->numpages-1);
+	 XtSetSensitive(nextEntry, current_page != doc->numpages-1);
        }
        {
          int n = doc ? doc->nummedia : 0;
@@ -1022,7 +1022,7 @@ setup_ghostview(void)
       int i=0;
       if (toc_text) {
 	s = (char*)XtMalloc((doc->numpages+1)*sizeof(char));
-	while (i < (int)doc->numpages) {
+	while (i < doc->numpages) {
 	  s[i] = 'p';
 	  i++;
 	}

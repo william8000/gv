@@ -341,7 +341,7 @@ psscan(FILE **fileP, char *filename, char *filename_raw, char **filename_dscP, c
     int page_media_set = NONE;
     int preread;		/* flag which tells the readline isn't needed */
     int i;
-    unsigned int maxpages = 0;
+    int maxpages = 0;
     unsigned int nextpage = 1;	/* Next expected page */
     unsigned int thispage;
     int ignore = 0;		/* whether to ignore page ordinals */

@@ -73,10 +73,10 @@ typedef struct document {
     int  default_page_boundingbox[4];
     int  orientation;			/* PORTRAIT, LANDSCAPE */
     int  default_page_orientation;	/* PORTRAIT, LANDSCAPE */
-    unsigned int nummedia;
+    int nummedia;
     struct documentmedia *media;
     Media default_page_media;
-    unsigned int numpages;
+    int numpages;
     struct page *pages;
 } *Document;
 
