@@ -86,8 +86,6 @@ typedef char *XPointer;
 #endif
 
 #include <errno.h>
-/* BSD 4.3 errno.h does not declare errno */
-extern int errno;
 /* Both error returns are checked for non-blocking I/O. */
 /* Manufacture the other error code if only one exists. */
 #if !defined(EWOULDBLOCK) && defined(EAGAIN)
