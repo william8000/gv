@@ -1,3 +1,23 @@
+2011-08-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+  	* src/ps.c (whole file): Fix calls of sec_sscanf having %s in format.
+	
+2011-08-01  Bernhard R. Link <brlink@debian.org>
+	
+	* src/Ghostview.c, src/error.h: do not define errno, as it might be a macro already.
+	
+	* src/doc_misc.c, src/misc.c, src/ps.c, src/ps.h: make numpages and nummedia signed to avoid warnings
+	
+	* src/*: get rid of core K&R, use gnulib's _GL_UNUSED and avoid some signed/unsigned
+	
+2011-07-12  Bernhard R. Link <brlink@debian.org>
+
+	* src/ps.c:  handling dsc parse errors: fix FILE given to unlink, check for file open error
+	
+2011-05-06  Bernhard R. Link <brlink@debian.org>
+
+	* configure.ac, src/Makefile.am: Only install files gv actually reads.
+
 2011-05-05  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* m4/* lib/* imported signal from gnulib.
