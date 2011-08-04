@@ -68,6 +68,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <math.h>
 
 #include <string.h>
 
@@ -130,6 +131,14 @@ static int dsc_strncmp(const char *s1, const char *s2, size_t n)
 #define length(a)       (sizeof((a))-1)
 #define iscomment(a, b) (dsc_strncmp((a), (b), length((b))) == 0)
 #define DSCcomment(a)   ((a)[0] == '%' && (a)[1] == '%')
+
+static inline char *firstword(char *p) {
+	while (*p == ' ' || *p == '\t')
+		p++;
+	return p;
+}
+
+#define isword(a, b) ((strncmp((a), (b), length((b)))==0)?(a[length((b))] == ' ' || a[length((b))] == '\t' || a[length((b))] == '\n' || a[length((b))] == '\0'):0)
 
 /* list of standard paper sizes from Adobe's PPD. */
 
@@ -321,6 +330,44 @@ static void ps_dynMemExhaust(void)
 /* psscan */
 /*###########################################################*/
 
+static int parse_boundingbox(const char *l, int *boundingbox) {
+	const char *p = l;
+	double fllx, flly, furx, fury;
+	char *pe;
+
+	fllx = strtod(p, &pe);
+	if (*pe != ' ' && *pe != '\t') {
+		return 0;
+	}
+	p = pe;
+	while (*p == ' ' || *p == '\t')
+		p++;
+	flly = strtod(p, &pe);
+	if (*pe != ' ' && *pe != '\t') {
+		return 0;
+	}
+	p = pe;
+	while (*p == ' ' || *p == '\t')
+		p++;
+	furx = strtod(p, &pe);
+	if (*pe != ' ' && *pe != '\t') {
+		return 0;
+	}
+	p = pe;
+	while (*p == ' ' || *p == '\t')
+		p++;
+	fury = strtod(p, &pe);
+	if (*pe != '\n' && *pe != '\0' && *pe != ' ' && *pe != '\t') {
+		return 0;
+	}
+
+	boundingbox[LLX] = floor(fllx);
+	boundingbox[LLY] = floor(flly);
+	boundingbox[URX] = ceil(furx);
+	boundingbox[URY] = ceil(fury);
+	return 1;
+}
+
 struct document *
 psscan(FILE **fileP, char *filename, char *filename_raw, char **filename_dscP, char *cmd_scan_pdf, char **filename_uncP, char *cmd_uncompress, int scanstyle, int gv_gs_safeDir)
 {
@@ -334,14 +381,14 @@ psscan(FILE **fileP, char *filename, char *filename_raw, char **filename_dscP, c
     int page_media_set = NONE;
     int preread;		/* flag which tells the readline isn't needed */
     int i;
+    long l;
+    char *p;
     int maxpages = 0;
     unsigned int nextpage = 1;	/* Next expected page */
     unsigned int thispage;
     int ignore = 0;		/* whether to ignore page ordinals */
     char *label;
     char *line;
-                           	/* 255 characters + 1 newline + 1 NULL */
-    char text[PSLINELENGTH];	/* Temporary storage for text */
     gv_off_t position;		/* Position of the current line */
     gv_off_t beginsection;		/* Position of the beginning of the section */
 
@@ -480,14 +527,13 @@ unc_ok:
     if (line_len>1 && (iscomment(line,"%!PS-Adobe-") || iscomment(line + 1,"%!PS-Adobe-"))) {
       INFMESSAGE(found "PS-Adobe-" comment)
 
-      doc = (struct document *) malloc(sizeof(struct document));
+      doc = (struct document *) calloc(1, sizeof(struct document));
       CHECK_MALLOCED(doc);
-      memset(doc, 0, sizeof(struct document));
-      *text=0;
-      sec_sscanf(line, "%*s %256s", text, 256);
-      /*###jp###*/
-      /*doc->epsf = iscomment(text, "EPSF-");*/
-      doc->epsf = iscomment(text, "EPSF");
+      p = line;
+      while (*p != '\0' && *p != ' ' && *p != '\t')
+	      p++;
+      p = firstword(p);
+      doc->epsf = strncmp(p, "EPSF", 4) == 0;
       doc->beginheader = position;
       section_len = line_len;
     } else if (iscomment(line,"%PDF-") && cmd_scan_pdf) {
@@ -662,65 +708,41 @@ scan_ok:
 	} else if (doc->date == NULL && iscomment(line+2, "CreationDate:")) {
 	    doc->date = gettextline(line+length("%%CreationDate:"));
 	} else if (bb_set == NONE && iscomment(line+2, "BoundingBox:")) {
-	    sec_sscanf(line+length("%%BoundingBox:"), "%256s", text, 256);
-	    if (strcmp(text, "(atend)") == 0) {
+	    p = firstword(line + length("%%BoundingBox:"));
+	    if (isword(p, "(atend)")) {
 		bb_set = ATEND;
-	    } else {
-		if (sec_sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
-			   &(doc->boundingbox[LLX]),
-			   &(doc->boundingbox[LLY]),
-			   &(doc->boundingbox[URX]),
-			   &(doc->boundingbox[URY])) == 4)
-		    bb_set = 1;
-		else {
-		    float fllx, flly, furx, fury;
-		    if (sec_sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
-			       &fllx, &flly, &furx, &fury) == 4) {
-			bb_set = 1;
-			doc->boundingbox[LLX] = fllx;
-			doc->boundingbox[LLY] = flly;
-			doc->boundingbox[URX] = furx;
-			doc->boundingbox[URY] = fury;
-			if (fllx < doc->boundingbox[LLX])
-			    doc->boundingbox[LLX]--;
-			if (flly < doc->boundingbox[LLY])
-			    doc->boundingbox[LLY]--;
-			if (furx > doc->boundingbox[URX])
-			    doc->boundingbox[URX]++;
-			if (fury > doc->boundingbox[URY])
-			    doc->boundingbox[URY]++;
-		    }
-		}
+	    } else if (parse_boundingbox(p, doc->boundingbox)) {
+		bb_set = 1;
 	    }
 	} else if (orientation_set == NONE &&
 		   iscomment(line+2, "Orientation:")) {
-	    sec_sscanf(line+length("%%Orientation:"), "%256s", text, 256);
-	    if (strcmp(text, "(atend)") == 0) {
+	    p = firstword(line + length("%%Orientation:"));
+	    if (isword(p, "(atend)")) {
 		orientation_set = ATEND;
-	    } else if (strcmp(text, "Portrait") == 0) {
+	    } else if (isword(p, "Portrait")) {
 		doc->orientation = PORTRAIT;
 		orientation_set = 1;
-	    } else if (strcmp(text, "Landscape") == 0) {
+	    } else if (isword(p, "Landscape")) {
 		doc->orientation = LANDSCAPE;
 		orientation_set = 1;
 	    }
 	} else if (page_order_set == NONE && iscomment(line+2, "PageOrder:")) {
-	    sec_sscanf(line+length("%%PageOrder:"), "%256s", text, 256);
-	    if (strcmp(text, "(atend)") == 0) {
+	    p = firstword(line + length("%%PageOrder:"));
+	    if (isword(p, "(atend)")) {
 		page_order_set = ATEND;
-	    } else if (strcmp(text, "Ascend") == 0) {
+	    } else if (isword(p, "Ascend")) {
 		doc->pageorder = ASCEND;
 		page_order_set = 1;
-	    } else if (strcmp(text, "Descend") == 0) {
+	    } else if (isword(p, "Descend")) {
 		doc->pageorder = DESCEND;
 		page_order_set = 1;
-	    } else if (strcmp(text, "Special") == 0) {
+	    } else if (isword(p, "Special")) {
 		doc->pageorder = SPECIAL;
 		page_order_set = 1;
 	    }
 	} else if (pages_set == NONE && iscomment(line+2, "Pages:")) {
-	    sec_sscanf(line+length("%%Pages:"), "%256s", text, 256);
-	    if (strcmp(text, "(atend)") == 0) {
+	    p = firstword(line + length("%%Pages:"));
+	    if (isword(p, "(atend)")) {
 		pages_set = ATEND;
 	    } else {
 		switch (sec_sscanf(line+length("%%Pages:"), "%d %d",
@@ -939,10 +961,10 @@ scan_ok:
 		/* Do nothing */
 	    } else if (doc->default_page_orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text, 256);
-		if (strcmp(text, "Portrait") == 0) {
+		p = firstword(line + length("%%PageOrientation:"));
+		if (isword(p, "Portrait")) {
 		    doc->default_page_orientation = PORTRAIT;
-		} else if (strcmp(text, "Landscape") == 0) {
+		} else if (isword(p, "Landscape")) {
 		    doc->default_page_orientation = LANDSCAPE;
 		}
 	    } else if (page_media_set == NONE &&
@@ -958,31 +980,9 @@ scan_ok:
 		free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
-			   &(doc->default_page_boundingbox[LLX]),
-			   &(doc->default_page_boundingbox[LLY]),
-			   &(doc->default_page_boundingbox[URX]),
-			   &(doc->default_page_boundingbox[URY])) == 4)
-		    page_bb_set = 1;
-		else {
-		    float fllx, flly, furx, fury;
-		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
-			       &fllx, &flly, &furx, &fury) == 4) {
+		p = firstword(line + length("%%PageBoundingBox:"));
+		if (parse_boundingbox(p, doc->default_page_boundingbox))
 			page_bb_set = 1;
-			doc->default_page_boundingbox[LLX] = fllx;
-			doc->default_page_boundingbox[LLY] = flly;
-			doc->default_page_boundingbox[URX] = furx;
-			doc->default_page_boundingbox[URY] = fury;
-			if (fllx < doc->default_page_boundingbox[LLX])
-			    doc->default_page_boundingbox[LLX]--;
-			if (flly < doc->default_page_boundingbox[LLY])
-			    doc->default_page_boundingbox[LLY]--;
-			if (furx > doc->default_page_boundingbox[URX])
-			    doc->default_page_boundingbox[URX]++;
-			if (fury > doc->default_page_boundingbox[URY])
-			    doc->default_page_boundingbox[URY]++;
-		    }
-		}
 	    }
 	}
 	section_len += line_len;
@@ -1061,10 +1061,10 @@ scan_ok:
 		/* Do nothing */
 	    } else if (doc->default_page_orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text, 256);
-		if (strcmp(text, "Portrait") == 0) {
+		p = firstword(line + length("%%PageOrientation:"));
+		if (isword(p, "Portrait")) {
 		    doc->default_page_orientation = PORTRAIT;
-		} else if (strcmp(text, "Landscape") == 0) {
+		} else if (isword(p, "Landscape")) {
 		    doc->default_page_orientation = LANDSCAPE;
 		}
 	    } else if (page_media_set == NONE &&
@@ -1084,31 +1084,9 @@ scan_ok:
 		free(cp);
 	    } else if (page_bb_set == NONE &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
-			   &(doc->default_page_boundingbox[LLX]),
-			   &(doc->default_page_boundingbox[LLY]),
-			   &(doc->default_page_boundingbox[URX]),
-			   &(doc->default_page_boundingbox[URY])) == 4)
-		    page_bb_set = 1;
-		else {
-		    float fllx, flly, furx, fury;
-		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%f %f %f %f",
-			       &fllx, &flly, &furx, &fury) == 4) {
+		p = firstword(line + length("%%PageBoundingBox:"));
+		if (parse_boundingbox(p, doc->default_page_boundingbox))
 			page_bb_set = 1;
-			doc->default_page_boundingbox[LLX] = fllx;
-			doc->default_page_boundingbox[LLY] = flly;
-			doc->default_page_boundingbox[URX] = furx;
-			doc->default_page_boundingbox[URY] = fury;
-			if (fllx < doc->default_page_boundingbox[LLX])
-			    doc->default_page_boundingbox[LLX]--;
-			if (flly < doc->default_page_boundingbox[LLY])
-			    doc->default_page_boundingbox[LLY]--;
-			if (furx > doc->default_page_boundingbox[URX])
-			    doc->default_page_boundingbox[URX]++;
-			if (fury > doc->default_page_boundingbox[URY])
-			    doc->default_page_boundingbox[URY]++;
-		    }
-		}
 	    }
 	}
 	section_len += line_len;
@@ -1160,7 +1138,8 @@ newpage:
             CHECK_MALLOCED(doc->pages);
 	}
 	label = ps_gettext(line+length("%%Page:"), &next_char);
-	if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
+	l = atol(firstword(next_char));
+	thispage = (l > 0)?l:0;
 	if (nextpage == 1) {
 	    ignore = thispage != 1;
 	}
@@ -1198,10 +1177,10 @@ continuepage:
 		/* Do nothing */
 	    } else if (doc->pages[doc->numpages].orientation == NONE &&
 		iscomment(line+2, "PageOrientation:")) {
-		sec_sscanf(line+length("%%PageOrientation:"), "%256s", text, 256);
-		if (strcmp(text, "Portrait") == 0) {
+		p = firstword(line + length("%%PageOrientation:"));
+		if (isword(p, "Portrait")) {
 		    doc->pages[doc->numpages].orientation = PORTRAIT;
-		} else if (strcmp(text, "Landscape") == 0) {
+		} else if (isword(p, "Landscape")) {
 		    doc->pages[doc->numpages].orientation = LANDSCAPE;
 		}
 	    } else if (doc->pages[doc->numpages].media == NULL &&
@@ -1230,42 +1209,11 @@ continuepage:
 		free(cp);
 	    } else if ((page_bb_set == NONE || page_bb_set == ATEND) &&
 		       iscomment(line+2, "PageBoundingBox:")) {
-		sec_sscanf(line+length("%%PageBoundingBox:"), "%256s", text, 256);
-		if (strcmp(text, "(atend)") == 0) {
+		p = firstword(line + length("%%PageBoundingBox:"));
+		if (isword(p, "(atend)")) {
 		    page_bb_set = ATEND;
-		} else {
-		    if (sec_sscanf(line+length("%%PageBoundingBox:"), "%d %d %d %d",
-			    &(doc->pages[doc->numpages].boundingbox[LLX]),
-			    &(doc->pages[doc->numpages].boundingbox[LLY]),
-			    &(doc->pages[doc->numpages].boundingbox[URX]),
-			    &(doc->pages[doc->numpages].boundingbox[URY])) == 4) 
-		      {
+		} else if (parse_boundingbox(p, doc->pages[doc->numpages].boundingbox)) {
 			if (page_bb_set == NONE) page_bb_set = 1;
-		      }
-		    else {
-			float fllx, flly, furx, fury;
-			if (sec_sscanf(line+length("%%PageBoundingBox:"),
-				   "%f %f %f %f",
-				   &fllx, &flly, &furx, &fury) == 4) {
-			    if (page_bb_set == NONE) page_bb_set = 1;
-			    doc->pages[doc->numpages].boundingbox[LLX] = fllx;
-			    doc->pages[doc->numpages].boundingbox[LLY] = flly;
-			    doc->pages[doc->numpages].boundingbox[URX] = furx;
-			    doc->pages[doc->numpages].boundingbox[URY] = fury;
-			    if (fllx <
-				    doc->pages[doc->numpages].boundingbox[LLX])
-				doc->pages[doc->numpages].boundingbox[LLX]--;
-			    if (flly <
-				    doc->pages[doc->numpages].boundingbox[LLY])
-				doc->pages[doc->numpages].boundingbox[LLY]--;
-			    if (furx >
-				    doc->pages[doc->numpages].boundingbox[URX])
-				doc->pages[doc->numpages].boundingbox[URX]++;
-			    if (fury >
-				    doc->pages[doc->numpages].boundingbox[URY])
-				doc->pages[doc->numpages].boundingbox[URY]++;
-			}
-		    }
 		}
 	    }
 	}
@@ -1295,7 +1243,8 @@ continuepage:
 	    /* Do nothing */
 	} else if (iscomment(line+2, "Page:")) {
 	    free(ps_gettext(line+length("%%Page:"), &next_char));
-	    if (sec_sscanf(next_char, "%d", &thispage) != 1) thispage = 0;
+	    l = atol(firstword(next_char));
+	    thispage = (l > 0)?l:0;
 	    if (!ignore && thispage == nextpage) {
 		if (doc->numpages > 0) {
 		    doc->pages[doc->numpages-1].end = position;
@@ -1322,43 +1271,23 @@ continuepage:
 	    doc->begintrailer = position;
 	    section_len = line_len;
 	} else if (bb_set == ATEND && iscomment(line+2, "BoundingBox:")) {
-	    if (sec_sscanf(line+length("%%BoundingBox:"), "%d %d %d %d",
-		       &(doc->boundingbox[LLX]),
-		       &(doc->boundingbox[LLY]),
-		       &(doc->boundingbox[URX]),
-		       &(doc->boundingbox[URY])) != 4) {
-		float fllx, flly, furx, fury;
-		if (sec_sscanf(line+length("%%BoundingBox:"), "%f %f %f %f",
-			   &fllx, &flly, &furx, &fury) == 4) {
-		    doc->boundingbox[LLX] = fllx;
-		    doc->boundingbox[LLY] = flly;
-		    doc->boundingbox[URX] = furx;
-		    doc->boundingbox[URY] = fury;
-		    if (fllx < doc->boundingbox[LLX])
-			doc->boundingbox[LLX]--;
-		    if (flly < doc->boundingbox[LLY])
-			doc->boundingbox[LLY]--;
-		    if (furx > doc->boundingbox[URX])
-			doc->boundingbox[URX]++;
-		    if (fury > doc->boundingbox[URY])
-			doc->boundingbox[URY]++;
-		}
-	    }
+		p = firstword(line + length("%%BoundingBox:"));
+		(void)parse_boundingbox(p, doc->boundingbox);
 	} else if (orientation_set == ATEND &&
 		   iscomment(line+2, "Orientation:")) {
-	    sec_sscanf(line+length("%%Orientation:"), "%256s", text, 256);
-	    if (strcmp(text, "Portrait") == 0) {
+	    p = firstword(line + length("%%Orientation:"));
+	    if (isword(p, "Portrait")) {
 		doc->orientation = PORTRAIT;
-	    } else if (strcmp(text, "Landscape") == 0) {
+	    } else if (isword(p, "Landscape")) {
 		doc->orientation = LANDSCAPE;
 	    }
 	} else if (page_order_set == ATEND && iscomment(line+2, "PageOrder:")) {
-	    sec_sscanf(line+length("%%PageOrder:"), "%256s", text, 256);
-	    if (strcmp(text, "Ascend") == 0) {
+	    p = firstword(line + length("%%PageOrder:"));
+	    if (isword(p, "Ascend")) {
 		doc->pageorder = ASCEND;
-	    } else if (strcmp(text, "Descend") == 0) {
+	    } else if (isword(p, "Descend")) {
 		doc->pageorder = DESCEND;
-	    } else if (strcmp(text, "Special") == 0) {
+	    } else if (isword(p, "Special")) {
 		doc->pageorder = SPECIAL;
 	    }
 	} else if (pages_set == ATEND && iscomment(line+2, "Pages:")) {
@@ -2049,7 +1978,6 @@ void
 pscopydoc(FILE *dest_file, char *src_filename, Document d, char *pagelist)
 {
     FILE *src_file;
-    char text[PSLINELENGTH];
     char *comment;
     Boolean pages_written = False;
     Boolean pages_atend = False;
@@ -2058,6 +1986,7 @@ pscopydoc(FILE *dest_file, char *src_filename, Document d, char *pagelist)
     int i, j;
     int here;
     FileData fd;
+    char *p;
 
     BEGINMESSAGE(pscopydoc)
 
@@ -2078,12 +2007,12 @@ pscopydoc(FILE *dest_file, char *src_filename, Document d, char *pagelist)
           free(comment);
           continue;
        }
-       sec_sscanf(comment+length("%%Pages:"), "%256s", text, 256);
-       if (strcmp(text, "(atend)") == 0) {
+       p = firstword(comment + length("%%Pages:"));
+       if (isword(p, "(atend)")) {
           fputs(comment, dest_file);
           pages_atend = True;
        } else {
-          switch (sec_sscanf(comment+length("%%Pages:"), "%*d %d", &i)) {
+          switch (sec_sscanf(p, "%*d %d", &i)) {
              case 1:
                 fprintf(dest_file, "%%%%Pages: %d %d\n", pages, i);
                 break;
