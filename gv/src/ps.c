@@ -114,19 +114,12 @@ extern int gv_infoSkipErrors;
 /* case and colon :-) insensitive DSC matching */
 static int dsc_strncmp(const char *s1, const char *s2, size_t n)
 {
- char *tmp;	
-
  if (strncasecmp(s1, s2, n) == 0)
 	 return 0;
  if (s2[n-1] == ':'){
-	 tmp = (char *) malloc(n*sizeof(char));
-	 strncpy(tmp, s2, (n-1));
-	 tmp[n-1]=' ';
-	 if (strncasecmp(s1, tmp, n) == 0){
-		 free(tmp);
+	 if (strncasecmp(s1, s2, n-1) == 0 && s1[n-1] == ' ') {
 		 return 0;
 	 }
-	 free(tmp);
  }
  
  return 1;
