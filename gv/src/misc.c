@@ -306,7 +306,7 @@ misc_setPageMarker(int entry, int kind, XEvent *event, Boolean check_toc)
       else
 	VlistSetFirstVisible(newtoc, entry);
       b = True;
-    } else if (entry < VlistEntries(newtoc) - 1) {
+    } else {
       /* sadly newtoc does not know it's height, so it cannot be told
        * to made an item visible and we need to trick: */
       lastvisible = VlistEntryOfPosition(newtoc, newtocClip->core.height);
