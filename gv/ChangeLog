@@ -1,3 +1,13 @@
+2011-08-16  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+        * src/misc.c: Revert "Fix Debian bug #594991: unexpected scrolling of the TOC widget"
+
+2011-08-04  Bernhard R. Link <brlink@debian.org>
+
+        * src/ps.c(dsc_strncmp): avoid unnecessary temporary string copy
+	
+	* src/ps.c: reduce the number of sec_sscanf invocations
+
 2011-08-03  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
   	* src/ps.c (whole file): Fix calls of sec_sscanf having %s in format.
