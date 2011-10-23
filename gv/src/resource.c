@@ -405,6 +405,7 @@ resource_buildDatabase (
   saveCurrentPageLabel = resource_getResource(db,app_class,app_name, "strings.saveCurrentPage",0);
   saveMarkedPagesLabel = resource_getResource(db,app_class,app_name, "strings.saveMarkedPages",0);
   saveDocumentLabel = resource_getResource(db,app_class,app_name, "strings.saveDocument",0);
+  saveAsPDFLabel = resource_getResource(db,app_class,app_name, "strings.saveAsPDF",0);
   openFileLabel = resource_getResource(db,app_class,app_name, "strings.openFile",0);
   passwordPromptLabel = resource_getResource(db,app_class,app_name, "strings.passwordPrompt",0);
   passwordRequiredLabel = resource_getResource(db,app_class,app_name, "strings.passwordRequired",0);
