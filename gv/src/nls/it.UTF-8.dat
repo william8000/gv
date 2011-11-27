@@ -89,7 +89,7 @@ GV*printCommandLabel.label:		Comando di stampa
 GV*antialias.Label:			Antialias
 GV*updateFile.label:			Aggiorna file
 GV*optiongsPopup.title:			Opzioni Ghostscript
-GV*quiet.label:				Quiet
+GV*quiet.label:				Silenzioso
 GV*confirmPopup.title:			Conferma
 GV*mediasLabel.label:			Dimensioni dei media
 GV*optionfsPopup.title:			Opzioni di selezione del file
