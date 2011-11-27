@@ -1,3 +1,8 @@
+2011-08-23  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+        * src/resource.c(resource_buildDatabase): Save resource
+        strings.saveAsPDF to variable
+
 2011-08-16  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
         * src/misc.c: Revert "Fix Debian bug #594991: unexpected scrolling of the TOC widget"

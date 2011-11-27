@@ -9,6 +9,10 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.3 (November 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Fixed "Save document" dialog for PDF files
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.2.90 (October 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Various bug fixes.
