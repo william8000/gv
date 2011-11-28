@@ -15,7 +15,7 @@ dnl AM_CONFIG_HEADER(src/ac_config.h)
 AM_MAINTAINER_MODE
 
 dnl gv version
-VERSION=3.7.2.90
+VERSION=3.7.3
 dnl manual edition
 MANUALEDITION=First
 
