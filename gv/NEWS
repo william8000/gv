@@ -11,11 +11,32 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.3 (November 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Fixed "Save document" dialog for PDF files
+# Updated Translations
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.2.90 (October 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Various bug fixes.
+? Reverted fix of debian bug #594991: unexpected scrolling of the TOC widget",
+  this fixes the following bug:
+# Pressng END does not scroll TOC wodget.
+
+# Fixed "Save document" dialog for PDF files
+
+# Fix debian bug 627471: gv: fails to read bounding box (depending on the
+  command line!), see http://bugs.debian.org/627471 for details
+
+# ignore resource and style files without absolute paths
+  (in order to improve security)
+
+# Do not install files that re not used
+
+# avoid make distcheck failing because of gv-i18n.h
+
+* Update gnulib, import signal, 
+# this should fix compiling on Mac OS again
+
+* Improved handling of DSC parse errors
+
+* Varuos code cleanups - for details see either CHANGELOG or the git repotory.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.2 (April 2011) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
