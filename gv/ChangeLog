@@ -1,3 +1,7 @@
+2012-02-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.3.90
+
 2011-08-23  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
         * src/resource.c(resource_buildDatabase): Save resource
