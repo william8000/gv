@@ -310,10 +310,15 @@ AC_CHECK_LIB(Xext, main, , , $X_LIBS)
 AC_CHECK_LIB(Xt, XtOpenDisplay, , , $X_LIBS)
 AC_CHECK_LIB(Xmu, main, , , $X_LIBS)
 AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
+
+PKG_CHECK_MODULES([DEPS], [xaw3d], [], [DEPS_CFLAGS=""; DEPS_LIB=""])
+
 AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
    AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
    $X_LIBS)
 
+CFLAGS="$CFLAGS $DEPS_CFLAGS"
+LIBS="$LIBS $DEPS_LIBS"
 
 myCPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $X_CFLAGS"
