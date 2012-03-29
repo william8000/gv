@@ -114,8 +114,8 @@
 #endif /* USE_SIGNAL_HANDLER */
 
 #define BITSOF(name) name ## _bits
-#define WIDTHOF(name) name ## _height
-#define HEIGHTOF(name) name ## _width
+#define WIDTHOF(name) name ## _width
+#define HEIGHTOF(name) name ## _height
 #define BITMAP_ARGS(name)\
            (const char*)BITSOF(name), WIDTHOF(name), HEIGHTOF(name)
 
