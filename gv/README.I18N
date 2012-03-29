@@ -4,7 +4,7 @@ GV I18N Fontset Patch
 
 This patch make gv to support UTF8.
 
-Note that Xaw3d version 1.5E is required for UTF8-Support.
+Note that Xaw3d version 1.5E or 1.6.1 or newer is required for UTF8-Support.
 
 Note that UTF8-Mode is currently turned off by default. 
 To enable it, you have two possibilities:
@@ -22,7 +22,8 @@ To enable it, you have two possibilities:
       
 
 NEED:
-	Xaw3d 1.4, 1.5 has a fatal bug in MultiSrc.c line 735-740.
+	Xaw3d 1.4, 1.5 and 1.6.x (at the time of writing this, not fixed upstream):
+	has a fatal bug in MultiSrc.c line 735-740.
 	This GV's patch need Xaw3d library patched follow:
 
 *** xc/lib/Xaw3d/MultiSrc.c	Fri May 15 04:03:23 1998
