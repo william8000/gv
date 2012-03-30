@@ -58,5 +58,7 @@ patch will fix it:
  
      /*
 
-A collection of Xaw3D 1.5E bug fixing patches can be found on
+A collection of Xaw3D 1.5E and 1.6.x bug fixing patches can be found on
 git://gitorious.org/xaw3d/xaw3d.git.
+For Xaw3d 1.5E take the master branch, for libXaw3d 1.6.x take the
+"v1.6-branch", "v1.6.1-branch" and so on.
