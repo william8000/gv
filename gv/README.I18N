@@ -22,8 +22,7 @@ To enable it, you have two possibilities:
       
 
 NEED:
-	Xaw3d 1.4, 1.5 and 1.6.x (at the time of writing this, not fixed upstream):
-	has a fatal bug in MultiSrc.c line 735-740.
+	Xaw3d 1.4, 1.5 and 1.6.0 and 1.6.1 has a fatal bug in MultiSrc.c line 735-740.
 	This GV's patch need Xaw3d library patched follow:
 
 *** xc/lib/Xaw3d/MultiSrc.c	Fri May 15 04:03:23 1998
