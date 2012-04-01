@@ -1,3 +1,7 @@
+2011-04-01  A. Costa <agcosta@gis.net>
+
+        * doc/gv-update-userconfig: improve wording of gv-update-userconfig manual.
+
 2011-04-01  William Bader <williambader@hotmail.com>
 
         * src/FileSel.c: Fix use of IIMESSAGE with a real argument. Initialize dirp.
