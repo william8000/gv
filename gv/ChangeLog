@@ -1,8 +1,12 @@
-2011-04-01  A. Costa <agcosta@gis.net>
+2012-04-01  Markus Steinborn <gnugv_maintainer@yahoo.de>
+
+	* configure.ac, src/versionp.h: Bumped version to 3.7.3.91
+
+2012-04-01  A. Costa <agcosta@gis.net>
 
         * doc/gv-update-userconfig: improve wording of gv-update-userconfig manual.
 
-2011-04-01  William Bader <williambader@hotmail.com>
+2012-04-01  William Bader <williambader@hotmail.com>
 
         * src/FileSel.c: Fix use of IIMESSAGE with a real argument. Initialize dirp.
 	
