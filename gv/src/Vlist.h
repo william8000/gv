@@ -83,5 +83,6 @@ extern void  VlistSetFirstVisible(Widget, int);
 extern void  VlistMoveFirstVisible(Widget, int, int);
 extern float VlistScrollPosition(Widget);
 extern float VlistVisibleLength(Widget, unsigned int);
+extern int   VlistMaxEntriesVisible (Widget, int);
 
 #endif /* _Vlist_h_ */

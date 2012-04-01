@@ -126,6 +126,7 @@ Scale *scale_parseScales(s)
       *scales++ = scale;
     }
     n--;
+    if (!nl) break;
     c=++nl;
   }
   if (!have_center) {

@@ -1385,7 +1385,13 @@ static void NotifyThumb(Widget w, XEvent *event, String *params _GL_UNUSED, Card
     Set the scroll bar to the given location.
 ###############################################################################*/
 
-void XawScrollbarSetThumb (Widget w, double top, double shown)
+void XawScrollbarSetThumb (Widget w,
+#if NeedWidePrototypes
+                                     double top, double shown
+#else
+                                     float top, float shown
+#endif
+                          )
 {
    SCROLLBARWIDGET w;
 

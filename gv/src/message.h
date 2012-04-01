@@ -76,21 +76,21 @@
 #define MESSAGE_PRINTF(format,value) {	\
    char __indent[100]; unsigned short __len;\
    MESSAGE_GETINDENT(__indent,__len);	\
-   printf(__indent);			\
-   printf(format,value);		\
+   fprintf(stderr,__indent);		\
+   fprintf(stderr,format,value);	\
 }
 
 #define MESSAGE2_PRINTF(format,value1,value2) {	\
    char __indent[100]; unsigned short __len;	\
    MESSAGE_GETINDENT(__indent,__len);		\
-   printf(__indent);				\
-   printf(format,value1,value2);		\
+   fprintf(stderr,__indent);			\
+   fprintf(stderr,format,value1,value2);	\
 }
 
 #define BEGIN_MESSAGE(txt)	{			\
    char __indent[100]; unsigned short __len;		\
    MESSAGE_GETINDENT(__indent,__len)			\
-   printf("%s\273\273\273 %s%s%s <%s>\n",		\
+   fprintf(stderr,"%s\273\273\273 %s%s%s <%s>\n",	\
 	__indent,					\
 	MESSAGE_B_ESC,MESSAGE_STRING(txt),MESSAGE_E_ESC,\
 	MESSAGE_FILE					\
@@ -103,7 +103,7 @@
    char __indent[100]; unsigned short __len;		\
    MESSAGE_GETINDENT(__indent,__len)			\
    if (__len>= 4) __indent[__len-4] = '\0';		\
-   printf("%s\253\253\253 %s%s%s <%s>\n",		\
+   fprintf(stderr,"%s\253\253\253 %s%s%s <%s>\n",	\
 	__indent,					\
 	MESSAGE_B_ESC,MESSAGE_STRING(txt),MESSAGE_E_ESC,\
 	MESSAGE_FILE					\
@@ -194,6 +194,7 @@
 #   define SMESSAGE1(st)		MESSAGE_PRINTF(#st "=%s\n",st ? st : MESSAGE_NULL_PTR)
 #   define INFSMESSAGE1(txt,st)		MESSAGE_PRINTF(#txt " " #st "=%s\n",st ? st : MESSAGE_NULL_PTR)
 #   define IIMESSAGE1(it1,it2)		MESSAGE2_PRINTF(#it1 "=%d, " #it2 "=%d\n",it1,it2)
+#   define DDMESSAGE1(dt1,dt2)		MESSAGE2_PRINTF(#dt1 "=%f, " #dt2 "=%f\n",dt1,dt2)
 #   define INFIIMESSAGE1(txt,it1,it2)	MESSAGE2_PRINTF(#txt " " #it1 "=%d, " #it2 "=%d\n",it1,it2)
 #else
 #   define BEGINMESSAGE1(txt)		BEGIN_MESSAGE(txt)
@@ -206,6 +207,7 @@
 #   define SMESSAGE1(st)		MESSAGE_PRINTF("st=%s\n",st ? st : MESSAGE_NULL_PTR)
 #   define INFSMESSAGE1(txt,st)		MESSAGE_PRINTF("txt st=%s\n",st ? st : MESSAGE_NULL_PTR)
 #   define IIMESSAGE1(it1,it2)		MESSAGE2_PRINTF("it1=%d, it2=%d\n",it1,it2)
+#   define DDMESSAGE1(dt1,dt2)		MESSAGE2_PRINTF("dt1=%d, dt2=%d\n",dt1,dt2)
 #   define INFIIMESSAGE1(txt,it1,it2)	MESSAGE2_PRINTF("txt it1=%d, it2=%d\n",it1,it2)
 #endif
 
@@ -221,6 +223,7 @@
 #   define SMESSAGE1(st)
 #   define INFSMESSAGE1(txt,st)
 #   define IIMESSAGE1(it1,it2)
+#   define DDMESSAGE1(dt1,dt2)
 #   define INFIIMESSAGE1(txt,it1,it2)
 
 #endif	/* MESSAGES1 */

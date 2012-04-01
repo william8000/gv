@@ -135,6 +135,7 @@ MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
 	}
     }
     n--;
+    if (!nl) break;
     c=++nl;
   }
   if (!have_entry) {

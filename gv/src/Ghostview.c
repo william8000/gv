@@ -199,7 +199,7 @@ static void SetBackground(Widget,Bool);
 static Boolean Setup(Widget);
 static void StartInterpreter(Widget);
 static void StopInterpreter(Widget);
-static void InterpreterFailed(Widget);
+static void InterpreterFailed(Widget,const char *);
 static void ChangeCursor(GhostviewWidget,int);
 
 static XtActionsRec actions[] =
@@ -521,7 +521,7 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 	    }
 	    if (gvw->ghostview.bytes_left > 0 &&
 		gvw->ghostview.buffer_bytes_left == 0) {
-		InterpreterFailed(w);	/* Error occurred */
+		InterpreterFailed(w,"bytes left");	/* Error occurred */
 	    }
 	    gvw->ghostview.input_buffer_ptr = gvw->ghostview.input_buffer;
 	    gvw->ghostview.bytes_left -= gvw->ghostview.buffer_bytes_left;
@@ -543,10 +543,10 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 #endif
 	    if (broken_pipe) {
 		broken_pipe = False;
-		InterpreterFailed(w);		/* Something bad happened */
+		InterpreterFailed(w,"broken pope");		/* Something bad happened */
 	    } else if (bytes_written == -1) {
 		if ((errno != EWOULDBLOCK) && (errno != EAGAIN)) {
-		    InterpreterFailed(w);	/* Something bad happened */
+		    InterpreterFailed(w,"write to pipe failed");	/* Something bad happened */
 		}
 	    } else {
 	       gvw->ghostview.buffer_bytes_left -= bytes_written;
@@ -566,10 +566,10 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
                   b=write(gvw->ghostview.interpreter_input,"\n",1);
                   if (broken_pipe) {
                      broken_pipe = False;
-                     InterpreterFailed(w);		/* Something bad happened */
+                     InterpreterFailed(w,"broken pipe writing NL");		/* Something bad happened */
                   } else if (b == -1) {
                      if ((errno != EWOULDBLOCK) && (errno != EAGAIN)) {
-                        InterpreterFailed(w);	/* Something bad happened */
+                        InterpreterFailed(w,"writing NL to pipe failed");	/* Something bad happened */
                      }
                   }
                }
@@ -594,10 +594,10 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
            b = write(gvw->ghostview.interpreter_input, peek_buf, PEEK_SIZE);
            if (broken_pipe) {
 	      broken_pipe = False;
-	      InterpreterFailed(w);
+	      InterpreterFailed(w,"broken pipe writing peek buf");
            } else if (b == -1) {
 	      if ((errno != EWOULDBLOCK) && (errno != EAGAIN)) {
-	         InterpreterFailed(w);	/* Something bad happened */
+	         InterpreterFailed(w,"writing peek buf to pipe failed");	/* Something bad happened */
 	      }
 	   }
 	}
@@ -637,7 +637,7 @@ Output(XtPointer client_data, int *source, XtInputId *id _GL_UNUSED)
 	    return;
 	} else if (bytes == -1) {
 	    INFMESSAGE(something bad happened in interpreter_output)
-	    InterpreterFailed(w);		/* Something bad happened */
+	    InterpreterFailed(w,"read stdout from pipe failed");		/* Something bad happened */
             ENDMESSAGE(Output)
 	    return;
 	}
@@ -652,7 +652,7 @@ Output(XtPointer client_data, int *source, XtInputId *id _GL_UNUSED)
 	    return;
 	} else if (bytes == -1) {
 	    INFMESSAGE(something bad happened in interpreter_error)
-	    InterpreterFailed(w);		/* Something bad happened */
+	    InterpreterFailed(w,"read stderr from pipe failed");		/* Something bad happened */
             ENDMESSAGE(Output)
 	    return;
 	}
@@ -1649,11 +1649,12 @@ StopInterpreter(Widget w)
 /*###################################################################################*/
 
 static void
-InterpreterFailed(Widget w)
+InterpreterFailed(Widget w, const char *mesg)
 {
     GhostviewWidget gvw = (GhostviewWidget) w;
     BEGINMESSAGE(InterpreterFailed)
     StopInterpreter(w);
+    fprintf(stderr, "Error: %s, errno %d\n", mesg, errno);
     XtCallCallbackList(w, gvw->ghostview.message_callback, "Failed");
     ENDMESSAGE(InterpreterFailed)
 }

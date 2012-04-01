@@ -1089,7 +1089,7 @@ static void FS_listAction(Widget w, XEvent *event, String *params, Cardinal *npa
 	relfactor = relfactor >= 0 ? (relfactor<=100 ? relfactor : 100) : 0;
 	if (*nparams>=3) absfactor = atof((char*)(params[2]));
 	absfactor = absfactor >= 0 ? (absfactor<=200 ? absfactor : 200) : 0;
-	IIMESSAGE1(absfactor,relfactor)
+	DDMESSAGE1(absfactor,relfactor)
         if (REVERSE_SCROLLING) { dx = -dx; } else { dy = -dy; }
 	childx = (int) (childx-(dx*absfactor)-(relfactor*childw*dx)/clipw);
 	childy = (int) (childy-(dy*absfactor)-(relfactor*childh*dy)/cliph);
@@ -1352,7 +1352,7 @@ CombineToPath(String path, char *dir, char *file)
 
 static void SetDirectoryView(FileSelectionWidget fs, char *dir)
 {
-   DIR			*dirp;
+   DIR			*dirp=NULL;
    struct dirent	*dp;
    String  		str;
    char 		*temp;

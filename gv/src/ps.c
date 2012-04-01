@@ -524,7 +524,7 @@ unc_ok:
 
     /* Header comments */
 
-    if (line_len>1 && (iscomment(line,"%!PS-Adobe-") || iscomment(line + 1,"%!PS-Adobe-"))) {
+    if (line_len>1 && (iscomment(line,"%!PS") || iscomment(line + 1,"%!PS"))) {
       INFMESSAGE(found "PS-Adobe-" comment)
 
       doc = (struct document *) calloc(1, sizeof(struct document));
@@ -698,7 +698,8 @@ scan_ok:
 	preread = 0;
 	if (line[0] != '%' ||
 	    iscomment(line+1, "%EndComments") ||
-	    line[1] == ' ' || line[1] == '\t' || line[1] == '\n' ||
+	    /* line[1] == ' ' || */	/* 10Jun09 wb allow comments starting percent + space */
+	    line[1] == '\t' || line[1] == '\n' ||
 	    !isprint(line[1])) {
 	    break;
 	} else if (line[1] != '%') {
@@ -724,6 +725,9 @@ scan_ok:
 		orientation_set = 1;
 	    } else if (isword(p, "Landscape")) {
 		doc->orientation = LANDSCAPE;
+		orientation_set = 1;
+	    } else if (isword(p, "Seascape")) {
+		doc->orientation = SEASCAPE;
 		orientation_set = 1;
 	    }
 	} else if (page_order_set == NONE && iscomment(line+2, "PageOrder:")) {
@@ -908,7 +912,7 @@ scan_ok:
 		}
 	    }
 	    section_len += line_len;
-	    if (doc->nummedia != 0) doc->default_page_media = doc->media;
+	    if (doc->nummedia > 0) doc->default_page_media = doc->media;
 	}
     }
 
@@ -966,6 +970,8 @@ scan_ok:
 		    doc->default_page_orientation = PORTRAIT;
 		} else if (isword(p, "Landscape")) {
 		    doc->default_page_orientation = LANDSCAPE;
+		} else if (isword(p, "Seascape")) {
+		    doc->default_page_orientation = SEASCAPE;
 		}
 	    } else if (page_media_set == NONE &&
 		       iscomment(line+2, "PageMedia:")) {
@@ -1066,6 +1072,8 @@ scan_ok:
 		    doc->default_page_orientation = PORTRAIT;
 		} else if (isword(p, "Landscape")) {
 		    doc->default_page_orientation = LANDSCAPE;
+		} else if (isword(p, "Seascape")) {
+		    doc->default_page_orientation = SEASCAPE;
 		}
 	    } else if (page_media_set == NONE &&
 		       iscomment(line+2, "PaperSize:")) {
@@ -1182,6 +1190,8 @@ continuepage:
 		    doc->pages[doc->numpages].orientation = PORTRAIT;
 		} else if (isword(p, "Landscape")) {
 		    doc->pages[doc->numpages].orientation = LANDSCAPE;
+		} else if (isword(p, "Seascape")) {
+		    doc->pages[doc->numpages].orientation = SEASCAPE;
 		}
 	    } else if (doc->pages[doc->numpages].media == NULL &&
 		       iscomment(line+2, "PageMedia:")) {
@@ -1280,6 +1290,8 @@ continuepage:
 		doc->orientation = PORTRAIT;
 	    } else if (isword(p, "Landscape")) {
 		doc->orientation = LANDSCAPE;
+	    } else if (isword(p, "Seascape")) {
+		doc->orientation = SEASCAPE;
 	    }
 	} else if (page_order_set == ATEND && iscomment(line+2, "PageOrder:")) {
 	    p = firstword(line + length("%%PageOrder:"));

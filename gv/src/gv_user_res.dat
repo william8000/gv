@@ -13,12 +13,13 @@ GV.respectDSC:		True
 GV.ignoreEOF:		True
 GV.confirmPrint:	True
 GV.reverseScrolling:	False
-GV.scrollingEyeGuide:	True
+GV.scrollingEyeGuide:	False
 GV.autoResize:		True
 GV.maximumWidth:	screen-20
 GV.maximumHeight:	screen-44
 GV.minimumWidth:	400
 GV.minimumHeight:	430
+GV.geometry:		+5+5
 GV.confirmQuit:		1
 GV.watchFile:		False
 GV.watchFileFrequency:	1000
@@ -68,6 +69,7 @@ GV.medias:		Letter,		612	792	\n\
 			# 9x12,		648	864	\n\
 			# 10x13,		720	936	\n\
 			10x14,		720	1008	\n\
+			14x24,		1008	1728	\n\
 			Executive,	540	720	\n\
 			# A0,		2384	3370	\n\
 			# A1,		1684	2384	\n\

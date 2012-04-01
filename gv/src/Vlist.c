@@ -367,6 +367,7 @@ PaintMark(Widget w, Region region, int entry, int style, Boolean erase)
   GC gc;
 
   BEGINMESSAGE(PaintMark)
+  IIMESSAGE(entry,erase)
   if (entry < 0 || entry >= vw->vlist.entries) {
     INFMESSAGE(invalid entry)
     ENDMESSAGE(PaintMark)
@@ -870,12 +871,16 @@ void VlistSetFirstVisible(Widget w, int newf)
   unsigned int height;
 
   BEGINMESSAGE(VlistSetFirstVisible)
+  IIMESSAGE(newf,vw->vlist.entries)
   if (newf < 0)
     newf = 0;
   else if (newf >= vw->vlist.entries)
     newf = vw->vlist.entries - 1;
-  if (newf == -1)
+  if (newf == -1) {
+    ENDMESSAGE(VlistSetFirstVisible)
     return;
+  }
+  IIMESSAGE(newf,vw->vlist.firstVisible)
   if (newf != vw->vlist.firstVisible) {
     vw->vlist.firstVisible = newf;
     /* better not allow the widget to grow that large, but that needs fixing
@@ -883,6 +888,7 @@ void VlistSetFirstVisible(Widget w, int newf)
     height = vw->core.height;
     if( height >= 0x8000 )
 	    height = 0x3fff;
+    IIMESSAGE(vw->core.height,height)
     XFillRectangle(XtDisplayOfObject(w), XtWindowOfObject(w), vw->vlist.background_GC,
 		    vw->core.x, vw->core.y, vw->core.width, height);
     Redisplay(w, NULL, NULL);
@@ -904,6 +910,7 @@ void VlistMoveFirstVisible(Widget w, int start, int ydiff)
   int newf;
 
   BEGINMESSAGE(VlistMoveFirstVisible)
+  IIMESSAGE(start,ydiff)
   ly = vw->vlist.ydelta;
   if (debug_p) fprintf(stderr, "move: start=%d ydiff=%d ly=%d\n", start, ydiff, ly);
 
@@ -927,13 +934,18 @@ void VlistMoveFirstVisible(Widget w, int start, int ydiff)
 float VlistScrollPosition(Widget w)
 {
   VlistWidget vw = (VlistWidget)w;
+  float position;
 
 #if 0
   printf("Scroll position %d/%d=%f\n",
 		  vw->vlist.firstVisible,(int)(vw->vlist.entries),
 		  vw->vlist.firstVisible/(float)(vw->vlist.entries));
 #endif
-  return vw->vlist.firstVisible/(float)vw->vlist.entries;
+  position = vw->vlist.firstVisible/(float)vw->vlist.entries;
+  INFMESSAGE(VlistScrollPosition)
+  IIMESSAGE(vw->vlist.firstVisible,vw->vlist.entries)
+  FMESSAGE(position)
+  return position;
 }
 
 float VlistVisibleLength(Widget w, unsigned int height)
@@ -957,5 +969,22 @@ float VlistVisibleLength(Widget w, unsigned int height)
 		  entriesvisible/(float)(vw->vlist.entries));
 #endif
   percent = entriesvisible/(float)(vw->vlist.entries);
+  INFMESSAGE(VlistVisibleLength)
+  IIMESSAGE(entriesvisible,vw->vlist.entries)
+  FMESSAGE(percent)
   return percent;
+}
+
+int VlistMaxEntriesVisible(Widget w, int height)
+{
+  VlistWidget vw = (VlistWidget)w;
+  int entriesvisible = -1;
+
+  if (vw->vlist.ydelta > 0) {
+    entriesvisible = (height - vw->label.label_y)/vw->vlist.ydelta;
+  }
+
+  INFIMESSAGE(VlistMaxEntriesVisible,entriesvisible)
+
+  return entriesvisible;
 }

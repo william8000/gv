@@ -34,10 +34,17 @@
 #define _PATHS_H_
 
 #include "config.h"
+#if HAVE_GCC_VERSION(2,95)
 #define INC_X11(aaa) <X11/aaa>
 #define INC_XMU(aaa) <X11/Xmu/aaa>
 #define INC_XAW(aaa) <X11/Xaw3d/aaa>
 #define INC_EXT(aaa) <X11/extensions/aaa>
+#else
+#define INC_X11(aaa) <X11/##aaa##>
+#define INC_XMU(aaa) <X11/Xmu/##aaa##>
+#define INC_XAW(aaa) <X11/Xaw3d/##aaa##>
+#define INC_EXT(aaa) <X11/extensions/##aaa##>
+#endif
 
 #endif /* _PATHS_H_ */
 

@@ -134,4 +134,13 @@ Miscellaneous defaults
    #define GV_FTELL ftell
 #endif
 
+#ifndef HAVE_GCC_VERSION
+#ifdef __GNUC__
+#define HAVE_GCC_VERSION(MAJOR, MINOR) \
+	(__GNUC__ > (MAJOR) || (__GNUC__ == (MAJOR) && __GNUC_MINOR__ >= (MINOR)))
+#else
+#define HAVE_GCC_VERSION(MAJOR, MINOR) 0
+#endif
+#endif
+
 #endif /* _GV_CONFIG_H_ */

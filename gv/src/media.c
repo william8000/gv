@@ -120,6 +120,7 @@ Media *media_parseMedias(s)
       *medias++ = media;
     }
     n--;
+    if (!nl) break;
     c=++nl;
   }
   if (!have_media) {

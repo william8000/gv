@@ -1,3 +1,47 @@
+2011-04-01  William Bader <williambader@hotmail.com>
+
+        * src/FileSel.c: Fix use of IIMESSAGE with a real argument. Initialize dirp.
+	
+	* src/Ghostview.c: Give InterpreterFailed() a way to indicate the type of failure.
+	
+	* src/Scrollbar.c, src/Scrollbar.h: Let XawScrollbarSetThumb pick its arguments as
+	double or float depending on NeedWidePrototypes. This is required to make the
+	scroll bar work in Fedora 14. 
+
+        * src/Vlist.c: Add some IIMESSAGE() lines for debugging. Add a call to ENDMESSAGE()
+	before an error return to balance the earlier BEGINMESSAGE().
+	
+	* src/ Vlist.c, src/Vlist.h:  Add VlistMaxEntriesVisible(Widget w, int height) to 
+	return the maximum number of entries that can fit in the list.
+	
+	* src/actions.c: Fix use of IIMESSAGE with a real argument.
+	
+	* src/doc_misc.c: Loosen the test for media sizes.
+	
+	* src/gv_misc_res.dat:  Add more space around the mag menu. Implement keypad
+	enter, insert, delete, home, end, prior. Switch buttons for zoom and pan.
+	
+	* src/gv_user_res.dat: Turn off scrolling eye guide. Add a margin in the geometry.
+	Add a 10x24 paper size.
+	
+	* src/magmenu.c: Fix an attempt to increment a NULL pointer.
+	
+	* src/main.c: Initialize gv_psfile and toc_text.
+	
+	* src/media.c: Fix an attempt to increment a NULL pointer.
+
+        * src/message.h: Write messages to stderr instead of stdout so they aren't buffered.
+	Add DDMESSAGE1() debug macro for real numbers.
+	
+	* src/misc.c: Clean up the toc scrolling to avoid leaving empty space when there are
+	items to fill the space. Fix a possible NULL pointer reference. Fix a possible -1 array
+	index. Fix an attempt to increment a NULL pointer.
+	
+	* src/ps.c: Check for %!PS instead of %!PS-Adobe- to recognize old files.
+	Do not stop parsing comments at a line starting % space. Implement Seascape orientation.
+	
+	* src/scale.c: Fix an attempt to increment a NULL pointer.
+
 2012-02-29  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.7.3.90

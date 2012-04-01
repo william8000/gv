@@ -346,11 +346,13 @@ int main(int argc, char *argv[])
     gv_class = GV_CLASS;
     gv_pending_page_request=NO_CURRENT_PAGE;
     gv_gs_arguments  = NULL;
+    gv_psfile        = NULL;
     gv_filename      = NULL;
     gv_filename_unc  = NULL;
     gv_filename_dsc  = NULL;
     gv_filename_old  = NULL;
     gv_filename_raw  = NULL;
+    toc_text         = NULL;
     infopopup        = NULL;
     confirmpopup     = NULL;
     dialogpopup      = NULL;

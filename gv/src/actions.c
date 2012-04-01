@@ -99,6 +99,7 @@ action_shellConfigureNotify(Widget w, XEvent *event, String *params _GL_UNUSED, 
        width = new_width;
        height=new_height;
     }
+    INFMESSAGE(action_shellConfigureNotify calling XawScrollbarSetThumb)
     XawScrollbarSetThumb(newtocScroll,
 		   VlistScrollPosition(newtoc),
 		   VlistVisibleLength(newtoc,newtocClip->core.height));
@@ -596,7 +597,7 @@ action_movePage(Widget w, XEvent *event, String *params, Cardinal *num_params)
                 relfactor = relfactor >= 0 ? (relfactor<=100 ? relfactor : 100) : 0;
                 if (*num_params>=3) absfactor = atof((char*)(params[2]));
                 absfactor = absfactor >= 0 ? (absfactor<=200 ? absfactor : 200) : 0;
-                IIMESSAGE1(absfactor,relfactor)
+                DDMESSAGE1(absfactor,relfactor)
                 if (app_res.reverse_scrolling) { dx = -dx; dy = -dy; }
                 xp = (int) (xp-(dx*absfactor)-(relfactor*pw*dx)/pvw);
                 yp = (int) (yp-(dy*absfactor)-(relfactor*ph*dy)/pvh);

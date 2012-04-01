@@ -288,6 +288,7 @@ misc_setPageMarker(int entry, int kind, XEvent *event, Boolean check_toc)
   /* kind: 0 = selected, 1 = highlighted , 2 = bring selected in sight*/
 {
   int firstvisible, lastvisible;
+  int maxvisible, numentries;
   Boolean b = False;
   INFMESSAGE(misc_setPageMarker)
   if (toc_text && (entry >= 0)) {
@@ -300,7 +301,18 @@ misc_setPageMarker(int entry, int kind, XEvent *event, Boolean check_toc)
       if (entry<0) return;
     }
     firstvisible = VlistGetFirstVisible(newtoc);
-    if (firstvisible > entry || (entry > 0 && firstvisible >= entry)) {
+    maxvisible = VlistMaxEntriesVisible(newtoc, newtocClip->core.height);
+    numentries = VlistEntries(newtoc);
+    IIMESSAGE(entry,firstvisible)
+    IIMESSAGE(maxvisible,numentries)
+    if (numentries < maxvisible) {
+      /* check if everything fits */
+      /* this can happen if the window size is increased */
+      if (entry != 0) {
+        VlistSetFirstVisible(newtoc, 0);
+        b = True;
+      }
+    } else if (firstvisible > entry || (entry > 0 && firstvisible >= entry)) {
       if (entry > 0)
 	VlistSetFirstVisible(newtoc, entry - 1);
       else
@@ -310,8 +322,13 @@ misc_setPageMarker(int entry, int kind, XEvent *event, Boolean check_toc)
       /* sadly newtoc does not know it's height, so it cannot be told
        * to made an item visible and we need to trick: */
       lastvisible = VlistEntryOfPosition(newtoc, newtocClip->core.height);
+      IIMESSAGE(lastvisible,maxvisible)
       if (entry > firstvisible && entry >= lastvisible) {
-	VlistSetFirstVisible(newtoc, entry - (lastvisible - firstvisible - 1));
+	int firstentry;
+	firstentry = entry - (lastvisible - firstvisible - 1); /* make the entry second last */
+	if (firstentry > numentries - maxvisible) firstentry = numentries - maxvisible; /* avoid empty holes at the end */
+	if (firstentry < 0) firstentry = 0; /* keep in range */
+	VlistSetFirstVisible(newtoc, firstentry);
 	b = True;
       }
     }
@@ -1041,6 +1058,7 @@ setup_ghostview(void)
       }
       XtSetValues(newtoc, args, n);
       ClipWidgetSetCoordinates(newtocClip,0,0);
+      INFMESSAGE(setup_ghostview calling XawScrollbarSetThumb)
       XawScrollbarSetThumb(newtocScroll,
 		      VlistScrollPosition(newtoc),
 		      VlistVisibleLength(newtoc,newtocClip->core.height));
@@ -1197,6 +1215,8 @@ set_new_scale(void)
     }
     default_xdpi *= ascale;
     default_ydpi *= ascale;
+    INFIMESSAGE(old scale base,gv_scale_base_current);
+    INFIMESSAGE(new scale base,new_scale_base);
     XtSetArg(args[0], XtNleftBitmap, None);
     if (gv_scale_base_current >=0) XtSetValues(scaleEntry[gv_scale_base_current],args, ONE);
     XtSetArg(args[0], XtNleftBitmap, app_res.selected_bitmap);
@@ -1319,6 +1339,7 @@ set_newBitmapIfChanged(Widget w, Pixmap new_bitmap)
    Pixmap old_bitmap;
 
    BEGINMESSAGE(set_newBitmapIfChanged)
+   if (!w) return;  /* continuing will eventually cause a core dump */
    XtSetArg(args[0], XtNleftBitmap, &old_bitmap);
    XtGetValues(w, args, ONE);
    if (new_bitmap != old_bitmap) {
@@ -1423,6 +1444,7 @@ set_pagemediaButton_label(int media_id)
    if (media_id>=0) {
       Widget w;
       if (pagemediaEntry[media_id]) w = pagemediaEntry[media_id];
+      else if (media_id <= 0)       w = NULL;
       else                          w = pagemediaEntry[media_id-1];
       if (!w)
 	  goto out;

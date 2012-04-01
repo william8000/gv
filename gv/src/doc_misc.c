@@ -221,12 +221,14 @@ doc_preferredMediaOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
   /* try to map bounding box to standard or document pagemedia */
   if (found==-1 && dbb[LLX]==0 && dbb[LLY]==0) {
     for (dm=(Media) d->media,i=0; !media && i<d->nummedia; i++,dm++)
-      if ((dm->width==dbb[URX] && dm->height==dbb[URY]) ||
-	  (dm->width+1==dbb[URX] && dm->height+1==dbb[URY])) media=dm;
+      if (dm->used &&
+          ((dm->width==dbb[URX] || dm->width+1==dbb[URX]) &&
+           (dm->height==dbb[URY] || dm->height+1==dbb[URY]))) media=dm;
     for (j=0; gv_medias[j] && !media ; j++) {
        dm = gv_medias[j];
-       if (dm->used==1 && ((dm->width==dbb[URX] && dm->height==dbb[URY]) ||
-	   (dm->width+1==dbb[URX] && dm->height+1==dbb[URY]))) media=dm;
+       if (dm->used==1 &&
+           ((dm->width==dbb[URX] || dm->width+1==dbb[URX]) &&
+            (dm->height==dbb[URY] || dm->height+1==dbb[URY]))) media=dm;
     }
     if (media) found=1;
   }

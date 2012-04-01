@@ -118,6 +118,7 @@ MagMenuEntry *magmenu_parseMagMenuEntries(s)
       *entries++ = entry;
     }
     n--;
+    if (!nl) break;
     c=++nl;
   }
   if (!have_entry) {
