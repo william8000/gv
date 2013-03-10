@@ -9,6 +9,15 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (March 2013) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Fixed CVE-2012-3386 (by using updated automake)
+# Fixed bug-gv] Problem after saving gv-settings
+# improve wording of gv-update-userconfig manual
+# Scrolling and memory access improved
+# README.I18N adjusted for libXaw3d 1.6.x
+# Fixed GNU gv 3.6.4 - 3.7.3 page selector button geometry bug
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.3.90 (March 2012) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Support for libXaw3d-1.6.x

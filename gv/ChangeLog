@@ -1,3 +1,12 @@
+
+        * src/options_gv.c(orientation2extern): Handle "Automatic" orientation
+	  correctly
+        * src/options_gv.c(pagemedia2extern): For pagemedia, we have to replace
+	  Translation of "Automatic" to "Automatic" befire saving. This is done
+	  by this new function.
+        * src/options_gv.c(options_gv_cb_save): Call pagemedia2extern. See above
+	  for explanation.
+
 2012-04-01  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
 	* configure.ac, src/versionp.h: Bumped version to 3.7.3.91
