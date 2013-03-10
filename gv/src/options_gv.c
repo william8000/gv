@@ -370,6 +370,15 @@ static char* orientation2extern(String l)
    for (i=0; orientations[i]; i++)
       if (!strcmp(l, orientations[i]))
           return orientationsExtern[i];
+   if (!strcmp(l, automaticLabel))
+      return "Automatic";
+   return l;
+}
+
+static char* pagemedia2extern(String l)
+{
+   if (!strcmp(l, automaticLabel))
+      return "Automatic";
    return l;
 }
 
@@ -410,10 +419,10 @@ void options_gv_cb_save(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, X
                                     n=0;
   XtSetArg(args[n], XtNlabel, &l);  n++;
   XtGetValues(mediaButton, args, n);
-  options_setArg(&(argi[argn]),&(argv[argn]),s_pageMedia           ,gv_class       ,l);
+  options_setArg(&(argi[argn]),&(argv[argn]),s_pageMedia           ,gv_class       ,pagemedia2extern(l));
        ++argn;
   XtGetValues(fmediaButton, args, n);
-  options_setArg(&(argi[argn]),&(argv[argn]),s_fallbackPageMedia   ,gv_class       ,l);
+  options_setArg(&(argi[argn]),&(argv[argn]),s_fallbackPageMedia   ,gv_class       ,pagemedia2extern(l));
        ++argn;
   XtGetValues(orientButton, args, n);
   options_setArg(&(argi[argn]),&(argv[argn]),s_orientation         ,gv_class       ,orientation2extern(l));
