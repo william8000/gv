@@ -1449,7 +1449,7 @@ void main_setGhostscriptResources(db)
   if (s) gv_gs_arguments = s;
 
   s = resource_getResource(db,gv_class,gv_name,"gsSafeDir",NULL);
-  if (!strcasecmp(s,"true"))  gv_gs_safeDir = 1; else gv_gs_safeDir = 0;
+  if (s && !strcasecmp(s,"true"))  gv_gs_safeDir = 1; else gv_gs_safeDir = 0;
 
   s = resource_getResource(db,gv_class,gv_name,"gsSafer",NULL);
   if (s && !strcasecmp(s,"true"))  gv_gs_safer = 1; else gv_gs_safer = 0;
@@ -1468,13 +1468,13 @@ void main_setGhostscriptResources(db)
   }
 
   s = resource_getResource(db,gv_class,gv_name,"infoVerbose",NULL);
-  if (!strcasecmp(s, "Silent"))      gv_infoVerbose=0;
-  else if (!strcasecmp(s, "Errors")) gv_infoVerbose=1;
-  else if (!strcasecmp(s, "All"))    gv_infoVerbose=2;
+  if (!s || !strcasecmp(s, "Errors")) gv_infoVerbose=1;
+  else if (!strcasecmp(s, "Silent"))  gv_infoVerbose=0;
+  else if (!strcasecmp(s, "All"))     gv_infoVerbose=2;
   else gv_infoVerbose = 1;
 
   s = resource_getResource(db,gv_class,gv_name,"xinerama",NULL);
-  if (!strcasecmp(s, "Off"))      gv_xinerama=0;
+  if (!s || !strcasecmp(s, "Off"))    gv_xinerama=0;
   else if (!strcasecmp(s, "On")) gv_xinerama=1;
   else if (!strcasecmp(s, "Auto"))    gv_xinerama=-1;
   else gv_xinerama = 0;
