@@ -6,3 +6,6 @@ config.log
 config.status
 configurelink-warning.h
 configure
+arg-nonnull.h
+c++defs.h
+warn-on-use.h
