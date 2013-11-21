@@ -1006,7 +1006,11 @@ static void Redisplay(Widget w, XEvent *event, Region region)
    TOPLOC = newtop;
    SHOWNLENGTH = newbot-newtop+1;
 
+#if defined(XtRRelief)
    (*swclass->threeD_class.shadowdraw) (w, event, region, sbw->threeD.relief, FALSE);
+#else
+   (*swclass->threeD_class.shadowdraw) (w, event, region, FALSE);
+#endif
 
    ENDMESSAGE(Redisplay)
 }
