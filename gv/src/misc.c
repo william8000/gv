@@ -995,8 +995,11 @@ setup_ghostview(void)
 
         INFMESSAGE(toc available)
 	if (doc->labels_useful) {
-	    for (i = 0; i < doc->numpages; i++) 
-		maxlen = max(maxlen, (int)strlen(doc->pages[i].label));
+	    for (i = 0; i < doc->numpages; i++)
+	       if (doc->pages[i].label)
+      	          maxlen = max(maxlen, (int)strlen(doc->pages[i].label));
+	       else
+	          maxlen = max(maxlen, log10((double) doc->numpages) + 2);
 	} else {
 	    double x;
 	    x = doc->numpages;
@@ -1014,7 +1017,10 @@ setup_ghostview(void)
 		} else {
 		    j = i;
 		}
-		sprintf(tocp, "%*s\n", maxlen, doc->pages[j].label);
+		if (doc->pages[j].label)
+		  sprintf(tocp, "%*s\n", maxlen, doc->pages[j].label);
+		else
+		  sprintf(tocp, "?%*d\n", maxlen-1, i+1);
 	    } else {
 		sprintf(tocp, "%*d\n", maxlen, i+1);
 	    }

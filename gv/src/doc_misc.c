@@ -84,7 +84,9 @@ doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_
          ret = d->structured = 1;
          if (d->numpages == 1) d->labels_useful=1;
          else for (i = 1; i < d->numpages; i++)
-            if (strcmp(d->pages[i-1].label,d->pages[i].label)) { d->labels_useful = 1; break; }
+	    if (d->pages[i-1].label && d->pages[i].label) {
+               if (strcmp(d->pages[i-1].label,d->pages[i].label)) { d->labels_useful = 1; break; }
+	    }
       }
    }
    *docP = d;
