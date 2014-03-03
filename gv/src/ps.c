@@ -699,7 +699,7 @@ scan_ok:
 	if (line[0] != '%' ||
 	    iscomment(line+1, "%EndComments") ||
 	    /* line[1] == ' ' || */	/* 10Jun09 wb allow comments starting percent + space */
-	    line[1] == '\t' || line[1] == '\n' ||
+	    line[1] == '\t' || line[1] == '\n' || line[1] == '\r' ||
 	    !isprint(line[1])) {
 	    break;
 	} else if (line[1] != '%') {
@@ -1496,7 +1496,7 @@ ps_gettext(char *line, char **next_char)
             line++;
           }
     } else {
-        while (*line && !(*line == ' ' || *line == '\t' || *line == '\n')) {
+        while (*line && !(*line == ' ' || *line == '\t' || *line == '\n' || *line == '\r')) {
             if (cp - text >= PSLINELENGTH - 2)
                 break;
 	    *cp++ = *line++;
