@@ -104,7 +104,7 @@ zoom_createZoom(Widget w _GL_UNUSED, XtPointer call_data)
 
     BEGINMESSAGE(zoom_createZoom)
 
-    if (!(gv_psfile != NULL || (gv_gs_arguments && *gv_gs_arguments))) {
+    if (!gv_psfile) {
        INFMESSAGE(no file) ENDMESSAGE(zoom_createZoom)
        return;
     }
