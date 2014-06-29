@@ -1,3 +1,4 @@
+2013-03-10  Markus Steinborn <gnugv_maintainer@yahoo.de>
 
         * src/options_gv.c(orientation2extern): Handle "Automatic" orientation
 	  correctly

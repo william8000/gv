@@ -570,42 +570,42 @@ GV*SimpleMenu.baseTranslations:#replace\n\
 !##### Ghostview widget
 
 GV*Ghostview.baseTranslations:		#replace		\n\
-~Button1 ~Button3	<Btn2Down>:	cursor(scroll)		\
+~Button2 ~Button3	<Btn1Down>:	cursor(scroll)		\
 					GV_MovePage(start)	\
 					GV_EraseLocator()	\n\
-~Button1 ~Button3	<Btn2Motion>:	GV_MovePage(move,1.0,0)	\n\
-			<Btn2Up>:	cursor(normal)		\
+~Button2 ~Button3	<Btn1Motion>:	GV_MovePage(move,1.0,0)	\n\
+			<Btn1Up>:	cursor(normal)		\
 					GV_MovePage(stop)	\
 					GV_OtherPage()		\
 					notify()		\n\
-~Button2 ~Button3 s	<Btn1Down>:	cursor(scroll)		\
+~Button1 ~Button3 s	<Btn2Down>:	cursor(scroll)		\
 					GV_MovePage(start)	\
 					GV_EraseLocator()	\
 					GV_MiscMenu(init)	\n\
-~Button2 ~Button3 s	<Btn1Motion>:	GV_MovePage(move,0,1.0)	\n\
-		  s	<Btn1Up>:	cursor(normal)		\
+~Button1 ~Button3 s	<Btn2Motion>:	GV_MovePage(move,0,1.0)	\n\
+		  s	<Btn2Up>:	cursor(normal)		\
 					GV_MiscMenu(popup)	\
 					notify()		\n\
 ~Button1 ~Button2 s	<Btn3Down>:	GV_MagMenu(begin)	\n\
 ~Button1 ~Button2 s	<Btn3Motion>:	GV_MagMenu(extend)	\n\
 ~Button1 ~Button2 s	<Btn3Up>:	GV_MagMenu(choose)	\n\
-~Button2 ~Button3	<Btn1Down>:	GV_MagMenu(begin)	\n\
- Button1		<Btn2Down>:	GV_MagMenu(reset)	\n\
- Button1		<Btn3Down>:	GV_MagMenu(reset)	\n\
-~Button2 ~Button3	<Btn1Motion>:	GV_MagMenu(extend)	\n\
-~Button2 ~Button3	<Btn1Up>:	GV_MagMenu(choose)	\n\
+~Button1 ~Button3	<Btn2Down>:	GV_MagMenu(begin)	\n\
+ Button2		<Btn1Down>:	GV_MagMenu(reset)	\n\
+ Button2		<Btn3Down>:	GV_MagMenu(reset)	\n\
+~Button1 ~Button3	<Btn2Motion>:	GV_MagMenu(extend)	\n\
+~Button1 ~Button3	<Btn2Up>:	GV_MagMenu(choose)	\n\
 ~Button1 ~Button2	<Btn3Down>:	cursor(scroll)		\
 					GV_MovePage(start)	\
 					GV_EraseLocator()	\
 					GV_MiscMenu(init)	\n\
-	  Button3	<Btn2Down>:	GV_MiscMenu(reset)	\n\
 	  Button3	<Btn1Down>:	GV_MiscMenu(reset)	\n\
+	  Button3	<Btn2Down>:	GV_MiscMenu(reset)	\n\
 ~Button1 ~Button2	<Btn3Motion>:	GV_MovePage(move,0,1.0)	\n\
 			<Btn3Up>:	cursor(normal)		\
 					GV_MiscMenu(popup)	\
 					notify()		\n\
- Button2 ~Button3 	<Btn1Down>:  	GV_Page(redisplay)	\n\
- Button2 ~Button1 	<Btn3Down>:  	GV_Page(redisplay)	\n\
+ Button1 ~Button3 	<Btn2Down>:  	GV_Page(redisplay)	\n\
+ Button1 ~Button2 	<Btn3Down>:  	GV_Page(redisplay)	\n\
 			<Message>:	message() 		\n\
 			<EnterWindow>:	notify()		\n\
 			<LeaveWindow>:	GV_EraseLocator()	\n\
