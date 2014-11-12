@@ -1,9 +1,14 @@
 noint:de
 ko_KR.UTF-8
+ko_KR.utf8 -> ko_KR.UTF-8
 ja_JP.UTF-8
+ja_JP.utf8 -> ja_JP.UTF-8
 it.UTF-8
+it.utf8 -> it.UTF-8
 fr.UTF-8
+fr.utf8 -> fr.UTF-8
 de.UTF-8
+de.utf8 -> de.UTF-8
 nl.UTF-8
 es.utf8
 es.UTF-8 -> es.utf8
