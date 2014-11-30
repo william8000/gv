@@ -1,0 +1,206 @@
+!
+!** Copyright (C) 2014 Wensheng Xie <xiewensheng@gmail.com>
+! 
+! This program is free software; you can redistribute it and/or modify
+! it under the terms of the GNU General Public License as published by
+! the Free Software Foundation; either version 2 of the License, or
+! (at your option) any later version.
+! 
+! This program is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU General Public License for more details.
+!
+! You should have received a copy of the GNU General Public License
+! along with this program; if not, write to the Free Software
+! Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+! 
+GV*copyright.Label:			版权声明
+GV*miscmenuLabel.label:			其它菜单
+GV*optionsgv.Label:			gv选项...
+GV*mark.Label:				标记
+GV*dismiss.Label:			离开
+GV*x11devLabel.label:			设备
+GV*scratchDirLabel.label:		草稿目录
+GV*quitstyle.always.Label:		总是
+GV*misc.label:				其它
+GV*miscMenu.stop.label:			停止解释器
+GV*strings.stillInProgress:		进行中:
+GV*miscMenu.save_all.label:		全部保存
+GV*center.Label:			居中
+GV*saveDirLabel.label:			保存目录
+GV*printMarkedPages.Label:		打印标记页...
+GV*update.Label:			更新
+GV*optionsgs.Label:			Ghostscript选项...
+GV*infoPopup.title:			Ghostscript信息
+GV*safeDir.label:			安全目录
+GV*dirsLabel.label:			文件选择目录
+GV*presentation.Label:			演讲模式
+GV*scanLabel.label:			扫描PDF
+GV*optiongvPopup*magLabel.label:	比例尺
+GV*button2.label:			打开文件
+GV*saveAllPages.Label:			保存文档...
+GV*optionsetupPopup.title:		设置选项
+GV*optiongvPopup*respectDSC.label:	考虑文件结构
+GV*miscMenu.save_marked.label:		保存标记页
+GV*strings.putTexCommand:		在当前位置加入Tex命令
+GV*strings.execOfFailed:		执行 %s 失败
+GV*scrolling.label:			反向滚动
+GV*optiongvPopup*forientLabel.label:	后备取向
+GV*pageButton*unmark.Label:		取消全部标记
+GV*button1.label:			取消
+GV*quitstyle.whenprocessing.Label:	当处理时
+GV*filters.label:			过滤器:
+GV*confirmLabel.label:			确认退出
+GV*title.filename.Label:		文件名
+GV*automatic.Label:			自动
+GV*unmark.Label:			未标记
+GV*printMarked.label:			打印标记页
+GV*optiongvPopup*orientLabel.label:	\     取向    \ 
+GV*optiongvPopup*fmediaLabel.label:	后备纸张尺寸
+GV*confirmPopup*done.label:		退出
+GV*optiongvPopup*autoResize.label:	可变尺寸
+GV*defaults.label:			系统默认
+GV*uncompressLabel.label:		解压缩
+GV*reopen.Label:			重载
+GV*miscMenu.unmark.label:		取消全部标记
+GV*safer.label:				更安全
+GV*saveMarked.label:			保存标记页
+GV*title.notitle.Label:			无标题
+GV*dsc.Label:				考虑文档结构
+GV*optiongvPopup*swapLandscape.label:	左右对调
+GV*pixmap.Label:			保存位图数据
+GV*miscMenu.update.label:		更新文件
+GV*strings.passwordPrompt:		密码:
+GV*miscMenu.print_marked.label:		打印标记页
+GV*strings.openFile:			打开文件
+GV*scalesLabel.label:			比例尺
+GV*savepos.Label:			保存位置
+GV*pageButton.Label:			页
+GV*x11alphadevLabel.label:		防锯齿设备
+GV*saveAll.label:			全部保存
+GV*open.Label:				打开...
+GV*miscMenu.toggle_current.label:	标记或取消标记当前页
+GV*fileButton.Label:			文件
+GV*miscMenu.toggle_odd.label:		标记或取消标记奇数页
+GV*miscMenu.toggle_even.label:		标记或取消标记偶数页
+GV*printCommandLabel.label:		打印命令
+GV*antialias.Label:			防锯齿
+GV*updateFile.label:			更新文件
+GV*optiongsPopup.title:			Ghostscript选项
+GV*quiet.label:				安静
+GV*confirmPopup.title:			确认
+GV*mediasLabel.label:			纸张
+GV*optionfsPopup.title:			文件选项
+GV*show.Label:				刷新显示
+GV*optiongvPopup*mediaLabel.label:	\ 纸张尺寸 \ 
+GV*convLabel.label:			转换PDF
+GV*zoomPopup.title:			缩放
+GV*optiongvPopup.title:			gv选项
+GV*stateButton.Label:			状态
+GV*strings.passwordRequired:		需要密码
+GV*confirmPrint.label:			确认打印
+GV*pageButton*current.Label:		标记或取消标记当前页
+GV*optionssetup.Label:			设置选项 ...
+GV*ascaleLabel.Label:			自定义比例尺
+GV*next.Label:				下一页
+GV*filterLabel.label:			默认过滤器
+GV*seascape.Label:			右横向
+GV*cancel.Label:			取消
+GV*watch.Label:				关注文件
+GV*titleLabel.Label:			显示标题
+GV*filtersLabel.label:			文件选择过滤器
+GV*checkFile.label:			检查文件
+GV*processButton.Label:			\ 处理中
+GV*toggleOdd.label:
+GV*strings.saveMarkedPages:		保存标记页
+GV*optiongvPopup*scalesLabel.label:	\   比例尺  \ 
+GV*toggleCurrent.label:
+GV*stop.Label:				停止解释器
+GV*dialogPopup*cancel.label:		取消
+GV*fileSelPopup.title:			打开文件
+GV*eyeGuide.label:			滚动提示
+GV*upsidedown.Label:			上下颠倒
+GV*pageButton*even.Label:		标记或取消标记偶数页
+GV*quit.Label:				退出
+GV*magmenuLabel.label:			主菜单
+GV*gs.errors.none.Label:		无
+GV*nextPage.Label:			>>
+GV*eof.Label:				忽略文件结尾标识
+GV*rescan.label:			重新扫描目录
+GV*miscMenu.print_all.label:		全部打印
+GV*landscape.Label:			左横向
+GV*printAllPages.Label:			打印文档...
+GV*gsLabel.label:			解释器
+GV*optiongvPopup*antialias.label:	防锯齿
+GV*strings.texCommand:			TeX命令
+GV*printAll.label:			全部打印
+GV*argumentsLabel.label:		参数
+GV*toggleEven.label:
+GV*infoVerboseLabel.Label:		信息提示框
+GV*gs.errors.all.Label:			全部
+GV*scaleBaseLabel.label:		比例尺单位
+GV*screenSizeLabel.label:		屏幕尺寸(毫米)
+GV*dialogPopup.title:			对话框
+GV*unmarkAll.label:
+GV*strings.saveCurrentPage:		保存当前页
+GV*strings.quitConfirm:			确认退出?
+GV*autoCenter.label:			自动居中
+GV*redisplay.label:			重载
+GV*size.Label:				自动缩放
+GV*prevPage.Label:			<<
+GV*prev.Label:				上一页
+GV*title.documenttitle.Label:		文件标题
+GV*confirmPopup*cancel.label:		取消
+GV*openFile.label:			打开
+GV*saveMarkedPages.Label:		保存标记页...
+GV*strings.saveDocument:		保存文档
+GV*pageButton*odd.Label:		标记或取消标记奇数页
+GV*save.label:				保存
+GV*notePopup.title:			信息
+GV*optionsfs.Label:			文件选项...
+GV*swap.Label:				左右对调
+GV*portrait.Label:			纵向
+GV*optiongvPopup*eof.label:		忽略文件结尾标识
+GV*strings.saveAsPDF:			保存为PDF
+GV*gs.errors.errors.Label:		误差
+GV*quitstyle.never.Label:		从不
+GV*apply.label:				应用
+GV*watchFile.Label:			关注文件
+GV*miscMenu.redisplay.label:		重载
+GV*dirs.label:				目录
+GV*notePopup*done.label:		确定
+
+## from ~/.gv ##
+GV.scales:		初始尺寸,	1.000,	屏\n\
+			基于像素,	1.000,	点\n\
+			自定义放大,	-2\n\
+			和窗口高度一致,	-3\n\
+			和窗口宽度一致,	-1\n\
+			和窗口一致,	0.000\n\
+
+GV.medias:		信纸,		612	792\n\
+			# LetterSmall,	612	792\n\
+			文书,		612	1008\n\
+			声明,	396	612\n\
+			报纸,		792	1224\n\
+			账本,		1224	792\n\
+			胶片,		612	936\n\
+			四开,		610	780\n\
+			# A4Small,	595	842\n\
+
+GV.miscMenuEntries:     刷新显示\n\
+			# update\n\
+			停止\n\
+			线条\n\
+			标记或取消标记当前页\n\
+			标记或取消标记偶数页\n\
+			标记或取消标记奇数页\n\
+			不标记\n\
+			线条\n\
+			全部打印\n\
+			打印已标记\n\
+			全部保存\n\
+			保存已标记
+GV*strings.copyrightTranslation:	Wensheng Xie <xiewensheng@gmail.com>
+
