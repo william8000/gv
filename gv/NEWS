@@ -9,6 +9,21 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (April 2021) %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Change the digit '9' function to rotate 90 degrees clockwise.
+# Change the digit '0' function to scale to 100%.
+# Change the cursor location format from '%d x %d' to '%d, %d'.
+# Restore left and right buttons to move and middle button to zoom.
+# Remove a tab in the 'Natural sizes' resource string.
+# Fix a possible bad access closing pipes.
+# Fix 'broken pipe' typo.
+# Fix some help and documentation typos.
+* Prefix sed with LC_ALL=C because GV.ad has 8-bit Latin-1 ISO text.
+* Remove -g from src/Makefile.am because it should be set by configure.
+* scripts/makedist.sh passes its arguments to ./configure to simplify
+  building CFLAGS=-O2 or --with-default-papersize=Letter .
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (March 2013) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Fixed CVE-2012-3386 (by using updated automake)

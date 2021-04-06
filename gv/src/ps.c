@@ -357,7 +357,7 @@ static int parse_boundingbox(const char *l, int *boundingbox) {
 	while (*p == ' ' || *p == '\t')
 		p++;
 	fury = strtod(p, &pe);
-	if (*pe != '\n'  && *pe != '\r'&& *pe != '\0' && *pe != ' ' && *pe != '\t') {
+	if (*pe != '\n' && *pe != '\r' && *pe != '\0' && *pe != ' ' && *pe != '\t') {
 		return 0;
 	}
 

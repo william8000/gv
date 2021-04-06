@@ -204,7 +204,7 @@ static XtResource resources[] = {
   {n_markEmptyBitmap, n_markEmptyBitmap, XtRBitmap, sizeof(Pixmap),
    XtOffsetOf(AppResources,mark_empty_bitmap), XtRImmediate, (XtPointer)None},
   {n_locatorFormat, n_locatorFormat, XtRString, sizeof(String),
-   XtOffsetOf(AppResources,locator_format),   XtRImmediate, (XtPointer)"%d x %d"},
+   XtOffsetOf(AppResources,locator_format),   XtRImmediate, (XtPointer)"%d, %d"},
   {n_antialias, n_antialias, XtRBoolean, sizeof(Boolean),
    XtOffsetOf(AppResources, antialias), XtRImmediate, (XtPointer)False},
   {n_magMenu, n_magMenu, XtRString, sizeof(String),

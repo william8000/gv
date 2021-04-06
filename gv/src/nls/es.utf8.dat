@@ -163,6 +163,7 @@ GV*save.label:				Guardar
 GV*notePopup.title:			Mensaje
 GV*optionsfs.Label:			Opciones de selección de archivos ...
 GV*swap.Label:				Cambiar apaisado
+GV*rotate.Label:			Girar
 GV*portrait.Label:			Vertical
 GV*optiongvPopup*eof.label:		Ignorar fin de fichero
 GV*strings.saveAsPDF:			Guardar como PDF

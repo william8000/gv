@@ -162,6 +162,7 @@ GV*save.label:				Salva
 GV*notePopup.title:			Messaggio
 GV*optionsfs.Label:			Opzioni di selezione file ...
 GV*swap.Label:				Passa a panorama
+GV*rotate.Label:			Girare
 GV*portrait.Label:			Ritratto
 GV*optiongvPopup*eof.label:		Ignora EOF
 GV*strings.saveAsPDF:			Salva come PDF

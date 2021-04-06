@@ -205,6 +205,7 @@ typedef struct ProcessDataStruct_ {
 #define O_UPSIDEDOWN      4
 #define O_AUTOMATIC       8
 #define O_SWAP_LANDSCAPE  1000
+#define O_ROTATE          1001
 
 #define MEDIA_ID_INVALID  -3
 #define MEDIA_ID_AUTO     -2

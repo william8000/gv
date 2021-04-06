@@ -1005,6 +1005,7 @@ int main(int argc, char *argv[])
        { &seascapeEntry,     "seascape", cb_setOrientation, (XtPointer)O_SEASCAPE},
        { NULL,               "line", NULL, NULL },
        { &swapEntry,         "swap", cb_setOrientation, (XtPointer)O_SWAP_LANDSCAPE},
+       { &rotateEntry,       "rotate", cb_setOrientation, (XtPointer)O_ROTATE},
        { NULL, NULL, NULL, NULL },
      };
      main_createMenu(m,cont_child,&cont_child_num);

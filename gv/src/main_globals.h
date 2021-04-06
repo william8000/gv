@@ -224,6 +224,7 @@ EXTERN Widget               landscapeEntry;
 EXTERN Widget               upsidedownEntry;
 EXTERN Widget               seascapeEntry;
 EXTERN Widget               swapEntry;
+EXTERN Widget               rotateEntry;
 EXTERN Widget         processButton;
 EXTERN Widget            processMenu;
 EXTERN Widget         pagemediaButton;

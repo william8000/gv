@@ -1226,6 +1226,15 @@ cb_setOrientation(Widget w _GL_UNUSED, XtPointer client_data, XtPointer call_dat
             if (gv_swap_landscape != 0) gv_swap_landscape = 0;
             else gv_swap_landscape = 1;
             break;
+       case O_ROTATE:
+            INFMESSAGE(rotating orientation)
+            if (gv_orientation == O_PORTRAIT)        gv_orientation = O_LANDSCAPE;
+            else if (gv_orientation == O_LANDSCAPE)  gv_orientation = O_UPSIDEDOWN;
+            else if (gv_orientation == O_UPSIDEDOWN) gv_orientation = O_SEASCAPE;
+            else if (gv_orientation == O_SEASCAPE)   gv_orientation = O_PORTRAIT;
+            else changed = 0;
+            INFIMESSAGE(new orientation,gv_orientation)
+            break;
        default:
             INFMESSAGE(unknown orientation)
             changed = 0;

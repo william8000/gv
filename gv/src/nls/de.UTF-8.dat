@@ -148,6 +148,7 @@ GV*saveMarkedPages.Label:		Markierte Seiten speichern ...
 GV*pageButton*odd.Label:		Ungerade Markierungen wechseln
 GV*optionsfs.Label:			Dateiauswahloptionen ...
 GV*swap.Label:				Qürformat umschalten
+GV*rotate.Label:			Drehen
 GV*portrait.Label:			Hochformat
 GV*watchFile.Label:			Datei beobachten
 GV*gs.errors.none.Label:		Keine

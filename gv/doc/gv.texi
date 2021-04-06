@@ -85,8 +85,8 @@ PostScript and PDF viewer.
   [-]-color                           display document as usual
   [-]-safer                           start ghostscript in safe mode
   [-]-nosafer                         do not start ghostscript in safe mode
-  [-]-safedir                         start ghostscript from a safe diretory
-  [-]-nosafedir                       do not start ghostscript from a safe diretory
+  [-]-safedir                         start ghostscript from a safe directory
+  [-]-nosafedir                       do not start ghostscript from a safe directory
   [-]-quiet                           start ghostscript with the -dQUIET option
   [-]-noquiet                         do not start ghostscript with the -dQUIET option
   [-]-infoSilent                      do not show any messages in the info popup window
@@ -149,7 +149,7 @@ in the context of the @code{--style} option.
 @item --antialias, --noantialias
 Whether to use antialiasing.
 @item --arguments=@var{args}
-Start ghostscrip with additional options as specified by the
+Start ghostscript with additional options as specified by the
 string @var{args}.
 @item --center, --nocenter
 Whether the page should be centered automatically.
@@ -210,11 +210,11 @@ Valid values for @var{orientation} are @code{portrait},
 @item --quiet, --noquiet
 Whether to start ghostscript with the @code{-dQUIET} option.
 @item --resize, --noresize
-Whether ghostscrip is allowed to automatically fit the
+Whether ghostscript is allowed to automatically fit the
 size of its window to the size of the displayed page.
 @item --password=PASSWORD
 When opening a file, use PASSWORD to decrypt it. This Option is
-usefull for viewing encrypted PDF files.
+useful for viewing encrypted PDF files.
 @item --presentation
 Is actually a shortcut for @code{--fullscreen --noresize --scale=-1000 --widgetless}.
 @item --safer, --nosafer
@@ -222,7 +222,7 @@ Whether to start ghostscript in safer mode
 (that includes he @code{-dSAFER} option or the @code{-dDELAYSAFER}
 mode where appropriate) and the @code{-P-} option.
 @item --safedir, --nosafedir
-Whether to start ghostscript from a safe direcotry or not.
+Whether to start ghostscript from a safe directory or not.
 @item --spartan
 This is a shortcut for @code{--style=gv_spartan.dat}.
 @item --style=@var{file}
@@ -328,7 +328,7 @@ Allowed values are @code{True} and @code{False}.
 It defaults to @code{True}.
 @item infoVerbose
 Defines the behavior of the info popup which shows messages from ghostscript. Valid values are @code{Silent} (Never), @code{Errors}
-(show only errror messages) and @code{All} (Any message is being shown).
+(show only error messages) and @code{All} (Any message is being shown).
 
 It defaults to @code{Errors}.
 @item xinerama
@@ -596,7 +596,7 @@ comments.
 It defaults to @code{automatic}.
 @item fallbackOrientation
 Defines the paper-size to be used when automatic orientation
-detetction fails.  Valid values are @code{portrait}, @code{landscape},
+detection fails.  Valid values are @code{portrait}, @code{landscape},
 @code{seascape} and @code{upside-down}.
 
 It defaults to @code{portrait}.
@@ -608,7 +608,7 @@ detection.
 
 @item pageMedia
 Sets the paper size. 
-Allowd values are as given in the above list of paper-sizes.
+Allowed values are as given in the above list of paper-sizes.
 Specifying
 @code{automatic} causes gv to attempt
 to derive the correct paper-size from document structuring
@@ -617,13 +617,13 @@ comments.
 It defaults to @code{automatic}.
 @item fallbackPageMedia
 Defines the paper-size to be used when automatic paper-size 
-detetction fails.  Valid values are as given in the  above
+detection fails.  Valid values are as given in the above
 list of paper-sizes.
 
 It defaults to @code{a4}.
 
 @item strings.*
-Variuos strings for translating GNU gv.
+Various strings for translating GNU gv.
 @end table
 
 @node Mouse and key bindings, Comments about the user interface, Resources, Top
@@ -651,7 +651,7 @@ Scrolls the displayed page 'proportionally'.
 Scrolls the displayed page 'absolutely'.
 @item double-click with button 1
 In the main window this displays the previous/next page
-if the double-click occured in the left/right half of the
+if the double-click occurred in the left/right half of the
 window.
 In a zoom window it does nothing.
 @item press button 2, release button 2
@@ -812,7 +812,7 @@ Unmark the current page
 @item Z
 append the current coordinate to a file whose name is given by the @code{GV.saveposFilename} resource.
 @item U
-enter a command with the current coordinate as its default parameter. By defalt it is 
+enter a command with the current coordinate as its default parameter. By default it is 
 % TODO
 @cite{\PutAtPos(x,y)()}, where x,y are the current coordinate and the user can put needed commands into ().
 This command is appended to a file whose name is given by the @code{GV.saveposFilename} resource.
@@ -1090,7 +1090,7 @@ based systems.
 
 They have been removed in order to make more room for the image. The
 displayed portion of the image may be moved by dragging the image or
-the paner (panel between the "Save Marked" and <<  >> buttons) with the
+the panner (panel between the "Save Marked" and <<  >> buttons) with the
 mouse. Alternatively, the cursor arrow keys can be used.
 
 @node How can I make even more room for the image?, Small characters are not very clear, What happened to the scroll bars?, Frequently asked questions

@@ -38,7 +38,7 @@ MAINTAINERCLEANFILES = gv-i18n.h
 
 # Compilation flags
 AM_CPPFLAGS = -DNON_BLOCKING_IO -DGV_CODE -DGV_LIBDIR=\"$(pkgdatadir)\" \
-              -I$(top_srcdir)/lib -I$(top_builddir)/lib -g $(X_CFLAGS)
+              -I$(top_srcdir)/lib -I$(top_builddir)/lib $(X_CFLAGS)
 
 AM_CFLAGS = 
 
@@ -157,7 +157,7 @@ BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h gv-
 
 ../GV : GV.ad
 	@echo "creating GV"
-	sed -e 's/^[^!]/!&/' GV.ad > ../GV
+	LC_ALL=C sed -e 's/^[^!]/!&/' GV.ad > ../GV
 
 GV.ad : gv_system.ad
 	@echo "creating GV.ad"

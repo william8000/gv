@@ -492,8 +492,12 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 	    if (gvw->ghostview.ps_input && gvw->ghostview.bytes_left == 0) {
 		struct record_list *ps_old = gvw->ghostview.ps_input;
 		gvw->ghostview.ps_input = ps_old->next;
-		if (ps_old->close) fclose(ps_old->fp);
+		if (ps_old->close) { fclose(ps_old->fp); ps_old->fp = NULL; }
 		XtFree((char *)ps_old);
+	    }
+
+	    if (!gvw->ghostview.ps_input || !gvw->ghostview.ps_input->fp) {
+		gvw->ghostview.bytes_left = 0;
 	    }
 
 	    /* Have to seek at the beginning of each section */
@@ -504,6 +508,7 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 			  gvw->ghostview.ps_input->begin, SEEK_SET);
 		gvw->ghostview.ps_input->seek_needed = False;
 		gvw->ghostview.bytes_left = gvw->ghostview.ps_input->len;
+		INFIIMESSAGE(Input new section, gvw->ghostview.ps_input->begin, gvw->ghostview.ps_input->len);
 	    }
 
 	    if (gvw->ghostview.bytes_left > GV_BUFSIZ) {
@@ -534,16 +539,15 @@ Input(XtPointer client_data, int *source _GL_UNUSED, XtInputId *id _GL_UNUSED)
 
 #if 0
 {
- char tmp[5000];
- strncpy(tmp,gvw->ghostview.input_buffer_ptr,gvw->ghostview.buffer_bytes_left);
- tmp[gvw->ghostview.buffer_bytes_left] = '\0';
- strcat(tmp,"###END###\n");
- printf(tmp);
+ int i;
+ for (i=0;i<bytes_written;i++) fputc(gvw->ghostview.input_buffer_ptr[i],stdout);
+ /* printf("###END###\n"); */
+ fflush(stdout);
 }
 #endif
 	    if (broken_pipe) {
 		broken_pipe = False;
-		InterpreterFailed(w,"broken pope");		/* Something bad happened */
+		InterpreterFailed(w,"broken pipe");		/* Something bad happened */
 	    } else if (bytes_written == -1) {
 		if ((errno != EWOULDBLOCK) && (errno != EAGAIN)) {
 		    InterpreterFailed(w,"write to pipe failed");	/* Something bad happened */

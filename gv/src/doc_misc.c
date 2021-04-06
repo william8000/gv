@@ -369,6 +369,7 @@ SMESSAGE(ostr)
       else if IS_STR(ostr,"Seascape")       { INFMESSAGE(is O_SEASCAPE)       o = O_SEASCAPE;   }
       else if IS_STR(ostr,"Upside-Down")    { INFMESSAGE(is O_UPSIDEDOWN)     o = O_UPSIDEDOWN; }
       else if IS_STR(ostr,"Swap-Landscape") { INFMESSAGE(is O_SWAP_LANDSCAPE) o = O_SWAP_LANDSCAPE; }
+      else if IS_STR(ostr,"Rotate")         { INFMESSAGE(is O_ROTATE)         o = O_ROTATE; }
 #     undef IS_STR
    }
    ENDMESSAGE(doc_convStringToDocOrient)
