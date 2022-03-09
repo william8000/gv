@@ -407,6 +407,14 @@ int main(int argc, char *argv[])
     /*###  initializing toolkit and the application context ########*/
 
     /*
+      If the locale is not set, gv will show messages like
+      "Warning: Missing charsets in String to FontSet conversion" and
+      "Warning: Unable to load any usable fontset"
+    */
+
+    gnu_gv_setenv("LC_ALL", "C", /* overwrite if set */ 0);
+
+    /*
       Make sure that LC_NUMERIC is POSIX.
       LC_NUMERIC must not use locales like de_DE.UTF-8 or de_DE@euro where
       the decimal separator is ',' or gv will fail with the

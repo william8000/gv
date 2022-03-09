@@ -209,8 +209,10 @@ resource_buildDatabase (
 
   {
      char* cL, * cP;
+     int len;
 
      cP = loc_lang;
+     len = 0;
      cL = locale;
   
      *loc_terr = 0;
@@ -219,10 +221,11 @@ resource_buildDatabase (
      
      while (*cL)
      {
-        if ( *cL == '_' ) { *cP = 0; cP = loc_terr; }
-        if ( *cL == '.' ) { *cP = 0; cP = loc_cs; }
-        if ( *cL == '@' ) { *cP = 0; cP = loc_mod; }
-	*cP++ = *cL++;
+        if ( *cL == '_' ) { *cP = 0; cP = loc_terr; len = 0; }
+        if ( *cL == '.' ) { *cP = 0; cP = loc_cs;   len = 0; }
+        if ( *cL == '@' ) { *cP = 0; cP = loc_mod;  len = 0; }
+        if (len < 99) { *cP++ = *cL; len++; }
+        cL++;
      }
      *cP = 0;
   }

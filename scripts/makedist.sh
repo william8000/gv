@@ -4,10 +4,12 @@
 # CFLAGS=-O2 # optimize and no -g for distribution
 # --with-default-papersize=Letter # change default from A4 to Letter
 
-cd ..
+cd .. || exit
 git clean -dfx
-cd gv
+cd gv || exit
 PATH=/opt/autotools/bin:${PATH} autoreconf -vi
 ./configure "$@"
-make
+np=$(nproc)
+if [ -z "$np" ] ; then np=1 ; fi
+make -j "$np"
 make dist
