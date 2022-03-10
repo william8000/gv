@@ -16,6 +16,8 @@ by a '#' or a '*' or a '?'. A
 # Set LC_ALL=C if it is unset to fix "Missing charsets in String to FontSet conversion" warnings.
 # Fix a bug where very long environment variables could crash gv.
 # Use make -j in scripts/makedist.sh.
+# Add makedist.sh --no-dist to suppress making a distribution.
+# Update makedist.sh to run from anywhere inside the repo.
 # Update .gitignore.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (April 2021) %%%%%%%%%%%%%%%%%%%%%%%%%%

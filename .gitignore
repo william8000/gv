@@ -53,3 +53,4 @@ gv/lib/unistd.h
 gv/lib/warn-on-use.h
 gv/lib/wchar.h
 gv/src/gv-i18n.h
+gv/gv-*
