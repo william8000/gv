@@ -78,6 +78,21 @@ AC_CHECK_HEADER(zio.h,[
   ],[LIBS=$savedLIBS])
 fi
 
+have_libXaw3dxft="no"
+AC_ARG_WITH(libXaw3dxft, AC_HELP_STRING([--with-libXaw3dxft],[Probe for libXaw3dxft]), opt_libXaw3dxft=$withval, opt_libXaw3dxft=no)
+
+if test "$opt_libXaw3dxft" = "yes" ; then
+#
+# Check for libXaw3dxft library
+#
+savedCFLAGS=$CFLAGS
+savedLIBS=$LIBS
+CFLAGS="-IX11/Xaw3dxft -IX11/Xft `pkg-config --cflags libxaw3dxft 2>/dev/null` $CFLAGS"
+LIBS="`pkg-config --libs libxaw3dxft 2>/dev/null` $LIBS"
+AC_CHECK_HEADER(X11/Xaw3dxft/Xaw3dXft.h,[
+    AC_CHECK_LIB(Xaw3dxft, Xaw3dXftDrawString, [have_libXaw3dxft="yes" CFLAGS="`pkg-config --cflags libxaw3dxft 2>/dev/null` $CFLAGS" LIBS="`pkg-config --libs libxaw3dxft 2>/dev/null` $LIBS" ; AC_DEFINE(HAVE_XAW3DXFT, 1, [Have Xaw3dXft Library])],[CFLAGS=$savedCFLAGS LIBS=$savedLIBS])
+  ],[CFLAGS=$savedCFLAGS LIBS=$savedLIBS])
+fi
 
 dnl WITH options
 
@@ -311,11 +326,13 @@ AC_CHECK_LIB(Xt, XtOpenDisplay, , , $X_LIBS)
 AC_CHECK_LIB(Xmu, main, , , $X_LIBS)
 AC_CHECK_LIB(Xpm, main, , , $X_LIBS)
 
+if test "$have_libXaw3dxft" != "yes" ; then
 PKG_CHECK_MODULES([DEPS], [xaw3d], [true], [DEPS_CFLAGS=""; DEPS_LIB=""])
 
 AC_CHECK_LIB([Xaw3d], XawInitializeWidgetSet,,
    AC_ERROR([Unable to find a valid Xaw3d library. Please install it and rerun configure.]),
    $X_LIBS)
+fi
 
 CFLAGS="$CFLAGS $DEPS_CFLAGS"
 LIBS="$LIBS $DEPS_LIBS"

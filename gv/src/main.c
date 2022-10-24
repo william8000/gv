@@ -65,6 +65,9 @@
 #ifdef HAVE_LIBXINERAMA
    #include INC_EXT(Xinerama.h)
 #endif
+#ifdef HAVE_XAW3DXFT
+#include INC_XAW(Xaw3dXft.h)
+#endif
 #include "Aaa.h"
 #include "Button.h"
 #include "Clip.h"
@@ -276,6 +279,15 @@ static XtActionsRec actions[] = {
 };
 
 /*--------------------------------------------------------------
+  Xaw3dxft configuration
+--------------------------------------------------------------*/
+
+#ifdef HAVE_XAW3DXFT
+Xaw3dXftData *xaw3dxft_data = NULL;
+Xaw3dXftProc *xaw3dxft_proc = NULL;
+#endif
+
+/*--------------------------------------------------------------
    dummyCvtStringToPixmap
    Dummy String to Pixmap converter. Used to suppress warnings
    about missing String to Pixmap converter.
@@ -403,6 +415,14 @@ int main(int argc, char *argv[])
     fullscreen_p = 0;
     ascale_p = 1.0;
 
+#ifdef HAVE_XAW3DXFT
+    /* retrieve address of specific Xaw3dXftData (if any) */
+    GET_XAW3DXFT_DATA(xaw3dxft_data);
+    if (xaw3dxft_data) {
+        /* encoding 0 = match Xaw3d, non-0 = freetype, -1 = freetype + UTF8 */
+        xaw3dxft_data->encoding = -1;
+    }
+#endif
 
     /*###  initializing toolkit and the application context ########*/
 

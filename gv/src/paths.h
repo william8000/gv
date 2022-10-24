@@ -37,12 +37,20 @@
 #if HAVE_GCC_VERSION(2,95)
 #define INC_X11(aaa) <X11/aaa>
 #define INC_XMU(aaa) <X11/Xmu/aaa>
+#if HAVE_XAW3DXFT
+#define INC_XAW(aaa) <X11/Xaw3dxft/aaa>
+#else
 #define INC_XAW(aaa) <X11/Xaw3d/aaa>
+#endif
 #define INC_EXT(aaa) <X11/extensions/aaa>
 #else
 #define INC_X11(aaa) <X11/##aaa##>
 #define INC_XMU(aaa) <X11/Xmu/##aaa##>
+#if HAVE_XAW3DXFT
+#define INC_XAW(aaa) <X11/Xaw3dxft/##aaa##>
+#else
 #define INC_XAW(aaa) <X11/Xaw3d/##aaa##>
+#endif
 #define INC_EXT(aaa) <X11/extensions/##aaa##>
 #endif
 
