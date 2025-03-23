@@ -109,7 +109,7 @@ zoom_createZoom(Widget w _GL_UNUSED, XtPointer call_data)
        return;
     }
 
-    if (strcmp(gv_filename, "-")) {
+    if (gv_filename != NULL && strcmp(gv_filename, "-")) {
        stat(gv_filename, &sbuf);
        if (mtime != sbuf.st_mtime) {
 	  INFMESSAGE1(file has changed) ENDMESSAGE1(zoom_createZoom)return;

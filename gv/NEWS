@@ -9,6 +9,11 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (March 2025) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+* Add NULL test from Fedora's zoom.c.bug1071238.
+* Add top level nightly_build.sh to run scripts/makedist.sh "$@".
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (October 2022) %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Add configure --with-libXaw3dxft to build with libXaw3dXft (runs but needs work).
