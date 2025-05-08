@@ -79,8 +79,7 @@ static MiscMenuEntryStruct miscmenu_entries[] = {
   miscmenu_freeMiscMenuEntries
 ##################################################*/
 
-void miscmenu_freeMiscMenuEntries(entries)
-  MiscMenuEntry *entries;
+void miscmenu_freeMiscMenuEntries(MiscMenuEntry *entries)
 {
   int i=0;
   BEGINMESSAGE(miscmenu_freeMiscMenuEntries)
@@ -104,8 +103,7 @@ static MiscMenuEntry miscmenu_mallocMiscMenuEntry(void)
   return entry;
 }
 
-MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
-  char *s;
+MiscMenuEntry *miscmenu_parseMiscMenuEntries(char *s)
 {
   char *c,*nl;
   MiscMenuEntry *entries,*mentries,entry;
@@ -161,11 +159,7 @@ MiscMenuEntry *miscmenu_parseMiscMenuEntries(s)
 #define MISC_MENU_RESET		(1<<5)
 #define MISC_MENU_CHECK		(1<<6)
 
-void miscmenu_a_miscMenu(w, event, params, num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params; 
+void miscmenu_a_miscMenu(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
   static int mode = MISC_MENU_IDLE;
   static Widget gvw = (Widget)NULL;

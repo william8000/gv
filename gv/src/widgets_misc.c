@@ -58,9 +58,7 @@
 /*##################################################*/
 
 void 
-widgets_setSelectedBitmap(w,on)
-  Widget w;
-  int on;
+widgets_setSelectedBitmap(Widget w, int on)
 {
   Arg args[1];
   Pixmap bitmap;
@@ -78,9 +76,7 @@ widgets_setSelectedBitmap(w,on)
 /*##################################################*/
 
 void
-widgets_setToggle(w,value)
-   Widget   w;
-   int      value;
+widgets_setToggle(Widget w, int value)
 {
    BEGINMESSAGE(widgets_setToggle)
    if (value) ButtonSet(w,NULL,NULL,NULL);
@@ -121,9 +117,7 @@ Meta<Key>Z: no-op()\n\
 ";
 
 Widget
-widgets_createLabeledLineTextField(name, parent)
-   String   name;
-   Widget   parent;
+widgets_createLabeledLineTextField(String name, Widget parent)
 {
    Arg      args[9];
    Cardinal n;
@@ -182,9 +176,7 @@ Meta<Key>Z: no-op()\n\
 ";
 
 Widget
-widgets_createLabeledTextField(name, parent)
-   String   name;
-   Widget   parent;
+widgets_createLabeledTextField(String name, Widget parent)
 {
    Arg      args[9];
    Cardinal n;
@@ -220,8 +212,7 @@ widgets_createLabeledTextField(name, parent)
 /*##################################################*/
 
 char *
-widgets_getText(w)
-   Widget w;
+widgets_getText(Widget w)
 {
    Arg    args[1];
    String value;
@@ -238,9 +229,7 @@ widgets_getText(w)
 /*##################################################*/
 
 void
-widgets_setText(w,value)
-  Widget w;
-  String value;
+widgets_setText(Widget w, String value)
 {
   Arg args[1];
 
@@ -259,9 +248,7 @@ widgets_setText(w,value)
 /*##################################################*/
 
 void 
-widgets_preferButton(w,prefer)
-   Widget   w;
-   int prefer;
+widgets_preferButton(Widget w, int prefer)
 {
    BEGINMESSAGE(widgets_preferButton)
    if (w) {

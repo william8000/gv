@@ -696,8 +696,7 @@ ClassInitialize(void)
 /*###################################################################################*/
 
 static void
-ClassPartInitialize(class)
-    WidgetClass class;
+ClassPartInitialize(WidgetClass class)
 {
     GhostviewWidgetClass gvc = (GhostviewWidgetClass)class;
     BEGINMESSAGE(ClassPartInitialize)
@@ -1672,9 +1671,7 @@ InterpreterFailed(Widget w, const char *mesg)
 /*###################################################################################*/
 
 void
-GhostviewDrawRectangle(w,x,y,width,height)
-  Widget w;
-  int x,y,width,height;
+GhostviewDrawRectangle(Widget w, int x, int y, int width, int height)
 {
   GhostviewWidget gvw = (GhostviewWidget) w;
 

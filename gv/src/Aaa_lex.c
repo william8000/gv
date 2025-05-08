@@ -90,9 +90,7 @@
 #define IS_MIXED(ccc)          (IS_CHAR((ccc)) || IS_DIGIT((ccc)) || (ccc)=='_')
 
 void
-layout_scan_error(s,layoutConverterStructP)
-    char    *s;
-    void *layoutConverterStructP;
+layout_scan_error(char *s, void *layoutConverterStructP)
 {
     LayoutConverterArg layoutConverterArg = (LayoutConverterArg) (layoutConverterStructP);
     char    *t;
@@ -142,9 +140,7 @@ maxlen_exceeded(void *layoutConverterStructP)
 }
 
 int
-layout_lex(v,layoutConverterStructP)
-   YYSTYPE *v;
-   void *layoutConverterStructP;
+layout_lex(YYSTYPE *v, void *layoutConverterStructP)
 {
    char *c,*oldc;
    LayoutConverterArg layoutConverterArg = (LayoutConverterArg) (layoutConverterStructP);

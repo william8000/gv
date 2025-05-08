@@ -53,11 +53,7 @@
 #include "main_globals.h"
 
 char* 
-open_fail_error(errornumber,error_str,file_name,show)
-  int errornumber;
-  char *error_str;
-  char *file_name;
-  int show;
+open_fail_error(int errornumber, char *error_str, char *file_name, int show)
 {
   char *m;
 

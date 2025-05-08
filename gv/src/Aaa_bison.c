@@ -421,15 +421,14 @@ __yy_memcpy (char *from, char *to, int count)
    to the proper pointer type.  */
 
 #ifdef YYPARSE_PARAM
-#define YYPARSE_PARAM_DECL void *YYPARSE_PARAM;
+#define YYPARSE_PARAM_DECL void *YYPARSE_PARAM
 #else
 #define YYPARSE_PARAM
 #define YYPARSE_PARAM_DECL
 #endif
 
 int
-yyparse(YYPARSE_PARAM)
-     YYPARSE_PARAM_DECL
+yyparse(YYPARSE_PARAM_DECL)
 {
   register int yystate;
   register int yyn;

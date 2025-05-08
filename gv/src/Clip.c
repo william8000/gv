@@ -181,10 +181,7 @@ static void SendReport (ClipWidget cw, unsigned int changed)
  *****************************************************************************/
 
 
-static void Realize (gw, valueMask, attributes)
-    register Widget gw;
-    Mask *valueMask;
-    XSetWindowAttributes *attributes;
+static void Realize (register Widget gw, Mask *valueMask, XSetWindowAttributes *attributes)
 {
 
    BEGINMESSAGE(Realize)

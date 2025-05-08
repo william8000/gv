@@ -58,8 +58,7 @@
   scale_freeScales
 ##################################################*/
 
-void scale_freeScales(scales)
-  Scale *scales;
+void scale_freeScales(Scale *scales)
 {
   int i=0;
   BEGINMESSAGE(scale_freeScales)
@@ -84,8 +83,7 @@ static Scale scale_mallocScale(void)
   return scale;
 }
 
-Scale *scale_parseScales(s)
-  char *s;
+Scale *scale_parseScales(char *s)
 {
   char *c,*nl;
   Scale *scales,*mscales;
@@ -170,9 +168,7 @@ Scale *scale_parseScales(s)
 /* scale_numOfScale */
 /*##################################################################*/
 
-int scale_checkScaleNum(scales,s)
-  Scale *scales;
-  int s;
+int scale_checkScaleNum(Scale *scales, int s)
 {
   int j,n=-1;
   int m;
@@ -208,14 +204,7 @@ int scale_checkScaleNum(scales,s)
 /* scale_getScreenSize */
 /*##################################################################*/
 
-void scale_getScreenSize(display,screen,db,app_class,app_name,widthP,heightP)
-  Display *display;
-  Screen *screen;
-  XrmDatabase db;
-  char *app_class;
-  char *app_name;
-  int *widthP;
-  int *heightP;
+void scale_getScreenSize(Display *display, Screen *screen, XrmDatabase db, char *app_class, char *app_name, int *widthP, int *heightP)
 {
   int hmm=0,wmm=0;
   char v[255];
@@ -256,9 +245,7 @@ void scale_getScreenSize(display,screen,db,app_class,app_name,widthP,heightP)
   scale_getScreenResourceName  
 ##################################################*/
 
-void scale_getScreenResourceName(display,name)
-  Display *display;
-  char *name;
+void scale_getScreenResourceName(Display *display, char *name)
 {
   char server[255],*s;
   int disp=0,scr=0;

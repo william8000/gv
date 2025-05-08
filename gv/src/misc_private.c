@@ -55,9 +55,7 @@
 /*############################################################*/
 
 void
-update_label(widget,text)
-   Widget widget;
-   char   *text;
+update_label(Widget widget, char *text)
 {
    LabelWidget w = (LabelWidget) widget;
    VlistWidget vw = (VlistWidget) widget;

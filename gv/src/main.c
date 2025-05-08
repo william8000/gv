@@ -1409,10 +1409,7 @@ int main(int argc, char *argv[])
     main_createMenu
 --------------------------------------------------*/
 
-static void main_createMenu(m,list,numP)
-  MenuEntry *m;
-  Widget   *list;
-  Cardinal *numP;  
+static void main_createMenu(MenuEntry *m, Widget *list, Cardinal *numP)
 {
   Arg args[1];
   Cardinal n;
@@ -1445,10 +1442,7 @@ static void main_createMenu(m,list,numP)
     main_setInternResource
 ##################################################*/
 
-void main_setInternResource(db,sP,name)
-  XrmDatabase db;
-  String *sP;
-  char *name;
+void main_setInternResource(XrmDatabase db, String *sP, char *name)
 {
   BEGINMESSAGE(main_setInternResource)
   *sP = resource_getResource(db,gv_class,gv_class,name,NULL);
@@ -1461,8 +1455,7 @@ void main_setInternResource(db,sP,name)
     main_setGhostscriptResources
 ##################################################*/
 
-void main_setGhostscriptResources(db)
-  XrmDatabase db;
+void main_setGhostscriptResources(XrmDatabase db)
 {
   char *s;
 
@@ -1515,8 +1508,7 @@ void main_setGhostscriptResources(db)
    main_setResolutions
 ##################################################*/
 
-void main_setResolutions(query)
-  int query;
+void main_setResolutions(int query)
 {
   int checkXinerama = 1;
   int sizeX, sizeY;

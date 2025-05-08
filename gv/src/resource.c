@@ -688,12 +688,7 @@ resource_putResource (XrmDatabase *db,
   resource_getResource
   #######################################################*/
 
-char *resource_getResource(db,app_class,app_name,name_val,class_val)
-     XrmDatabase db;
-     char *app_class;
-     char *app_name;
-     char *name_val;
-     char *class_val;
+char *resource_getResource(XrmDatabase db, char *app_class, char *app_name, char *name_val, char *class_val)
 {
   char *result=NULL;
   XrmValue rm_value;
@@ -722,10 +717,7 @@ char *resource_getResource(db,app_class,app_name,name_val,class_val)
 #endif
 #define max(a,b) ((a)>(b)?(a):(b))
 
-int resource_checkGeometryResource(dbP,app_class,app_name)
-     XrmDatabase *dbP;
-     char *app_class;
-     char *app_name;
+int resource_checkGeometryResource(XrmDatabase *dbP, char *app_class, char *app_name)
 {
   char tmp[GV_MAX_FILENAME_LENGTH];
   char *pos;
@@ -780,10 +772,7 @@ int resource_checkGeometryResource(dbP,app_class,app_name)
   resource_checkResources
   #######################################################*/
 
-int resource_checkResources(app_name,v,vc)
-     char *app_name;
-     char *v;
-     char *vc;
+int resource_checkResources(char *app_name, char *v, char *vc)
 {
   int n,nc,v1,v2,v3,v4,v1c,v2c,v3c,v4c,r=1;
 
@@ -847,7 +836,7 @@ int resource_checkResources(app_name,v,vc)
   resource_userResourceFile()
   #######################################################*/
 
-char *resource_userDefaultsFile()
+char *resource_userDefaultsFile(void)
 {
   char *s;
   BEGINMESSAGE(resource_userResourceFile)
@@ -857,16 +846,14 @@ char *resource_userDefaultsFile()
   s = XtNewString(s);
   return(s);
   ENDMESSAGE(resource_userResourceFile)  
-    }
+}
 
 
 /*---------------------------------------------------------------
   resource_mergeFileIntoDatabase
   ---------------------------------------------------------------*/
 
-static char* resource_mergeFileIntoDatabase(dbP,name)
-     XrmDatabase *dbP;
-     char *name;
+static char* resource_mergeFileIntoDatabase(XrmDatabase *dbP, char *name)
 {
   char tmp[GV_MAX_FILENAME_LENGTH];
 

@@ -46,6 +46,7 @@ gv/lib/c++defs.h
 gv/lib/fcntl.h
 gv/lib/getopt.h
 gv/lib/inttypes.h
+gv/lib/stdbool.h
 gv/lib/stdlib.h
 gv/lib/sys/
 gv/lib/time.h

@@ -53,8 +53,7 @@
   media_freeMedias
 ##################################################*/
 
-void media_freeMedias(medias)
-  Media *medias;
+void media_freeMedias(Media *medias)
 {
   int i=0;
   BEGINMESSAGE(media_freeMedias)
@@ -79,8 +78,7 @@ static Media media_mallocMedia(void)
   return media;
 }
 
-Media *media_parseMedias(s)
-  char *s;
+Media *media_parseMedias(char *s)
 {
   char *c,*nl;
   Media *medias,*mmedias,media;
@@ -143,8 +141,7 @@ Media *media_parseMedias(s)
   media_numMedias
 ##################################################*/
 
-int media_numMedias(medias)
-  Media *medias;
+int media_numMedias(Media *medias)
 {
   int i;
   for (i=1; medias[i]; i++);

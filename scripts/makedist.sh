@@ -13,17 +13,25 @@ cd "$dir" || exit
 if [ ! -d "gv" ] || [ ! -d "scripts" ] ; then echo "$0: Error: gv directories not found in $dir" ; fi
 clean=yes
 dist=no
+opt=yes
+debug=no
 while [ -n "$1" ] ; do
   case "$1" in
-  --dist) dist="yes" ;;
-  --no-dist) dist="no" ;;
+  --dist) dist=yes ; opt=yes ; debug=no ;;
+  --no-dist) dist=no ;;
   --clean) clean=yes ;;
   --no-clean) clean=no ;;
+  --opt) opt=yes ;;
+  --no-opt) opt=no ;;
+  --debug) debug=yes ;;
+  --no-debug) debug=no ;;
   *) break ;;
   esac
   shift
 done
 if [ "$clean" = yes ] ; then git clean -dfx ; fi
+if [ "$opt" = yes ] ; then export CFLAGS="$CFLAGS -O2" ; fi
+if [ "$debug" = yes ] ; then export CFLAGS="$CFLAGS -g" ; fi
 cd gv || exit
 defpap=
 if [[ "$LANG" =~ ^en_US ]] && ! [[ "$*" =~ "default-papersize" ]] ; then defpap="--with-default-papersize=Letter" ; fi

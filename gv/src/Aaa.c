@@ -300,8 +300,7 @@ CvtStringToLayout (Display *dpy _GL_UNUSED, XrmValue *args _GL_UNUSED, Cardinal 
 }
 
 static void
-Destroy(w)
-   Widget w;
+Destroy(Widget w)
 {
    AaaWidget l = (AaaWidget) w;
 

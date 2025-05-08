@@ -185,10 +185,7 @@ Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardi
 /*---------------------------------------------------*/
 
 static void 
-Redisplay(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+Redisplay(Widget w, XEvent *event, Region region)
 {
   BEGINMESSAGE(Redisplay)
   PaintButtonWidget(w, event, region);
@@ -200,8 +197,7 @@ Region region;
 /*---------------------------------------------------*/
 
 static void 
-Destroy(w)
-Widget w;
+Destroy(Widget w)
 {
   ButtonWidget bw = (ButtonWidget)w;
 
@@ -215,8 +211,7 @@ Widget w;
 /* GetHighlightedBackgroundGC */
 /*---------------------------------------------------*/
 
-static void GetHighlightedBackgroundGC(bw)
-  ButtonWidget bw;
+static void GetHighlightedBackgroundGC(ButtonWidget bw)
 {
   XGCValues	values;
 
@@ -231,8 +226,7 @@ static void GetHighlightedBackgroundGC(bw)
 /* GetSetBackgroundGC */
 /*---------------------------------------------------*/
 
-static void GetSetBackgroundGC(bw)
-  ButtonWidget bw;
+static void GetSetBackgroundGC(ButtonWidget bw)
 {
   XGCValues	values;
 
@@ -248,10 +242,7 @@ static void GetSetBackgroundGC(bw)
 /*---------------------------------------------------*/
 
 static void 
-PaintButtonWidget(w, event, region)
-Widget w;
-XEvent *event;
-Region region;
+PaintButtonWidget(Widget w, XEvent *event, Region region)
 {
   ButtonWidget bw = (ButtonWidget)w;
   int wh,ww,sw,fs;
@@ -351,11 +342,7 @@ ButtonUnset(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_pa
 }
 
 void 
-ButtonReset(w,event,params,num_params)
-Widget w;
-XEvent *event;
-String *params;		/* unused */
-Cardinal *num_params;   /* unused */
+ButtonReset(Widget w, XEvent *event, String *params /* unused */, Cardinal *num_params /* unused */)
 {
   ButtonWidget bw = (ButtonWidget)w;
 

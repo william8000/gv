@@ -57,17 +57,8 @@ extern Media* gv_medias;
 /*##################################################################*/
 
 int
-doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_uncP,cmd_uncompress,scanstyle,gv_gs_safeDir)
-   FILE ** fPP;
-   Document *docP;
-   String filename;
-   String filename_raw;
-   String *filename_dscP;
-   String cmd_scan_pdf;
-   String *filename_uncP;
-   String cmd_uncompress;
-   int scanstyle;
-   int gv_gs_safeDir;
+doc_scanFile(FILE **fPP, Document *docP, String filename, String filename_raw, String *filename_dscP, String cmd_scan_pdf, String *filename_uncP,
+   String cmd_uncompress, int scanstyle, int gv_gs_safeDir)
 {
    Document d;
    int i,ret;
@@ -108,9 +99,7 @@ doc_scanFile(fPP,docP,filename,filename_raw,filename_dscP,cmd_scan_pdf,filename_
 /*##################################################################*/
 
 int
-doc_putPageInRange(d,pagenumber)
-   Document d;
-   int pagenumber;
+doc_putPageInRange(Document d, int pagenumber)
 {
    BEGINMESSAGE(doc_putPageInRange)
    if (d && d->structured) {
@@ -126,10 +115,7 @@ doc_putPageInRange(d,pagenumber)
 /*############################################################*/
 
 int 
-doc_mediaIsOk (d,pagenumber,m)
-  Document d;
-  int pagenumber;
-  int m;
+doc_mediaIsOk (Document d, int pagenumber, int m)
 {
   int r=1;
   int bbox = d ? d->nummedia : 0;
@@ -149,10 +135,7 @@ doc_mediaIsOk (d,pagenumber,m)
 /*############################################################*/
 
 int
-doc_boundingBoxOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
-  Document d;
-  int pagenumber;
-  int *llxP,*llyP,*urxP,*uryP;
+doc_boundingBoxOfPage(Document d, int pagenumber, int *llxP, int *llyP, int *urxP, int *uryP)
 {
   int *dbb = NULL;
   int retry;
@@ -189,10 +172,7 @@ doc_boundingBoxOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
 /*############################################################*/
 
 int
-doc_preferredMediaOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
-  Document d;
-  int pagenumber;
-  int *llxP,*llyP,*urxP,*uryP;
+doc_preferredMediaOfPage(Document d, int pagenumber, int *llxP, int *llyP, int *urxP, int *uryP)
 {
 # define BB_VALID (dbb[URX]>dbb[LLX] && dbb[URY]>dbb[LLY])
   int *dbb = NULL;
@@ -259,9 +239,7 @@ doc_preferredMediaOfPage(d,pagenumber,llxP,llyP,urxP,uryP)
 /*##################################################################*/
 
 int
-doc_preferredOrientationOfPage(d,page)
-   Document d;
-   int page;
+doc_preferredOrientationOfPage(Document d, int page)
 {
    int o;
 
@@ -284,9 +262,7 @@ doc_preferredOrientationOfPage(d,page)
 /*############################################################*/
 
 int
-doc_convStringToPage(d,pageLabel)
-   Document d;
-   String pageLabel;
+doc_convStringToPage(Document d, String pageLabel)
 {
    int i,j;
    int page;
@@ -311,9 +287,7 @@ doc_convStringToPage(d,pageLabel)
 /*############################################################*/
 
 XtPageOrientation
-doc_convDocOrientToXtOrient(orientation,swapLandscape)
-   int orientation;
-   int swapLandscape;
+doc_convDocOrientToXtOrient(int orientation, int swapLandscape)
 {
    XtPageOrientation ret;
 
@@ -355,8 +329,7 @@ doc_convDocOrientToXtOrient(orientation,swapLandscape)
 /*############################################################*/
 
 int
-doc_convStringToDocOrient(ostr)
-   String ostr;
+doc_convStringToDocOrient(String ostr)
 {
    int o=O_PORTRAIT;
    BEGINMESSAGE(doc_convStringToDocOrient)
@@ -381,9 +354,7 @@ SMESSAGE(ostr)
 /*############################################################*/
 
 int
-doc_convStringToPageMedia(d,mstr)
-   Document d;
-   String mstr;
+doc_convStringToPageMedia(Document d, String mstr)
 {
    int media = MEDIA_ID_INVALID;
    int i;

@@ -9,6 +9,15 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (May 2025) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+* Update prototypes for gcc 15.
+* Update configure.ac to remove some warnings.
+* Ran autoupdate for additional updates to configure.ac.
+* nightly_build.sh now cleans before opening the build log to avoid deleting it.
+* makedist.sh now builds without debug by default.
+* Update .gitignore.
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (March 2025) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 * Add NULL test from Fedora's zoom.c.bug1071238.

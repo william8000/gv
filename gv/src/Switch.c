@@ -139,11 +139,7 @@ static void ClassInitialize(void)
 /*###################################################*/
 
 void
-SwitchToggle(w,event,params,num_params)
-  Widget w;
-  XEvent *event;
-  String *params;
-  Cardinal *num_params;
+SwitchToggle(Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
   SwitchWidget sw = (SwitchWidget)w;
 
@@ -156,8 +152,7 @@ SwitchToggle(w,event,params,num_params)
   ENDMESSAGE(SwitchToggle)
 }
 
-int SwitchIsSet(w)
-  Widget w;
+int SwitchIsSet(Widget w)
 {
   SwitchWidget sw = (SwitchWidget)w;
 

@@ -1019,8 +1019,7 @@ static void Redisplay(Widget w, XEvent *event, Region region)
     Destroy
 ###############################################################################*/
 
-static void Destroy (w)
-    Widget w;
+static void Destroy (Widget w)
 {
     SCROLLBARWIDGET w;
     BEGINMESSAGE(Destroy)

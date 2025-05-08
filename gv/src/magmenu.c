@@ -60,8 +60,7 @@
   magmenu_freeMagMenuEntries
 ##################################################*/
 
-void magmenu_freeMagMenuEntries(entries)
-  MagMenuEntry *entries;
+void magmenu_freeMagMenuEntries(MagMenuEntry *entries)
 {
   int i=0;
   BEGINMESSAGE(magmenu_freeMagMenuEntries)
@@ -86,8 +85,7 @@ static MagMenuEntry magmenu_mallocMagMenuEntry(void)
   return entry;
 }
 
-MagMenuEntry *magmenu_parseMagMenuEntries(s)
-  char *s;
+MagMenuEntry *magmenu_parseMagMenuEntries(char *s)
 {
   char *c,*nl;
   MagMenuEntry *entries,*mentries,entry;
@@ -155,11 +153,7 @@ typedef struct
 #define MAG_CHECK	(1<<8)
 
 void
-magmenu_a_magMenu (w, event, params, num_params)
-   Widget w;
-   XEvent *event;
-   String *params;
-   Cardinal *num_params; 
+magmenu_a_magMenu (Widget w, XEvent *event, String *params, Cardinal *num_params)
 {
    static magMenu_data *d = (magMenu_data *)NULL;
    static int mode=MAG_INIT_0;

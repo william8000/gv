@@ -311,8 +311,7 @@ save_copyToFile(String save_filename, String src_filename, char *pagelist, int s
 /*############################################################*/
 
 String
-save_saveFile(sd)
-   SaveData sd;
+save_saveFile(SaveData sd)
 {
    char *src_fn;
    String error=NULL,s;
