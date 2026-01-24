@@ -9,6 +9,11 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+* Ran the smatch static checker.
+# Fix a label test in callbacks.c.
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (May 2025) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 * Update prototypes for gcc 15.

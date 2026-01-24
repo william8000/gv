@@ -1298,9 +1298,9 @@ cb_track(Widget w _GL_UNUSED, XtPointer client_data _GL_UNUSED, XtPointer call_d
     /* locator events have zero width and height */
     if ((p->width == 0)&&(p->height == 0)) {
         if (show_locator) {
-           static char buf[MAX_LOCATOR_LENGTH];
-           static int x,y;
-           if ((x != p->psx) || (y != p->psy) || (buf[0]='\0')) {
+           static char buf[MAX_LOCATOR_LENGTH] = { 0 };
+           static int x = 0, y = 0;
+           if ((x != p->psx) || (y != p->psy) || (buf[0] == '\0')) {
     	      sprintf(buf, app_res.locator_format, p->psx, p->psy);
               update_label(locator,buf);
            }

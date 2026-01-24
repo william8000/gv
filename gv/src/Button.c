@@ -155,7 +155,7 @@ WidgetClass buttonWidgetClass = (WidgetClass) &buttonClassRec;
 /* ClassInitialize */
 /*---------------------------------------------------*/
 
-static void ClassInitialize()
+static void ClassInitialize(void)
 {
   BEGINMESSAGE(ClassInitialize)
   XawInitializeWidgetSet();

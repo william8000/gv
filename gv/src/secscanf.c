@@ -48,7 +48,7 @@ static char* GNU_strndup (char const *s, size_t n)
    char *new = malloc (len + 1);
 
    if (new == NULL)
-   return NULL;
+      return NULL;
 
    new[len] = '\0';
    return memcpy (new, s, len);
