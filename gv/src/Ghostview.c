@@ -344,7 +344,7 @@ Message(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params
       XtCallCallbackList(w, gvw->ghostview.message_callback, "Done");
    }
     
-    if(!gvw->ghostview.use_bpixmap){
+   if(!gvw->ghostview.use_bpixmap){
       if(!pix) {
         StopInterpreter(w);
         Realize_pixmap(w);
@@ -352,7 +352,7 @@ Message(Widget w, XEvent *event, String *params _GL_UNUSED, Cardinal *num_params
       } else {
         Copy_pixmap(w);
       }
-    }      
+   }      
    ENDMESSAGE(Message)
 }
 
@@ -1354,15 +1354,15 @@ StartInterpreter(Widget w)
 
     BEGINMESSAGE(StartInterpreter)
 
-  if(w == page && !gvw->ghostview.use_bpixmap) {
+    if(w == page && !gvw->ghostview.use_bpixmap) {
 /*    printf("StartInterpreter on page\n"); */
-    SetProperty(w,None);
-    if (!pix) SetBackground(w,True); 
-  }
+      SetProperty(w,None);
+      if (!pix) SetBackground(w,True); 
+    }
     else {
 /*    printf("StartInterpreter old\n"); */
-    SetBackground(w,True);
-  }
+      SetBackground(w,True);
+    }
 
     StopInterpreter(w);
 

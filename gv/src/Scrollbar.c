@@ -1341,9 +1341,9 @@ static void MoveThumb(Widget w, XEvent *event, String *params _GL_UNUSED, Cardin
    position = PUT_IN_RANGE(tosr,position,bosr);
 
    if (SCROLLMODE != CONTINUOUS) {
-       if ((position < TOPLOC) || (position >= TOPLOC + SHOWNLENGTH)) {
-         TOP = PUT_IN_RANGE(0.0,((float)(position-tosr))/losr, 1.0-SHOWN);
-        }
+      if ((position < TOPLOC) || (position >= TOPLOC + SHOWNLENGTH)) {
+        TOP = PUT_IN_RANGE(0.0,((float)(position-tosr))/losr, 1.0-SHOWN);
+      }
       SCROLLMODE=CONTINUOUS;
    } else {
       TOP = PUT_IN_RANGE(0.0,TOP+((float)(position-old_position))/losr, 1.0-SHOWN);

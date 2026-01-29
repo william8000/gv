@@ -142,7 +142,7 @@ print_file(String print_command, String print_filename)
    INFSMESSAGE(printing:,c)
    if (SYSTEM_FAILED_ON(c)) {
      m = (strlen(printfail)+strlen(c)+1)*sizeof(char);
-       error = (char*) XtMalloc(m);
+     error = (char*) XtMalloc(m);
      sprintf(error,printfail,c); 
    }
    XtFree(c);

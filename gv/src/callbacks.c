@@ -179,7 +179,7 @@ XTextProperty* char_to_xtp ( Display* dpy, char* s ) {
 		tp.nitems = strlen (s);
 		free_prop = False;
 	}
-    return &tp;
+	return &tp;
 }
 
 void

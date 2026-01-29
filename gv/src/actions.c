@@ -634,7 +634,8 @@ break_movePage:
     INFMESSAGE1(interrupting due to wrong event type)
     initialized = False;
     gv_scroll_mode = SCROLL_MODE_NONE;
-    ENDMESSAGE1(action_movePage) return;
+    ENDMESSAGE1(action_movePage)
+    return;
 }
 
 /*##################################################################*/

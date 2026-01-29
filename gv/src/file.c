@@ -103,7 +103,7 @@ file_locateFilename(char *path)
    BEGINMESSAGE(file_locateFileName)
    if (path) {
 
-         tmp = strrchr(path,'/');
+      tmp = strrchr(path,'/');
 
       if (!tmp) tmp=path;
       else tmp++;
