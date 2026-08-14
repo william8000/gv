@@ -81,6 +81,55 @@ GV*optiongvPopup*Label.shadowWidth:	0
 GV*optionsetupPopup*Label.shadowWidth:	0
 GV*confirmPopup*message1.shadowWidth:	0
 
+!##### Precomputed Xaw3d shadow colours
+!  Without these, every 3D widget derives its shadows at realize time with an
+!  XQueryColor plus an XAllocColor per shadow, about 520 blocking X round trips.
+!  That dominates startup over a high latency link: ~35 s at 50 ms RTT,
+!  versus ~6 s with these set.
+!    top    = background * (100 + topShadowContrast)    / 100 (default 20)
+!    bottom = background * (100 - bottomShadowContrast) / 100 (default 40)
+!  GV*Label* sets the contrasts to -40/-20, which swaps top and bottom.
+!  Keep these in step with the background resources below.
+
+GV*topShadowPixel:			#da0cda0cda0c
+GV*bottomShadowPixel:			#6d066d066d06
+GV*Button.topShadowPixel:		#f6f6e74cd406
+GV*Button.bottomShadowPixel:		#7b7b73a66a03
+GV.?.Button.topShadowPixel:		#f6f6e74cd406
+GV.?.Button.bottomShadowPixel:		#7b7b73a66a03
+GV*Switch.topShadowPixel:		#f6f6e74cd406
+GV*Switch.bottomShadowPixel:		#7b7b73a66a03
+GV*MButton*topShadowPixel:		#f6f6e74cd406
+GV*MButton*bottomShadowPixel:		#7b7b73a66a03
+GV*SimpleMenu*topShadowPixel:		#f6f6e74cd406
+GV*SimpleMenu*bottomShadowPixel:	#7b7b73a66a03
+GV*Text.topShadowPixel:			#fe30da0cda0c
+GV*Text.bottomShadowPixel:		#7f186d066d06
+GV*newtoc.topShadowPixel:		#efbbefbbefbb
+GV*newtoc.bottomShadowPixel:		#77dd77dd77dd
+GV*fileSel*list.topShadowPixel:		#efbbefbbefbb
+GV*fileSel*list.bottomShadowPixel:	#77dd77dd77dd
+GV*panner.topShadowPixel:		#c7fac7fac7fa
+GV*panner.bottomShadowPixel:		#63fd63fd63fd
+GV*Label.topShadowPixel:		#7b7b73a66a03
+GV*Label.bottomShadowPixel:		#f6f6e74cd406
+GV*locator*topShadowPixel:		#63fd63fd63fd
+GV*locator*bottomShadowPixel:		#c7fac7fac7fa
+GV*optionfsPopup*Label.topShadowPixel:		#6d066d066d06
+GV*optionfsPopup*Label.bottomShadowPixel:	#da0cda0cda0c
+GV*optiongsPopup*Label.topShadowPixel:		#6d066d066d06
+GV*optiongsPopup*Label.bottomShadowPixel:	#da0cda0cda0c
+GV*optiongvPopup*Label.topShadowPixel:		#6d066d066d06
+GV*optiongvPopup*Label.bottomShadowPixel:	#da0cda0cda0c
+GV*optionsetupPopup*Label.topShadowPixel:	#6d066d066d06
+GV*optionsetupPopup*Label.bottomShadowPixel:	#da0cda0cda0c
+GV*confirmPopup*message1.topShadowPixel:	#6d066d066d06
+GV*confirmPopup*message1.bottomShadowPixel:	#da0cda0cda0c
+GV*confirmPopup*message3.topShadowPixel:	#7f186d066d06
+GV*confirmPopup*message3.bottomShadowPixel:	#fe30da0cda0c
+GV*notePopup*message.topShadowPixel:		#7f186d066d06
+GV*notePopup*message.bottomShadowPixel:		#fe30da0cda0c
+
 !##### Frames
 
 GV*Frame.frameType:			sunken
