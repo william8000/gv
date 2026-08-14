@@ -78,7 +78,9 @@ PostScript and PDF viewer.\n\
   [-]-spartan                         shortcut for --style=gv_spartan.dat\n\
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
   [-]-hidpi                           shortcut for --style=gv_hidpi.dat, doubling the size of\n\
-                                      the widgets and fonts for 4K and other high DPI displays\n\
+                                      the widgets and fonts for 4K and other high DPI displays.\n\
+                                      Used automatically on displays of more than 144 dpi\n\
+  [-]-nohidpi                         do not use gv_hidpi.dat automatically\n\
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)\n\
   [-]-presentation                    Presentation mode (fullscreen, Fit to window,\n\
                                       widgetless and no resizing of window)\n\

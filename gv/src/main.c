@@ -183,6 +183,7 @@ enum
     SPARTAN_ARG,
     WIDGETLESS_ARG,
     HIDPI_ARG,
+    NOHIDPI_ARG,
     USAGE_ARG,
     VERSION_ARG
   };
@@ -235,6 +236,7 @@ static struct option const GNU_longOptions[] =
     {"spartan", no_argument, NULL, SPARTAN_ARG},
     {"widgetless", no_argument, NULL, WIDGETLESS_ARG},
     {"hidpi", no_argument, NULL, HIDPI_ARG},
+    {"nohidpi", no_argument, NULL, NOHIDPI_ARG},
     {"version", no_argument, NULL, VERSION_ARG},
     {NULL, 0, NULL, 0}
   };
@@ -397,6 +399,7 @@ int main(int argc, char *argv[])
     spartan_p = 0;
     widgetless_p = 0;
     hidpi_p = 0;
+    nohidpi_p = 0;
     center_p = 0;
     nocenter_p = 0;
     scale_p = 0;
@@ -671,6 +674,10 @@ int main(int argc, char *argv[])
 
 	 case HIDPI_ARG:
 	   hidpi_p = 1;
+	   break;
+
+	 case NOHIDPI_ARG:
+	   nohidpi_p = 1;
 	   break;
 
 	 case VERSION_ARG:

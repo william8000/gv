@@ -129,7 +129,9 @@ PostScript and PDF viewer.
   [-]-spartan                         shortcut for --style=gv_spartan.dat
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat
   [-]-hidpi                           shortcut for --style=gv_hidpi.dat, doubling the size of
-                                      the widgets and fonts for 4K and other high DPI displays
+                                      the widgets and fonts for 4K and other high DPI displays.
+                                      Used automatically on displays of more than 144 dpi
+  [-]-nohidpi                         do not use gv_hidpi.dat automatically
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)
   [-]-presentation                    Presentation mode (fullscreen, Fit to window,
                                       widgetless and no resizing of window)
@@ -246,9 +248,15 @@ may be used by document creators to trigger gv
 remotely.
 @item --widgetless
 This is a shortcut for @code{--style=gv_widgetless.dat}.
-@item --hidpi
-This is a shortcut for @code{--style=gv_hidpi.dat}, a style which doubles
-the size of the widgets and fonts for 4K and other high DPI displays.
+@item --hidpi, --nohidpi
+@code{--hidpi} is a shortcut for @code{--style=gv_hidpi.dat}, a style which
+doubles the size of the widgets and fonts for 4K and other high DPI displays.
+
+gv uses this style on its own when the RANDR extension reports an output of
+more than 144 dots per inch, unless another style has already been chosen on
+the command line or by a @emph{style} resource. @code{--nohidpi} switches the
+automatic selection off, as does a @emph{hidpi} resource of @code{False};
+a @emph{hidpi} resource of @code{True} always selects the style.
 @end table
 
 @node Resources, Mouse and key bindings, Invoking gv, Top

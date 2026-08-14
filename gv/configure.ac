@@ -357,6 +357,7 @@ CPPFLAGS="$myCPPFLAGS"
 
 
 AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
+AC_CHECK_LIB(Xrandr, XRRQueryExtension, , , $X_LIBS)
 
 
 #################### END: X11 related stuff ######################

@@ -46,6 +46,9 @@
 
 #include "paths.h"
 #include INC_X11(Intrinsic.h)
+#ifdef HAVE_LIBXRANDR
+   #include INC_EXT(Xrandr.h)
+#endif
 
 #include "types.h"
 #include "config.h"
@@ -108,6 +111,73 @@ static char* resource_mergeFileIntoDatabase(XrmDatabase*,char*);
 
 extern int debug_p;
 
+
+/*#######################################################
+  resource_displayIsHiDPI
+
+  Returns 1 if any output of the display has a resolution
+  of more than 144 dots per inch.  The core protocol is of
+  no use here since many servers report a made up physical
+  screen size which works out at exactly 96 dpi.
+  #######################################################*/
+
+#ifdef HAVE_LIBXRANDR
+static int
+resource_displayIsHiDPI (Display *display)
+{
+  XRRScreenResources *screenRes;
+  int event_base, error_base;
+  int hidpi = 0;
+  int i;
+
+  BEGINMESSAGE(resource_displayIsHiDPI)
+  if (!XRRQueryExtension(display, &event_base, &error_base)) {
+    INFMESSAGE(display has no RANDR extension)
+    ENDMESSAGE(resource_displayIsHiDPI)
+    return 0;
+  }
+  screenRes = XRRGetScreenResources(display, RootWindow(display, DefaultScreen(display)));
+  if (!screenRes) {
+    INFMESSAGE(unable to get the screen resources)
+    ENDMESSAGE(resource_displayIsHiDPI)
+    return 0;
+  }
+
+  for (i = 0; i < screenRes->noutput; i++) {
+    XRROutputInfo *outputInfo;
+    XRRCrtcInfo *crtcInfo;
+
+    outputInfo = XRRGetOutputInfo(display, screenRes, screenRes->outputs[i]);
+    if (!outputInfo) continue;
+    if (outputInfo->crtc &&
+        (crtcInfo = XRRGetCrtcInfo(display, screenRes, outputInfo->crtc))) {
+      double width_in  = outputInfo->mm_width  / 25.4;
+      double height_in = outputInfo->mm_height / 25.4;
+      double dpi_x = (width_in  < 1) ? 0 : (crtcInfo->width  / width_in);
+      double dpi_y = (height_in < 1) ? 0 : (crtcInfo->height / height_in);
+
+      if (debug_p)
+        printf("Output %s: %d x %d pixels, %.2f x %.2f inches, %.2f x %.2f dpi\n",
+               outputInfo->name, (int)crtcInfo->width, (int)crtcInfo->height,
+               width_in, height_in, dpi_x, dpi_y);
+      if (dpi_x > 144 || dpi_y > 144) hidpi = 1;
+      XRRFreeCrtcInfo(crtcInfo);
+    }
+    XRRFreeOutputInfo(outputInfo);
+  }
+  XRRFreeScreenResources(screenRes);
+
+  if (debug_p) printf("Your display %s a high resolution display.\n", hidpi ? "is" : "is not");
+  ENDMESSAGE(resource_displayIsHiDPI)
+  return hidpi;
+}
+#else
+static int
+resource_displayIsHiDPI (Display *display _GL_UNUSED)
+{
+  return 0;
+}
+#endif
 
 /*#######################################################
   resource_freeData
@@ -488,16 +558,32 @@ resource_buildDatabase (
       resource_putResource (&db, app_name, ".style", widgetless_filename);
       XtFree (widgetless_filename);
     }
-  if (hidpi_p)
-    {
-      char *hidpi_filename = (char *)
-	XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_hidpi.dat") + 1);
-      hidpi_filename[0] = '\0';
-      strcat(hidpi_filename, GV_LIBDIR);
-      strcat(hidpi_filename, "/gv_hidpi.dat");
-      resource_putResource (&db, app_name, ".style", hidpi_filename);
-      XtFree (hidpi_filename);
-    }
+  {
+    /* --hidpi and --nohidpi win over the hidpi resource, which in turn
+       wins over the automatic detection.  Detection is skipped when a
+       style has already been selected, be it on the command line or by
+       a style resource of the user. */
+    int use_hidpi = hidpi_p;
+
+    if (!hidpi_p && !nohidpi_p)
+      {
+        s = resource_getResource(db,app_class,app_name,"hidpi","Hidpi");
+        if (s)
+          use_hidpi = !strcasecmp(s,"true");
+        else if (!resource_getResource(db,app_class,app_name,"style","Style"))
+          use_hidpi = resource_displayIsHiDPI(display);
+      }
+    if (use_hidpi)
+      {
+        char *hidpi_filename = (char *)
+	  XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_hidpi.dat") + 1);
+        hidpi_filename[0] = '\0';
+        strcat(hidpi_filename, GV_LIBDIR);
+        strcat(hidpi_filename, "/gv_hidpi.dat");
+        resource_putResource (&db, app_name, ".style", hidpi_filename);
+        XtFree (hidpi_filename);
+      }
+  }
   if (quiet_p)
     {
       resource_putResource (&db, app_name, ".gsQuiet", "True");

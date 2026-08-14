@@ -13,6 +13,7 @@ by a '#' or a '*' or a '?'. A
 
 # Add resources for shadows to reduce Xaw3d startup time.
 # Add a --hidpi style which doubles the size of the widgets and fonts.
+# Use the --hidpi style automatically on displays of more than 144 dpi.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
