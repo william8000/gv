@@ -1,0 +1,259 @@
+!
+!##########################################################
+!##### gv_hidpi.dat
+!#####
+!##### Style for high resolution displays: every size, margin
+!##### and font is roughly doubled with respect to the stock
+!##### resources.  Intended for 4K and other high DPI screens,
+!##### or for anyone who simply wants a larger interface.
+!#####
+!##### Selected with 'gv --hidpi' or 'gv --style=gv_hidpi.dat'.
+!#####
+!##### Specifications must match the stock ones exactly,
+!##### including the binding: Xrm prefers a tight binding ('.')
+!##### over a loose one ('*'), so a loose override never
+!##### replaces a stock tight specification.
+!##########################################################
+
+!##### General
+
+GV*highlightThickness:			2
+
+!##### Shadows
+
+GV*shadowWidth:				4
+GV*Label.shadowWidth:			2
+
+!##### Border
+
+GV*page.borderWidth:			2
+GV*SimpleMenu.borderWidth:		2
+GV*infoPopup*Text.borderWidth:		2
+
+!##### View Area
+
+GV*viewFrame.hSpace:			2
+GV*viewFrame.vSpace:			2
+GV*viewClip.borderWidth:		2
+
+!##### Scrollbar widget
+
+GV*Scrollbar.thickness:			34
+
+!##### Menus
+
+GV*magMenu*VertSpace:			30
+GV*magMenu*leftMargin:			60
+GV*magMenu*rightMargin:			60
+
+!##### File Selection widget
+
+GV*fileSel.filterframe.hSpace:		8
+GV*fileSel.filterframe*Text*Margin:	8
+GV*fileSel.pathframe.hSpace:		8
+GV*fileSel.pathframe*Text*Margin:	12
+
+GV*fileSel*topframe.forcedWidth:	200
+GV*fileSel*subframe.forcedWidth:	200
+
+GV*fileSel*Scrollbar.width:		24
+GV*fileSel*Scrollbar.shadowWidth:	2
+
+GV*fileSel.minimumWidth:		800
+GV*fileSel.height:			700
+GV*fileSelPopup.minWidth:		700
+GV*fileSelPopup.minHeight:		400
+
+!##### Zoom Popup
+
+GV*zoomControl.maximumWidth:		1200
+GV*zoomControl.maximumHeight:		1200
+
+!##### Version Popup
+
+GV*versionPopup*Label.internalHeight:	12
+GV*versionPopup*Label.internalWidth:	16
+
+!##### Info Popup
+
+GV*infoPopup.geometry:			+100+100
+
+!##### Dialog Popup
+
+GV*dialogPopup*message.internalHeight:	4
+GV*dialogPopup*message.internalWidth:	16
+GV*dialogPopup*defaultDistance:		4
+
+!##### Note Popup
+
+GV*notePopup*message.internalHeight:	12
+GV*notePopup*message.internalWidth:	16
+
+!##### Confirm Popup
+
+GV*confirmPopup*Label.internalHeight:	12
+GV*confirmPopup*Label.internalWidth:	16
+
+!##### OptionsFS Popup
+
+GV*optionfsPopup*defaultDistance:	4
+GV*optionfsPopup*Text*leftMargin:	16
+GV*optionfsPopup*filters.Margin:	16
+GV*optionfsPopup*dirs.Margin:		16
+GV*optionfsPopup*filters.height:	240
+GV*optionfsPopup*dirs.height:		240
+
+!##### OptionsGS Popup
+
+GV*optiongsPopup*defaultDistance:	4
+GV*optiongsPopup*Text*Margin:		10
+
+!##### OptionsSetup Popup
+
+GV*optionsetupPopup*defaultDistance:	4
+GV*optionsetupPopup*Text*leftMargin:	16
+GV*optionsetupPopup*scales.Margin:	16
+GV*optionsetupPopup*scalesFrame.forcedWidth:	460
+GV*optionsetupPopup*mediasFrame.forcedWidth:	480
+GV*optionsetupPopup*mediasFrame.forcedHeight:	800
+
+!##### Panner
+
+GV*pannerFrame.shadowWidth:		2
+GV*panner.width:			100
+GV*panner.height:			100
+
+GV*slider.shadowWidth:			2
+
+!##### Miscellaneous
+
+GV*stateButton*menu*leftMargin:		40
+GV*orientationButton*menu*leftMargin:	40
+GV*pagemediaButton*menu*leftMargin:	40
+GV*scaleButton*menu*leftMargin:		40
+GV.control.prevPage*internalHeight:	8
+GV.control.nextPage*internalHeight:	8
+GV*locator*internalHeight:		6
+
+!##### Fonts
+
+GV*font:			-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*SmeBSB.font:			-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*Button.font:			-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV.?.processButton.font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.Label*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.Button*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.locator*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.fileButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.stateButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.pageButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*orientationButton*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*scaleButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.pagemediaButton*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.dateButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.titleButton*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongvPopup*infoVerboseButton.font:-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.infoVerboseButton*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.prevPage*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV.?.nextPage*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*saveAll*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*autoResize*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*newtoc.font:			-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*fileSel*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*fileSel*button1.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*fileSel*button2.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*fileSel*button3.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*fileSel*button4.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*fileSel*pathtext*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*optionsetupPopup*Label*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionsetupPopup*confirmButton.font:-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionsetupPopup*Switch*font:-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionsetupPopup*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionsetupPopup*Button.font:-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*optiongvPopup*Label*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongvPopup*Switch*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongvPopup*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongvPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*optionfsPopup*Label*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionfsPopup*Switch*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionfsPopup*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optionfsPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*optiongsPopup*Label*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongsPopup*Switch*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongsPopup*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*optiongsPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*dialogPopup*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*dialogPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*dialogPopup*message*font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*notePopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*notePopup*message*font:	-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*confirmPopup*font:		-*-Helvetica-Medium-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*confirmPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*versionPopup*Label*font:	-*-Courier-Medium-R-Normal--*-240-*-*-M-*-ISO8859-1
+GV*versionPopup*versionTexta*font:-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+GV*versionPopup*versionTextb*font:-*-Helvetica-Bold-R-Normal--*-240-*-*-P-*-ISO8859-1
+
+GV*infoPopup*Text*font:		-*-Courier-Medium-R-Normal--*-240-*-*-M-*-ISO8859-1
+
+!##### FontSets
+
+GV*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*SmeBSB.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.processButton.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.stateButton*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.Button*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.locator*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.dateButton*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.titleButton*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongvPopup*infoVerboseButton.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.infoVerboseButton*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.prevPage*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV.?.nextPage*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*newtoc.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*button1.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*button2.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*button3.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*button4.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*fileSel*pathtext*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionsetupPopup*Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionsetupPopup*confirmButton.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionsetupPopup*Switch*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionsetupPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionsetupPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongvPopup*Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongvPopup*Switch*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongvPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongvPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionfsPopup*Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionfsPopup*Switch*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionfsPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optionfsPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongsPopup*Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongsPopup*Switch*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongsPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*optiongsPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*dialogPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*dialogPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*dialogPopup*message*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*notePopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*notePopup*message*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*confirmPopup*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*confirmPopup*Button.fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*versionPopup*Label*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*versionPopup*versionTexta*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*versionPopup*versionTextb*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*
+GV*infoPopup*Text*fontSet: -efont-biwidth-medium-r-normal--32-*-*-*-*-*-iso10646-1,-gnu-unifont-medium-r-normal--32-*-*-*-*-*-iso10646-1,-adobe-helvetica-medium-r-normal--28-*-*-*-*-*-*-*,-jis-fixed-medium-r-*--32-*-*-*-*-*-jisx0208.1983-0,-*-*-medium-r-*--32-*-*-*-*-*-*-*,*

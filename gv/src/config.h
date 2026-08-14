@@ -72,6 +72,9 @@ Inline copies of optional external files.
 
 #   define FALLBACK_STYLE_2_DAT         "gv_widgetless.dat"
 #   define FALLBACK_STYLE_2_H           "gv_widgetless.h"
+
+#   define FALLBACK_STYLE_3_DAT         "gv_hidpi.dat"
+#   define FALLBACK_STYLE_3_H           "gv_hidpi.h"
 #endif
 
 #define FALLBACK_ICON_PIXMAP         "gv_icon.xbm"

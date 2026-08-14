@@ -77,6 +77,8 @@ PostScript and PDF viewer.\n\
   [-]-password=PASSWORD               Sets the password for opening encrypted PDF files\n\
   [-]-spartan                         shortcut for --style=gv_spartan.dat\n\
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat\n\
+  [-]-hidpi                           shortcut for --style=gv_hidpi.dat, doubling the size of\n\
+                                      the widgets and fonts for 4K and other high DPI displays\n\
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)\n\
   [-]-presentation                    Presentation mode (fullscreen, Fit to window,\n\
                                       widgetless and no resizing of window)\n\

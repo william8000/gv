@@ -488,6 +488,16 @@ resource_buildDatabase (
       resource_putResource (&db, app_name, ".style", widgetless_filename);
       XtFree (widgetless_filename);
     }
+  if (hidpi_p)
+    {
+      char *hidpi_filename = (char *)
+	XtMalloc (strlen(GV_LIBDIR) + strlen ("/gv_hidpi.dat") + 1);
+      hidpi_filename[0] = '\0';
+      strcat(hidpi_filename, GV_LIBDIR);
+      strcat(hidpi_filename, "/gv_hidpi.dat");
+      resource_putResource (&db, app_name, ".style", hidpi_filename);
+      XtFree (hidpi_filename);
+    }
   if (quiet_p)
     {
       resource_putResource (&db, app_name, ".gsQuiet", "True");

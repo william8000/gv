@@ -128,6 +128,8 @@ PostScript and PDF viewer.
   [-]-password=PASSWORD               Sets the password for opening encrypted PDF files
   [-]-spartan                         shortcut for --style=gv_spartan.dat
   [-]-widgetless                      shortcut for --style=gv_widgetless.dat
+  [-]-hidpi                           shortcut for --style=gv_hidpi.dat, doubling the size of
+                                      the widgets and fonts for 4K and other high DPI displays
   [-]-fullscreen                      start in fullscreen mode (needs support from WM)
   [-]-presentation                    Presentation mode (fullscreen, Fit to window,
                                       widgetless and no resizing of window)
@@ -244,6 +246,9 @@ may be used by document creators to trigger gv
 remotely.
 @item --widgetless
 This is a shortcut for @code{--style=gv_widgetless.dat}.
+@item --hidpi
+This is a shortcut for @code{--style=gv_hidpi.dat}, a style which doubles
+the size of the widgets and fonts for 4K and other high DPI displays.
 @end table
 
 @node Resources, Mouse and key bindings, Invoking gv, Top

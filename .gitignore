@@ -24,6 +24,7 @@ gv/src/gv
 gv/src/GV.ad
 gv/src/gv_class.ad
 gv/src/gv_class.h
+gv/src/gv_hidpi.h
 gv/src/gv_intern_res_unix.dat
 gv/src/gv_intern_res_unix.h
 gv/src/gv_make_res.dat

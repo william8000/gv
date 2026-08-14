@@ -12,6 +12,7 @@ by a '#' or a '*' or a '?'. A
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Aug 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Add resources for shadows to reduce Xaw3d startup time.
+# Add a --hidpi style which doubles the size of the widgets and fonts.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

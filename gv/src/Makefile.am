@@ -9,7 +9,7 @@ bin_PROGRAMS = gv
 bin_SCRIPTS = gv-update-userconfig
 pkgdata_DATA = gv_system.ad
 if !ENABLE_FALLBACK_STYLES
-pkgdata_DATA += gv_spartan.dat gv_widgetless.dat
+pkgdata_DATA += gv_spartan.dat gv_widgetless.dat gv_hidpi.dat
 endif
 
 appdefaultsdir = $(pkgdatadir)
@@ -19,7 +19,7 @@ appdefaults_DATA = ../GV
 EXTRA_DIST=ad2c gv_font_res.dat gv_font_res-I18N_mb.dat gv_layout_res.dat gv-i18n.pl gv_misc_res.dat Aaa_bison.yacc \
            gv_current.xbm gv_doc.xbm gv_empty.xbm gv_even.xbm gv_icon.xbm gv_odd.xbm \
            gv_selected.xbm gv_unmark.xbm $(srcdir)/nls/* \
-	   gv_spartan.dat gv_widgetless.dat gv_user_res.dat gv_copyright.dat
+	   gv_spartan.dat gv_widgetless.dat gv_hidpi.dat gv_user_res.dat gv_copyright.dat
 
 # Clean files
 CLEANFILES = ../GV \
@@ -28,6 +28,7 @@ CLEANFILES = ../GV \
              gv_user.ad \
              gv_spartan.h \
              gv_widgetless.h \
+             gv_hidpi.h \
              gv_intern_res_unix.h \
              gv_class.ad \
              gv_class.h \
@@ -150,7 +151,7 @@ gv_SOURCES = Aaa.c \
              gv-i18n.h \
              gv-update-userconfig.in
 
-BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_intern_res_unix.h gv_class.h gv-i18n.h
+BUILT_SOURCES = gv_spartan.h gv_widgetless.h gv_hidpi.h gv_intern_res_unix.h gv_class.h gv-i18n.h
 
 
 # Additional rules for generating styles
@@ -186,6 +187,9 @@ gv_spartan.h : $(srcdir)/gv_spartan.dat
 
 gv_widgetless.h : $(srcdir)/gv_widgetless.dat
 	@sh $(srcdir)/ad2c $(srcdir)/gv_widgetless.dat > gv_widgetless.h
+
+gv_hidpi.h : $(srcdir)/gv_hidpi.dat
+	@sh $(srcdir)/ad2c $(srcdir)/gv_hidpi.dat > gv_hidpi.h
 
 gv_intern_res_unix.h : gv_intern_res_unix.dat
 	@echo "creating gv_intern_res_unix.h"
