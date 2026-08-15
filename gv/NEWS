@@ -11,7 +11,7 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Aug 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Add resources for shadows to reduce Xaw3d startup time by a factor of 10 on high-latency connections.
+# Add resources for shadows to reduce Xaw3d startup time by a factor of 6 on high-latency connections.
 # Add a --hidpi style which doubles the size of the widgets and fonts.
 # Use the --hidpi style automatically on displays of more than 144 dpi.
 # Add a --nohidpi option to suppress hidpi detection.
