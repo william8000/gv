@@ -22,6 +22,7 @@ by a '#' or a '*' or a '?'. A
 # Draw the bitmap of an insensitive button in gray instead of letting Xaw3d stipple it through Xpm, removing 20 X11 round trips from the first paint.
 # Add an insensitiveForeground resource to the Button widget for the color of the bitmap of an insensitive button.
 * Share the dpi computation of resource_displayIsHiDPI between the monitor and the output path.
+* Fix a C23 warning from the const return from strrchr in file_getTmpFilename in file.c.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -127,16 +127,17 @@ file_getTmpFilename(const char *baseDirectory, const char *baseFilename, int *fi
    char *tmpName;
    char *tmpExt;
    char *pos;
+   const char *dirEnd;
    int len;
 
    BEGINMESSAGE(file_getTmpFilename)
 
    if (baseDirectory)
-	pos = strrchr(baseDirectory, '/');
+	dirEnd = strrchr(baseDirectory, '/');
    else
-	pos = NULL;
-   if (pos) {
-	len = pos - baseDirectory;
+	dirEnd = NULL;
+   if (dirEnd) {
+	len = dirEnd - baseDirectory;
    } else {
 	baseDirectory = app_res.scratch_dir;
 	len = strlen(baseDirectory);
