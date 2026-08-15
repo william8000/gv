@@ -11,10 +11,17 @@ by a '#' or a '*' or a '?'. A
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Aug 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Add resources for shadows to reduce Xaw3d startup time by a factor of 6 on high-latency connections.
+# Add resources for shadows to reduce Xaw3d startup time by a factor of 6 on high-latency connections, removing 500 of gv's 621 startup X11 round trips.
 # Add a --hidpi style which doubles the size of the widgets and fonts.
 # Use the --hidpi style automatically on displays of more than 144 dpi.
 # Add a --nohidpi option to suppress hidpi detection.
+# Compute the pixel value of a "#rrggbb" color in gv instead of asking the X server for it, removing 25 X11 round trips from startup.
+* Write the colors in the resource files as hex values with the color name in a comment.
+# Detect hidpi displays with a single XRRGetMonitors request instead of a request per output, removing 7 X11 round trips from startup.
+* Intern the atoms for the window title once instead of on every title change.
+# Draw the bitmap of an insensitive button in gray instead of letting Xaw3d stipple it through Xpm, removing 20 X11 round trips from the first paint.
+# Add an insensitiveForeground resource to the Button widget for the color of the bitmap of an insensitive button.
+* Share the dpi computation of resource_displayIsHiDPI between the monitor and the output path.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

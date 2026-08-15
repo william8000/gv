@@ -123,5 +123,7 @@ GV.magMenu:		2,	2	\n\
 
 !##### Ghostview Widget
 
-GV*Ghostview.background:		white
-GV*Ghostview.foreground:		black
+!  white
+GV*Ghostview.background:		#ffffff
+!  black
+GV*Ghostview.foreground:		#000000

@@ -51,6 +51,8 @@
 #define XtCSetBackground "SetBackground"
 #define XtNunsetBackground "unsetBackground"
 #define XtCUnsetBackground "UnsetBackground"
+#define XtNinsensitiveForeground "insensitiveForeground"
+#define XtCInsensitiveForeground "InsensitiveForeground"
 
 extern WidgetClass buttonWidgetClass;
 

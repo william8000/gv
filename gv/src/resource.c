@@ -115,18 +115,42 @@ extern int debug_p;
 /*#######################################################
   resource_displayIsHiDPI
 
-  Returns 1 if any output of the display has a resolution
-  of more than 144 dots per inch.  The core protocol is of
+  Returns 1 if any monitor or output of the display has a
+  resolution of more than 144 dpi.  The core protocol is of
   no use here since many servers report a made up physical
   screen size which works out at exactly 96 dpi.
   #######################################################*/
 
 #ifdef HAVE_LIBXRANDR
+/*#######################################################
+  resource_sizeIsHiDPI
+
+  Prints the size of one monitor or output when debugging
+  and returns 1 if it works out at more than 144 dpi.
+  #######################################################*/
+
+static int
+resource_sizeIsHiDPI (const char *what, int width, int height, int mm_width, int mm_height)
+{
+  double width_in  = mm_width  / 25.4;
+  double height_in = mm_height / 25.4;
+  double dpi_x = (width_in  < 1) ? 0 : (width  / width_in);
+  double dpi_y = (height_in < 1) ? 0 : (height / height_in);
+
+  if (debug_p)
+    printf("%s: %d x %d pixels, %.2f x %.2f inches, %.2f x %.2f dpi\n",
+           what, width, height, width_in, height_in, dpi_x, dpi_y);
+  return (dpi_x > 144 || dpi_y > 144);
+}
+
 static int
 resource_displayIsHiDPI (Display *display)
 {
   XRRScreenResources *screenRes;
+  Window root;
+  char what[64];
   int event_base, error_base;
+  int have_result = 0;
   int hidpi = 0;
   int i;
 
@@ -136,36 +160,60 @@ resource_displayIsHiDPI (Display *display)
     ENDMESSAGE(resource_displayIsHiDPI)
     return 0;
   }
-  screenRes = XRRGetScreenResources(display, RootWindow(display, DefaultScreen(display)));
-  if (!screenRes) {
-    INFMESSAGE(unable to get the screen resources)
-    ENDMESSAGE(resource_displayIsHiDPI)
-    return 0;
-  }
+  root = RootWindow(display, DefaultScreen(display));
 
-  for (i = 0; i < screenRes->noutput; i++) {
-    XRROutputInfo *outputInfo;
-    XRRCrtcInfo *crtcInfo;
+#ifdef HAVE_XRRGETMONITORS
+  /* RANDR 1.5 reports the size of every monitor in one request.  Asking
+     for the screen resources and then for each output costs a round trip
+     each, and makes the server probe the outputs again. */
+  {
+    int major, minor;
 
-    outputInfo = XRRGetOutputInfo(display, screenRes, screenRes->outputs[i]);
-    if (!outputInfo) continue;
-    if (outputInfo->crtc &&
-        (crtcInfo = XRRGetCrtcInfo(display, screenRes, outputInfo->crtc))) {
-      double width_in  = outputInfo->mm_width  / 25.4;
-      double height_in = outputInfo->mm_height / 25.4;
-      double dpi_x = (width_in  < 1) ? 0 : (crtcInfo->width  / width_in);
-      double dpi_y = (height_in < 1) ? 0 : (crtcInfo->height / height_in);
+    if (XRRQueryVersion(display, &major, &minor) &&
+        (major > 1 || (major == 1 && minor >= 5))) {
+      int nmonitors = 0;
+      XRRMonitorInfo *monitors = XRRGetMonitors(display, root, True, &nmonitors);
 
-      if (debug_p)
-        printf("Output %s: %d x %d pixels, %.2f x %.2f inches, %.2f x %.2f dpi\n",
-               outputInfo->name, (int)crtcInfo->width, (int)crtcInfo->height,
-               width_in, height_in, dpi_x, dpi_y);
-      if (dpi_x > 144 || dpi_y > 144) hidpi = 1;
-      XRRFreeCrtcInfo(crtcInfo);
+      if (monitors) {
+        for (i = 0; i < nmonitors; i++) {
+          snprintf(what, sizeof(what), "Monitor %d", i);
+          if (resource_sizeIsHiDPI(what, monitors[i].width, monitors[i].height,
+                                   monitors[i].mwidth, monitors[i].mheight))
+            hidpi = 1;
+        }
+        XRRFreeMonitors(monitors);
+        have_result = 1;
+      }
     }
-    XRRFreeOutputInfo(outputInfo);
   }
-  XRRFreeScreenResources(screenRes);
+#endif
+
+  if (!have_result) {
+    screenRes = XRRGetScreenResources(display, root);
+    if (!screenRes) {
+      INFMESSAGE(unable to get the screen resources)
+      ENDMESSAGE(resource_displayIsHiDPI)
+      return 0;
+    }
+
+    for (i = 0; i < screenRes->noutput; i++) {
+      XRROutputInfo *outputInfo;
+      XRRCrtcInfo *crtcInfo;
+
+      outputInfo = XRRGetOutputInfo(display, screenRes, screenRes->outputs[i]);
+      if (!outputInfo) continue;
+      if (outputInfo->crtc &&
+          (crtcInfo = XRRGetCrtcInfo(display, screenRes, outputInfo->crtc))) {
+        snprintf(what, sizeof(what), "Output %s", outputInfo->name);
+        if (resource_sizeIsHiDPI(what, (int)crtcInfo->width, (int)crtcInfo->height,
+                                 (int)outputInfo->mm_width, (int)outputInfo->mm_height))
+          hidpi = 1;
+        XRRFreeCrtcInfo(crtcInfo);
+      }
+      XRRFreeOutputInfo(outputInfo);
+    }
+    XRRFreeScreenResources(screenRes);
+  }
 
   if (debug_p) printf("Your display %s a high resolution display.\n", hidpi ? "is" : "is not");
   ENDMESSAGE(resource_displayIsHiDPI)

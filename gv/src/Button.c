@@ -52,6 +52,7 @@ static void Destroy(Widget);
 static void PaintButtonWidget(Widget,XEvent *,Region);
 static void GetSetBackgroundGC(ButtonWidget);
 static void GetHighlightedBackgroundGC(ButtonWidget);
+static void GetInsensitiveGC(ButtonWidget);
 
 /****************************************************************
  *
@@ -79,6 +80,8 @@ static XtResource resources[] = {
 	offset(button.set_background), XtRString, XtDefaultBackground},
   {XtNhighlightedBackground, XtCHighlightedBackground, XtRPixel, sizeof(Pixel),
 	offset(button.highlighted_background), XtRString, XtDefaultBackground},
+  {XtNinsensitiveForeground, XtCInsensitiveForeground, XtRPixel, sizeof(Pixel),
+	offset(button.insensitive_foreground), XtRString, (XtPointer) "#666666"},
   {XtNhighlightThickness, XtCThickness, XtRDimension, sizeof(Dimension),
         offset(command.highlight_thickness), XtRImmediate,(XtPointer)0},
   {XtNborderWidth, XtCBorderWidth, XtRDimension, sizeof(Dimension),
@@ -176,6 +179,7 @@ Initialize(Widget request _GL_UNUSED, Widget new, ArgList args _GL_UNUSED, Cardi
   BEGINMESSAGE(Initialize)
   GetSetBackgroundGC(bw);
   GetHighlightedBackgroundGC(bw);
+  GetInsensitiveGC(bw);
   bw->button.highlighted = 0;
   ENDMESSAGE(Initialize)
 }
@@ -204,6 +208,7 @@ Destroy(Widget w)
   BEGINMESSAGE(Destroy)
   XtReleaseGC(w,bw->button.set_background_GC);
   XtReleaseGC(w,bw->button.highlighted_background_GC);
+  XtReleaseGC(w,bw->button.insensitive_GC);
   ENDMESSAGE(Destroy)
 }
 
@@ -238,6 +243,21 @@ static void GetSetBackgroundGC(ButtonWidget bw)
 }
 
 /*---------------------------------------------------*/
+/* GetInsensitiveGC */
+/*---------------------------------------------------*/
+
+static void GetInsensitiveGC(ButtonWidget bw)
+{
+  XGCValues	values;
+
+  BEGINMESSAGE(GetInsensitiveGC)
+  values.foreground	= bw->button.insensitive_foreground;
+  values.background	= bw->core.background_pixel;
+  bw->button.insensitive_GC = XtGetGC((Widget)bw,(unsigned) (GCForeground | GCBackground),&values);
+  ENDMESSAGE(GetInsensitiveGC)
+}
+
+/*---------------------------------------------------*/
 /* PaintButtonWidget */
 /*---------------------------------------------------*/
 
@@ -248,6 +268,8 @@ PaintButtonWidget(Widget w, XEvent *event, Region region)
   int wh,ww,sw,fs;
   GC cgc,lgc,gc;
   Boolean set;
+  Boolean gray_bitmap;
+  Boolean sensitive = True, ancestor_sensitive = True;
 
   BEGINMESSAGE(PaintButtonWidget)
 
@@ -271,7 +293,24 @@ PaintButtonWidget(Widget w, XEvent *event, Region region)
   if (bw->label.pixmap != None) {
     bw->command.normal_GC = gc;
   }
+  /* Xaw3d grays out the bitmap of an insensitive button by reading it back
+     from the server and pushing a dimmed copy of it back, which costs five
+     round trips per button.  Draw the bitmap in the insensitive foreground
+     color instead, which costs none.  Color pixmaps are left to Xaw3d,
+     since it copies those without consulting the GC. */
+  gray_bitmap = (Boolean) (!XtIsSensitive(w) && bw->label.pixmap != None && bw->label.depth == 1);
+  if (gray_bitmap) {
+    /* Command copies this one into the label before it draws */
+    bw->command.normal_GC = bw->button.insensitive_GC;
+    sensitive = bw->core.sensitive;
+    ancestor_sensitive = bw->core.ancestor_sensitive;
+    bw->core.sensitive = bw->core.ancestor_sensitive = True;
+  }
   (*SuperClass->core_class.expose) (w, event, region);
+  if (gray_bitmap) {
+    bw->core.sensitive = sensitive;
+    bw->core.ancestor_sensitive = ancestor_sensitive;
+  }
   bw->command.set = set;
   bw->threeD.shadow_width = (Dimension) sw;
   bw->label.normal_GC = lgc;

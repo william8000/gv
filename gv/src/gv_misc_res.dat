@@ -15,55 +15,91 @@ GV.version:				gv 3.6.7.90
 
 !##### Background, Foreground
 
-GV*background:				gray71
-GV*foreground:				black
+!  gray71
+GV*background:				#b5b5b5
+!  black
+GV*foreground:				#000000
 GV*Text*background:			#D3B5B5
-GV*SimpleMenu*background:		AntiqueWhite3
-GV*locator*background:			gray65
-GV*panner*foreground:			gray78
-GV*Label.background:			AntiqueWhite3
-GV*fileSel*Frame*background:		gray78
+!  AntiqueWhite3
+GV*SimpleMenu*background:		#cdc0b0
+!  gray65
+GV*locator*background:			#a6a6a6
+!  gray78
+GV*panner*foreground:			#c7c7c7
+!  AntiqueWhite3
+GV*Label.background:			#cdc0b0
+!  gray78
+GV*fileSel*Frame*background:		#c7c7c7
 GV*fileSel*Frame*Text*background:	#D3B5B5
-GV*optiongvPopup*Toggle*foreground:	gray65
-GV*optiongsPopup*Toggle*foreground:	gray65
-GV*optionsetupPopup*Toggle*foreground:	gray65
-GV*infoPopup*Scrollbar.background:	gray71
+!  gray65
+GV*optiongvPopup*Toggle*foreground:	#a6a6a6
+!  gray65
+GV*optiongsPopup*Toggle*foreground:	#a6a6a6
+!  gray65
+GV*optionsetupPopup*Toggle*foreground:	#a6a6a6
+!  gray71
+GV*infoPopup*Scrollbar.background:	#b5b5b5
 GV*notePopup*message.background:	#D3B5B5
 
 GV*confirmPopup*message3.background:	#D3B5B5
-GV*confirmPopup*message1.background:	gray71
+!  gray71
+GV*confirmPopup*message1.background:	#b5b5b5
 
-GV*Button.background:			AntiqueWhite3
-GV*Button.highlightedBackground:	AntiqueWhite2
-GV*Button.setBackground:		AntiqueWhite4
-GV*Switch.background:			AntiqueWhite3
-GV*Switch.highlightedBackground:	AntiqueWhite4
-GV*Switch.setBackground:		AntiqueWhite2
-GV.?.Button.highlightedBackground:	AntiqueWhite2
-GV.?.Button.background:			AntiqueWhite3
-GV.?.Button.setBackground:		AntiqueWhite4
+!  AntiqueWhite3
+GV*Button.background:			#cdc0b0
+!  AntiqueWhite2
+GV*Button.highlightedBackground:	#eedfcc
+!  AntiqueWhite4
+GV*Button.setBackground:		#8b8378
+!  AntiqueWhite3
+GV*Switch.background:			#cdc0b0
+!  AntiqueWhite4
+GV*Switch.highlightedBackground:	#8b8378
+!  AntiqueWhite2
+GV*Switch.setBackground:		#eedfcc
+!  AntiqueWhite2
+GV.?.Button.highlightedBackground:	#eedfcc
+!  AntiqueWhite3
+GV.?.Button.background:			#cdc0b0
+!  AntiqueWhite4
+GV.?.Button.setBackground:		#8b8378
 
-GV*MButton*setBackground:		AntiqueWhite2
-GV*MButton*background:			AntiqueWhite3
+!  AntiqueWhite2
+GV*MButton*setBackground:		#eedfcc
+!  AntiqueWhite3
+GV*MButton*background:			#cdc0b0
 
-GV*Scrollbar.background:		gray78
-GV*Scrollbar.pointerColor:		black
-GV*Scrollbar.pointerColorBackground:	White
-GV*Scrollbar.scrollbarBackground:	gray71
-GV*Scrollbar.foreground:		gray78
+!  gray78
+GV*Scrollbar.background:		#c7c7c7
+!  black
+GV*Scrollbar.pointerColor:		#000000
+!  White
+GV*Scrollbar.pointerColorBackground:	#ffffff
+!  gray71
+GV*Scrollbar.scrollbarBackground:	#b5b5b5
+!  gray78
+GV*Scrollbar.foreground:		#c7c7c7
 GV*optionsetupPopup*Text*Scrollbar.background:gray71
 GV*optionfsPopup*Text*Scrollbar.background:gray71
 
-GV*optionfsPopup*Label.background:	gray71
-GV*optiongsPopup*Label.background:	gray71
-GV*optiongvPopup*Label.background:	gray71
-GV*optionsetupPopup*Label.background:	gray71
+!  gray71
+GV*optionfsPopup*Label.background:	#b5b5b5
+!  gray71
+GV*optiongsPopup*Label.background:	#b5b5b5
+!  gray71
+GV*optiongvPopup*Label.background:	#b5b5b5
+!  gray71
+GV*optionsetupPopup*Label.background:	#b5b5b5
 
-GV*newtocFrame*background:		gray78
-GV*newtocScroll.background:		gray78
-GV*Vlist.markBackground:		red
+!  gray78
+GV*newtocFrame*background:		#c7c7c7
+!  gray78
+GV*newtocScroll.background:		#c7c7c7
+!  red
+GV*Vlist.markBackground:		#ff0000
 GV*Vlist.selectedBackground:		#D3B5B5
-GV*Vlist.highlightedBackground:		gray65
+!  gray65
+GV*Vlist.highlightedBackground:		#a6a6a6
 
 !##### Shadows
 
@@ -71,10 +107,13 @@ GV*shadowWidth:				2
 GV*Label.shadowWidth:			1
 GV*Label*topShadowContrast:		-40
 GV*Label*bottomShadowContrast:		-20
-GV*Scrollbar.TopShadowPixel:		gray90
-GV*Scrollbar.BottomShadowPixel:		gray40
+!  gray90
+GV*Scrollbar.TopShadowPixel:		#e5e5e5
+!  gray40
+GV*Scrollbar.BottomShadowPixel:		#666666
 GV*newtoc.shadowWidth:			0
-GV*newtocScroll.bottomShadowPixel:	gray40
+!  gray40
+GV*newtocScroll.bottomShadowPixel:	#666666
 GV*optionfsPopup*Label.shadowWidth:	0
 GV*optiongsPopup*Label.shadowWidth:	0
 GV*optiongvPopup*Label.shadowWidth:	0
@@ -133,8 +172,10 @@ GV*notePopup*message.bottomShadowPixel:		#fe30da0cda0c
 !##### Frames
 
 GV*Frame.frameType:			sunken
-GV*Frame.topShadowPixel:		gray85
-GV*Frame.bottomShadowPixel:		gray40
+!  gray85
+GV*Frame.topShadowPixel:		#d9d9d9
+!  gray40
+GV*Frame.bottomShadowPixel:		#666666
 GV*Frame.hSpace:			0
 GV*Frame.vSpace:			0
 
@@ -156,12 +197,15 @@ GV*infoPopup*Text.borderWidth:		1
 
 !##### View Area
 
-GV*viewFrame.topShadowPixel:		gray78
+!  gray78
+GV*viewFrame.topShadowPixel:		#c7c7c7
 GV*viewFrame.hSpace:			1
 GV*viewFrame.vSpace:			1
-GV*page.borderColor:			gray65
+!  gray65
+GV*page.borderColor:			#a6a6a6
 GV*viewClip.borderWidth:		1
-GV*viewClip.borderColor:		gray71
+!  gray71
+GV*viewClip.borderColor:		#b5b5b5
 
 !##### Scrollbar widget
 
@@ -184,7 +228,8 @@ GV*fileSel.pathframe.background:	#D3B5B5
 GV*fileSel.pathframe.hSpace:		4
 GV*fileSel.pathframe*Text*Margin:	6
 
-GV*fileSel*Vlist.selectedBackground:	gray58
+!  gray58
+GV*fileSel*Vlist.selectedBackground:	#949494
 GV*fileSel*Vlist.selectedGeometry:	3 0 -3 1
 GV*fileSel*Vlist.highlightedGeometry:	3 0 -3 1
 
@@ -195,8 +240,10 @@ GV*fileSel*Scrollbar.showArrows:	False
 GV*fileSel*Scrollbar.thumbTopIndent:	0
 GV*fileSel*Scrollbar.width:		12
 GV*fileSel*Scrollbar.shadowWidth:	1
-GV*fileSel*Scrollbar.background:	gray78
-GV*fileSel*Scrollbar.foreground:	gray71
+!  gray78
+GV*fileSel*Scrollbar.background:	#c7c7c7
+!  gray71
+GV*fileSel*Scrollbar.foreground:	#b5b5b5
 
 GV*fileSel.minimumWidth:		400
 GV*fileSel.height:			350
@@ -279,17 +326,23 @@ GV*pannerFrame.frameType:		sunken
 GV*pannerFrame.hSpace:			0
 GV*pannerFrame.vSpace:			0
 
-GV*panner.background:			gray65
+!  gray65
+GV*panner.background:			#a6a6a6
 GV*pannerFrame.shadowWidth:		1
-GV*pannerFrame.topShadowPixel:		gray90
-GV*pannerFrame.bottomShadowPixel:	gray40
+!  gray90
+GV*pannerFrame.topShadowPixel:		#e5e5e5
+!  gray40
+GV*pannerFrame.bottomShadowPixel:	#666666
 GV*panner.width:			50
 GV*panner.height:			50
 
-GV*slider.background:			gray78
+!  gray78
+GV*slider.background:			#c7c7c7
 GV*slider.shadowWidth:			1
-GV*slider.topShadowPixel:		gray90
-GV*slider.bottomShadowPixel:		gray40
+!  gray90
+GV*slider.topShadowPixel:		#e5e5e5
+!  gray40
+GV*slider.bottomShadowPixel:		#666666
 
 
 !##### Miscellaneous

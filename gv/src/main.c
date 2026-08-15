@@ -316,6 +316,72 @@ dummyCvtStringToPixmap(Display *dpy _GL_UNUSED, XrmValue *args _GL_UNUSED, Cardi
    return(False);
 }
 
+/*--------------------------------------------------------------
+   cvtColorComponent
+   Places a 16 bit color component into its field of a pixel.
+--------------------------------------------------------------*/
+
+static Pixel
+cvtColorComponent(unsigned short value, unsigned long mask)
+{
+   int shift = 0;
+   int bits  = 0;
+
+   while (mask && !(mask & 1)) { mask >>= 1; shift++; }
+   while (mask & 1)            { mask >>= 1; bits++;  }
+   if (bits > 16) bits = 16;
+   return ((Pixel)(value >> (16 - bits))) << shift;
+}
+
+/*--------------------------------------------------------------
+   cvtStringToPixel
+   String to Pixel converter for colors written as "#rrggbb".
+   On a TrueColor or DirectColor visual the pixel value follows
+   from the masks of the visual, so it can be computed here
+   instead of asking the server for it.  Colors given by name,
+   and all other visuals, are left to the Xt converter, which
+   needs a round trip each.  gv converts about fifty colors
+   while starting up, which is slow on a high latency connection.
+--------------------------------------------------------------*/
+
+static Boolean
+cvtStringToPixel(Display *dpy, XrmValue *args, Cardinal *num_args, XrmValue *fromVal, XrmValue *toVal, XtPointer *converter_data)
+{
+   char        *name = (char*) fromVal->addr;
+   static Pixel pixel;
+
+   BEGINMESSAGE(cvtStringToPixel)
+   if (*num_args == 2 && name && name[0] == '#') {
+      Screen   *screen   = *((Screen**)  args[0].addr);
+      Colormap  colormap = *((Colormap*) args[1].addr);
+      Visual   *visual   = DefaultVisualOfScreen(screen);
+      XColor    color;
+
+      if (colormap == DefaultColormapOfScreen(screen)                &&
+          (visual->class == TrueColor || visual->class == DirectColor) &&
+          XParseColor(dpy, colormap, name, &color)) {
+         pixel = cvtColorComponent(color.red,   visual->red_mask)
+               | cvtColorComponent(color.green, visual->green_mask)
+               | cvtColorComponent(color.blue,  visual->blue_mask);
+         if (toVal->addr) {
+            if (toVal->size < sizeof(Pixel)) {
+               toVal->size = sizeof(Pixel);
+               ENDMESSAGE(cvtStringToPixel)
+               return(False);
+            }
+            *(Pixel*)toVal->addr = pixel;
+         } else {
+            toVal->addr = (XPointer) &pixel;
+         }
+         toVal->size = sizeof(Pixel);
+         ENDMESSAGE(cvtStringToPixel)
+         return(True);
+      }
+   }
+   ENDMESSAGE(cvtStringToPixel)
+   return(XtCvtStringToPixel(dpy,args,num_args,fromVal,toVal,converter_data));
+}
+
 /*### Procedure and Macro Declarations ###########################################*/
 
 static void  main_createMenu(MenuEntry*,Widget*,Cardinal*);
@@ -710,6 +776,7 @@ int main(int argc, char *argv[])
     INFMESSAGE(initializing widget set)
     XawInitializeWidgetSet();
     XtAppSetTypeConverter(app_con,XtRString,XtRPixmap,dummyCvtStringToPixmap,NULL,0,XtCacheNone,NULL);   
+    XtAppSetTypeConverter(app_con,XtRString,XtRPixel,cvtStringToPixel,(XtConvertArgList)colorConvertArgs,2,XtCacheByDisplay,NULL);
     old_Xerror = XSetErrorHandler(catch_Xerror);
     wm_delete_window = XInternAtom(gv_display, "WM_DELETE_WINDOW", False);
     dim_forced=resource_checkGeometryResource(&gv_database,gv_class,gv_name);

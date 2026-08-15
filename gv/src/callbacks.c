@@ -117,13 +117,21 @@ void setTitle ( Display* dpy, Window w, char* title, int icon) {
 	char utf8title [4096];
 	char* outptr;
 	size_t outsize;
-	Atom net_wm_name;
-	Atom net_wm_icon_name;
-        Atom utf8_string;
-	
-	net_wm_name = XInternAtom (dpy, "_NET_WM_NAME", False);
-	net_wm_icon_name = XInternAtom (dpy, "_NET_WM_ICON_NAME", False);
-	utf8_string = XInternAtom (dpy, "UTF8_STRING" ,False);
+	/* interned once: one round trip for the three of them instead of
+	   three on every title change */
+	static Atom net_wm_name = None;
+	static Atom net_wm_icon_name;
+        static Atom utf8_string;
+
+	if (net_wm_name == None) {
+		static char* atom_names[] = { "_NET_WM_NAME", "_NET_WM_ICON_NAME", "UTF8_STRING" };
+		Atom atoms[3];
+
+		XInternAtoms (dpy, atom_names, 3, False, atoms);
+		net_wm_name      = atoms[0];
+		net_wm_icon_name = atoms[1];
+		utf8_string      = atoms[2];
+	}
 
 	from  = nl_langinfo (CODESET);
 	cd  = iconv_open ("UTF-8",from);

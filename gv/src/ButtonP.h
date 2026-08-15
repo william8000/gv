@@ -58,9 +58,11 @@ typedef struct {
   XawFrameType highlighted_frame_style;
   Pixel        set_background;
   Pixel        highlighted_background;
+  Pixel        insensitive_foreground;
   /* private state */
   GC set_background_GC;
   GC highlighted_background_GC;
+  GC insensitive_GC;
   int highlighted;
 } ButtonPart;
 
