@@ -58,7 +58,7 @@ GV*notePopup*message*font:	-*-Helvetica-Medium-R-Normal--*-120-*-*-P-*-ISO8859-1
 GV*confirmPopup*font:		-*-Helvetica-Medium-R-Normal--*-120-*-*-P-*-ISO8859-1
 GV*confirmPopup*Button.font:	-*-Helvetica-Bold-R-Normal--*-120-*-*-P-*-ISO8859-1
 
-GV*versionPopup*Label*font:	-*-Courier-Medium-R-Normal--*-100-*-*-M-*-ISO8859-1
+GV*versionPopup*Label*font:	-*-Courier-Bold-R-Normal--*-100-*-*-M-*-ISO8859-1
 GV*versionPopup*versionTexta*font:-*-Helvetica-Bold-R-Normal--*-180-*-*-P-*-ISO8859-1
 GV*versionPopup*versionTextb*font:-*-Helvetica-Bold-R-Normal--*-120-*-*-P-*-ISO8859-1
 

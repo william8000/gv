@@ -23,6 +23,7 @@ by a '#' or a '*' or a '?'. A
 # Add an insensitiveForeground resource to the Button widget for the color of the bitmap of an insensitive button.
 * Share the dpi computation of resource_displayIsHiDPI between the monitor and the output path.
 * Fix a C23 warning from the const return from strrchr in file_getTmpFilename in file.c.
+# Darken the text in the copyright dialog with a bold font.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Jan 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
