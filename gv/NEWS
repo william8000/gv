@@ -9,6 +9,10 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (Oct 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Fix PDF pages shifted left and down when the MediaBox does not start at the origin.
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Aug 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Add resources for shadows to reduce Xaw3d startup time by a factor of 6 on high-latency connections, removing 500 of gv's 621 startup X11 round trips.

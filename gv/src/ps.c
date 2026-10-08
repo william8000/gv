@@ -368,6 +368,45 @@ static int parse_boundingbox(const char *l, int *boundingbox) {
 	return 1;
 }
 
+/* pdf2dsc writes the CropBox as %%PageBoundingBox, but Ghostscript already
+   moves a PDF page to its MediaBox origin, so a box that does not start at
+   0,0 is applied a second time and the page shifts left and down.  The DSC
+   has the media size but not its origin, so only a box that covers the whole
+   media can be rebased.  The floor/ceil of the box can only make it up to
+   2 points larger than the rounded media, never smaller. */
+
+static void pdf_rebase_boundingbox(int *bb, Media media)
+{
+	int w = bb[URX] - bb[LLX];
+	int h = bb[URY] - bb[LLY];
+
+	if (!media ||
+	    w <= 0 ||
+	    h <= 0 ||
+	    (bb[LLX] == 0 && bb[LLY] == 0)) {
+		return;
+	}
+
+	if (w - media->width >= 0 && w - media->width <= 2 &&
+	    h - media->height >= 0 && h - media->height <= 2) {
+		bb[LLX] = 0;
+		bb[LLY] = 0;
+		bb[URX] = w;
+		bb[URY] = h;
+	}
+}
+
+static void pdf_rebase_boundingboxes(Document doc)
+{
+	int i;
+
+	for (i = 0; i < doc->numpages; i++)
+		pdf_rebase_boundingbox(doc->pages[i].boundingbox,
+		    doc->pages[i].media ? doc->pages[i].media : doc->default_page_media);
+	pdf_rebase_boundingbox(doc->default_page_boundingbox, doc->default_page_media);
+	pdf_rebase_boundingbox(doc->boundingbox, doc->default_page_media);
+}
+
 struct document *
 psscan(FILE **fileP, char *filename, char *filename_raw, char **filename_dscP, char *cmd_scan_pdf, char **filename_uncP, char *cmd_uncompress, int scanstyle, int gv_gs_safeDir)
 {
@@ -683,6 +722,7 @@ scan_ok:
 	sprintf(s,"Scanning\n%s\nfailed.",filename_dsc);
 	goto scan_failed;
       }
+      pdf_rebase_boundingboxes(retval);
       *filename_dscP = (char*)XtNewString(filename_dsc);
       goto scan_ok;
     } else {

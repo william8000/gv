@@ -5,6 +5,7 @@
 # --dist # first to make distribution in gv-#.#.# subdirectory
 # --no-dist # first to suppress making distribution [default]
 # --no-clean # do not run git clean
+# --pull # do git pull, then restart the script
 # --with-default-papersize=Letter # change default from A4 to Letter
 
 dir=$(git rev-parse --show-toplevel)
@@ -15,6 +16,8 @@ clean=yes
 dist=no
 opt=yes
 debug=no
+pull=no
+opts=()
 while [ -n "$1" ] ; do
   case "$1" in
   --dist) dist=yes ; opt=yes ; debug=no ;;
@@ -25,14 +28,24 @@ while [ -n "$1" ] ; do
   --no-opt) opt=no ;;
   --debug) debug=yes ;;
   --no-debug) debug=no ;;
+  --pull) pull=yes ;;
+  --no-pull) pull=no ;;
   *) break ;;
   esac
+  opts+=("$1")
   shift
 done
-if [ "$clean" = yes ] ; then git clean -dfx ; fi
+# bash reads a script as it runs, so restart after a pull that may have changed this file
+if [ "$pull" = yes ] ; then
+  if git pull --ff-only ; then
+    exec "$dir/scripts/makedist.sh" "${opts[@]}" --no-pull "$@"
+  fi
+  echo "$0: Warning: git pull failed"
+fi
+if [ "$clean" = yes ] ; then git clean -dfx || echo "$0: Warning: git clean failed" ; fi
 if [ "$opt" = yes ] ; then export CFLAGS="$CFLAGS -O2" ; fi
 if [ "$debug" = yes ] ; then export CFLAGS="$CFLAGS -g" ; fi
-cd gv || exit
+cd gv || { echo "$0: Error: cd gv failed" ; exit 1 ; }
 defpap=
 if [[ "$LANG" =~ ^en_US ]] && ! [[ "$*" =~ "default-papersize" ]] ; then defpap="--with-default-papersize=Letter" ; fi
 PATH=/opt/autotools/bin:${PATH} autoreconf -vi
