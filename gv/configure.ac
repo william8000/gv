@@ -360,6 +360,9 @@ AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 AC_CHECK_LIB(Xrandr, XRRQueryExtension, , , $X_LIBS)
 AC_CHECK_FUNCS(XRRGetMonitors)
 
+AC_SEARCH_LIBS(dlsym, dl)
+AC_CHECK_FUNCS(dlsym)
+
 
 #################### END: X11 related stuff ######################
 

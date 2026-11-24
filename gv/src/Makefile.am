@@ -142,6 +142,8 @@ gv_SOURCES = Aaa.c \
              widgets_misc.h \
              zoom.c \
              zoom.h \
+             xcache.c \
+             xcache.h \
              message.h \
              Aaa_intern.h \
              Aaa.h \

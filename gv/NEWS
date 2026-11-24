@@ -9,6 +9,18 @@ by a '#' or a '*' or a '?'. A
   '#' denotes a change which is noticeable by the user.
   '?' describes a known problem which is not fixed yet.
 
+%%%%%%%%%%%%%%%%%%% GV 3.7.4 (Nov 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Answer Xaw3d's queries for the size of gv's own bitmaps without asking the X server, removing 18 X11 round trips from startup.
+# Remember the font names that match no font, so XCreateFontSet does not list them twice, removing 4 X11 round trips from startup.
+# Intern the atoms used at startup in a single request, removing 7 X11 round trips from startup.
+# Take the size of the first monitor from the RANDR hidpi check instead of asking Xinerama, removing 3 X11 round trips from startup.
+# Copy the metrics of a font that is loaded again instead of asking the X server for them, removing 1 X11 round trip from startup.
+# Detect a failed allocation of the backing pixmap with the XSync that publishes the GHOSTVIEW property instead of two more,
+  removing 2 X11 round trips from startup and from every resize.
+# Read the screenSize resource from the resource database instead of reading SCREEN_RESOURCES again, removing 1 X11 round trip from startup.
+* Add xcache.c, which overrides XGetGeometry, XListFonts and XLoadQueryFont and passes the requests it cannot answer on to libX11 through dlsym.
+
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Oct 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # Fix PDF pages shifted left and down when the MediaBox does not start at the origin.

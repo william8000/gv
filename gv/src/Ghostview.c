@@ -1161,12 +1161,19 @@ ComputeSize(Widget w, Boolean xfree, Boolean yfree, Dimension *width, Dimension 
 
 static Boolean alloc_error;
 static XErrorHandler oldhandler;
+static Pixmap alloc_pixmap = None;	/* until the XSync in SetProperty */
+static unsigned long alloc_serial;
 
+/* Errors of other requests go to the previous handler, so there is no
+   need to XSync before installing this one. */
 static int
 catch_alloc (Display *dpy, XErrorEvent *err)
 {
-    if (err->error_code == BadAlloc) alloc_error = True;
-    if (alloc_error) return 0;
+    if (err->serial == alloc_serial && err->error_code == BadAlloc) {
+       alloc_error = True;
+       return 0;
+    }
+    if (alloc_error && err->resourceid == alloc_pixmap) return 0;
     return oldhandler(dpy, err);
 }
 
@@ -1212,29 +1219,19 @@ Setup(Widget w)
       INFMESSAGE(setting up backing pixmap)
       if (gvw->core.background_pixmap == XtUnspecifiedPixmap) {
          INFMESSAGE(backing pixmap will be allocated)
-         /* Get a Backing Pixmap, but be ready for the BadAlloc. */
-         XSync(XtDisplay(w), False);  /* Get to known state */
+         /* Get a Backing Pixmap, but be ready for the BadAlloc.  It is
+            reported by the XSync in SetProperty, which undoes all this
+            if the allocation failed: one round trip instead of three. */
          oldhandler = XSetErrorHandler(catch_alloc);
          alloc_error = False;
+         alloc_serial = NextRequest(XtDisplay(w));
          bpixmap = XCreatePixmap(XtDisplay(w), XtWindow(w),
 	     		         gvw->core.width, gvw->core.height,
 			         gvw->core.depth);
-	 XSync(XtDisplay(w), False);  /* Force the error */
-	 if (alloc_error) {
-            INFMESSAGE(allocation error for backing pixmap)
-	    XtCallCallbackList(w, gvw->ghostview.message_callback,"BadAlloc");
-	    if (bpixmap != None) {
-	       XFreePixmap(XtDisplay(w), bpixmap);
-	       XSync(XtDisplay(w), False);  /* Force the error */
-	       bpixmap = None;
-	    }
-	 }
-	 oldhandler = XSetErrorHandler(oldhandler);
-	 if (bpixmap != None) {
-            INFMESSAGE(setting background pixmap)
-	    gvw->core.background_pixmap = bpixmap;
-            XSetWindowBackgroundPixmap(XtDisplay(w), XtWindow(w), bpixmap);
-         }
+         alloc_pixmap = bpixmap;
+         INFMESSAGE(setting background pixmap)
+         gvw->core.background_pixmap = bpixmap;
+         XSetWindowBackgroundPixmap(XtDisplay(w), XtWindow(w), bpixmap);
       } else {
 	 bpixmap = gvw->core.background_pixmap;
       }
@@ -1313,6 +1310,22 @@ SetProperty(Widget w, Pixmap bpixmap)
   /* Be sure to update properties */
 
    XSync(XtDisplay(w), False);
+
+   if (alloc_pixmap != None) {
+      alloc_pixmap = None;
+      XSetErrorHandler(oldhandler);
+      if (alloc_error) {
+         XSetWindowAttributes xswa;
+
+         INFMESSAGE(allocation error for backing pixmap)
+         XtCallCallbackList(w, gvw->ghostview.message_callback,"BadAlloc");
+         gvw->core.background_pixmap = XtUnspecifiedPixmap;
+         XSetWindowBackgroundPixmap(XtDisplay(w), XtWindow(w), None);
+         xswa.backing_store = Always;
+         XChangeWindowAttributes(XtDisplay(w), XtWindow(w), CWBackingStore, &xswa);
+         return SetProperty(w, None);
+      }
+   }
 
    gvw->ghostview.background_cleared = 0;
    if(!pix || w != page) SetBackground(w,True);

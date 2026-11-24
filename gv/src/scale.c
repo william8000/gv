@@ -209,20 +209,13 @@ void scale_getScreenSize(Display *display, Screen *screen, XrmDatabase db, char 
   int hmm=0,wmm=0;
   char v[255];
   char *s;
-  XrmDatabase sdb=NULL;
 
   BEGINMESSAGE(scale_getScreenSize)
-  s=XScreenResourceString(screen);
-  if (s) {
-    sdb=XrmGetStringDatabase(s);
-    s=resource_getResource(sdb,app_class,app_name,"screenSize",NULL);
-    INFSMESSAGE(found in SCREEN_RESOURCES,s)
-  }
-  if (!s) {
-    scale_getScreenResourceName(display,v);
-    s=resource_getResource(db,app_class,app_name,v,NULL);
-    INFSMESSAGE(found in screen specific resource,s)
-  }
+  /* db already holds the SCREEN_RESOURCES that Xt read; reading them again
+     costs a round trip, as Xlib does not cache an atom that does not exist. */
+  scale_getScreenResourceName(display,v);
+  s=resource_getResource(db,app_class,app_name,v,NULL);
+  INFSMESSAGE(found in screen specific resource,s)
   if (!s) {
     s=resource_getResource(db,app_class,app_name,"screenSize",NULL);
     INFSMESSAGE(found,s)
@@ -236,7 +229,6 @@ void scale_getScreenSize(Display *display, Screen *screen, XrmDatabase db, char 
     *widthP=WidthMMOfScreen(screen);
     *heightP=HeightMMOfScreen(screen);
   }
-  if (sdb) XrmDestroyDatabase(sdb);
   IIMESSAGE(*widthP,*heightP)
   ENDMESSAGE(scale_getScreenSize)
 }

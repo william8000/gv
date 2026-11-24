@@ -175,6 +175,12 @@ resource_displayIsHiDPI (Display *display)
       XRRMonitorInfo *monitors = XRRGetMonitors(display, root, True, &nmonitors);
 
       if (monitors) {
+        /* The X server lists the Xinerama screens in this order too, so
+           main_setResolutions does not have to ask Xinerama again. */
+        if (nmonitors > 0) {
+          gv_monitor0_width = monitors[0].width;
+          gv_monitor0_height = monitors[0].height;
+        }
         for (i = 0; i < nmonitors; i++) {
           snprintf(what, sizeof(what), "Monitor %d", i);
           if (resource_sizeIsHiDPI(what, monitors[i].width, monitors[i].height,

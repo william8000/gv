@@ -108,6 +108,7 @@
 #include "doc_misc.h"
 #include "version.h"
 #include "scale.h"
+#include "xcache.h"
 
 #if defined(USE_SIGNAL_HANDLER) && (XtSpecificationRelease < 6)
 #   undef USE_SIGNAL_HANDLER
@@ -121,6 +122,7 @@
 #define HEIGHTOF(name) name ## _height
 #define BITMAP_ARGS(name)\
            (const char*)BITSOF(name), WIDTHOF(name), HEIGHTOF(name)
+#define BITMAP_SIZE(name) WIDTHOF(name), HEIGHTOF(name)
 
 #include FALLBACK_ICON_PIXMAP
 #include FALLBACK_SELECTED_BITMAP
@@ -778,7 +780,19 @@ int main(int argc, char *argv[])
     XtAppSetTypeConverter(app_con,XtRString,XtRPixmap,dummyCvtStringToPixmap,NULL,0,XtCacheNone,NULL);   
     XtAppSetTypeConverter(app_con,XtRString,XtRPixel,cvtStringToPixel,(XtConvertArgList)colorConvertArgs,2,XtCacheByDisplay,NULL);
     old_Xerror = XSetErrorHandler(catch_Xerror);
-    wm_delete_window = XInternAtom(gv_display, "WM_DELETE_WINDOW", False);
+    {
+      /* Intern in one round trip the atoms that gv, Xt and Xaw would
+         otherwise intern one round trip at a time.  Xlib caches them. */
+      static char *atom_names[] = {
+        "WM_DELETE_WINDOW", "WM_PROTOCOLS", "WM_LOCALE_NAME", "WM_CLIENT_LEADER",
+        "FIGURE_WIDTH", "GHOSTVIEW", "GHOSTVIEW_COLORS", "NEXT", "PAGE", "DONE",
+        "_NET_WM_NAME", "_NET_WM_ICON_NAME", "UTF8_STRING"
+      };
+      Atom atoms[XtNumber(atom_names)];
+
+      XInternAtoms(gv_display, atom_names, XtNumber(atom_names), False, atoms);
+      wm_delete_window = atoms[0];
+    }
     dim_forced=resource_checkGeometryResource(&gv_database,gv_class,gv_name);
 
     INFMESSAGE(creating the application shell)
@@ -951,34 +965,48 @@ int main(int argc, char *argv[])
           XtSetValues(toplevel, args, 1);
        }
     }
-       if (app_res.mark_odd_bitmap == None)
+       if (app_res.mark_odd_bitmap == None) {
            app_res.mark_odd_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_MARK_ODD_NAME));
-       if (app_res.mark_even_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.mark_odd_bitmap, BITMAP_SIZE(FALLBACK_MARK_ODD_NAME));
+       }
+       if (app_res.mark_even_bitmap == None) {
            app_res.mark_even_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_MARK_EVEN_NAME));
-       if (app_res.mark_current_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.mark_even_bitmap, BITMAP_SIZE(FALLBACK_MARK_EVEN_NAME));
+       }
+       if (app_res.mark_current_bitmap == None) {
            app_res.mark_current_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_MARK_CURRENT_NAME));
-       if (app_res.mark_unmark_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.mark_current_bitmap, BITMAP_SIZE(FALLBACK_MARK_CURRENT_NAME));
+       }
+       if (app_res.mark_unmark_bitmap == None) {
            app_res.mark_unmark_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_MARK_UNMARK_NAME));
-       if (app_res.mark_empty_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.mark_unmark_bitmap, BITMAP_SIZE(FALLBACK_MARK_UNMARK_NAME));
+       }
+       if (app_res.mark_empty_bitmap == None) {
            app_res.mark_empty_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_MARK_EMPTY_NAME));
-       if (app_res.selected_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.mark_empty_bitmap, BITMAP_SIZE(FALLBACK_MARK_EMPTY_NAME));
+       }
+       if (app_res.selected_bitmap == None) {
            app_res.selected_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_SELECTED_NAME));
-       if (app_res.document_bitmap == None)
+           xcache_addBitmap(gv_display, app_res.selected_bitmap, BITMAP_SIZE(FALLBACK_SELECTED_NAME));
+       }
+       if (app_res.document_bitmap == None) {
            app_res.document_bitmap =
               XCreateBitmapFromData(gv_display, RootWindowOfScreen(gv_screen),
                                   BITMAP_ARGS(FALLBACK_DOCUMENT_NAME));
+           xcache_addBitmap(gv_display, app_res.document_bitmap, BITMAP_SIZE(FALLBACK_DOCUMENT_NAME));
+       }
 
 /*### Parsing maximum width, maximum height resources, creating control ####################*/
 
@@ -1626,10 +1654,13 @@ void main_setResolutions(int query)
      checkXinerama = 0;
   else if (gv_xinerama == 1)
      checkXinerama = 1;
-  if (!XineramaIsActive(gv_display))
-     checkXinerama = 0;
-
-  if (checkXinerama)
+  if (checkXinerama && gv_monitor0_width > 0)
+  {
+    sizeX = gv_monitor0_width;
+    sizeY = gv_monitor0_height;
+    if (debug_p) printf("RANDR's resolution of monitor 0 is: %i x %i\n", sizeX, sizeY);
+  }
+  else if (checkXinerama && XineramaIsActive(gv_display))
   {
     int num_heads;
     XineramaScreenInfo *head_info;

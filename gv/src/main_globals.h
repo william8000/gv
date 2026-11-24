@@ -156,6 +156,8 @@ EXTERN int                      gv_gs_quiet;
 EXTERN int			gv_infoVerbose;
 EXTERN int			gv_infoSkipErrors;
 EXTERN int			gv_xinerama;
+EXTERN int			gv_monitor0_width;   /* in pixels, from RANDR, 0 if unknown */
+EXTERN int			gv_monitor0_height;
 EXTERN String                   gv_gs_arguments;
 EXTERN String                   gv_pdf_password;
 
