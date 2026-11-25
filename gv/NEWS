@@ -20,6 +20,7 @@ by a '#' or a '*' or a '?'. A
   removing 2 X11 round trips from startup and from every resize.
 # Read the screenSize resource from the resource database instead of reading SCREEN_RESOURCES again, removing 1 X11 round trip from startup.
 * Add xcache.c, which overrides XGetGeometry, XListFonts and XLoadQueryFont and passes the requests it cannot answer on to libX11 through dlsym.
+# Add configure --disable-xcache to build without xcache.c if ./configure guesses incorrectly that dlsym() works with libX11.
 
 %%%%%%%%%%%%%%%%%%% GV 3.7.4 (Oct 2026) %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -360,8 +360,37 @@ AC_CHECK_LIB(Xinerama, main, , , $X_LIBS)
 AC_CHECK_LIB(Xrandr, XRRQueryExtension, , , $X_LIBS)
 AC_CHECK_FUNCS(XRRGetMonitors)
 
-AC_SEARCH_LIBS(dlsym, dl)
-AC_CHECK_FUNCS(dlsym)
+dnl xcache.c overrides XGetGeometry, XListFonts and XLoadQueryFont and reaches
+dnl libX11's own copies through dlsym(RTLD_NEXT).  That needs a shared libX11
+dnl and a dynamic linker that lets the executable interpose on it, so test it.
+AC_ARG_ENABLE(xcache, AS_HELP_STRING([--disable-xcache],[Do not override Xlib functions through dlsym to save X11 round trips at startup. Defaults to `yes' if a test program shows that it works]), opt_xcache=$enableval, opt_xcache=yes)
+
+AS_IF([test "$opt_xcache" = "yes"], [
+  savedLIBS=$LIBS
+  savedLDFLAGS=$LDFLAGS
+  AC_SEARCH_LIBS(dlsym, dl, , opt_xcache=no)
+  LDFLAGS="$LDFLAGS $X_LIBS"
+  AC_MSG_CHECKING([whether dlsym(RTLD_NEXT) finds the Xlib functions that gv overrides])
+  AS_IF([test "$opt_xcache" = "yes"], [
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <dlfcn.h>
+extern int XFree (void *);
+int XGetGeometry () { return 0; }
+int XListFonts () { return 0; }
+int XLoadQueryFont () { return 0; }
+]], [[
+  /* XFree keeps libX11 in the link under --as-needed. */
+  return !XFree || !dlsym(RTLD_NEXT, "XGetGeometry")
+         || !dlsym(RTLD_NEXT, "XListFonts") || !dlsym(RTLD_NEXT, "XLoadQueryFont");
+]])], , opt_xcache=no,
+      [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <dlfcn.h>]],
+        [[return !dlsym(RTLD_NEXT, "XGetGeometry");]])], , opt_xcache=no)])
+  ])
+  AC_MSG_RESULT([$opt_xcache])
+  LDFLAGS=$savedLDFLAGS
+  AS_IF([test "$opt_xcache" != "yes"], [LIBS=$savedLIBS])
+])
+AS_IF([test "$opt_xcache" = "yes"], [AC_DEFINE(HAVE_DLSYM, 1, [Define to override Xlib functions in xcache.c through dlsym(RTLD_NEXT)])])
 
 
 #################### END: X11 related stuff ######################

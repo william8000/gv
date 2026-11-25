@@ -34,6 +34,7 @@
 
 #include "ac_config.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -146,6 +147,21 @@ xcache_addBitmap (Display *display, Pixmap pixmap, unsigned int width, unsigned 
   num_bitmaps++;
 }
 
+/* configure has checked that this works, so a failure cannot be recovered:
+   libX11's copy of the function is not reachable from here. */
+static void *
+xcache_real (const char *name)
+{
+  void *real = dlsym(RTLD_NEXT, name);
+
+  if (!real)
+    {
+      fprintf(stderr, "gv: dlsym cannot find %s; rebuild gv with configure --disable-xcache\n", name);
+      abort();
+    }
+  return real;
+}
+
 Status
 XGetGeometry (Display *display, Drawable d, Window *root, int *x, int *y,
               unsigned int *width, unsigned int *height,
@@ -168,7 +184,7 @@ XGetGeometry (Display *display, Drawable d, Window *root, int *x, int *y,
         return True;
       }
   if (!real)
-    *(void **) &real = dlsym(RTLD_NEXT, "XGetGeometry");
+    *(void **) &real = xcache_real("XGetGeometry");
   return real(display, d, root, x, y, width, height, border_width, depth);
 }
 
@@ -187,7 +203,7 @@ XListFonts (Display *display, _Xconst char *pattern, int maxnames, int *count)
       return NULL;
     }
   if (!real)
-    *(void **) &real = dlsym(RTLD_NEXT, "XListFonts");
+    *(void **) &real = xcache_real("XListFonts");
   list = real(display, pattern, maxnames, count);
   if (!list)
     xcache_addMissing(display, pattern);
@@ -217,7 +233,7 @@ XLoadQueryFont (Display *display, _Xconst char *name)
         break;
       }
   if (!real)
-    *(void **) &real = dlsym(RTLD_NEXT, "XLoadQueryFont");
+    *(void **) &real = xcache_real("XLoadQueryFont");
   font = real(display, name);
   if (!font)
     xcache_addMissing(display, name);
